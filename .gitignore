@@ -1,0 +1,30 @@
+# 依赖
+node_modules/
+package-lock.json
+
+# 原始数据集（不需要部署）
+football-datasets-main/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+npm-debug.log*
+
+# 云函数/Worker（暂不需要）
+functions/
+worker/
+
+# 临时文件
+tmp/
+temp/
+*.tmp

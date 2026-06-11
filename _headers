@@ -1,0 +1,14 @@
+# Cloudflare Pages 自定义 HTTP 头
+# 让浏览器和 CDN 合理缓存静态资源
+
+# HTML 文件 - 短期缓存（内容可能更新）
+/*.html
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# JavaScript 数据文件 - 长期缓存（球员数据变化少）
+/*.js
+  Cache-Control: public, max-age=604800, immutable
+
+# 启用 Brotli/Gzip 压缩（Cloudflare 自动处理，这里做声明）
+/*
+  Content-Encoding: auto

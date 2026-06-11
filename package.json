@@ -1,0 +1,23 @@
+{
+  "name": "fifa-worldcup-analytics",
+  "version": "1.0.0",
+  "description": "FIFA World Cup 2022 & 2026 Data Analytics Platform",
+  "main": "FIFAWorldCup.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "fifa",
+    "worldcup",
+    "analytics",
+    "football",
+    "soccer"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

@@ -1,0 +1,2365 @@
+<!-- Author: Antas Lee -->
+<!-- Copyright: © 2026 ZHENTAO LI. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.60</title>
+<style>
+:root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
+.header{background:linear-gradient(135deg,#0d1b2a,#1a2740,#0d1b2a);border-bottom:2px solid var(--gold);padding:18px 24px;text-align:center}
+.header h1{font-size:1.8rem;font-weight:800;letter-spacing:2px;background:linear-gradient(180deg,#f0d070 0%,#d4a843 50%,#b8862d 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.header .subtitle{font-size:0.85rem;color:var(--text-secondary);letter-spacing:1px}
+.sticky-top-group{position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,0.5)}
+.container{max-width:1400px;margin:0 auto;padding:20px 16px}
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:20px;padding:14px 18px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border)}
+.toolbar-left{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+/* ===== Neon Streak 按钮系统 ===== */
+@keyframes streakSweep{0%{left:-120%}100%{left:120%}}
+.btn,.btn-primary,.btn-accent{position:relative;overflow:hidden}
+.btn::after,.btn-primary::after,.btn-accent::after{content:'';position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);transform:skewX(-25deg);animation:streakSweep 3.5s ease-in-out infinite;pointer-events:none;z-index:2}
+.btn:hover::after,.btn-primary:hover::after,.btn-accent:hover::after{animation-duration:1.5s}
+.btn{padding:9px 18px;border:1.5px solid rgba(91,156,245,0.5);border-radius:8px;cursor:pointer;font-size:0.9rem;font-weight:600;transition:all 0.3s ease;color:#8bb8f8;background:rgba(20,27,34,0.85);letter-spacing:0.5px;box-shadow:0 0 10px rgba(91,156,245,0.25),0 0 24px rgba(91,156,245,0.08),inset 0 0 10px rgba(91,156,245,0.04)}
+.btn:hover{border-color:rgba(120,180,255,0.8);color:#a8d0ff;transform:translateY(-2px);box-shadow:0 0 18px rgba(91,156,245,0.4),0 0 40px rgba(91,156,245,0.18),inset 0 0 14px rgba(91,156,245,0.08)}
+.btn-primary{border-color:rgba(240,208,112,0.7);color:#f0d070;box-shadow:0 0 14px rgba(240,208,112,0.35),0 0 28px rgba(240,208,112,0.12),inset 0 0 10px rgba(240,208,112,0.06);font-weight:700}
+.btn-primary:hover{border-color:#f0d070;color:#fff;box-shadow:0 0 22px rgba(240,208,112,0.5),0 0 48px rgba(240,208,112,0.2),inset 0 0 16px rgba(240,208,112,0.1)}
+.btn-accent{border-color:rgba(76,175,132,0.6);color:#8ad8a8;box-shadow:0 0 10px rgba(76,175,132,0.25),0 0 22px rgba(76,175,132,0.08),inset 0 0 8px rgba(76,175,132,0.04)}
+.btn-accent:hover{border-color:#6ecc98;color:#a0f0c0;box-shadow:0 0 18px rgba(76,175,132,0.45),0 0 36px rgba(76,175,132,0.18),inset 0 0 14px rgba(76,175,132,0.08)}
+.btn-danger{background:var(--accent2);border-color:var(--accent2);color:#fff}
+.btn-prob{background:var(--blue);border-color:var(--blue);color:#fff;font-size:0.7rem;padding:4px 8px;margin-left:2px}
+.btn-prob:hover{background:var(--blue-light);border-color:var(--blue-light)}
+.btn-analysis{background:var(--orange);border-color:var(--orange);color:#fff;font-size:0.7rem;padding:4px 8px;margin-left:2px}
+.btn-analysis:hover{background:var(--orange-light);border-color:var(--orange-light)}
+.btn-venue{background:var(--accent);border-color:var(--accent);color:#fff;font-size:0.7rem;padding:4px 8px;margin-left:2px;margin-right:2px}
+.btn-venue:hover{background:#35a868;border-color:#35a868;color:#fff}
+.btn-update{background:var(--accent);border-color:var(--accent);color:#fff;font-size:0.8rem;padding:8px 16px;cursor:pointer;border-radius:6px;font-weight:600;transition:all 0.2s}
+.btn-update:hover{background:#35a868;box-shadow:0 4px 16px rgba(46,139,87,0.4)}
+.btn-update:disabled{opacity:0.5;cursor:not-allowed}
+.search-input{padding:9px 14px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-size:0.9rem;width:220px;outline:none}
+.search-input:focus{border-color:var(--gold)}
+.tabs{display:flex;gap:4px;margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:8px 16px;border:1px solid var(--border);border-radius:6px 6px 0 0;cursor:pointer;font-size:0.85rem;font-weight:600;background:var(--surface);color:var(--text-secondary);transition:all 0.2s}
+.tab.active{background:var(--surface2);color:var(--gold-light);border-color:var(--gold)}
+.tab:hover{color:var(--gold-light);border-color:var(--gold)}
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:16px}
+.group-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow)}
+.group-card:hover{border-color:var(--gold)}
+.group-header{background:var(--surface2);padding:12px 16px;font-weight:700;font-size:1.05rem;letter-spacing:1px;color:var(--gold-light);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.group-badge{background:var(--gold);color:#111;padding:3px 10px;border-radius:4px;font-size:0.8rem;font-weight:800}
+.match-list{padding:8px 12px}
+.match-item{display:flex;align-items:center;gap:6px;padding:10px 8px;border-radius:8px;cursor:pointer;transition:all 0.2s;border:2px solid transparent;margin-bottom:4px;flex-wrap:wrap}
+.match-item:hover{background:var(--surface2);border-color:var(--border)}
+.match-item.selected{background:var(--highlight);border-color:var(--gold);box-shadow:0 0 12px rgba(212,168,67,0.15)}
+.match-item.predicted{border-left:3px solid var(--accent)}
+.team-block{display:flex;align-items:center;gap:6px;min-width:110px;flex:1}
+.team-block.home{justify-content:flex-end;text-align:right}
+.team-block.away{justify-content:flex-start;text-align:left}
+.team-flag{width:28px;height:19px;border-radius:3px;object-fit:cover;box-shadow:0 1px 3px rgba(0,0,0,0.4);flex-shrink:0}
+.team-info{display:flex;flex-direction:column;line-height:1.2}
+.team-name-zh{font-size:0.82rem;font-weight:600;color:var(--text)}
+.team-code{font-size:0.62rem;color:var(--text-secondary);letter-spacing:0.5px}
+.vs-badge{font-weight:800;font-size:0.75rem;color:var(--gold);min-width:24px;text-align:center;flex-shrink:0}
+.score-input-group{display:flex;align-items:center;gap:2px;flex-shrink:0}
+.score-input{width:34px;height:28px;text-align:center;font-size:0.85rem;font-weight:700;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--gold-light);outline:none}
+.score-input:focus{border-color:var(--gold);box-shadow:0 0 6px rgba(212,168,67,0.3)}
+.score-colon{font-weight:700;color:var(--text-secondary);font-size:0.85rem}
+.predict-indicator{font-size:0.62rem;color:var(--accent);font-weight:700;letter-spacing:0.5px;min-width:30px;text-align:center;flex-shrink:0}
+.match-time{font-size:0.62rem;color:var(--text-secondary);min-width:65px;text-align:center;flex-shrink:0}
+.standings-panel{margin:8px 12px;padding:10px;background:var(--surface2);border-radius:6px;border:1px solid var(--border);display:none}
+.standings-panel.visible{display:block}
+.standings-table{width:100%;border-collapse:collapse;font-size:0.75rem}
+.standings-table th{color:var(--gold-light);padding:6px 8px;text-align:center;border-bottom:1px solid var(--border);font-size:0.7rem}
+.standings-table td{padding:6px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.05)}
+.rank-1{color:#f0d070;font-weight:700}
+.rank-2{color:#c0c0c0;font-weight:700}
+.rank-3{color:#cd7f32}
+.advance{background:rgba(46,139,87,0.15)}
+.knockout-panel{display:none;margin-top:10px}
+.knockout-panel.visible{display:block}
+.ko-round-section{display:none}
+.ko-round-section.active{display:block}
+.ko-match{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;margin-bottom:8px;flex-wrap:wrap}
+.ko-team{flex:1;display:flex;align-items:center;gap:6px;cursor:pointer;position:relative}
+.ko-team select{display:none;position:absolute;top:100%;left:0;width:100%;z-index:10}
+.ko-team.editing select{display:block}
+.ko-team .display{display:flex;align-items:center;gap:6px;min-height:30px}
+.ko-score-group{display:flex;align-items:center;gap:4px}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:999;justify-content:center;align-items:center}
+#playerDetailModal{z-index:10000!important}
+.modal-overlay.visible{display:flex}
+.modal-box{background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius);padding:24px;width:90%;max-height:85vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+.modal-box.prob-modal{max-width:1000px}
+.modal-box.analysis-modal{max-width:780px;background:#0d0d14}
+.modal-box.venue-analysis-modal{max-width:900px;background:#0d1117}
+.modal-box h3{color:var(--gold-light);margin-bottom:16px;letter-spacing:1px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.modal-close{cursor:pointer;font-size:1.3rem;color:var(--text-secondary)}
+.modal-close:hover{color:var(--accent2)}
+.summary-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;margin-bottom:4px;background:var(--surface2);font-size:0.85rem}
+.toast{position:fixed;top:20px;right:20px;background:var(--accent);color:#fff;padding:12px 20px;border-radius:8px;font-weight:600;z-index:9999;opacity:0;transform:translateX(100px);transition:all 0.3s ease;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.toast.show{opacity:1;transform:translateX(0)}
+.prob-matrix{width:100%;border-collapse:collapse;font-size:0.72rem;margin-top:12px}
+.prob-matrix th{background:var(--surface2);color:var(--gold-light);padding:10px 6px;text-align:center;border:1px solid var(--border);position:sticky;top:0;z-index:1}
+.prob-matrix th.cond-header{font-size:0.8rem;letter-spacing:1px}
+.prob-matrix td{padding:8px 6px;text-align:center;border:1px solid rgba(255,255,255,0.06);vertical-align:middle}
+.prob-matrix .goal-col{font-weight:700;color:var(--text);font-size:0.85rem;background:var(--surface2);min-width:40px}
+.prob-matrix .odd-val{color:#f0d070;font-weight:600}
+.prob-matrix .prob-val{color:#87ceeb;font-size:0.68rem}
+.prob-matrix tr:hover td{background:rgba(212,168,67,0.06)}
+.prob-bar{display:inline-block;height:3px;background:var(--gold);border-radius:2px;min-width:2px;vertical-align:middle;margin-left:4px}
+.update-info{font-size:0.7rem;color:var(--text-secondary);margin-top:8px;padding:8px 12px;background:rgba(46,139,87,0.1);border-radius:6px;border-left:3px solid var(--accent)}
+.source-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.65rem;margin:0 2px;font-weight:600}
+.source-william{background:#1a3a5c;color:#5b9bd5}
+.source-ladbrokes{background:#3a1a1a;color:#e74c3c}
+.source-bet365{background:#1a3a2a;color:#35a868}
+.source-pinnacle{background:#1a1a3a;color:#7b9bd5}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--text-secondary);border-top:2px solid var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.analysis-hero{display:flex;align-items:stretch;gap:0;margin-top:10px;position:relative}.ah-card{flex:1;min-width:0}.ah-card .analysis-team-card{height:100%}.ah-vs{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 16px;min-width:80px;flex-shrink:0;z-index:2}.ah-vs-badge{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#c8a030);color:#111;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.85rem;box-shadow:0 0 20px rgba(212,160,32,0.3);margin-bottom:8px}.ah-vs-group{font-size:0.75rem;color:var(--gold-light);font-weight:700;margin-bottom:4px}.ah-vs-date{font-size:0.8rem;color:var(--text);font-weight:600}.ah-vs-time{font-size:0.7rem;color:var(--text-secondary)}.analysis-team-card{display:flex;flex-direction:column}.analysis-team-card .btn-squad{margin-top:auto}@media(max-width:800px){.analysis-hero{flex-direction:column;gap:12px}.ah-vs{flex-direction:row;gap:12px;padding:8px 0}.ah-vs-badge{margin-bottom:0;margin-right:4px}}
+.analysis-team-card{background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);padding:16px}
+.analysis-team-card h4{color:var(--gold-light);font-size:1rem;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.analysis-team-card h4 img{width:28px;height:18px;border-radius:2px}
+.analysis-section{margin-bottom:12px}
+.section-title{font-size:0.7rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:700}
+.section-value{font-size:0.85rem;color:var(--text)}
+.fifa-rank{display:inline-block;background:var(--gold);color:#111;padding:3px 10px;border-radius:12px;font-weight:800;font-size:0.8rem}
+.coach-card{display:flex;align-items:center;gap:10px;padding:8px;background:rgba(255,255,255,0.03);border-radius:6px}
+.coach-avatar{width:40px;height:40px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:2px solid var(--gold)}
+.player-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:4px;font-size:0.73rem}
+.player-row:hover{background:rgba(255,255,255,0.03)}
+.player-rank-num{width:22px;text-align:center;font-weight:700;color:var(--gold-light);font-size:0.8rem;flex-shrink:0}
+.player-name{font-weight:600;color:var(--text);min-width:80px}
+.player-pos{font-size:0.65rem;background:var(--surface);padding:1px 6px;border-radius:3px;color:var(--text-secondary)}
+.player-club{color:var(--text-secondary);font-size:0.68rem}
+.player-value{color:var(--gold-light);font-weight:700;font-size:0.72rem;margin-left:auto;white-space:nowrap}
+.style-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.style-tag{padding:3px 10px;border-radius:12px;font-size:0.7rem;font-weight:600;background:var(--highlight);color:#87ceeb;border:1px solid rgba(135,206,235,0.3)}
+.style-desc{font-size:0.75rem;color:var(--text-secondary);margin-top:6px;line-height:1.5}
+.formation-pitch{position:relative;width:100%;aspect-ratio:3/4;max-width:260px;margin:12px auto;background:linear-gradient(180deg,#2d5a27 0%,#3a7d32 30%,#4a9c3f 60%,#3a7d32 90%,#2d5a27 100%);border-radius:12px;border:3px solid #fff;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.4)}
+.formation-pitch::before{content:'';position:absolute;top:50%;left:5%;right:5%;height:2px;background:rgba(255,255,255,0.6);z-index:1}
+.pitch-center-circle{position:absolute;top:50%;left:50%;width:60px;height:60px;border:2px solid rgba(255,255,255,0.5);border-radius:50%;transform:translate(-50%,-50%);z-index:1}
+.pitch-center-dot{position:absolute;top:50%;left:50%;width:6px;height:6px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);z-index:2}
+.pitch-penalty-top{position:absolute;top:12%;left:50%;width:50px;height:30px;border:2px solid rgba(255,255,255,0.5);border-radius:0 0 4px 4px;transform:translate(-50%,0);z-index:1}
+.pitch-penalty-bot{position:absolute;bottom:12%;left:50%;width:50px;height:30px;border:2px solid rgba(255,255,255,0.5);border-radius:4px 4px 0 0;transform:translate(-50%,0);z-index:1}
+.player-dot{position:absolute;width:18px;height:18px;background:var(--surface);border:2px solid var(--gold);border-radius:50%;transform:translate(-50%,-50%);z-index:3;display:flex;align-items:center;justify-content:center;font-size:0.55rem;color:var(--gold-light);font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.4)}
+.player-dot.goalkeeper{border-color:#e74c3c;color:#e74c3c}
+.player-dot.defender{border-color:#5b9bd5;color:#5b9bd5}
+.player-dot.midfielder{border-color:#35a868;color:#35a868}
+.player-dot.forward{border-color:#f0d070;color:#f0d070}
+.formation-label{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:0.65rem;font-weight:700;color:#fff;background:rgba(0,0,0,0.5);padding:2px 8px;border-radius:4px;z-index:4;letter-spacing:1px}
+.footer-note{text-align:center;padding:20px;color:var(--text-secondary);font-size:0.75rem;letter-spacing:0.5px}
+@media(max-width:768px){.groups-grid{grid-template-columns:1fr}.toolbar{flex-direction:column;align-items:stretch}.toolbar-left{flex-direction:column}.search-input{width:100%}.match-item{flex-wrap:wrap;gap:5px}.team-block{min-width:90px}.modal-box.prob-modal{max-width:95vw;padding:12px}.modal-box.analysis-modal{max-width:95vw;padding:12px}.prob-matrix{font-size:0.6rem}.prob-matrix th,.prob-matrix td{padding:4px 2px}}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+/* ========== Refined Match Detail V1b ========== */
+.analysis-hero-refined{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;padding:0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.team-card-refined{background:rgba(255,255,255,0.02);border-radius:10px;padding:12px;position:relative;text-align:center;transition:all .2s}
+.team-card-refined .card-stripe{position:absolute;top:0;left:0;width:100%;height:2px;border-radius:2px 2px 0 0}
+.team-card-refined.home .card-stripe{background:linear-gradient(90deg,#009b3a,#fedf00)}
+.team-card-refined.away .card-stripe{background:linear-gradient(90deg,#000,#dd0000,#ffcc00)}
+.flag-lg{width:48px;height:32px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.5);margin-top:8px}
+.team-name-lg{font-size:1.1rem;font-weight:700;color:#fff;margin:4px 0 0}
+.team-code-sm{font-size:0.65rem;color:#777;font-weight:500}
+.data-pill{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:6px;font-size:0.7rem;font-weight:600;background:#1e1e28;border:1px solid #2a2a36;color:#ccc;white-space:nowrap}
+.data-pill.gold{background:rgba(212,160,32,0.12);border:1px solid rgba(212,160,32,0.3);color:#f0d070}
+.data-pill.em{font-weight:700}
+.coach-mini{display:flex;align-items:center;gap:6px;padding:5px 8px;font-size:0.68rem;color:#ccc;justify-content:center}
+.coach-dot{width:28px;height:28px;border-radius:50%;background:#1a1a24;display:flex;align-items:center;justify-content:center;font-size:0.9rem;border:1.5px solid #d4a020;flex-shrink:0}
+.pl-row{display:flex;align-items:center;gap:5px;padding:3px 6px;font-size:0.65rem;border-radius:3px;text-align:left}.pl-row:hover{background:rgba(255,255,255,0.03)}
+.pl-row:hover{background:rgba(255,255,255,0.03)}
+.pl-num{width:15px;text-align:center;font-weight:700;color:#d4a020;font-size:0.65rem;flex-shrink:0}
+.pl-name{font-weight:600;color:#ddd;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-val{color:#d4a020;font-weight:600;font-size:0.6rem;white-space:nowrap}
+.btn-squad-gold{display:flex;align-items:center;justify-content:center;position:relative;padding:6px 14px;border-radius:6px;font-size:0.72rem;font-weight:600;cursor:pointer;background:linear-gradient(135deg,#d4a020,#e8c840);color:#111;border:none;white-space:nowrap;transition:all .2s;text-decoration:none}
+.btn-squad-gold:hover{filter:brightness(1.1)}
+
+/* ===== 完整阵容按钮流光效果 ===== */
+.btn-squad-gold.btn-shimmer-active {
+    position: relative;
+    overflow: hidden;
+    pointer-events: none; /* 防止流光期间重复点击 */
+}
+.btn-squad-gold.btn-shimmer-active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255,255,255,0.15) 15%,
+        rgba(255,255,255,0.35) 35%,
+        rgba(255,255,255,0.5) 50%,
+        rgba(255,255,255,0.35) 65%,
+        rgba(255,255,255,0.15) 85%,
+        transparent 100%);
+    animation: btnShimmerSweep 1s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+@keyframes btnShimmerSweep {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.vs-center-refined{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 4px}
+.vs-badge-refined{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;font-weight:800;font-size:0.78rem;background:linear-gradient(135deg,#2a2210,#3a2e15);border:2px solid #d4a020;color:#f0d070;flex-shrink:0}
+.vs-info{font-size:0.6rem;color:#777;margin-top:6px}
+.vs-date-info{display:inline-block;font-size:0.6rem;color:#d4a020;font-weight:600;margin-top:2px}
+.vs-time-info{font-size:0.6rem;color:#777;margin-top:2px}
+.fm-dual-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:4px 16px 12px}
+.fm-section-header{text-align:center;font-size:0.7rem;font-weight:700;color:#aaa;margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase}
+.fm-section-header.gold{color:#d4a020;padding:10px 16px 0}
+
+/* === Refined Team Card === */
+.team-card{background:rgba(255,255,255,0.02);border-radius:10px;padding:12px;position:relative;transition:all .2s;text-align:center}
+.team-card .card-stripe{position:absolute;top:0;left:0;width:100%;height:2px;border-radius:2px 2px 0 0}
+.team-card.home .card-stripe{background:linear-gradient(90deg,#009b3a,#fedf00)}
+.team-card.away .card-stripe{background:linear-gradient(90deg,#000,#dd0000,#ffcc00)}
+.flag-sm{width:24px;height:16px;border-radius:2px;vertical-align:middle;margin-right:3px}
+.h2h-badge{font-size:0.55rem;padding:1px 5px;border-radius:3px;font-weight:700;white-space:nowrap}
+.h2h-badge.exp{background:#2ecc71;color:#fff}
+.h2h-badge.ups{background:#e74c3c;color:#fff}
+.h2h-badge.abv{background:#f39c12;color:#111}
+.info-badge{display:inline-block;font-size:0.6rem;color:#d4a020;font-weight:600;margin-top:2px}
+.info-time{font-size:0.6rem;color:#777;margin-top:2px}
+.fm-pitch{position:relative;width:100%;aspect-ratio:3/4;max-width:160px;margin:6px auto;background:linear-gradient(180deg,#2d5a27 0%,#3a7d32 30%,#4a9c3f 60%,#3a7d32 90%,#2d5a27 100%);border-radius:8px;border:2px solid rgba(255,255,255,0.25);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+.fm-dot{position:absolute;width:14px;height:14px;background:#1a1a22;border:2px solid #d4a020;border-radius:50%;transform:translate(-50%,-50%);z-index:3;display:flex;align-items:center;justify-content:center;font-size:0.45rem;color:#f0d070;font-weight:700}
+.fm-dot.gk{border-color:#e74c3c;color:#e74c3c}
+.fm-dot.df{border-color:#5b9bd5;color:#5b9bd5}
+.fm-dot.mf{border-color:#35a868;color:#35a868}
+.fm-dot.fw{border-color:#f0d070;color:#f0d070}
+.fm-label{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:0.58rem;color:rgba(255,255,255,0.85);font-weight:700;background:rgba(0,0,0,0.5);padding:1px 8px;border-radius:3px;z-index:5}
+.fm-center-circle{position:absolute;width:35%;aspect-ratio:1;border:1.5px solid rgba(255,255,255,0.2);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.fm-center-dot{position:absolute;width:5px;height:5px;background:#fff;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2}
+.fm-penalty-area{position:absolute;width:40px;height:24px;border:1.5px solid rgba(255,255,255,0.35);z-index:1}
+.fm-penalty-top{top:8%;left:50%;transform:translateX(-50%);border-radius:0 0 3px 3px}
+.fm-penalty-bot{bottom:8%;left:50%;transform:translateX(-50%);border-radius:3px 3px 0 0}
+.pitch-annotation{display:flex;justify-content:space-between;font-size:0.5rem;color:rgba(255,255,255,0.3);padding:0 8px;margin-top:-4px;margin-bottom:8px}
+.h2h-table-refined{width:100%;border-collapse:collapse;font-size:0.65rem}
+.h2h-table-refined td{padding:6px 10px;vertical-align:middle}
+.h2h-table-refined .td-date{width:70px;color:#777}
+.h2h-table-refined .td-home{text-align:right;font-weight:600;color:#ddd}
+.h2h-table-refined .td-score{text-align:center;font-weight:800;color:#f0d070;font-size:0.72rem;width:50px}
+.h2h-table-refined .td-away{text-align:left;font-weight:600;color:#ddd}
+.h2h-table-refined .td-tag{text-align:right;width:52px}
+.src-footer{padding:7px 14px;font-size:0.58rem;color:#444;text-align:right;border-top:1px solid rgba(255,255,255,0.04)}
+@media(max-width:768px){.analysis-hero-refined{grid-template-columns:1fr;gap:12px}.fm-dual-row{grid-template-columns:1fr}}
+/* ========== 策略回测弹窗样式 ========== */
+.backtest-modal{max-width:1100px!important;width:95%;max-height:88vh}
+.backtest-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+.backtest-summary-card{background:var(--surface2);border-radius:10px;padding:18px 16px;text-align:center;border:1px solid var(--border);transition:all 0.2s}
+.backtest-summary-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.backtest-summary-card .card-label{font-size:0.72rem;color:var(--text-secondary);margin-bottom:6px;letter-spacing:1px}
+.backtest-summary-card .card-value{font-size:1.6rem;font-weight:800;margin-bottom:4px}
+.backtest-summary-card .card-sub{font-size:0.68rem;color:var(--text-secondary)}
+.backtest-summary-card .card-badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:0.65rem;font-weight:700;margin-top:4px}
+.backtest-positive{color:#2ecc71!important}
+.backtest-negative{color:#e74c3c!important}
+.backtest-neutral{color:#f39c12!important}
+.backtest-table{width:100%;border-collapse:collapse;font-size:0.75rem;margin:12px 0}
+.backtest-table th{background:var(--surface2);color:var(--gold-light);padding:10px 8px;text-align:center;border:1px solid var(--border);font-size:0.7rem;position:sticky;top:0;z-index:1}
+.backtest-table td{padding:9px 8px;text-align:center;border:1px solid rgba(255,255,255,0.06);font-size:0.73rem}
+.backtest-table tr:hover td{background:rgba(212,168,67,0.06)}
+.backtest-table .highlight-row{background:rgba(46,139,87,0.08)}
+.backtest-section-title{font-size:0.85rem;color:var(--gold-light);font-weight:700;margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border);letter-spacing:1px}
+.backtest-insight{background:rgba(212,168,67,0.06);border-left:3px solid var(--gold);padding:10px 16px;border-radius:0 6px 6px 0;font-size:0.72rem;color:var(--text-secondary);margin:10px 0;line-height:1.6}
+.backtest-insight strong{color:var(--gold-light)}
+.backtest-bar-wrap{display:inline-block;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;min-width:60px;vertical-align:middle;margin-left:6px;overflow:hidden}
+.backtest-bar-fill{height:100%;border-radius:3px;transition:width 0.5s}
+.backtest-bar-green{background:#2ecc71}
+.backtest-bar-red{background:#e74c3c}
+.backtest-bar-orange{background:#f39c12}
+.backtest-detail-table{width:100%;border-collapse:collapse;font-size:0.73rem;margin:8px 0}
+.backtest-detail-table th{background:var(--surface2);color:var(--gold-light);padding:9px 8px;text-align:center;border:1px solid var(--border);font-size:0.68rem;position:sticky;top:0;z-index:1;white-space:nowrap}
+.backtest-detail-table td{padding:8px;text-align:center;border:1px solid rgba(255,255,255,0.06);font-size:0.7rem;vertical-align:middle}
+.backtest-detail-table tr:hover td{background:rgba(212,168,67,0.06)}
+.backtest-detail-table .col-stage{text-align:center;font-weight:700;color:var(--gold-light);white-space:nowrap}
+.backtest-detail-table .col-pnl{text-align:center;font-weight:700;white-space:nowrap}
+.backtest-legend{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0;font-size:0.68rem;color:var(--text-secondary)}
+.backtest-legend span{display:flex;align-items:center;gap:4px}
+.backtest-legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.backtest-pk-toggle{cursor:pointer;color:var(--gold-light);font-size:0.55rem;margin-left:2px;text-decoration:underline;text-underline-offset:2px;user-select:none}
+.backtest-pk-toggle:hover{color:#f0d070}
+.past-pk-toggle{cursor:pointer;color:var(--gold-light);font-size:0.55rem;display:block;text-decoration:underline;text-underline-offset:2px;user-select:none;margin-top:1px}
+.past-pk-toggle:hover{color:#f0d070}
+.past-score-display{font-weight:800;font-size:0.92rem;color:var(--gold-light)}
+@media(max-width:700px){.backtest-summary-grid{grid-template-columns:1fr}}
+
+
+/* ========== 往届世界杯弹窗样式 (V13 增强版) ========== */
+.past-wc-modal{max-width:1100px!important;width:95%;max-height:85vh}
+.past-wc-tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:8px}
+.past-wc-tab{padding:7px 16px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:600;background:var(--surface);color:var(--text-secondary);transition:all 0.2s}
+.past-wc-tab.active{background:var(--gold);color:#111;border-color:var(--gold)}
+.past-wc-tab:hover{border-color:var(--gold);color:var(--gold-light)}
+.past-wc-subtabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.past-wc-subtab{padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;background:var(--surface2);color:var(--text-secondary);border:1px solid transparent;transition:all 0.15s}
+.past-wc-subtab.active{background:var(--highlight);color:var(--gold-light);border-color:var(--gold)}
+
+/* V13: Grid 7列对齐格式 */
+.past-match-card{background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:6px;border-left:4px solid transparent;transition:all 0.2s;cursor:pointer}
+.past-match-card:hover{border-color:var(--border);background:var(--surface)}
+/* 三档分类边框色 */
+.past-match-card.result-expected{border-left-color:#2ecc71!important;background:rgba(46,204,113,0.06)}
+.past-match-card.result-above{border-left-color:#f39c12!important;background:rgba(243,156,18,0.06)}
+.past-match-card.result-upset{border-left-color:#e74c3c!important;background:rgba(231,76,60,0.06)}
+
+/* V13: 7列Grid行 */
+.past-match-row{display:grid;grid-template-columns:50px 1fr 80px 1fr 55px 150px 100px 110px;align-items:center;gap:8px;font-size:0.78rem}
+.past-score-real{font-weight:800;font-size:0.92rem;color:var(--gold-light);text-align:center;background:rgba(212,168,67,0.12);border-radius:4px;padding:4px 12px;letter-spacing:2px;min-width:70px;cursor:pointer}
+.past-odds-mini{font-size:0.62rem;color:var(--text-secondary);display:flex;gap:8px;justify-content:center;flex-wrap:wrap;text-align:center}
+.past-odds-mini span{background:var(--surface);padding:2px 6px;border-radius:3px;text-align:center;min-width:42px}
+.past-team-mini{display:flex;align-items:center;gap:4px;font-size:0.72rem}.past-team-mini.home{justify-content:flex-end;text-align:right}.past-team-mini.away{justify-content:flex-start;text-align:left}
+.past-team-mini img{width:22px;height:14px;border-radius:2px;flex-shrink:0}
+/* V20: 往届球队完整格式（与2026统一） */
+.past-team-full{display:flex;align-items:center;gap:6px;font-size:0.78rem}
+.past-team-full.home{justify-content:flex-end;text-align:right}
+.past-team-full.away{justify-content:flex-start;text-align:left}
+.past-team-full img{width:28px;height:19px;border-radius:3px;object-fit:cover;box-shadow:0 1px 3px rgba(0,0,0,0.4);flex-shrink:0}
+.past-team-fname{font-size:0.82rem;font-weight:600;color:var(--text);line-height:1.2}
+.past-team-fcode{font-size:0.62rem;color:var(--text-secondary);letter-spacing:0.5px;line-height:1.2}
+.past-team-finfo{display:flex;flex-direction:column;line-height:1.2}
+.past-stage-badge{font-size:0.6rem;background:var(--surface);padding:2px 6px;border-radius:3px;color:var(--text-secondary);text-align:center}
+.past-venue{font-size:0.62rem;color:var(--text-secondary);text-align:center}.past-date{font-size:0.62rem;color:var(--text-secondary);text-align:center;white-space:nowrap}
+.past-group-header-mini{font-weight:700;color:var(--gold-light);font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border);margin-bottom:6px}
+.past-search-input{padding:6px 10px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:0.78rem;width:180px;outline:none}
+.past-search-input:focus{border-color:var(--gold)}
+.past-wc-info{font-size:0.7rem;color:var(--text-secondary);margin-bottom:8px}
+
+/* V13: 三档徽章 */
+.past-expected-badge{background:#2ecc71;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:3px;font-weight:700;white-space:nowrap}
+.past-above-badge{background:#f39c12;color:#111;font-size:0.6rem;padding:1px 6px;border-radius:3px;font-weight:700;white-space:nowrap}
+.past-upset-badge{background:#e74c3c;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:3px;font-weight:700;white-space:nowrap}
+
+.btn-past{background:#8e44ad;border-color:#8e44ad;color:#fff;font-size:0.78rem;padding:8px 14px}
+
+.btn-compare{background:var(--orange);border-color:var(--orange);color:#fff;font-size:0.7rem;padding:5px 10px;border-radius:6px;cursor:pointer;font-weight:600;transition:all 0.2s;margin-right:6px}
+.btn-compare:hover{background:var(--orange-light);border-color:var(--orange-light);color:#fff}
+.btn-past:hover{background:#9b59b6;border-color:#9b59b6;color:#fff}
+
+/* V13: H2H交手记录样式 */
+.h2h-section{margin-top:16px;padding-top:12px;border-top:1px solid var(--border)}
+.h2h-title{font-size:0.8rem;color:var(--gold-light);font-weight:700;margin-bottom:8px}
+.h2h-card{background:var(--surface);border-radius:6px;padding:8px 12px;margin-bottom:4px;border-left:4px solid transparent;font-size:0.7rem;display:grid;grid-template-columns:55px 120px 60px 120px 60px;align-items:center;gap:8px}
+.h2h-card.result-expected{border-left-color:#2ecc71}
+.h2h-card.result-above{border-left-color:#f39c12}
+.h2h-card.result-upset{border-left-color:#e74c3c}
+.h2h-no-data{font-size:0.72rem;color:var(--text-secondary);padding:8px 0}
+
+
+@media(max-width:700px){.backtest-summary-grid{grid-template-columns:1fr}}
+/* 响应式 */
+@media(max-width:900px){.past-match-row{grid-template-columns:45px 1fr 70px 1fr 50px 130px 90px 100px;gap:4px;font-size:0.7rem}}
+@media(max-width:700px){.past-match-row{grid-template-columns:1fr;gap:4px;text-align:center}}
+
+/* ========== WC Edition Selector (V16) ========== */
+.wc-edition-bar{display:flex;align-items:center;gap:6px;padding:12px 18px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:14px;flex-wrap:wrap;overflow-x:auto}
+.wc-edition-bar .edition-label{font-size:0.75rem;color:var(--text-secondary);white-space:nowrap;margin-right:8px;font-weight:700;letter-spacing:1px}
+.wc-edition-tab{padding:8px 16px;border-radius:20px;cursor:pointer;font-size:0.78rem;font-weight:600;white-space:nowrap;transition:all 0.2s;background:var(--surface2);color:var(--text-secondary);border:2px solid transparent;letter-spacing:0.5px;user-select:none}
+.wc-edition-tab:hover{border-color:var(--gold);color:var(--gold-light);transform:translateY(-1px)}
+@keyframes neonPulseWcTab{0%,100%{box-shadow:0 0 5px rgba(240,208,112,0.3),0 0 12px rgba(240,208,112,0.15),0 0 25px rgba(200,162,72,0.08)}50%{box-shadow:0 0 10px rgba(240,208,112,0.55),0 0 22px rgba(240,208,112,0.3),0 0 40px rgba(200,162,72,0.18),0 0 55px rgba(180,140,60,0.06)}}
+.wc-edition-tab.active{animation:neonPulseWcTab 2.4s ease-in-out infinite;background:linear-gradient(135deg,#b8862d,#d4a843);color:#111;border-color:#d4a843;font-weight:800;box-shadow:0 4px 16px rgba(212,168,67,0.3)}
+.wc-edition-tab.past-edition{background:var(--surface);border:1px solid var(--border)}
+.wc-edition-tab.past-edition.active{background:linear-gradient(135deg,#b8862d,#d4a843);color:#111;border-color:#d4a843;box-shadow:0 4px 16px rgba(212,168,67,0.3)}
+
+/* Past WC Main Content */
+.past-wc-main-container{display:none;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:16px;box-shadow:var(--shadow)}
+.past-wc-main-container.visible{display:block}
+.past-wc-main-toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.past-wc-main-info{font-size:0.75rem;color:var(--text-secondary);margin-bottom:10px;padding:8px 12px;background:var(--surface2);border-radius:6px;border-left:3px solid var(--gold)}
+
+/* PK toggle in past matches */
+.past-score-clickable{cursor:pointer;position:relative}
+.past-score-clickable:hover .past-score-display{color:#f0d070}
+.past-pk-detail{display:none;font-size:0.58rem;color:#e74c3c;margin-top:2px;font-weight:600}
+.past-pk-detail.show{display:block}
+
+/* Backtest modal additional */
+.backtest-modal .stage-summary-cards{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0}
+.backtest-modal .stage-summary-cards .ssc{flex:1;min-width:130px;background:var(--surface);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border)}
+.backtest-modal .ssc .ssc-val{font-size:1.3rem;font-weight:800}
+.backtest-modal .ssc .ssc-lbl{font-size:0.65rem;color:var(--text-secondary);margin-top:2px}
+
+
+.match-detail-modal{max-width:750px!important;width:95%;max-height:88vh}
+.match-detail-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;margin-bottom:16px}
+.team-block-detail{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;text-align:center}
+.team-block-detail img{width:48px;height:32px;border-radius:4px;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.team-block-detail .tname{font-size:0.95rem;font-weight:700;color:var(--text)}
+.team-block-detail .tcode{font-size:0.62rem;color:var(--text-secondary);letter-spacing:1px}
+.match-detail-score-big{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.match-detail-score-big .score-num{font-size:2rem;font-weight:800;color:var(--gold-light);min-width:36px;text-align:center}
+.match-detail-score-big .score-divider{font-size:1.3rem;color:var(--text-secondary)}
+.match-detail-info-bar{display:flex;flex-wrap:wrap;gap:10px;padding:8px 12px;background:var(--surface2);border-radius:8px;margin-bottom:14px;font-size:0.7rem;color:var(--text-secondary)}
+.match-detail-info-bar span{display:flex;align-items:center;gap:3px}
+.ko-stage-marker{background:var(--gold);color:#111;padding:2px 10px;border-radius:4px;font-weight:700;font-size:0.68rem}
+.detail-section{margin-bottom:14px}
+.detail-section-title{font-size:0.8rem;font-weight:700;color:var(--gold-light);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);letter-spacing:1px}
+.detail-no-data{padding:20px;text-align:center;color:var(--text-secondary);font-size:0.78rem;background:var(--surface2);border-radius:8px;line-height:1.6}
+.goal-timeline{position:relative;padding-left:24px}
+.goal-timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--border);border-radius:1px}
+.goal-event{display:flex;align-items:center;gap:10px;padding:6px 10px;margin-bottom:5px;background:var(--surface2);border-radius:6px;position:relative;font-size:0.76rem}
+.goal-event::before{content:'';position:absolute;left:-20px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--surface);z-index:1}
+.goal-event.goal-home::before{background:#87ceeb}
+.goal-event.goal-away::before{background:#e74c3c}
+.goal-min{font-weight:700;color:var(--gold-light);min-width:45px;font-size:0.7rem}
+.goal-scorer{font-weight:600;color:var(--text);flex:1}
+.goal-type{padding:2px 8px;border-radius:10px;font-size:0.63rem;font-weight:700;white-space:nowrap}
+.goal-type.penalty{background:rgba(255,215,0,0.2);color:#ffd700}
+.goal-type.header{background:rgba(135,206,235,0.2);color:#87ceeb}
+.goal-type.free_kick{background:rgba(186,85,211,0.2);color:#ba55d3}
+.goal-type.own_goal{background:rgba(231,76,60,0.2);color:#e74c3c}
+.goal-type.shot{background:rgba(46,204,113,0.2);color:#2ecc71}
+.cards-row{display:flex;gap:14px}
+.cards-box{flex:1;background:var(--surface2);border-radius:8px;padding:12px;text-align:center}
+.cards-count{font-size:1.5rem;font-weight:800}
+.cards-count.cards-yellow{color:#f0d070}
+.cards-count.cards-red{color:#e74c3c}
+.cards-label{font-size:0.62rem;color:var(--text-secondary);margin-top:2px}
+.detail-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.detail-stat-item{background:var(--surface2);border-radius:8px;padding:12px;text-align:center}
+.detail-stat-item .stat-val{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.detail-stat-item .stat-lbl{font-size:0.62rem;color:var(--text-secondary)}
+/* ========== 数据总览弹窗样式 ========== */
+.data-overview-modal{max-width:1100px!important;width:95%;max-height:88vh}
+.overview-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
+.overview-stat-card{background:var(--surface2);border-radius:8px;padding:14px 12px;text-align:center;border:1px solid var(--border)}
+.overview-stat-card .stat-num{font-size:1.4rem;font-weight:800;color:var(--gold-light)}
+.overview-stat-card .stat-lbl{font-size:0.65rem;color:var(--text-secondary);margin-top:2px}
+.overview-bar-chart{display:flex;flex-direction:column;gap:2px;padding:4px 0;margin:8px 0;width:100%}
+.overview-bar-row{display:flex;align-items:center;gap:4px;width:100%}
+.overview-bar-label{font-size:0.55rem;color:var(--text-secondary);min-width:42px;text-align:right;flex-shrink:0}
+.overview-bar-track{flex:1;height:14px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden;min-width:40px}
+.overview-bar-fill{height:100%;border-radius:2px;min-width:2px;transition:width 0.3s}
+.overview-bar-val{font-size:0.5rem;color:var(--gold-light);min-width:22px;text-align:left;flex-shrink:0}
+.overview-goal-bar{background:linear-gradient(90deg,#87ceeb,#5b9bd5)}
+.overview-yellow-bar{background:linear-gradient(90deg,#f0d070,#d4a843)}
+.overview-red-bar{background:linear-gradient(90deg,#e74c3c,#c0392b)}
+.scorer-table{width:100%;border-collapse:collapse;font-size:0.73rem;margin:8px 0}
+.scorer-table th{background:var(--surface2);color:var(--gold-light);padding:8px;text-align:center;border:1px solid var(--border);font-size:0.65rem}
+.scorer-table td{padding:7px 8px;text-align:center;border:1px solid rgba(255,255,255,0.06);font-size:0.7rem}
+.scorer-table .rank-gold{color:#f0d070;font-weight:800}
+.scorer-table .rank-silver{color:#c0c0c0;font-weight:700}
+.scorer-table .rank-bronze{color:#cd7f32;font-weight:700}
+.overview-tab-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.overview-tab-btn{padding:5px 14px;border-radius:16px;cursor:pointer;font-size:0.7rem;font-weight:600;background:var(--surface);color:var(--text-secondary);border:1px solid var(--border);transition:all 0.15s}
+.overview-tab-btn.active{background:var(--gold);color:#111;border-color:var(--gold)}
+.overview-tab-btn:hover{border-color:var(--gold);color:var(--gold-light)}
+
+/* ========== 球员详情弹窗样式 (V24) ========== */
+.player-detail-modal{max-width:900px!important;width:95%;max-height:88vh}
+.player-detail-header-card{display:flex;gap:16px;align-items:flex-start;padding:16px;background:var(--surface2);border-radius:12px;margin-bottom:16px;border:1px solid var(--border);flex-wrap:wrap}
+.player-detail-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#b8862d);display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:800;color:#111;flex-shrink:0;border:3px solid var(--gold-light);box-shadow:0 4px 16px rgba(212,168,67,0.3);overflow:hidden;position:relative}.player-detail-avatar img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
+.player-detail-info{flex:1;min-width:200px}
+.player-detail-info .pd-name{font-size:1.2rem;font-weight:800;color:var(--gold-light);margin-bottom:4px}
+.player-detail-info .pd-native{font-size:0.82rem;color:var(--text-secondary);margin-bottom:2px}
+.player-detail-info .pd-nickname{font-size:0.75rem;color:#f0d070;font-style:italic;margin-bottom:6px}
+.player-detail-info .pd-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:0.72rem;color:var(--text-secondary)}
+.player-detail-info .pd-meta span{background:var(--surface);padding:3px 10px;border-radius:12px;white-space:nowrap}
+.player-detail-tabs-row{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:8px}
+.player-detail-tab{padding:7px 16px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:600;background:var(--surface);color:var(--text-secondary);transition:all 0.2s;user-select:none}
+.player-detail-tab.active{background:var(--gold);color:#111;border-color:var(--gold)}
+.player-detail-tab:hover{border-color:var(--gold);color:var(--gold-light)}
+.player-detail-tab-content{display:none}
+.player-detail-tab-content.active{display:block}
+.pd-career-table{width:100%;border-collapse:collapse;font-size:0.73rem;margin:8px 0}
+.pd-career-table th{background:var(--surface2);color:var(--gold-light);padding:8px 6px;text-align:center;border:1px solid var(--border);font-size:0.65rem}
+.pd-career-table td{padding:7px 6px;text-align:center;border:1px solid rgba(255,255,255,0.06);font-size:0.7rem}
+.pd-career-table .pd-nt-row{background:rgba(212,168,67,0.08)}
+.pd-career-table tr:hover td{background:rgba(212,168,67,0.06)}
+.pd-award-list{list-style:none;padding:0;margin:0}
+.pd-award-list li{padding:7px 10px;margin-bottom:3px;background:var(--surface2);border-radius:6px;font-size:0.73rem;display:flex;align-items:center;gap:8px}
+.pd-award-list li:before{content:'🏆';font-size:0.85rem}
+.pd-injury-list{list-style:none;padding:0;margin:0}
+.pd-injury-list li{padding:7px 10px;margin-bottom:3px;background:var(--surface2);border-radius:6px;font-size:0.73rem;display:flex;align-items:center;gap:8px}
+.pd-injury-list li:before{content:'🏥';font-size:0.85rem}
+/* ========== 球员搜索下拉 & 工具栏 (V24) ========== */
+.search-row-toolbar{position:relative;z-index:50;}
+.player-search-dropdown{position:absolute;top:100%;left:0;width:100%;min-width:260px;max-height:280px;overflow-y:auto;background:var(--surface);border:1px solid var(--gold);border-radius:0 0 8px 8px;box-shadow:0 8px 24px rgba(0,0,0,0.6);z-index:999;display:none;margin-top:2px;}
+.psd-item{padding:9px 14px;cursor:pointer;font-size:0.78rem;color:var(--text);border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.15s;}
+.psd-item:hover{background:var(--highlight);color:var(--gold-light);}
+.psd-item:last-child{border-bottom:none;}
+.psd-no-match{padding:12px 14px;font-size:0.73rem;color:var(--text-secondary);text-align:center;cursor:default;}
+.psd-no-match:hover{background:transparent;color:var(--text-secondary);}
+
+.pd-no-data{text-align:center;padding:20px;color:var(--text-secondary);font-size:0.78rem}
+.player-clickable{cursor:pointer;color:var(--gold-light);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(212,168,67,0.3);transition:all 0.15s}
+.player-clickable:hover{color:#f0d070;text-decoration-color:#f0d070}
+
+
+/* ========== V24: 搜索行样式 ========== */
+.search-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 18px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:12px}
+.search-row .search-label{font-size:0.72rem;color:var(--text-secondary);white-space:nowrap}
+
+/* ========== V24: 球员详情弹窗样式 ========== */
+.player-clickable{cursor:pointer;color:var(--gold-light);font-weight:600;text-decoration:underline;text-underline-offset:3px;transition:all 0.15s}
+.player-clickable:hover{color:#f0d070;text-decoration-thickness:2px}
+.player-detail-modal{max-width:1050px!important;width:95%;max-height:88vh;z-index:10000!important}
+.player-detail-header{display:flex;align-items:center;gap:20px;padding:16px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
+.player-avatar-large{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);box-shadow:0 4px 16px rgba(212,168,67,0.3);flex-shrink:0}
+.player-timeline-table{width:100%;border-collapse:collapse;font-size:0.73rem;margin:8px 0}
+.player-timeline-table th{background:var(--surface2);color:var(--gold-light);padding:8px 6px;text-align:center;border:1px solid var(--border);font-size:0.68rem}
+.player-timeline-table td{padding:8px 6px;text-align:center;border:1px solid rgba(255,255,255,0.06);font-size:0.7rem}
+.player-timeline-table .nt-row{background:rgba(212,168,67,0.1)}
+.player-timeline-table td:first-child{text-align:center;font-weight:600}
+.player-timeline-table td:nth-child(2){text-align:left}
+.player-award-item{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;margin-bottom:3px;background:var(--surface2);border-radius:6px;font-size:0.72rem;color:var(--text)}
+.player-award-item .award-icon{flex-shrink:0;width:20px;text-align:center}
+.player-injury-item{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;margin-bottom:3px;background:rgba(231,76,60,0.06);border-radius:6px;font-size:0.72rem;color:#e74c3c;border-left:2px solid rgba(231,76,60,0.3)}
+.player-injury-item .injury-icon{flex-shrink:0}
+.career-table{width:100%;border-collapse:collapse;font-size:0.73rem;margin:8px 0}
+.career-table th{background:var(--surface2);color:var(--gold-light);padding:8px 6px;text-align:center;border:1px solid var(--border);font-size:0.68rem}
+.career-table td{padding:8px 6px;text-align:center;border:1px solid rgba(255,255,255,0.06);font-size:0.7rem;vertical-align:middle}
+.career-table .nt-row{background:rgba(212,168,67,0.08)}
+.career-table td:nth-child(2){text-align:left;font-weight:600}
+
+/* ========== V24: section title for player detail ========== */
+.pd-section-title{font-size:0.8rem;font-weight:700;color:var(--gold-light);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);letter-spacing:1px}
+/* ========== 比赛统计数据 (V24) ========== */
+.detail-stats-table{width:100%;border-collapse:collapse;font-size:0.7rem;margin:8px 0;}
+.detail-stats-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.detail-stats-table .stat-label{color:var(--text-secondary);text-align:left;width:40%;}
+.detail-stats-table .stat-home{text-align:center;color:#5b9bd5;font-weight:700;width:20%;}
+.detail-stats-table .stat-away{text-align:center;color:#e74c3c;font-weight:700;width:20%;}
+.detail-stats-table .stat-bar-wrap{width:20%;text-align:center;}
+.detail-stats-bar{display:inline-block;height:4px;border-radius:2px;}
+.detail-stats-bar.home{background:#5b9bd5;}
+.detail-stats-bar.away{background:#e74c3c;}
+
+
+/* ===== League & Club Floating Button ===== */
+.league-club-float-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 20px; border-radius: 24px; cursor: pointer;
+    font-size: 0.78rem; font-weight: 700; white-space: nowrap;
+    background: linear-gradient(135deg, #1a3a4a, #2a5a7a);
+    color: #87ceeb; border: 1.5px solid #5b9bd5;
+    transition: all 0.25s; margin-left: auto; text-decoration: none;
+}
+.league-club-float-btn:hover {
+    background: linear-gradient(135deg, #2a5a7a, #3a6a9a);
+    color: #fff; border-color: #87ceeb;
+    transform: translateY(-1px); box-shadow: 0 4px 15px rgba(91,155,213,0.4);
+}
+
+		/* ===== Welcome Overlay ===== */
+		#welcomeOverlay {
+		  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+		  background: linear-gradient(135deg, #0a0e17 0%, #141b2d 40%, #1a1f2e 100%);
+		  z-index: 10000;
+		  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+		  font-family: 'Arial Black', 'Impact', 'Segoe UI Black', sans-serif;
+		}
+		#welcomeOverlay.welcome-hide {
+		  transform: translateY(-100%); opacity: 0; pointer-events: none;
+		}
+		.welcome-title-group {
+		  position: absolute; top: 24%; left: 50%;
+		  transform: translate(-50%, -50%);
+		  display: flex; flex-direction: column; align-items: center;
+		}
+		.welcome-logo {
+		  font-size: 3.5rem; margin-bottom: 12px; animation: welcomePulse 2s infinite;
+		}
+		@keyframes welcomePulse {
+		  0%, 100% { transform: scale(1); opacity: 0.8; }
+		  50% { transform: scale(1.08); opacity: 1; }
+		}
+		.welcome-title {
+		  font-size: 2rem; font-weight: 700; color: #e0e8f0;
+		  letter-spacing: 2px; margin-bottom: 0;
+		}
+		.welcome-progress-group {
+		  position: absolute; top: 50%; left: 50%;
+		  transform: translate(-50%, -50%);
+		  display: flex; flex-direction: column; align-items: center;
+		  transition: opacity 0.35s ease;
+		}
+		.welcome-progress-container {
+		  width: 480px; max-width: 64vw; height: 4px;
+		  background: rgba(255,255,255,0.06); border-radius: 10px;
+		  overflow: visible; margin-bottom: 18px;
+		  position: relative;
+		  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+		}
+		.welcome-progress-bar {
+		  width: 0%; height: 100%; border-radius: 10px;
+		  background: linear-gradient(90deg, #d4a843 0%, #f0d070 50%, #e8c860 100%);
+		  transition: width 0.12s linear;
+		  position: relative;
+		  box-shadow: 0 0 12px rgba(212,168,67,0.35), 0 0 4px rgba(240,208,112,0.25);
+		}
+		.welcome-progress-bar::after {
+		  content: ''; position: absolute; right: 0; top: 50%;
+		  transform: translate(50%, -50%);
+		  width: 10px; height: 10px; border-radius: 50%;
+		  background: #f0d070;
+		  box-shadow: 0 0 10px rgba(240,208,112,0.6), 0 0 20px rgba(212,168,67,0.4);
+		  opacity: 0; transition: opacity 0.3s ease;
+		}
+		.welcome-progress-bar.has-glow::after { opacity: 1; }
+		.welcome-loading-text {
+		  font-size: 1.05rem; color: #a0b0c0; margin-bottom: 0;
+		  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', 'Menlo', monospace;
+		  letter-spacing: 2px; font-weight: 500;
+		  transition: opacity 0.3s ease;
+		  text-align: center;
+		}
+		.welcome-loading-percent {
+		  font-size: 1.8rem; font-weight: 700; color: #f0d070;
+		  font-family: 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', sans-serif;
+		  letter-spacing: 0; line-height: 1;
+		  display: block; margin-bottom: 18px;
+		  transition: color 0.3s ease;
+		}
+#welcomeChoicePanel {
+			  position: absolute; top: 56%; left: 50%;
+		  transform: translate(-50%, -50%);
+		  display: none; flex-direction: column; align-items: center; gap: 10px;
+		  opacity: 0; transition: opacity 0.4s ease;
+		}
+		#welcomeChoicePanel.choice-visible {
+		  opacity: 1;
+		}
+.welcome-choice-title {
+			  font-size: 1.0rem; font-weight: 700; color: #8899aa; margin-bottom: 18px;
+			  letter-spacing: 3px; text-transform: uppercase;
+		}
+.welcome-choice-subtitle {
+			  font-size: 2.4rem; font-weight: 700; color: #e0e8f0; margin-bottom: 0;
+			  font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif; letter-spacing: 4px;
+		}
+		.welcome-btn-row {
+		  display: flex; gap: 48px; flex-wrap: wrap; justify-content: center;
+		}
+		.welcome-btn {
+		  width: 300px; padding: 40px 28px; border-radius: 28px;
+		  border: 2px solid rgba(255,255,255,0.08);
+		  background: rgba(255,255,255,0.02);
+		  color: #d0d8e0; cursor: pointer; text-align: center;
+		  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+		  box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+		  position: relative; top: 0;
+		}
+		.welcome-btn::after {
+		  content: ''; position: absolute; top: 8px; left: 16px; right: 16px; bottom: -6px;
+		  background: rgba(0,0,0,0.18); border-radius: 28px; z-index: -1;
+		  filter: blur(10px); transition: all 0.3s ease;
+		}
+		.welcome-btn:hover {
+		  border-color: rgba(212,168,67,0.5);
+		  background: rgba(212,168,67,0.06);
+		  transform: translateY(-8px);
+		  box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.45);
+		}
+		.welcome-btn:hover::after {
+		  bottom: -14px; filter: blur(20px);
+		}
+		.welcome-btn-icon { font-size: 2.8rem; display: block; margin-bottom: 14px; }
+		.welcome-btn-label { font-size: 1.4rem; font-weight: 700; display: block; letter-spacing: 2px; }
+		.welcome-btn-sub { font-size: 0.85rem; color: #7a8a9a; display: block; margin-top: 8px; font-weight: bold; }
+
+
+/* ===== 阵容名单弹窗 V1.58 ===== */
+.squad-modal{max-width:1050px;width:95vw}
+.squad-modal .modal-box{max-height:85vh;overflow-y:auto}
+.squad-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.squad-header img{width:48px;height:48px;border-radius:4px;object-fit:contain}
+.squad-header h4{color:var(--gold-light);margin:0;font-size:1.2rem}
+.squad-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.squad-tab{padding:8px 18px;border-radius:20px;background:var(--surface2);color:var(--text-secondary);cursor:pointer;border:1px solid var(--border);font-size:0.85rem;transition:all 0.2s;white-space:nowrap}
+.squad-tab:hover,.squad-tab.active{background:var(--gold);color:#111;border-color:var(--gold);font-weight:700}
+.squad-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.squad-table th{background:var(--surface2);color:var(--gold-light);padding:10px 8px;text-align:left;position:sticky;top:0;z-index:2;font-weight:600;border-bottom:2px solid var(--gold)}
+.squad-table td{padding:9px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
+.squad-table tr:hover{background:rgba(212,168,67,0.06)}
+.squad-table .num{width:40px;text-align:center;color:var(--gold);font-weight:700;font-size:0.9rem}
+.squad-table .name-cell{cursor:pointer;transition:all 0.2s}
+.squad-table .name-cell:hover{color:var(--gold-light)}
+.squad-table .name-cell .cn{font-weight:600;color:var(--text-primary);font-size:0.88rem}
+.squad-table .name-cell .en{font-size:0.75rem;color:var(--text-secondary)}
+.squad-table .name-cell:hover .cn{color:var(--gold-light)}
+.squad-table .club{color:var(--text-secondary);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.squad-table .value{color:var(--gold-light);font-weight:600;white-space:nowrap}
+.squad-table .height{color:var(--text-secondary);text-align:center}
+.squad-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.7rem;font-weight:600}
+.badge-gk{background:rgba(255,180,50,0.2);color:#ffb432}
+.badge-df{background:rgba(80,160,255,0.2);color:#50a0ff}
+.badge-mf{background:rgba(80,220,140,0.2);color:#50dc8c}
+.badge-fw{background:rgba(255,90,90,0.2);color:#ff5a5a}
+.btn-squad{background:linear-gradient(135deg,var(--surface2),var(--surface));border:1px solid var(--gold);color:var(--gold-light);padding:10px 24px;border-radius:8px;cursor:pointer;font-weight:700;font-size:0.9rem;transition:all 0.3s;width:100%}
+.btn-squad:hover{background:linear-gradient(135deg,var(--gold),#b8860b);color:#111;transform:translateY(-1px);box-shadow:0 4px 16px rgba(212,168,67,0.3)}
+.player-detail-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}
+.player-detail-card{background:var(--surface);border:1px solid var(--gold);border-radius:16px;padding:28px;max-width:500px;width:90vw;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.player-detail-card .pd-close{position:absolute;top:12px;right:16px;font-size:1.4rem;color:var(--text-secondary);cursor:pointer}
+.player-detail-card .pd-close:hover{color:var(--accent2)}
+.player-detail-card .pd-header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.player-detail-card .pd-avatar{width:64px;height:64px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:2rem;border:2px solid var(--gold)}
+.player-detail-card .pd-name-cn{font-size:1.3rem;font-weight:700;color:var(--gold-light)}
+.player-detail-card .pd-name-en{font-size:0.85rem;color:var(--text-secondary)}
+.player-detail-card .pd-info{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.player-detail-card .pd-item{background:var(--surface2);padding:12px;border-radius:8px}
+.player-detail-card .pd-label{font-size:0.7rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.player-detail-card .pd-value{font-size:0.95rem;color:var(--text-primary);font-weight:600}
+
+/* ========== WORLD CUP BRACKET V9 — Plan C High Contrast Minimal ========== */
+#bracketOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #080c12;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+#bracketOverlay.active {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#bracketOverlay .bk-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 16px;
+  flex-shrink: 0;
+  background: #0d1520;
+  border-bottom: 2px solid #c8a248;
+}
+#bracketOverlay .bk-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#bracketOverlay .bk-header-trophy { font-size: 1.5rem; }
+#bracketOverlay .bk-header-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+#bracketOverlay .bk-header-subtitle {
+  font-size: 0.7rem;
+  color: #c8a248;
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+#bracketOverlay .bk-header-right { display: flex; gap: 6px; align-items: center; }
+
+#bracketOverlay .bk-btn {
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 2px solid #2a3a50;
+  background: #1a2434;
+  color: #c8d0d8;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-family: 'PingFang SC','Microsoft YaHei',sans-serif;
+  font-weight: 600;
+  transition: all 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+#bracketOverlay .bk-btn:hover {
+  background: #243044;
+  color: #ffffff;
+  border-color: #c8a248;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+}
+#bracketOverlay .bk-btn.gold {
+  background: #d4a843;
+  border-color: #d4a843;
+  color: #080c12;
+  font-weight: 700;
+}
+#bracketOverlay .bk-btn.gold:hover {
+  background: #e8b84f;
+  border-color: #e8b84f;
+  box-shadow: 0 0 16px rgba(200,162,72,0.3);
+}
+#bracketOverlay .bk-btn.danger:hover {
+  background: rgba(220,80,70,0.15);
+  border-color: rgba(220,80,70,0.4);
+  color: #e07068;
+}
+#bracketOverlay .bk-btn-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #2a3a50;
+  background: transparent;
+  color: #8899aa;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  margin-left: 8px;
+}
+#bracketOverlay .bk-btn-close:hover {
+  background: rgba(220,80,70,0.15);
+  border-color: rgba(220,80,70,0.4);
+  color: #e07068;
+}
+
+#bracketOverlay .bk-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 5px 14px;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1a2434;
+  background: #0a1018;
+  font-size: 0.65rem;
+  color: #8899aa;
+}
+#bracketOverlay .bk-progress-wrap { display: flex; align-items: center; gap: 7px; }
+#bracketOverlay .bk-progress-bar {
+  width: 120px;
+  height: 5px;
+  border-radius: 3px;
+  background: #1a2434;
+  overflow: hidden;
+}
+#bracketOverlay .bk-progress-fill {
+  height: 100%;
+  background: #d4a843;
+  border-radius: 3px;
+  box-shadow: 0 0 6px rgba(212,168,67,0.4);
+  transition: width 0.4s;
+}
+
+#bracketOverlay .bk-scene-wrap {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+  background-color: #080c12;
+  background-image:
+    radial-gradient(ellipse 65% 92% at 50% 50%, rgba(240,208,112,0.68) 0%, rgba(200,162,72,0.32) 32%, rgba(180,140,60,0.10) 58%, transparent 78%),
+    radial-gradient(circle 48% at 52% 48%, rgba(245,215,120,0.48) 0%, rgba(220,180,90,0.20) 40%, transparent 68%),
+    radial-gradient(circle 28% at 48% 50%, rgba(210,170,80,0.25) 0%, rgba(160,120,50,0.08) 50%, transparent 70%);
+}
+
+/* ── Footer strip (Plan D reference) ── */
+#bracketOverlay .bk-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  flex-shrink: 0;
+  border-top: 1px solid #1e2d42;
+  background: #0a1018;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #c8a248;
+  letter-spacing: 0.10em;
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+}
+
+/* ── Column glow layer ── */
+#bracketOverlay .bk-glow-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* 完全透明——光晕由 #bracketOverlay 的背景统一提供 */
+  background: none;
+}
+#bracketOverlay .bk-final-label {
+  position: absolute;
+  z-index: 0;
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: #d4a843;
+  letter-spacing: 0.10em;
+  text-align: center;
+  font-family: 'PingFang SC','Microsoft YaHei',sans-serif;
+  pointer-events: none;
+  text-shadow: 0 0 12px rgba(212,168,67,0.4);
+  white-space: nowrap;
+}
+#bracketOverlay .bk-final-label .bk-label-en {
+  display: block;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #8899aa;
+  letter-spacing: 0.15em;
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  margin-top: 2px;
+}
+#bracketOverlay .bk-final-label.third {
+  color: #c0b0d0;
+}
+#bracketOverlay .bk-final-label.third .bk-label-en {
+  color: #8a7a98;
+}
+#bracketOverlay .bk-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: transparent;
+}
+#bracketOverlay .bk-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+#bracketOverlay .bk-svg path {
+  fill: none;
+  stroke: #2a3a50;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#bracketOverlay .bk-svg path.conn-winner {
+  stroke: #c8a248;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 4px rgba(200,162,72,0.4));
+}
+#bracketOverlay .bk-svg line.divider-line {
+  stroke: #1e2d42;
+  stroke-width: 1.2;
+  stroke-dasharray: 4,4;
+}
+#bracketOverlay .bk-cards-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+#bracketOverlay .bk-col-header {
+  position: absolute;
+  z-index: 3;
+  font-size: 0.66rem;
+  font-weight: 800;
+  color: #c8a248;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  pointer-events: none;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 1;
+}
+#bracketOverlay .bk-col-header.gold {
+  color: #f0d070;
+  opacity: 1;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+#bracketOverlay .bk-card {
+  position: absolute;
+  width: 126px;
+  height: 38px;
+  border-radius: 3px;
+  background: #1a2434;
+  border: 2px solid #2a3a50;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px 0 10px;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  overflow: hidden;
+  z-index: 2;
+}
+#bracketOverlay .bk-card.final-card {
+  border-color: rgba(240,208,112,0.55);
+  box-shadow: 0 0 16px rgba(240,208,112,0.18);
+  background: #2a3420;
+}
+#bracketOverlay .bk-card.final-card.winner {
+  border-color: rgba(240,208,112,0.8);
+  box-shadow: 0 0 22px rgba(240,208,112,0.25);
+  background: #262014;
+}
+#bracketOverlay .bk-card.tp-card {
+  border-color: rgba(184,160,192,0.35);
+  box-shadow: 0 0 10px rgba(184,160,192,0.08);
+  background: #1e1c24;
+}
+#bracketOverlay .bk-card.tp-card.winner {
+  border-color: rgba(200,180,210,0.6);
+  box-shadow: 0 0 16px rgba(184,160,192,0.18);
+  background: #26202c;
+}
+#bracketOverlay .bk-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.008) 100%);
+  pointer-events: none;
+}
+#bracketOverlay .bk-card:hover {
+  background: #222e40;
+  border-color: #c8a248;
+  z-index: 20 !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  transform: translate(-50%, -50%) scale(1.05);
+}
+#bracketOverlay .bk-card.filled {
+  border-color: #3a4a60;
+  background: #1e2c3c;
+}
+#bracketOverlay .bk-card.winner {
+  border-color: #d4a843;
+  border-width: 2px;
+  border-left-width: 4px;
+  background: #1c283a;
+  box-shadow: 0 0 14px rgba(212,168,67,0.32);
+}
+#bracketOverlay .bk-card.winner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 3px;
+  bottom: 3px;
+  width: 3px;
+  background: #e0b850;
+  border-radius: 0 1px 1px 0;
+}
+#bracketOverlay .bk-card .flag {
+  width: 22px;
+  height: 15px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.02);
+}
+#bracketOverlay .bk-card .info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+}
+#bracketOverlay .bk-card .name-zh {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.6px;
+}
+#bracketOverlay .bk-card .name-en {
+  font-size: 9.5px;
+  color: #b0b8c0;
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
+}
+#bracketOverlay .bk-card .placeholder {
+  font-size: 0.58rem;
+  color: #6b7888;
+  text-align: center;
+  width: 100%;
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  letter-spacing: 0.5px;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+/* Picker Modal */
+#bracketOverlay .bk-picker-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+#bracketOverlay .bk-picker-overlay.show { display: block; animation: fadeIn 0.15s ease; }
+#bracketOverlay .bk-picker-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10002;
+  background: #0d1520;
+  border: 2px solid #c8a248;
+  border-radius: 10px;
+  padding: 8px 0;
+  min-width: 280px;
+  max-width: 420px;
+  max-height: 65vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(200,162,72,0.10);
+  display: none;
+  animation: fadeIn 0.18s ease;
+}
+#bracketOverlay .bk-picker-popup::-webkit-scrollbar { width: 5px; }
+#bracketOverlay .bk-picker-popup::-webkit-scrollbar-track { background: transparent; }
+#bracketOverlay .bk-picker-popup::-webkit-scrollbar-thumb { background: rgba(200,162,72,0.3); border-radius: 3px; }
+#bracketOverlay .bk-picker-popup .picker-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #c8d0d8;
+  transition: all 0.15s ease;
+  border-left: 3px solid transparent;
+  margin: 0 2px;
+  border-radius: 0 6px 6px 0;
+}
+#bracketOverlay .bk-picker-popup .picker-item:hover {
+  background: rgba(200,162,72,0.12);
+  color: #ffffff;
+  border-left-color: #c8a248;
+  transform: scale(1.01);
+}
+#bracketOverlay .bk-picker-popup .picker-item img {
+  width: 28px;
+  height: 19px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Toast */
+#bracketOverlay .bk-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #2e8b57;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  z-index: 99999;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+#bracketOverlay .bk-toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Save Modal */
+#bracketOverlay .bk-save-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+#bracketOverlay .bk-save-overlay.show { display: flex; }
+#bracketOverlay .bk-save-box {
+  background: #0d1520;
+  border: 2px solid #c8a248;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+}
+#bracketOverlay .bk-save-box h3 {
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+#bracketOverlay .bk-save-box .save-confirm {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.btn-bracket-primary {
+  padding: 12px 24px;
+  border: 2px solid rgba(240,208,112,0.7);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: rgba(20,27,34,0.9);
+  color: #f0d070;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 16px rgba(240,208,112,0.3), 0 0 36px rgba(240,208,112,0.12), 0 0 60px rgba(240,208,112,0.05), inset 0 0 12px rgba(240,208,112,0.05);
+}
+.btn-bracket-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(240,208,112,0.12), transparent);
+  transform: skewX(-25deg);
+  animation: streakSweep 3.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+.btn-bracket-primary:hover::after {
+  animation-duration: 1.5s;
+}
+.btn-bracket-primary:hover {
+  border-color: #f8e090;
+  color: #fff;
+  box-shadow: 0 0 24px rgba(240,208,112,0.5), 0 0 48px rgba(240,208,112,0.2), 0 0 80px rgba(240,208,112,0.08), inset 0 0 18px rgba(240,208,112,0.1);
+  transform: translateY(-2px);
+}
+.btn-bracket-primary.active {
+  background: linear-gradient(135deg, #d4a843, #f0d070);
+  border-color: #f0d070;
+  color: #111;
+  box-shadow: 0 0 28px rgba(240,208,112,0.5), 0 0 56px rgba(240,208,112,0.25), inset 0 0 16px rgba(255,255,255,0.2);
+}
+
+
+/* ===== 比赛规则弹窗样式 ===== */
+.rules-modal{max-width:1100px!important;width:95%;max-height:90vh}
+.rules-modal iframe{width:100%;height:70vh;border:none;border-radius:8px;background:var(--bg)}
+
+/* =============================================
+   V4 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
+   霓虹紫分割线 · 三色概率 · 双栏对比 · AI推演
+   ============================================= */
+/* -- 头部 -- */
+.prob-v4-header{text-align:center;padding:0 0 10px;margin-bottom:8px;border-bottom:2px solid #c350ff}
+.prob-v4-title{font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:.6px;margin:0}
+.prob-v4-subtitle{font-size:0.72rem;color:#667799;margin:6px 0 0}
+.prob-v4-update{font-size:0.62rem;color:#5a6888;margin-bottom:12px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+
+/* -- 双栏布局 -- */
+.prob-v4-dual-panel{display:grid;grid-template-columns:1fr 6px 1fr;gap:0;margin-bottom:10px}
+.prob-v4-col{padding:8px 10px}
+.prob-v4-odds-col{border-right:none}
+.prob-v4-ai-col{border-left:none}
+
+/* -- 分隔线 -- */
+.prob-v4-divider{display:flex;align-items:stretch;justify-content:center;position:relative}
+.prob-v4-divider-line{width:2px;background:linear-gradient(180deg,transparent 0%,#c350ff 15%,#c350ff 85%,transparent 100%);border-radius:1px;min-height:40px}
+
+/* -- 区块标题 -- */
+.prob-v4-section-title{display:flex;align-items:center;gap:6px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.06)}
+.prob-v4-section-title .prob-v4-icon{font-size:1rem}
+.prob-v4-section-title{font-weight:700;font-size:0.8rem;color:#e8ecf4;letter-spacing:.5px}
+.prob-v4-section-title.ai-title{color:#4fc3f7}
+.prob-v4-badge{font-size:0.55rem;padding:2px 8px;border-radius:10px;font-weight:600;margin-left:auto;background:rgba(255,107,53,.12);color:#ff6b35}
+.prob-v4-badge.ai-badge{background:rgba(79,195,247,.12);color:#4fc3f7}
+
+/* -- 子区块 -- */
+.prob-v4-subsection{margin-bottom:10px}
+.prob-v4-sub-title{font-size:0.68rem;font-weight:700;color:#8899bb;margin:0 0 6px;letter-spacing:.4px;text-transform:uppercase}
+
+/* -- 1X2 三栏 -- */
+.prob-v4-1x2-row{display:flex;gap:4px}
+.prob-v4-1x2-item{flex:1;text-align:center;padding:10px 4px;border-radius:8px;background:rgba(0,0,0,.2)}
+.prob-v4-1x2-item.odds-home{border-top:3px solid #4caf50}
+.prob-v4-1x2-item.odds-draw{border-top:3px solid #ffb74d}
+.prob-v4-1x2-item.odds-away{border-top:3px solid #ef5350}
+.prob-v4-1x2-item.ai-home{border-top:3px solid #4fc3f7}
+.prob-v4-1x2-item.ai-draw{border-top:3px solid #ffb74d}
+.prob-v4-1x2-item.ai-away{border-top:3px solid #ef5350}
+.prob-v4-label{display:block;font-size:0.68rem;font-weight:600;color:#8899bb;margin-bottom:2px}
+.prob-v4-value{display:block;font-size:1.4rem;font-weight:800;letter-spacing:-.5px}
+.odds-home .prob-v4-value{color:#4caf50}
+.odds-draw .prob-v4-value{color:#ffb74d}
+.odds-away .prob-v4-value{color:#ef5350}
+.ai-home .prob-v4-value{color:#4fc3f7}
+.ai-draw .prob-v4-value{color:#ffb74d}
+.ai-away .prob-v4-value{color:#ef5350}
+.prob-v4-odds,.prob-v4-lambda{display:block;font-size:0.62rem;color:#5a6888;margin-top:3px;font-weight:500}
+
+/* -- 概率条 -- */
+.prob-v4-bar-wrap{margin:8px 0 10px}
+.prob-v4-bar{display:flex;height:5px;border-radius:3px;overflow:hidden;background:rgba(255,255,255,.05)}
+.prob-v4-bar.ai-bar{height:5px}
+.prob-v4-bar-fill{height:100%}
+.bar-home{background:#4caf50}
+.bar-draw{background:#ffb74d}
+.bar-away{background:#ef5350}
+
+/* -- 让球盘 -- */
+.prob-v4-ah-line,.prob-v4-ou-line{font-size:0.65rem;color:#5a6888;margin:0 0 4px;font-weight:600}
+.prob-v4-ah-row,.prob-v4-ou-row{display:flex;gap:6px}
+.prob-v4-ah-item,.prob-v4-ou-item{flex:1;text-align:center;padding:12px 6px;border-radius:8px}
+.prob-v4-ah-item:nth-child(1){background:rgba(76,175,80,.08)}
+.prob-v4-ah-item:nth-child(2){background:rgba(239,83,80,.06)}
+.prob-v4-ou-item:nth-child(1){background:rgba(255,183,77,.08)}
+.prob-v4-ou-item:nth-child(2){background:rgba(79,195,247,.06)}
+.prob-v4-ah-item span,.prob-v4-ou-item span{display:block;font-size:0.6rem;color:#8899bb;margin-bottom:2px}
+.prob-v4-value-sm{font-size:1.1rem!important;font-weight:800!important;color:#e8ecf4!important;margin:4px 0!important}
+.prob-v4-odds-sm{font-size:0.6rem!important;color:#5a6888!important}
+.prob-v4-ou-est{font-size:0.62rem;color:#667799;margin-top:6px;font-weight:500}
+
+/* -- 迷你矩阵 -- */
+.prob-v4-matrix-mini{width:100%;border-collapse:collapse;font-size:0.62rem;margin-top:4px}
+.prob-v4-matrix-mini th{background:rgba(0,0,0,.2);color:#8899bb;padding:6px 4px;font-size:0.58rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.prob-v4-matrix-mini td{padding:5px 4px;text-align:center;border-bottom:1px solid rgba(255,255,255,.03)}
+.prob-v4-matrix-mini .goal-col{font-weight:700;color:#e8ecf4;font-size:0.6rem;background:rgba(0,0,0,.15)}
+.prob-v4-matrix-mini .prob-home-cell{color:#4caf50;font-weight:600}
+.prob-v4-matrix-mini .prob-draw-cell{color:#ffb74d;font-weight:600}
+.prob-v4-matrix-mini .prob-away-cell{color:#ef5350;font-weight:600}
+.prob-v4-matrix-note{font-size:0.58rem;color:#5a6888;text-align:center;margin:4px 0 0}
+
+/* -- 考量参数 -- */
+.prob-v4-factors{display:flex;flex-direction:column;gap:4px}
+.prob-v4-factor-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:0.65rem;border-bottom:1px solid rgba(255,255,255,.03)}
+.prob-v4-factor-item span:first-child{color:#8899bb}
+.prob-v4-factor-item span:last-child{color:#c9d1d9;font-weight:500;text-align:right}
+
+/* -- 模型标签 -- */
+.prob-v4-models{display:flex;flex-wrap:wrap;gap:4px}
+.prob-v4-model-tag{padding:3px 8px;border-radius:12px;font-size:0.58rem;font-weight:600;background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.2)}
+
+/* -- 推演总结 -- */
+.prob-v4-summary{background:linear-gradient(135deg,rgba(255,107,53,.03),rgba(79,195,247,.03));border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:12px 14px;font-size:0.65rem;line-height:1.65;color:#9aa4b8}
+
+/* -- 用户预测 -- */
+.prob-v4-user-score{text-align:center;font-size:0.7rem;color:#667799;padding:8px 0;margin-top:4px;border-top:1px solid rgba(255,255,255,.04)}
+
+/* -- 无数据占位 -- */
+.prob-v4-na{font-size:0.62rem;color:#5a6888;text-align:center;padding:14px 0;font-style:italic}
+
+/* -- 响应式 -- */
+@media(max-width:700px){
+  .prob-v4-dual-panel{grid-template-columns:1fr}
+  .prob-v4-divider{display:none}
+  .prob-v4-1x2-row{flex-wrap:wrap}
+  .prob-v4-1x2-item{min-width:80px}
+}
+
+</style>
+</head>
+<body>
+<div id="welcomeOverlay">
+  <div class="welcome-title-group">
+    <div class="welcome-logo">⚽</div>
+    <div class="welcome-title">FIFA World Cup Data Analysis</div>
+  </div>
+  <div class="welcome-progress-group" id="welcomeProgressGroup">
+    <div class="welcome-loading-percent" id="welcomeLoadingPercent">0%</div>
+    <div class="welcome-progress-container">
+      <div class="welcome-progress-bar" id="welcomeProgressBar"></div>
+    </div>
+    <div class="welcome-loading-text" id="welcomeLoadingText">Initializing</div>
+  </div>
+  <div id="welcomeChoicePanel">
+    <div class="welcome-choice-subtitle">选择赛事</div>
+    <div class="welcome-choice-title">Select Tournament</div>
+    <div class="welcome-btn-row">
+      <button class="welcome-btn" id="btnEdition2026">
+        <span class="welcome-btn-icon">🏆</span>
+        <span class="welcome-btn-label">本届世界杯</span>
+        <span class="welcome-btn-sub"><b>2026</b> USA / Mexico / Canada</span>
+      </button>
+      <button class="welcome-btn" id="btnEdition2022">
+        <span class="welcome-btn-icon">📜</span>
+        <span class="welcome-btn-label">往届世界杯</span>
+        <span class="welcome-btn-sub"><b>2002 - 2022</b> WorldCup</span>
+      </button>
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  var progressBar = document.getElementById('welcomeProgressBar');
+  var loadingText = document.getElementById('welcomeLoadingText');
+  var loadingPercent = document.getElementById('welcomeLoadingPercent');
+  var progressGroup = document.getElementById('welcomeProgressGroup');
+  var choicePanel = document.getElementById('welcomeChoicePanel');
+  var startTime = Date.now();
+  var duration = 2800; // slightly under 3s for snappier feel
+  var readyTriggered = false;
+  var dataReady = false;
+
+  // Fast path: if engine data was already built in this session, skip animation entirely
+  var _hasEngineData = false;
+  try {
+    if (sessionStorage.getItem('engineDataBuilt') === 'V1.60') {
+      _hasEngineData = true;
+      sessionStorage.removeItem('engineDataBuilt');
+    }
+  } catch(e) {}
+  // Robust cross-tab detection for file:// protocol
+  var _isCrossTab = false;
+  try { if (window.opener && window.opener !== window && !window.opener.closed) _isCrossTab = true; } catch(e) {}
+  try { if (sessionStorage.getItem('_xtab_open') === '1') { _isCrossTab = true; sessionStorage.removeItem('_xtab_open'); } } catch(e) {}
+  if (_hasEngineData && !_isCrossTab) {
+      console.log('[welcome] 会话缓存命中，跳过加载动画');
+      document.getElementById('welcomeOverlay').style.display = 'none';
+      var _fastPoll = setInterval(function() {
+        if (typeof switchEdition === 'function') {
+          clearInterval(_fastPoll);
+          switchEdition('2026');
+        }
+      }, 30);
+      return;
+  }
+
+  // Init buttons with opacity 0 for staggered fade-in
+  var btns = document.querySelectorAll('.welcome-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].style.opacity = '0';
+    btns[i].style.transition = 'opacity 0.5s ease';
+  }
+
+  // Listen for data ready (non-blocking - just sets flag)
+  var dataCheck = setInterval(function() {
+    if (window.tournamentDataReady) {
+      dataReady = true;
+      clearInterval(dataCheck);
+    }
+  }, 50);
+
+  // Enable buttons - always active (data loads in background)
+  function enableButtonsWhenReady() {
+    // Always show buttons at full opacity and enabled
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].style.opacity = '1';
+      btns[i].disabled = false;
+      btns[i].style.cursor = 'pointer';
+    }
+    // If data isn't ready yet, show a subtle indicator
+    if (!dataReady) {
+      loadingText.textContent = 'Ready';
+      // Keep polling for data readiness in background (for sessionStorage caching)
+      var enableCheck = setInterval(function() {
+        if (window.tournamentDataReady) {
+          dataReady = true;
+          clearInterval(enableCheck);
+        }
+      }, 500);
+    } else {
+      loadingText.textContent = 'Ready';
+    }
+  }
+
+  function showChoicePanel() {
+    if (readyTriggered) return;
+    readyTriggered = true;
+    progressBar.classList.add('has-glow');
+    loadingText.textContent = 'Ready';
+    
+    // Short transition then show panel
+    setTimeout(function() {
+      progressGroup.style.opacity = '0';
+      setTimeout(function() {
+        progressGroup.style.display = 'none';
+        choicePanel.style.display = 'flex';
+        requestAnimationFrame(function() {
+          choicePanel.classList.add('choice-visible');
+        });
+        // Buttons appear - check if data is ready
+        setTimeout(function() {
+          enableButtonsWhenReady();
+        }, 400);
+      }, 350);
+    }, 400);
+  }
+
+  // Main animation loop
+  function animate() {
+    var elapsed = Date.now() - startTime;
+    var rawPercent = Math.min(100, (elapsed / duration) * 100);
+
+    var easedPercent = rawPercent;
+    if (rawPercent > 80) {
+      var t = (rawPercent - 80) / 20;
+      easedPercent = 80 + (1 - Math.pow(1 - t, 2)) * 20;
+    }
+
+    progressBar.style.width = easedPercent.toFixed(1) + '%';
+    var displayPercent = Math.floor(easedPercent);
+    loadingPercent.textContent = displayPercent + '%';
+
+    if (displayPercent < 15) {
+      loadingText.textContent = 'Initializing';
+    } else if (displayPercent < 35) {
+      loadingText.textContent = 'Loading Data';
+    } else if (displayPercent < 55) {
+      loadingText.textContent = 'Processing';
+    } else if (displayPercent < 75) {
+      loadingText.textContent = 'Almost Ready';
+    } else if (displayPercent < 95) {
+      loadingText.textContent = 'Preparing';
+    } else {
+      loadingText.textContent = 'Complete';
+    }
+
+    if (rawPercent >= 100) {
+      // Animation complete: show panel immediately regardless of data state
+      showChoicePanel();
+      return;
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
+
+  function hideOverlay() {
+    var overlay = document.getElementById('welcomeOverlay');
+    overlay.classList.add('welcome-hide');
+    setTimeout(function() { overlay.style.display = 'none'; }, 500);
+  }
+
+  // Click handler: if buttons disabled (data loading), show feedback
+  function makeClickHandler(edition) {
+    return function() {
+      if (typeof switchEdition === 'function') {
+        hideOverlay();
+        setTimeout(function() {
+          switchEdition(edition);
+        }, 150);
+      } else {
+        // switchEdition not ready - show brief feedback
+        loadingText.textContent = 'Please wait...';
+        var retry = setInterval(function() {
+          if (typeof switchEdition === 'function') {
+            clearInterval(retry);
+            hideOverlay();
+            setTimeout(function() {
+              switchEdition(edition);
+            }, 100);
+          }
+        }, 100);
+      }
+    };
+  }
+
+  document.getElementById('btnEdition2026').onclick = makeClickHandler('2026');
+  document.getElementById('btnEdition2022').onclick = makeClickHandler('2022');
+})();
+</script>
+<div class="sticky-top-group">
+<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.60 | Author: Antas Lee</div></div>
+
+<!-- WC Edition Selector -->
+<div class="wc-edition-bar" id="wcEditionBar">
+  <span class="edition-label">🌍 选择赛事：</span>
+  <div class="wc-edition-tab" data-edition="2026" onclick="switchEdition('2026')">🏆 2026 美加墨</div>
+  <div class="wc-edition-tab past-edition" data-edition="2022" onclick="switchEdition('2022')">🇶🇦 2022 卡塔尔</div>
+  <div class="wc-edition-tab past-edition" data-edition="2018" onclick="switchEdition('2018')">🇷🇺 2018 俄罗斯</div>
+  <div class="wc-edition-tab past-edition" data-edition="2014" onclick="switchEdition('2014')">🇧🇷 2014 巴西</div>
+  <div class="wc-edition-tab past-edition" data-edition="2010" onclick="switchEdition('2010')">🇿🇦 2010 南非</div>
+  <div class="wc-edition-tab past-edition" data-edition="2006" onclick="switchEdition('2006')">🇩🇪 2006 德国</div>
+  <div class="wc-edition-tab past-edition" data-edition="2002" onclick="switchEdition('2002')">🇰🇷🇯🇵 2002 韩日</div>
+</div>
+
+<!-- League & Club Float Button [TEMPORARILY HIDDEN - 待 League 功能开发完成后启用] -->
+<div style="display:none;align-items:center;justify-content:flex-end;padding:4px 18px 0 18px;">
+  <button class="league-club-float-btn" onclick="switchToTab('league.html','league_tab')" title="联赛 & 俱乐部数据">
+    ⚽ 联赛&俱乐部
+  </button>
+</div>
+</div>
+
+<div class="container">
+<div class="toolbar" id="mainToolbar" style="display:none;">
+  <div class="toolbar-left">
+    <button class="btn btn-bracket-primary" id="btnBracketToggle" onclick="Bracket.toggle()">📋 晋级路线图</button>
+      <button class="btn btn-primary" onclick="showRulesModal()" style="margin-left:4px;">📖 比赛规则</button>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <button class="btn" onclick="resetAllPredictions()">🔄 重置小组预测</button>
+    <button class="btn btn-accent" onclick="showMyPredictionsModal()">📋 我的预测汇总</button>
+    <button class="btn btn-primary" onclick="savePredictions()">💾 保存全部预测</button>
+  </div>
+</div>
+<div class="toolbar search-row-toolbar" id="searchToolbar" style="padding:10px 18px;">
+  <div class="toolbar-left" style="gap:8px;align-items:center;flex-wrap:wrap;">
+    <span style="font-size:0.78rem;font-weight:700;color:var(--gold-light);white-space:nowrap;">🔍 搜索</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="球队名称..." oninput="filterTeams()" style="width:180px;">
+    <span style="position:relative;display:inline-block;">
+      <input type="text" class="search-input" id="playerSearchInput" placeholder="球员姓名（中文或英文）..." oninput="filterPlayersDropdown()" style="width:260px;" autocomplete="off">
+      <div id="playerSearchDropdown" class="player-search-dropdown" style="display:none;"></div>
+    </span>
+    <button class="btn btn-accent" onclick="searchPlayer()" style="font-size:0.75rem;padding:7px 14px;color:#c0c8d0;border-color:rgba(160,175,190,0.4);box-shadow:0 0 10px rgba(180,195,210,0.25),0 0 24px rgba(180,195,210,0.08),inset 0 0 8px rgba(180,195,210,0.04);">搜索球员</button>
+  </div>
+  <div style="font-size:0.65rem;color:var(--text-secondary);margin-top:4px;">* 点击任意球员姓名可查看详情</div>
+</div>
+<div class="tabs" id="tabContainer" style="display:none;"><div class="tab active" data-tab="groups" onclick="switchMainTab('groups')">📅 小组赛</div><div class="tab" data-tab="knockout" onclick="switchMainTab('knockout')">🏟️ 淘汰赛</div></div>
+<div id="groupsContainer" style="display:none;"><div class="tabs" id="groupTabs"></div><div class="groups-grid" id="groupsGrid"></div></div>
+<div class="knockout-panel" id="knockoutPanel"><div class="tabs" id="koTabs"></div><div id="koContent"></div></div>
+
+<!-- World Cup Bracket — Full-Screen Overlay -->
+<div id="bracketOverlay">
+  <div class="bk-header">
+    <div class="bk-header-left">
+      <span class="bk-header-trophy">🏆</span>
+      <span class="bk-header-title">2026 世界杯 · 晋级路线图</span>
+      <span class="bk-header-subtitle">FIFA World Cup 2026™ — Knockout Bracket</span>
+    </div>
+    <div class="bk-header-right">
+      <button class="bk-btn danger" onclick="Bracket.resetAll()">🗑 清空</button>
+      <button class="bk-btn gold" onclick="Bracket.saveImage()">📸 导出图片</button>
+      <button class="bk-btn-close" onclick="Bracket.close()" title="关闭 (ESC)">✕</button>
+    </div>
+  </div>
+  <div class="bk-toolbar">
+    <div class="bk-progress-wrap">
+      <span>预测进度</span>
+      <div class="bk-progress-bar"><div class="bk-progress-fill" id="bkProgressFill" style="width:0%"></div></div>
+      <span id="bkProgressText">0 / 62</span>
+    </div>
+  </div>
+  <div class="bk-scene-wrap" id="bkSceneWrap">
+      <div class="bk-scene" id="bkScene">
+          <div class="bk-glow-layer" id="bkGlowLayer"></div>
+          <svg class="bk-svg" id="bkSVG"></svg>
+          <div class="bk-cards-layer" id="bkCardsLayer"></div>
+        </div>
+  </div>
+  <div class="bk-footer">◆ FIFA WORLD CUP 2026 ◆</div>
+  <div class="bk-picker-overlay" id="bkPickerOverlay" onclick="Bracket.closePicker()"></div>
+  <div class="bk-picker-popup" id="bkPickerPopup"></div>
+  <div class="bk-save-overlay" id="bkSaveOverlay">
+    <div class="bk-save-box">
+      <h3>💾 保存晋级路线图</h3>
+      <div style="font-size:0.75rem;color:#a09888;margin-bottom:14px;" id="bkSavePreview"></div>
+      <div class="save-confirm">
+        <button class="bk-btn gold" onclick="Bracket.confirmSave()">✅ 确认保存</button>
+        <button class="bk-btn" onclick="Bracket.closeSaveModal()">取消</button>
+      </div>
+    </div>
+  </div>
+  <div class="bk-toast" id="bkToast"></div>
+</div>
+
+
+<!-- Past WC Main Content (shown when past edition selected) -->
+<div class="past-wc-main-container" id="pastWCMainContainer">
+  <div class="past-wc-main-toolbar">
+    <div class="past-wc-subtabs" id="pastWCStageTabsMain"></div>
+    <button class="btn" onclick="runFlatBacktestMain()" style="margin-right:4px;background:transparent;border-color:#4caf84;color:#6ecc98;">📊 均注策略</button><button class="btn" onclick="runBacktest()" style="background:transparent;border-color:#ff8c42;color:#ffb366;">🎯 优选策略</button>
+    <button class="btn" onclick="showDataOverview()" style="background:transparent;border-color:#ab47bc;color:#ce93d8;">📈 数据总览</button>
+  </div>
+  <div class="past-wc-main-info" id="pastWCInfoMain"></div>
+  <div id="pastWCContentMain" style="max-height:60vh;overflow-y:auto;"></div>
+</div>
+
+
+<!-- 球员详情弹窗 -->
+<div class="modal-overlay" id="playerDetailModal"><div class="modal-box player-detail-modal">
+<h3>👤 球员详情 <span style="font-size:0.65rem;color:var(--text-secondary);" id="playerDetailSubtitle"></span> <span class="modal-close" onclick="closePlayerDetail()">✕</span></h3>
+<div id="playerDetailContent" style="max-height:68vh;overflow-y:auto;"></div>
+</div></div>
+<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.60</div>
+</div>
+
+<div class="modal-overlay" id="summaryModal"><div class="modal-box" style="max-width:600px"><h3>📋 我的预测汇总 <span class="modal-close" onclick="closeSummaryModal()">✕</span></h3><div id="summaryContent"></div></div></div>
+<div class="modal-overlay" id="probModal"><div class="modal-box prob-modal"><h3>📊 概率分析 <span class="modal-close" onclick="closeProbModal()">✕</span></h3><div id="probContent"></div></div></div>
+<div class="modal-overlay" id="analysisModal"><div class="modal-box analysis-modal"><h3>📋 对阵详情 <span class="modal-close" onclick="closeAnalysisModal()">✕</span></h3><div id="analysisContent"></div></div>
+</div>
+<!-- 赛场分析弹窗 -->
+<div class="modal-overlay" id="venueAnalysisModal"><div class="modal-box venue-analysis-modal"><h3>🏟️ 赛场分析 <span style="display:flex;align-items:center;gap:12px"><button class="btn btn-update" id="btnRefreshWeather" onclick="window._vaWeatherLoaded=null;var v=window._vaVenue;if(v&&v.coordinates)fetchWeatherForVenue(document.getElementById('venueAnalysisContent'),v);">🔄 更新天气</button><span class="modal-close" onclick="closeVenueAnalysis()">✕</span></span></h3><div id="venueAnalysisContent"></div></div></div>
+<!-- 阵容名单弹窗 V1.58 -->
+<div class="modal-overlay" id="squadModal"><div class="modal-box squad-modal">
+<h3 id="squadModalTitle">📋 阵容名单 <span class="modal-close" onclick="closeSquadModal()">✕</span></h3>
+<div id="squadContent"></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+
+<!-- 策略回测弹窗 V20 -->
+<div class="modal-overlay" id="backtestModal"><div class="modal-box backtest-modal">
+<h3>📊 策略回测报告 <span style="font-size:0.7rem;color:var(--text-secondary);" id="backtestYearLabel"></span> <span style="display:flex;align-items:center;gap:8px;"><button class="btn btn-compare" onclick="event.stopPropagation();runComparison();">📊 数据对比</button><span class="modal-close" onclick="closeBacktestModal()">✕</span></span></h3>
+<div id="backtestContent" style="max-height:65vh;overflow-y:auto;"></div>
+</div></div>
+
+<!-- 比赛详情弹窗 -->
+
+<div class="modal-overlay" id="matchDetailModal"><div class="modal-box match-detail-modal">
+<h3>📋 比赛详情 <span style="font-size:0.7rem;color:var(--text-secondary);" id="matchDetailSubtitle"></span> <span class="modal-close" onclick="closeMatchDetail()">✕</span></h3>
+<div id="matchDetailContent" style="max-height:70vh;overflow-y:auto;"></div>
+</div></div>
+
+<!-- 数据总览弹窗 -->
+<div class="modal-overlay" id="dataOverviewModal"><div class="modal-box data-overview-modal">
+<h3>📈 数据总览 <span style="font-size:0.7rem;color:var(--text-secondary);" id="dataOverviewYearLabel"></span> <span style="display:flex;align-items:center;gap:8px;"><button class="btn btn-compare" onclick="event.stopPropagation();runDataOverviewComparison();">📊 数据对比</button><span class="modal-close" onclick="closeDataOverview()">✕</span></span></h3>
+<div id="dataOverviewContent" style="max-height:65vh;overflow-y:auto;"></div>
+</div></div>
+
+<script src="teamdata.js" defer></script>
+    <script src="matchdata.js" defer></script>
+    <script src="clubdata.js" defer></script></script></script></script></script>
+    <script src="coachdata.js" defer></script>
+    <script src="squaddata.js" defer></script>
+<script src="engine.js" defer></script>
+<script src="app.js" defer></script>
+<!-- World Cup Bracket V9 Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+<script src="bracket_overlay.js"></script>
+<script>
+// (bracket logic moved to bracket_overlay.js)
+</script>
+
+<script>
+// DISABLED: bracket logic in bracket_overlay.js — old inline code removed
+(function() { return; // DISABLED
+
+// ── FIFA → ISO 3166-1 alpha-2 CODE MAPPING ──
+var FIFA_TO_ISO = {
+  MEX:'mx', RSA:'za', KOR:'kr', CZE:'cz',
+  CAN:'ca', BIH:'ba', QAT:'qa', SUI:'ch',
+  BRA:'br', MAR:'ma', CRC:'cr', URU:'uy',
+  POR:'pt', ENG:'gb-eng', FRA:'fr', GER:'de',
+  TUN:'tn', ITA:'it', BFA:'bf', COL:'co',
+  CRO:'hr', JPN:'jp', SEN:'sn', GHA:'gh',
+  ALG:'dz', UKR:'ua', EGY:'eg', NGA:'ng',
+  PAN:'pa', USA:'us', HON:'hn', PER:'pe',
+  ECU:'ec', NED:'nl', PAR:'py', SRB:'rs',
+  BEL:'be', SCO:'gb-sct', IRN:'ir', ROU:'ro',
+  ESP:'es', DEN:'dk', ISL:'is', AUT:'at',
+  ARG:'ar', CHI:'cl', NOR:'no', CMR:'cm'
+};
+
+function getFlag(code) {
+  var iso = FIFA_TO_ISO[code] || code.toLowerCase();
+  return 'https://flagcdn.com/w80/' + iso + '.png';
+}
+
+// ── R32 Pairings (aligned with groupsdata.js r32s) ──
+var R32_PAIRINGS = [
+  {a:'A',ap:1,b:'B',bp:2},{a:'C',ap:1,b:'D',bp:2},
+  {a:'E',ap:1,b:'F',bp:2},{a:'G',ap:1,b:'H',bp:2},
+  {a:'I',ap:1,b:'J',bp:2},{a:'K',ap:1,b:'L',bp:2},
+  {a:'B',ap:1,b:'A',bp:2},{a:'D',ap:1,b:'C',bp:2},
+  {a:'F',ap:1,b:'E',bp:2},{a:'H',ap:1,b:'G',bp:2},
+  {a:'J',ap:1,b:'I',bp:2},{a:'L',ap:1,b:'K',bp:2},
+  {a:'A',ap:1,b:'C',bp:2},{a:'E',ap:1,b:'G',bp:2},
+  {a:'I',ap:1,b:'K',bp:2},{a:'B',ap:1,b:'D',bp:2}
+];
+
+var R16_FEED=[[0,7],[8,15],[1,6],[9,14],[2,11],[10,3],[5,12],[4,13]];
+var QF_FEED=[[0,3],[1,2],[5,6],[4,7]];
+var SF_FEED=[[0,1],[2,3]];
+var THIRD_MATCH=[0,1];
+
+// ── Slot / State ──
+var _sid=0;
+function makeSlot(round,idx,extra){
+  _sid++;
+  var s={id:_sid,round:round,idx:idx,teams:[null,null],winner:null,nextMatchId:null,nextTeamPos:null};
+  if(extra){
+    if(extra.ga)s.ga=extra.ga; if(extra.gb)s.gb=extra.gb;
+    if(extra.ap)s.ap=extra.ap; if(extra.bp)s.bp=extra.bp;
+    if(extra.feeds){s.feeds=extra.feeds;}
+  }
+  return s;
+}
+
+var R32=R32_PAIRINGS.map(function(p,i){return makeSlot('R32',i,{ga:p.a,gb:p.b,ap:p.ap,bp:p.bp});});
+var R16=R16_FEED.map(function(pair,i){
+  var s=makeSlot('R16',i,{feeds:[R32[pair[0]].id,R32[pair[1]].id]});
+  R32[pair[0]].nextMatchId=s.id;R32[pair[0]].nextTeamPos=0;
+  R32[pair[1]].nextMatchId=s.id;R32[pair[1]].nextTeamPos=1;
+  return s;
+});
+var QF=QF_FEED.map(function(pair,i){
+  var s=makeSlot('QF',i,{feeds:[R16[pair[0]].id,R16[pair[1]].id]});
+  R16[pair[0]].nextMatchId=s.id;R16[pair[0]].nextTeamPos=0;
+  R16[pair[1]].nextMatchId=s.id;R16[pair[1]].nextTeamPos=1;
+  return s;
+});
+var SF=SF_FEED.map(function(pair,i){
+  var s=makeSlot('SF',i,{feeds:[QF[pair[0]].id,QF[pair[1]].id]});
+  QF[pair[0]].nextMatchId=s.id;QF[pair[0]].nextTeamPos=0;
+  QF[pair[1]].nextMatchId=s.id;QF[pair[1]].nextTeamPos=1;
+  return s;
+});
+var FNL=makeSlot('FNL',0,{feeds:[SF[0].id,SF[1].id]});
+SF[0].nextMatchId=FNL.id;SF[0].nextTeamPos=0;
+SF[1].nextMatchId=FNL.id;SF[1].nextTeamPos=1;
+var TPP=makeSlot('TPP',0,{feeds:[SF[THIRD_MATCH[0]].id,SF[THIRD_MATCH[1]].id]});
+SF[THIRD_MATCH[0]].nextMatchId=TPP.id;SF[THIRD_MATCH[0]].nextTeamPos=0;
+SF[THIRD_MATCH[1]].nextMatchId=TPP.id;SF[THIRD_MATCH[1]].nextTeamPos=1;
+var ALL_SLOTS=[].concat(R32,R16,QF,SF,[FNL,TPP]);
+var SLOT_BY_ID={};ALL_SLOTS.forEach(function(s){SLOT_BY_ID[s.id]=s;});
+
+// ── Layout ──
+var COLUMNS=[
+  {label:'32強',slots:R32,xFactor:0.0},
+  {label:'16強',slots:R16,xFactor:1.0},
+  {label:'8強',slots:QF,xFactor:2.0},
+  {label:'4強',slots:SF,xFactor:3.0},
+  {label:'🏆 決賽 / 🥉 季軍賽',slots:[FNL,TPP],xFactor:4.0},
+  {label:'4強',slots:SF.slice().reverse(),xFactor:5.0},
+  {label:'8強',slots:QF.slice().reverse(),xFactor:6.0},
+  {label:'16強',slots:R16.slice().reverse(),xFactor:7.0},
+  {label:'32強',slots:R32.slice().reverse(),xFactor:8.0}
+];
+
+var CARD_W=126, CARD_H=38, R32_GAP=40;
+var TOP_PAD=26, COL_PAD=10;
+var CW=CARD_W+COL_PAD;
+
+function colX(ci){return ci*CW+COL_PAD;}
+function matchY(ci,idx,total){
+  if(total===1)return TOP_PAD;
+  return TOP_PAD+idx*(CARD_H+R32_GAP);
+}
+
+// ── Picker ──
+var pickerCallback=null;
+function openPicker(x,y,cb){
+  pickerCallback=cb;
+  var popup=document.getElementById('bkPickerPopup');
+  var overlay=document.getElementById('bkPickerOverlay');
+  
+  var items='';
+  if(typeof groupsData!=='undefined'){
+    var allTeams=[];
+    groupsData.forEach(function(g){
+      g.teams.forEach(function(t){allTeams.push({code:t.code,nameZh:t.nameZh||t.code,group:g.name,flag:getFlag(t.code)});});
+    });
+    allTeams.sort(function(a,b){return a.nameZh.localeCompare(b.nameZh,'zh');});
+    allTeams.forEach(function(t){
+      items+='<div class="picker-item" onclick="Bracket.pickTeam(\''+t.code+'\')"><img src="'+t.flag+'" onerror="this.style.display=\'none\'"><span>'+t.nameZh+' <small style=\"color:var(--text-secondary)\">'+t.code+'</small></span></div>';
+    });
+  }
+  popup.innerHTML=items||'<div style="padding:12px;color:var(--text-secondary)">请先加载小组数据</div>';
+  popup.style.left=Math.min(x,window.innerWidth-210)+'px';
+  popup.style.top=Math.min(y,window.innerHeight-330)+'px';
+  popup.style.display='block';
+  overlay.classList.add('show');
+}
+
+function closePicker(){
+  document.getElementById('bkPickerPopup').style.display='none';
+  document.getElementById('bkPickerOverlay').classList.remove('show');
+  pickerCallback=null;
+}
+
+window.Bracket = window.Bracket || {};
+Bracket.pickTeam=function(code){
+  if(pickerCallback){
+    var t=null;
+    if(typeof groupsData!=='undefined'){
+      for(var i=0;i<groupsData.length;i++){
+        for(var j=0;j<groupsData[i].teams.length;j++){
+          if(groupsData[i].teams[j].code===code){
+            t={code:code,nameZh:groupsData[i].teams[j].nameZh||code,flag:getFlag(code)};
+            break;
+          }
+        }
+        if(t)break;
+      }
+    }
+    if(!t)t={code:code,nameZh:code,flag:getFlag(code)};
+    pickerCallback(t);
+  }
+  closePicker();
+};
+Bracket.closePicker=closePicker;
+
+// ── Predictions ──
+var preds={};
+function load(){
+  try{var raw=localStorage.getItem('wc2026_bracket_v8');if(raw)preds=JSON.parse(raw);}catch(e){}
+  if(!preds||typeof preds!=='object')preds={};
+}
+function save(){localStorage.setItem('wc2026_bracket_v8',JSON.stringify(preds));}
+function gpred(sid){return preds[sid]||null;}
+function spred(sid,data){preds[sid]=data;save();}
+
+// ── Render ──
+var cardElements={};
+
+function createCardEl(mid,slot){
+  var el=document.createElement('div');
+  el.className='bracket-card';
+  el.setAttribute('data-sid',slot.id);
+  el.addEventListener('click',function(e){
+    e.stopPropagation();
+    handleCardClick(slot);
+  });
+  cardElements[slot.id]=el;
+  document.getElementById('bracketInner').appendChild(el);
+  updateCardEl(el,slot);
+  return el;
+}
+
+function updateCardEl(el,slot){
+  var pred=gpred(slot.id);
+  var team=null;
+  if(pred&&pred.tid)team=pred;
+  
+  if(team){
+    el.innerHTML='<img class="card-flag" src="'+team.flag+'" onerror="this.style.display=\'none\'"><div class="card-info"><span class="card-name">'+team.nameZh+'</span><span class="card-code">'+team.code+'</span></div>';
+    el.classList.add('picked');
+  }else{
+    el.innerHTML='<span style="font-size:0.6rem;color:var(--text-secondary);width:100%;text-align:center;">?</span>';
+    el.classList.remove('picked');
+  }
+  
+  if(slot.winner){
+    el.classList.add('winner-card');
+  }else{
+    el.classList.remove('winner-card');
+  }
+}
+
+function handleCardClick(slot){
+  openPicker(0,0,function(team){
+    var pred={tid:slot.id,code:team.code,nameZh:team.nameZh,flag:team.flag,round:slot.round,idx:slot.idx};
+    spred(slot.id,pred);
+    
+    if(slot.nextMatchId){
+      var nextSlot=SLOT_BY_ID[slot.nextMatchId];
+      if(nextSlot){
+        nextSlot.teams[slot.nextTeamPos]=team;
+        if(cardElements[nextSlot.id])updateCardEl(cardElements[nextSlot.id],nextSlot);
+      }
+    }
+    
+    updateCardEl(cardElements[slot.id],slot);
+    updateProgress();
+  });
+}
+
+function updateProgress(){
+  var filled=0,total=0;
+  ALL_SLOTS.forEach(function(s){
+    var p=gpred(s.id);
+    if(p&&p.code)filled++;
+    total++;
+  });
+  var el=document.getElementById('bracketProgress');
+  if(el)el.textContent=filled+' / '+total;
+}
+
+function renderAll(){
+  var inner=document.getElementById('bracketInner');
+  if(!inner)return;
+  
+  var oldCards=inner.querySelectorAll('.bracket-card');
+  oldCards.forEach(function(c){c.remove();});
+  cardElements={};
+  
+  var oldHeaders=inner.querySelectorAll('.bracket-col-header');
+  oldHeaders.forEach(function(h){h.remove();});
+  var oldDividers=inner.querySelectorAll('.bracket-divider');
+  oldDividers.forEach(function(d){d.remove();});
+  
+  var totalWidth=CW*9+COL_PAD*2;
+  
+  COLUMNS.forEach(function(col,ci){
+    var x=colX(ci);
+    var totalSlots=col.slots.length;
+    
+    var hdr=document.createElement('div');
+    hdr.className='bracket-col-header';
+    hdr.style.position='absolute';
+    hdr.style.left=x+'px';
+    hdr.style.top='0px';
+    hdr.style.width=CARD_W+'px';
+    hdr.textContent=col.label;
+    inner.appendChild(hdr);
+    
+    col.slots.forEach(function(slot,idx){
+      var y=matchY(ci,idx,totalSlots);
+      var existing=cardElements[slot.id];
+      if(!existing){
+        var el=createCardEl(slot.id,slot);
+        el.style.left=x+'px';
+        el.style.top=y+'px';
+      }
+    });
+    
+    if(col.label==='32強'&&totalSlots>1){
+      for(var d=1;d<totalSlots;d++){
+        var divY=matchY(ci,d,totalSlots)-R32_GAP/2;
+        var divEl=document.createElement('div');
+        divEl.className='bracket-divider';
+        divEl.style.position='absolute';
+        divEl.style.left=x+'px';
+        divEl.style.top=divY+'px';
+        divEl.style.width=CARD_W+'px';
+        inner.appendChild(divEl);
+      }
+    }
+  });
+  
+  var maxSlots=Math.max.apply(null,COLUMNS.map(function(c){return c.slots.length;}));
+  var totalHeight=matchY(0,maxSlots-1,maxSlots)+CARD_H+TOP_PAD;
+  inner.style.height=totalHeight+'px';
+  inner.style.width=totalWidth+'px';
+  
+  drawLines();
+  updateProgress();
+  
+  ALL_SLOTS.forEach(function(s){
+    if(cardElements[s.id])updateCardEl(cardElements[s.id],s);
+  });
+}
+
+// ── SVG connector lines ──
+function drawLines(){
+  var svg=document.getElementById('bracketSVG');
+  if(!svg)return;
+  var inner=document.getElementById('bracketInner');
+  var h=inner.offsetHeight||800;
+  var w=inner.offsetWidth||1320;
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.style.width=w+'px';
+  svg.style.height=h+'px';
+  
+  var lines='';
+  COLUMNS.forEach(function(col,ci){
+    if(col.label==='32強')return;
+    
+    col.slots.forEach(function(slot,idx){
+      if(!slot.feeds)return;
+      
+      var x=colX(ci);
+      var totalSlots=col.slots.length;
+      var y=matchY(ci,idx,totalSlots)+CARD_H/2;
+      
+      slot.feeds.forEach(function(feedId,fi){
+        var feedSlot=SLOT_BY_ID[feedId];
+        if(!feedSlot)return;
+        
+        var feedCol=null,feedIdx=-1;
+        for(var fc=0;fc<COLUMNS.length;fc++){
+          var fci=COLUMNS[fc].slots.indexOf(feedSlot);
+          if(fci>=0){feedCol=fc;feedIdx=fci;break;}
+        }
+        if(feedCol===null)return;
+        
+        var fx=colX(feedCol)+CARD_W;
+        var fy=matchY(feedCol,feedIdx,COLUMNS[feedCol].slots.length)+CARD_H/2;
+        
+        var mx=(fx+x)/2;
+        var strokeColor='rgba(212,168,67,0.25)';
+        var pred=gpred(slot.id);
+        if(pred&&pred.code)strokeColor='rgba(212,168,67,0.55)';
+        
+        lines+='<path d="M'+fx+','+fy+' L'+mx+','+fy+' L'+mx+','+y+' L'+x+','+y+'" fill="none" stroke="'+strokeColor+'" stroke-width="1.2" stroke-linejoin="round"/>';
+      });
+    });
+  });
+  
+  svg.innerHTML=lines;
+}
+
+// ── Public API ──
+Bracket.toggle=function(){
+  var section=document.getElementById('bracketSection');
+  var btn=document.getElementById('btnBracketToggle');
+  if(!section)return;
+  
+  var isVisible=section.classList.contains('visible');
+  if(isVisible){
+    section.classList.remove('visible');
+    if(btn){btn.classList.remove('active');btn.textContent='📋 晋级路线图';}
+    var groupsC=document.getElementById('groupsContainer');
+    var koPanel=document.getElementById('knockoutPanel');
+    var mainToolbar=document.getElementById('mainToolbar');
+    var searchToolbar=document.getElementById('searchToolbar');
+    var tabContainer=document.getElementById('tabContainer');
+    if(groupsC)groupsC.style.display='';
+    if(koPanel){koPanel.classList.remove('visible');}
+    if(mainToolbar)mainToolbar.style.display='';
+    if(searchToolbar)searchToolbar.style.display='';
+    if(tabContainer)tabContainer.style.display='';
+  }else{
+    var groupsC2=document.getElementById('groupsContainer');
+    var koPanel2=document.getElementById('knockoutPanel');
+    var mainToolbar2=document.getElementById('mainToolbar');
+    var searchToolbar2=document.getElementById('searchToolbar');
+    var tabContainer2=document.getElementById('tabContainer');
+    if(groupsC2)groupsC2.style.display='none';
+    if(koPanel2)koPanel2.classList.remove('visible');
+    if(mainToolbar2)mainToolbar2.style.display='none';
+    if(searchToolbar2)searchToolbar2.style.display='none';
+    if(tabContainer2)tabContainer2.style.display='none';
+    
+    section.classList.add('visible');
+    if(btn){btn.classList.add('active');btn.textContent='📅 返回小组预测';}
+    renderAll();
+  }
+};
+
+Bracket.resetAll=function(){
+  if(!confirm('确定清空晋级路线图所有预测？此操作不可撤销。'))return;
+  preds={};
+  save();
+  ALL_SLOTS.forEach(function(s){
+    s.teams=[null,null];
+    s.winner=null;
+    if(cardElements[s.id])updateCardEl(cardElements[s.id],s);
+  });
+  updateProgress();
+  Bracket.toast('已清空晋级路线图');
+};
+
+Bracket.toast=function(msg){
+  var t=document.getElementById('bkToast');
+  if(!t)return;
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2000);
+};
+
+Bracket.saveImage=function(){
+  var inner=document.getElementById('bracketInner');
+  if(!inner||typeof html2canvas==='undefined'){
+    alert('截图功能需要html2canvas库，正在加载中...');
+    return;
+  }
+  html2canvas(inner,{backgroundColor:'#0a0e14',scale:2}).then(function(canvas){
+    var link=document.createElement('a');
+    link.download='WorldCupBracket_V8.png';
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+    Bracket.toast('📸 晋级路线图已导出');
+  }).catch(function(){
+    alert('截图失败，请重试');
+  });
+};
+
+Bracket.closeSaveModal=function(){
+  document.getElementById('bkSaveModal').classList.remove('show');
+};
+
+Bracket.confirmSave=function(){
+  Bracket.closeSaveModal();
+  save();
+  Bracket.toast('💾 晋级路线图已保存');
+};
+
+var _initialized=false;
+var _origToggle=Bracket.toggle;
+Bracket.toggle=function(){
+  if(!_initialized){
+    load();
+    renderAll();
+    _initialized=true;
+  }
+  _origToggle();
+};
+
+load();
+console.log('🏆 Bracket V8 embedded — ready');
+})();
+
+</script>
+
+<script>
+
+
+</script>
+<script src="venuedata.js" defer></script>
+<script src="oddsdata.js" defer></script>
+<script src="groupsdata.js" defer></script>
+<script src="prob_engine.js" defer></script>
+
+
+<script>
+// === 跨页面标签切换 ===
+(function() {
+  if (!window.name || window.name === '') window.name = 'fifawc_tab';
+  
+  window.switchToTab = function(url, tabName) {
+    // Check heartbeat to see if target tab is alive
+    var hb = localStorage.getItem('tab_heartbeat_' + tabName);
+    var isAlive = (hb && (Date.now() - parseInt(hb, 10) < 5000));
+    
+    if (isAlive) {
+        // Target tab exists — reuse without navigating (empty URL)
+        try {
+            var existing = window.open('', tabName);
+            if (existing && !existing.closed) { existing.focus(); return; }
+        } catch(e) {}
+        window.open(url, tabName);
+    } else {
+        window.open(url, tabName);
+    }
+  };
+})();
+
+// 心跳保活
+(function() {
+  var hbKey = 'tab_heartbeat_' + window.name;
+  var alKey = 'tab_alive_' + window.name;
+  localStorage.setItem(alKey, '1');
+  localStorage.setItem(hbKey, Date.now().toString());
+  setInterval(function() {
+    localStorage.setItem(hbKey, Date.now().toString());
+  }, 1000);
+  window.addEventListener('beforeunload', function() {
+    localStorage.removeItem(alKey);
+    localStorage.removeItem(hbKey);
+  });
+})();
+</script>
+
+<script>
+// ===== PlayerDB 安全代理 - 在数据加载完成前防止报错 =====
+(function() {
+    if (typeof playerDB === 'undefined') {
+        // Create a placeholder proxy that will be replaced when real data loads
+        window.__playerDBPlaceholder = true;
+        console.log('[playerDBGuard] playerDB 尚未加载，已设置安全代理');
+        
+        // Define a getter that returns undefined for any key (prevents crashes)
+        window.playerDB = {};
+        window.__playerDBReady = false;
+        
+        // After dynamic loader finishes, the real playerDB will overwrite this
+    }
+})();
+</script>
+
+<script src="squadmodal.js" defer></script>
+
+<script>
+// ===== 动态后台加载球员数据（避免阻塞首屏渲染） =====
+(function() {
+    'use strict';
+    
+    var playerDataFiles = [
+        'playerdata_core.js',
+        'playerdata_media.js',
+        'playerdata_career.js',
+        'playerdata_meta.js'
+    ];
+    
+    var loadedCount = 0;
+    var totalFiles = playerDataFiles.length;
+    
+    function loadNext(index) {
+        if (index >= totalFiles) {
+            // All loaded - build search indexes
+            console.log('[dynamicLoader] 所有球员数据加载完成 (' + totalFiles + ' 文件)');
+            if (typeof window.buildSearchIndex === 'function') {
+                try {
+                    window.buildSearchIndex();
+                    console.log('[dynamicLoader] 搜索索引已构建');
+                } catch(e) {
+                    console.warn('[dynamicLoader] 搜索索引构建失败:', e.message);
+                }
+            }
+            // Signal that player data is fully ready
+            window.__playerDataReady = true;
+            // Set sessionStorage for fast reload on next visit
+            try {
+                sessionStorage.setItem('engineDataBuilt', 'V1.60');
+            } catch(e) {}
+            return;
+        }
+        
+        var script = document.createElement('script');
+        script.src = playerDataFiles[index];
+        script.onload = function() {
+            loadedCount++;
+            console.log('[dynamicLoader] 已加载: ' + playerDataFiles[index] + ' (' + loadedCount + '/' + totalFiles + ')');
+            // Yield to event loop before loading next file (keeps UI responsive)
+            setTimeout(function() {
+                loadNext(index + 1);
+            }, 50);
+        };
+        script.onerror = function() {
+            console.warn('[dynamicLoader] 加载失败: ' + playerDataFiles[index] + ', 跳过');
+            // Continue with next file
+            setTimeout(function() {
+                loadNext(index + 1);
+            }, 50);
+        };
+        document.head.appendChild(script);
+    }
+    
+    // Start loading after a brief delay to let the initial UI settle
+    // DOMContentLoaded already fired (defer scripts executed), 
+    // so we can start loading immediately with a small yield
+    setTimeout(function() {
+        console.log('[dynamicLoader] 开始后台加载球员数据...');
+        loadNext(0);
+    }, 100);
+})();
+</script>
+
+
+
+<!-- 比赛规则弹窗 -->
+<div class="modal-overlay" id="rulesModal">
+  <div class="modal-box rules-modal">
+    <h3>🏆 2026 世界杯 · 比赛规则 <span class="modal-close" onclick="closeRulesModal()">✕</span></h3>
+    <iframe src="FIFAWorldCup_Rules.html" id="rulesIframe"></iframe>
+  </div>
+</div>
+
+
+<script>
+function showRulesModal(){
+  document.getElementById('rulesModal').classList.add('visible');
+}
+function closeRulesModal(){
+  document.getElementById('rulesModal').classList.remove('visible');
+}
+// Close on overlay click
+document.getElementById('rulesModal').addEventListener('click', function(e){
+  if(e.target === this) closeRulesModal();
+});
+// Close on ESC
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' && document.getElementById('rulesModal').classList.contains('visible')){
+    closeRulesModal();
+  }
+});
+
+// ── Main Tab Switching ──
+function switchMainTab(tabName) {
+  var tabs = document.querySelectorAll('#tabContainer .tab');
+  for (var i = 0; i < tabs.length; i++) {
+    if (tabs[i].getAttribute('data-tab') === tabName) {
+      tabs[i].classList.add('active');
+    } else {
+      tabs[i].classList.remove('active');
+    }
+  }
+  var groupsEl = document.getElementById('groupsContainer');
+  var koEl = document.getElementById('knockoutPanel');
+  if (tabName === 'groups') {
+    if (groupsEl) groupsEl.style.display = '';
+    if (koEl) koEl.style.display = 'none';
+  } else if (tabName === 'knockout') {
+    if (groupsEl) groupsEl.style.display = 'none';
+    if (koEl) koEl.style.display = '';
+  }
+}
+</script>
+
+<div class="footer-note" style="padding:12px 20px;text-align:center;font-size:0.7rem;color:var(--text-secondary);border-top:1px solid var(--border);">Copyright: © 2026 ZHENTAO LI. All rights reserved.</div>
+</body>
+</html>

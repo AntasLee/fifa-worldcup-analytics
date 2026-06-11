@@ -1,0 +1,1970 @@
+<!-- Author: Antas Lee -->
+<!-- Copyright: © 2026 ZHENTAO LI. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEAGUE · CLUB DATA ANALYSIS · V1.60</title>
+<style>
+:root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
+.header{background:linear-gradient(135deg,#0d1b2a,#1a2740,#0d1b2a);border-bottom:2px solid var(--gold);padding:18px 24px;text-align:center}
+.header h1{font-size:1.8rem;font-weight:800;letter-spacing:2px;background:linear-gradient(180deg,#f0d070 0%,#d4a843 50%,#b8862d 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.header .subtitle{font-size:0.85rem;color:var(--text-secondary);letter-spacing:1px}
+.sticky-top-group{position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,0.5)}
+.container{max-width:1400px;margin:0 auto;padding:20px 16px}
+/* ===== Continent Nav Outer (full-width, like WC edition bar) ===== */
+.continent-nav-outer{padding:0 18px;margin-bottom:14px}
+.continent-nav-outer .continent-nav{margin-bottom:0;border-radius:var(--radius)}
+/* ===== Float Button Row ===== */
+.float-btn-row{display:flex;align-items:center;justify-content:flex-end;padding:4px 18px 0 18px;margin-bottom:8px}
+/* ===== WC Float Button (gold) ===== */
+.wc-float-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border-radius:24px;cursor:pointer;font-size:0.78rem;font-weight:700;white-space:nowrap;background:linear-gradient(135deg,#b8862d,#d4a843);color:#111;border:1.5px solid #d4a843;transition:all 0.25s;text-decoration:none}
+.wc-float-btn:hover{background:linear-gradient(135deg,#d4a843,#f0d070);color:#111;border-color:#f0d070;transform:translateY(-1px);box-shadow:0 4px 15px rgba(212,168,67,0.4)}
+.content-wrapper{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:12px;box-shadow:var(--shadow)}
+
+/* Stats Bar */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat-card{background:var(--surface);border-radius:var(--radius);padding:16px;text-align:center;border:1px solid var(--border)}
+.stat-card .lbl{font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:6px;letter-spacing:1px}
+.stat-card .val{font-size:2rem;font-weight:800;color:var(--gold-light)}
+
+/* Toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px;padding:12px 16px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border)}
+.toolbar input{padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:0.8rem;width:260px;outline:none}
+.toolbar input:focus{border-color:var(--gold)}
+.toolbar .info-text{font-size:0.7rem;color:var(--text-secondary);margin-left:auto}
+
+/* Breadcrumb */
+.breadcrumb{display:flex;align-items:center;gap:6px;margin-bottom:14px;font-size:0.78rem;color:var(--text-secondary);flex-wrap:wrap}
+.breadcrumb span{cursor:pointer;transition:color 0.2s}
+.breadcrumb span:hover{color:var(--gold-light)}
+.breadcrumb .sep{color:var(--border);cursor:default}
+.breadcrumb .current{color:var(--gold-light);font-weight:700;cursor:default}
+
+/* ========== Continent Navigation Tabs ========== */
+/* ===== Continent Edition Bar (like WC Edition Selector) ===== */
+.continent-nav{display:flex;align-items:center;gap:6px;padding:12px 18px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:14px;flex-wrap:wrap;overflow-x:auto}
+.continent-nav .edition-label{font-size:0.75rem;color:var(--text-secondary);white-space:nowrap;margin-right:8px;font-weight:700;letter-spacing:1px}
+.continent-tab{padding:8px 16px;border-radius:20px;cursor:pointer;font-size:0.78rem;font-weight:600;white-space:nowrap;transition:all 0.2s;background:var(--surface2);color:var(--text-secondary);border:2px solid transparent;letter-spacing:0.5px;user-select:none}
+.continent-tab:hover{border-color:#5b9bd5;color:#87ceeb;transform:translateY(-1px)}
+.continent-tab.active{background:linear-gradient(135deg,#1a3a4a,#2a5a7a);color:#87ceeb;border-color:#5b9bd5;font-weight:800;box-shadow:0 4px 16px rgba(91,155,213,0.3)}
+.continent-tab .tab-count{font-size:0.65rem;opacity:0.7;margin-left:4px}
+
+/* ========== Continent Section ========== */
+.continent-section{margin-bottom:24px}
+.continent-section-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface2);border-radius:12px 12px 0 0;border:1px solid var(--border);border-bottom:2px solid var(--gold)}
+.continent-section-header .continent-icon{font-size:1.4rem}
+.continent-section-header .continent-name{font-weight:800;font-size:1.1rem;color:var(--gold-light);letter-spacing:1px}
+.continent-section-header .continent-stats{font-size:0.7rem;color:var(--text-secondary);margin-left:auto}
+.continent-section-body{background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;padding:16px}
+
+/* ===== Country Grid ===== */
+.country-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;padding:4px}
+.country-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px;cursor:pointer;transition:all 0.2s}
+.country-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
+.country-card .country-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.country-card .country-flag{width:30px;height:20px;border-radius:3px;object-fit:cover;box-shadow:0 1px 3px rgba(0,0,0,0.4);flex-shrink:0}
+.country-card .country-flag-placeholder{width:30px;height:20px;border-radius:3px;background:var(--surface2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.55rem;color:var(--text-secondary)}
+.country-card .country-name-block{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+.country-card .country-name-zh{font-weight:700;font-size:0.9rem;color:var(--text)}
+.country-card .country-name-en{font-size:0.62rem;color:var(--text-secondary);letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.country-card .country-stats{display:flex;gap:14px;flex-wrap:wrap;font-size:0.7rem;color:var(--text-secondary)}
+.country-card .country-stat{text-align:center}
+.country-card .country-stat .val{font-size:1.1rem;font-weight:700;color:var(--gold-light)}
+.country-card .country-stat .lbl{font-size:0.6rem;text-transform:uppercase}
+
+/* ===== League Grid ===== */
+.back-btn{display:inline-block;padding:6px 16px;margin-bottom:12px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);color:var(--text-secondary);cursor:pointer;font-size:0.78rem;transition:all 0.15s}
+.back-btn:hover{border-color:var(--gold);color:var(--gold-light)}
+.region-header{display:flex;align-items:center;gap:12px;padding:14px 16px;margin-bottom:14px;background:var(--surface2);border-radius:12px;border:1px solid var(--border)}
+.region-flag{width:40px;height:26px;border-radius:4px;object-fit:cover;box-shadow:0 1px 4px rgba(0,0,0,0.4);flex-shrink:0}
+.region-info{display:flex;flex-direction:column;line-height:1.3}
+.region-name-zh{font-weight:800;font-size:1.1rem;color:var(--gold-light)}
+.region-name-en{font-size:0.7rem;color:var(--text-secondary)}
+.region-league-count{font-size:0.75rem;color:var(--text-secondary);margin-left:auto;white-space:nowrap}
+.lc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.lc-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:all 0.2s}
+.lc-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
+.lc-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.lc-card-name{font-weight:700;font-size:0.9rem;color:var(--text)}
+.lc-card-name small{font-weight:400;font-size:0.7rem;color:var(--text-secondary);display:block}
+.lc-card-stats{display:flex;gap:16px;flex-wrap:wrap;font-size:0.7rem;color:var(--text-secondary)}
+.lc-card-stat{text-align:center}
+.lc-card-stat .val{font-size:1.1rem;font-weight:700;color:var(--gold-light)}
+.lc-card-stat .lbl{font-size:0.6rem;text-transform:uppercase}
+
+/* ===== Club Table ===== */
+.table-wrap{max-height:60vh;overflow-y:auto;background:var(--bg);border-radius:12px;border:1px solid var(--border)}
+.data-table{width:100%;border-collapse:collapse;font-size:0.78rem}
+.data-table th{position:sticky;top:0;background:var(--surface);color:var(--text-secondary);font-weight:700;padding:10px 12px;text-align:left;border-bottom:2px solid var(--border);z-index:1;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px}
+.data-table td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,0.06);color:var(--text)}
+.data-table tr:hover td{background:rgba(212,168,67,0.05)}
+.data-table .rank-col{text-align:center;width:40px}
+.data-table .num-col{text-align:center;width:70px}
+.data-table .goals-col{text-align:center;font-weight:700;color:var(--gold-light);width:80px}
+.clickable{color:var(--gold-light);cursor:pointer;font-weight:600;text-decoration:underline;text-underline-offset:3px;transition:color 0.15s}
+.clickable:hover{color:#f0d070}
+.league-info-bar{padding:10px 16px;margin-bottom:12px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);font-size:0.78rem;color:var(--text-secondary)}
+
+/* Player sub-row */
+.player-sub-row{display:none}
+.player-sub-row.show{display:table-row}
+.player-sub-cell{background:var(--bg);padding:0!important}
+.player-sublist{padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px}
+.player-tag{display:inline-block;padding:4px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;font-size:0.7rem;color:var(--text);cursor:pointer;transition:all 0.15s}
+.player-tag:hover{border-color:var(--gold);color:var(--gold-light);background:var(--highlight)}
+
+/* ===== Player Detail Modal ===== */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;justify-content:center;align-items:flex-start;padding-top:60px;overflow-y:auto}
+.modal-overlay.visible{display:flex}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;max-width:700px;width:95%;padding:20px;box-shadow:var(--shadow);max-height:80vh;overflow-y:auto}
+.modal-box h3{font-size:1.1rem;color:var(--gold-light);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.modal-close{cursor:pointer;font-size:1.2rem;color:var(--text-secondary);transition:color 0.2s}
+.modal-close:hover{color:var(--accent2)}
+.pd-header-card{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:8px;margin-bottom:12px}
+.pd-avatar{width:48px;height:48px;border-radius:50%;background:var(--gold);color:#111;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;flex-shrink:0}
+.pd-name{font-weight:700;font-size:1rem;color:var(--text)}
+.pd-meta{font-size:0.7rem;color:var(--text-secondary);margin-top:3px;display:flex;flex-wrap:wrap;gap:8px}
+.pd-section-title{font-weight:700;font-size:0.82rem;color:var(--gold-light);margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.pd-table{width:100%;border-collapse:collapse;font-size:0.72rem;margin-bottom:8px}
+.pd-table th{background:var(--surface2);color:var(--text-secondary);padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);font-size:0.65rem;text-transform:uppercase}
+.pd-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text)}
+.nt-row td{color:var(--gold-light)}
+.no-data{text-align:center;padding:40px 20px;color:var(--text-secondary);font-size:0.85rem}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--surface2);color:var(--gold-light);padding:10px 24px;border-radius:20px;border:1px solid var(--border);font-size:0.78rem;z-index:300;opacity:0;transition:opacity 0.3s;pointer-events:none}
+.toast.show{opacity:1}
+
+/* Spinner */
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.footer-note{text-align:center;padding:20px;color:var(--text-secondary);font-size:0.75rem;letter-spacing:0.5px}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-secondary)}
+
+/* ===== Welcome Overlay (League) ===== */
+#welcomeOverlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(135deg, #0a0e17 0%, #141b2d 40%, #1a1f2e 100%);
+  z-index: 10000;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+  font-family: 'Arial Black', 'Impact', 'Segoe UI Black', sans-serif;
+}
+#welcomeOverlay.welcome-hide {
+  transform: translateY(-100%); opacity: 0; pointer-events: none;
+}
+.welcome-title-group {
+  position: absolute; top: 24%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+}
+.welcome-logo {
+  font-size: 3.5rem; margin-bottom: 12px; animation: welcomePulse 2s infinite;
+}
+@keyframes welcomePulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+.welcome-title {
+  font-size: 2rem; font-weight: 700; color: #e0e8f0;
+  letter-spacing: 2px; margin-bottom: 0;
+}
+.welcome-progress-group {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+  transition: opacity 0.35s ease;
+}
+.welcome-progress-container {
+  width: 480px; max-width: 64vw; height: 4px;
+  background: rgba(255,255,255,0.06); border-radius: 10px;
+  overflow: visible; margin-bottom: 18px;
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+.welcome-progress-bar {
+  width: 0%; height: 100%; border-radius: 10px;
+  background: linear-gradient(90deg, #5b8def 0%, #87ceeb 50%, #b8e0f8 100%);
+  transition: width 0.12s linear;
+  position: relative;
+  box-shadow: 0 0 12px rgba(91,141,239,0.4), 0 0 4px rgba(135,206,235,0.3);
+}
+.welcome-progress-bar::after {
+  content: ''; position: absolute; right: 0; top: 50%;
+  transform: translate(50%, -50%);
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #87ceeb;
+  box-shadow: 0 0 10px rgba(135,206,235,0.7), 0 0 20px rgba(91,141,239,0.5);
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.welcome-progress-bar.has-glow::after { opacity: 1; }
+.welcome-loading-text {
+  font-size: 1.05rem; color: #a0b0c0; margin-bottom: 0;
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', 'Menlo', monospace;
+  letter-spacing: 2px; font-weight: 500;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+.welcome-loading-percent {
+  font-size: 1.8rem; font-weight: 700; color: #87ceeb;
+  font-family: 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  letter-spacing: 0; line-height: 1;
+  display: block; margin-bottom: 18px;
+  transition: color 0.3s ease;
+}
+/* Redirect text */
+.welcome-redirect-group {
+  position: absolute; top: 56%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: none; flex-direction: column; align-items: center; gap: 6px;
+  opacity: 0; transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.welcome-redirect-group.show { opacity: 1; }
+.welcome-redirect-zh {
+  font-size: 2.4rem; font-weight: 700; color: #e0e8f0;
+  font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  letter-spacing: 4px; display: block;
+}
+.welcome-redirect-en {
+  font-size: 1.0rem; font-weight: 700; color: #8899aa;
+  letter-spacing: 3px; text-transform: uppercase; display: block;
+}
+
+</style>
+</head>
+<body>
+<!-- Welcome / Loading Overlay -->
+<div id="welcomeOverlay">
+  <div class="welcome-title-group">
+    <div class="welcome-logo">⚽</div>
+    <div class="welcome-title">LEAGUE & CLUB Data Analysis</div>
+  </div>
+  <div class="welcome-progress-group" id="welcomeProgressGroup">
+    <div class="welcome-loading-percent" id="welcomeLoadingPercent">0%</div>
+    <div class="welcome-progress-container">
+      <div class="welcome-progress-bar" id="welcomeProgressBar"></div>
+    </div>
+    <div class="welcome-loading-text" id="welcomeLoadingText">Initializing</div>
+  </div>
+  <div class="welcome-redirect-group" id="welcomeRedirectGroup">
+    <span class="welcome-redirect-zh">自动跳转</span>
+    <span class="welcome-redirect-en">Auto Redirect</span>
+  </div>
+</div>
+
+
+<div class="sticky-top-group">
+<div class="header">
+    <h1>⚽ LEAGUE & CLUB</h1>
+    <div class="subtitle">LEAGUE & CLUB · All Editions · Data Analysis V1.60 | Author: Antas Lee</div>
+</div>
+
+<!-- Continent Navigation (full-width, like WC Edition Bar) -->
+<div class="continent-nav-outer">
+    <div class="continent-nav" id="continentNav">
+        <span class="edition-label">🌍 选择联赛：</span>
+        <div class="continent-tab active" data-continent="all" onclick="filterByContinent('all')">🌐 全部 <span class="tab-count" id="cntAll">—</span></div>
+        <div class="continent-tab" data-continent="europe" onclick="filterByContinent('europe')">🌍 欧洲 <span class="tab-count" id="cntEurope">—</span></div>
+        <div class="continent-tab" data-continent="asia" onclick="filterByContinent('asia')">🌏 亚洲 <span class="tab-count" id="cntAsia">—</span></div>
+        <div class="continent-tab" data-continent="americas" onclick="filterByContinent('americas')">🌎 美洲 <span class="tab-count" id="cntAmericas">—</span></div>
+        <div class="continent-tab" data-continent="africa" onclick="filterByContinent('africa')">🌍 非洲 <span class="tab-count" id="cntAfrica">—</span></div>
+        <div class="continent-tab" data-continent="oceania" onclick="filterByContinent('oceania')">🌏 大洋洲 <span class="tab-count" id="cntOceania">—</span></div>
+    </div>
+</div>
+
+<!-- Float Button Row (left-aligned, gold) -->
+<div class="float-btn-row">
+    <a href="#" onclick="switchToTab('FIFAWorldCup.html','fifawc_tab');return false;" class="wc-float-btn">🏆 国际足联世界杯</a>
+</div>
+</div>
+
+<div class="container">
+    <!-- Stats Bar -->
+    <div class="stats-bar" id="statsBar">
+        <div class="stat-card"><div class="lbl">联赛总数</div><div class="val" id="statLeagues">—</div></div>
+        <div class="stat-card"><div class="lbl">俱乐部总数</div><div class="val" id="statClubs">—</div></div>
+        <div class="stat-card"><div class="lbl">球员总数</div><div class="val" id="statPlayers">—</div></div>
+        <div class="stat-card"><div class="lbl">世界杯进球</div><div class="val" id="statGoals">—</div></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="🔍 搜索国家、联赛或俱乐部..." oninput="onSearch()">
+        <span class="info-text" id="statusText"><span class="spinner"></span>正在聚合数据...</span>
+    </div>
+
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb" id="breadcrumb"></div>
+
+    <!-- Main View -->
+    <div id="mainView"></div>
+</div>
+
+<!-- Player Detail Modal -->
+<div class="modal-overlay" id="playerDetailModal">
+    <div class="modal-box">
+        <h3>👤 球员详情 <span id="playerDetailSubtitle"></span> <span class="modal-close" onclick="closePlayerDetail()">✕</span></h3>
+        <div id="playerDetailContent"></div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="teamdata.js" defer></script>
+<script src="matchdata.js" defer></script>
+<script src="engine.js" defer></script>
+<script>
+(function(){
+    var aggData = null;
+    var currentView = 'countries';
+    var currentCountryId = null;
+    var currentLeagueKey = null;
+    var currentContinentFilter = 'all'; // 'all' or continent id
+    var searchTerm = '';
+
+    // ========== Continent Definitions ==========
+    var CONTINENTS = [
+        { id: 'europe', name: '欧洲', icon: '🌍', order: 1 },
+        { id: 'asia', name: '亚洲', icon: '🌏', order: 2 },
+        { id: 'americas', name: '美洲', icon: '🌎', order: 3 },
+        { id: 'africa', name: '非洲', icon: '🌍', order: 4 },
+        { id: 'oceania', name: '大洋洲', icon: '🌏', order: 5 }
+    ];
+
+    // ========== Country / Region Definitions ==========
+    // Each country has: id, code (flagcdn), continent, name, enAbbr, enFull, keywords
+    var COUNTRY_CONFIG = [
+        // ==================== EUROPE ====================
+        { id:'england', code:'gb-eng', continent:'europe', name:'英格兰', enAbbr:'ENG', enFull:'England',
+          keywords:['english','premier league','championship','league one','league two','efl','英超','英冠','英甲','英乙','英格兰','fa cup','carabao'] },
+        { id:'spain', code:'es', continent:'europe', name:'西班牙', enAbbr:'ESP', enFull:'Spain',
+          keywords:['la liga','spanish','spanish primera','spanish segunda','liga adelante','西甲','西乙','西班牙','laliga','primera federación','spanish la liga'] },
+        { id:'italy', code:'it', continent:'europe', name:'意大利', enAbbr:'ITA', enFull:'Italy',
+          keywords:['serie a','serie b','serie c','italian','意甲','意乙','意丙','意大利','serie a italia'] },
+        { id:'germany', code:'de', continent:'europe', name:'德国', enAbbr:'GER', enFull:'Germany',
+          keywords:['bundesliga','german','german bundesliga','regionalliga','德甲','德乙','德国','2. bundesliga','3. liga german'] },
+        { id:'france', code:'fr', continent:'europe', name:'法国', enAbbr:'FRA', enFull:'France',
+          keywords:['ligue 1','ligue 2','french','championnat','法甲','法乙','法国','national 1'] },
+        { id:'portugal', code:'pt', continent:'europe', name:'葡萄牙', enAbbr:'POR', enFull:'Portugal',
+          keywords:['primeira liga','portuguese','liga portugal','葡超','葡甲','葡萄牙','liga portugal 2'] },
+        { id:'netherlands', code:'nl', continent:'europe', name:'荷兰', enAbbr:'NED', enFull:'Netherlands',
+          keywords:['eredivisie','dutch','eerste divisie','荷甲','荷乙','荷兰','keuken kampioen'] },
+        { id:'belgium', code:'be', continent:'europe', name:'比利时', enAbbr:'BEL', enFull:'Belgium',
+          keywords:['belgian','belgian pro league','pro league','jupiler','比甲','比利时','challenger pro league'] },
+        { id:'scotland', code:'gb-sct', continent:'europe', name:'苏格兰', enAbbr:'SCO', enFull:'Scotland',
+          keywords:['scottish','scottish premiership','苏超','苏格兰','scottish championship','scottish premier'] },
+        { id:'turkey', code:'tr', continent:'europe', name:'土耳其', enAbbr:'TUR', enFull:'Turkey',
+          keywords:['turkish','süper lig','super lig','土超','土耳其','tff 1. lig','tff'] },
+        { id:'austria', code:'at', continent:'europe', name:'奥地利', enAbbr:'AUT', enFull:'Austria',
+          keywords:['austrian','bundesliga austria','austrian bundesliga','奥地利','奥超','奥甲','2. liga austria'] },
+        { id:'switzerland', code:'ch', continent:'europe', name:'瑞士', enAbbr:'SUI', enFull:'Switzerland',
+          keywords:['swiss','swiss super league','challenge league','瑞士超','瑞士','swiss challenge','swiss challenge league'] },
+        { id:'russia', code:'ru', continent:'europe', name:'俄罗斯', enAbbr:'RUS', enFull:'Russia',
+          keywords:['russian','russian premier league','俄超','俄罗斯','russian first','russian premier','rpl','russian football','rossiya','russia league','russian championship'] },
+        { id:'croatia', code:'hr', continent:'europe', name:'克罗地亚', enAbbr:'CRO', enFull:'Croatia',
+          keywords:['croatian','prva hnl','克罗地亚甲','克罗地亚','克甲','hnl'] },
+        { id:'serbia', code:'rs', continent:'europe', name:'塞尔维亚', enAbbr:'SRB', enFull:'Serbia',
+          keywords:['serbian','serbian superliga','塞尔维亚超','塞尔维亚','super liga srbije'] },
+        { id:'czech', code:'cz', continent:'europe', name:'捷克', enAbbr:'CZE', enFull:'Czech Republic',
+          keywords:['czech','czech first league','捷克甲','捷克','捷甲','czech fortuna liga'] },
+        { id:'denmark', code:'dk', continent:'europe', name:'丹麦', enAbbr:'DEN', enFull:'Denmark',
+          keywords:['danish','superligaen','丹麦超','丹麦','丹超','danish superliga','1. division denmark'] },
+        { id:'sweden', code:'se', continent:'europe', name:'瑞典', enAbbr:'SWE', enFull:'Sweden',
+          keywords:['swedish','allsvenskan','瑞典超','瑞典','superettan','sweden league'] },
+        { id:'norway', code:'no', continent:'europe', name:'挪威', enAbbr:'NOR', enFull:'Norway',
+          keywords:['norwegian','eliteserien','挪威超','挪威','挪超','obos-ligaen'] },
+        { id:'poland', code:'pl', continent:'europe', name:'波兰', enAbbr:'POL', enFull:'Poland',
+          keywords:['polish','ekstraklasa','波兰甲','波兰','i liga polska'] },
+        { id:'greece', code:'gr', continent:'europe', name:'希腊', enAbbr:'GRE', enFull:'Greece',
+          keywords:['greek','super league greece','希腊超','希腊','superleague greece','football league greece'] },
+        { id:'ukraine', code:'ua', continent:'europe', name:'乌克兰', enAbbr:'UKR', enFull:'Ukraine',
+          keywords:['ukrainian','ukrainian premier league','乌克兰超','乌克兰','persha liha'] },
+        { id:'romania', code:'ro', continent:'europe', name:'罗马尼亚', enAbbr:'ROU', enFull:'Romania',
+          keywords:['romanian','liga i','罗马尼亚甲','罗马尼亚','liga ii romania'] },
+        { id:'bulgaria', code:'bg', continent:'europe', name:'保加利亚', enAbbr:'BUL', enFull:'Bulgaria',
+          keywords:['bulgarian','efbet league','保加利亚甲','保加利亚','parva liga'] },
+        { id:'hungary', code:'hu', continent:'europe', name:'匈牙利', enAbbr:'HUN', enFull:'Hungary',
+          keywords:['hungarian','nb i','匈牙利甲','匈牙利','nemzeti bajnokság','otp bank liga'] },
+        { id:'slovakia', code:'sk', continent:'europe', name:'斯洛伐克', enAbbr:'SVK', enFull:'Slovakia',
+          keywords:['slovak','fortuna liga slovakia','斯洛伐克甲','斯洛伐克','slovak super liga'] },
+        { id:'slovenia', code:'si', continent:'europe', name:'斯洛文尼亚', enAbbr:'SVN', enFull:'Slovenia',
+          keywords:['slovenian','prva liga slovenia','斯洛文尼亚甲','斯洛文尼亚','slovenian league'] },
+        { id:'cyprus', code:'cy', continent:'europe', name:'塞浦路斯', enAbbr:'CYP', enFull:'Cyprus',
+          keywords:['cypriot','cyprus first division','塞浦路斯甲','塞浦路斯','cyprus league'] },
+        { id:'iceland', code:'is', continent:'europe', name:'冰岛', enAbbr:'ISL', enFull:'Iceland',
+          keywords:['icelandic','besta deild','冰岛超','冰岛','iceland league','úrvalsdeild'] },
+        { id:'finland', code:'fi', continent:'europe', name:'芬兰', enAbbr:'FIN', enFull:'Finland',
+          keywords:['finnish','veikkausliiga','芬兰超','芬兰','finland league'] },
+        { id:'ireland', code:'ie', continent:'europe', name:'爱尔兰', enAbbr:'IRL', enFull:'Ireland',
+          keywords:['irish','league of ireland','爱尔兰超','爱尔兰','irish premier division'] },
+        { id:'wales', code:'gb-wls', continent:'europe', name:'威尔士', enAbbr:'WAL', enFull:'Wales',
+          keywords:['welsh','cymru premier','威尔士超','威尔士','welsh premier league'] },
+        { id:'israel', code:'il', continent:'europe', name:'以色列', enAbbr:'ISR', enFull:'Israel',
+          keywords:['israeli','ligat ha\'al','以色列超','以色列','israeli premier league'] },
+        { id:'albania', code:'al', continent:'europe', name:'阿尔巴尼亚', enAbbr:'ALB', enFull:'Albania',
+          keywords:['albanian','kategoria superiore','阿尔巴尼亚超','阿尔巴尼亚','albania league'] },
+        { id:'macedonia', code:'mk', continent:'europe', name:'北马其顿', enAbbr:'MKD', enFull:'North Macedonia',
+          keywords:['macedonian','macedonian first league','北马其顿甲','北马其顿','马其顿','macedonia','north macedonia'] },
+        { id:'moldova', code:'md', continent:'europe', name:'摩尔多瓦', enAbbr:'MDA', enFull:'Moldova',
+          keywords:['moldovan','moldovan national division','摩尔多瓦甲','摩尔多瓦'] },
+        { id:'latvia', code:'lv', continent:'europe', name:'拉脱维亚', enAbbr:'LVA', enFull:'Latvia',
+          keywords:['latvian','latvian higher league','拉脱维亚甲','拉脱维亚','virslīga'] },
+        { id:'lithuania', code:'lt', continent:'europe', name:'立陶宛', enAbbr:'LTU', enFull:'Lithuania',
+          keywords:['lithuanian','a lyga','立陶宛甲','立陶宛'] },
+        { id:'estonia', code:'ee', continent:'europe', name:'爱沙尼亚', enAbbr:'EST', enFull:'Estonia',
+          keywords:['estonian','meistriliiga','爱沙尼亚甲','爱沙尼亚'] },
+        { id:'luxembourg', code:'lu', continent:'europe', name:'卢森堡', enAbbr:'LUX', enFull:'Luxembourg',
+          keywords:['luxembourg','luxembourg national division','卢森堡甲','卢森堡'] },
+        { id:'malta', code:'mt', continent:'europe', name:'马耳他', enAbbr:'MLT', enFull:'Malta',
+          keywords:['maltese','maltese premier league','马耳他超','马耳他'] },
+        { id:'georgia', code:'ge', continent:'europe', name:'格鲁吉亚', enAbbr:'GEO', enFull:'Georgia',
+          keywords:['georgian','erovnuli liga','格鲁吉亚甲','格鲁吉亚'] },
+        { id:'armenia', code:'am', continent:'europe', name:'亚美尼亚', enAbbr:'ARM', enFull:'Armenia',
+          keywords:['armenian','armenian premier league','亚美尼亚超','亚美尼亚'] },
+        { id:'azerbaijan', code:'az', continent:'europe', name:'阿塞拜疆', enAbbr:'AZE', enFull:'Azerbaijan',
+          keywords:['azerbaijan','azerbaijan premier league','阿塞拜疆超','阿塞拜疆'] },
+        { id:'belarus', code:'by', continent:'europe', name:'白俄罗斯', enAbbr:'BLR', enFull:'Belarus',
+          keywords:['belarusian','belarusian premier league','白俄超','白俄罗斯'] },
+        { id:'bosnia', code:'ba', continent:'europe', name:'波黑', enAbbr:'BIH', enFull:'Bosnia & Herzegovina',
+          keywords:['bosnian','bosnian premier league','波黑甲','波黑','herzegovina'] },
+        { id:'montenegro', code:'me', continent:'europe', name:'黑山', enAbbr:'MNE', enFull:'Montenegro',
+          keywords:['montenegrin','montenegrin first league','黑山甲','黑山'] },
+        { id:'faroe', code:'fo', continent:'europe', name:'法罗群岛', enAbbr:'FRO', enFull:'Faroe Islands',
+          keywords:['faroe','faroe islands premier league','法罗群岛甲','法罗群岛'] },
+        { id:'northernIreland', code:'gb-nir', continent:'europe', name:'北爱尔兰', enAbbr:'NIR', enFull:'Northern Ireland',
+          keywords:['northern irish','northern ireland premiership','北爱尔兰超','北爱尔兰'] },
+        { id:'sanmarino', code:'sm', continent:'europe', name:'圣马力诺', enAbbr:'SMR', enFull:'San Marino',
+          keywords:['sanmarinese','sammarinese','圣马力诺甲','圣马力诺','san marino'] },
+        { id:'andorra', code:'ad', continent:'europe', name:'安道尔', enAbbr:'AND', enFull:'Andorra',
+          keywords:['andorran','andorran primera','安道尔甲','安道尔'] },
+        { id:'gibraltar', code:'gi', continent:'europe', name:'直布罗陀', enAbbr:'GIB', enFull:'Gibraltar',
+          keywords:['gibraltar','gibraltar national league','直布罗陀甲','直布罗陀'] },
+
+        // ==================== ASIA ====================
+        { id:'japan', code:'jp', continent:'asia', name:'日本', enAbbr:'JPN', enFull:'Japan',
+          keywords:['j.league','japanese','j1 league','j2 league','j3 league','j联赛','日本','j1','j2'] },
+        { id:'korea', code:'kr', continent:'asia', name:'韩国', enAbbr:'KOR', enFull:'South Korea',
+          keywords:['k league','korean','k联赛','韩国','k league 1','k league 2'] },
+        { id:'china', code:'cn', continent:'asia', name:'中国', enAbbr:'CHN', enFull:'China',
+          keywords:['chinese','chinese super league','csl','中超','中国','china league one','china league two','中超联赛','中甲','中乙'] },
+        { id:'iran', code:'ir', continent:'asia', name:'伊朗', enAbbr:'IRN', enFull:'Iran',
+          keywords:['iranian','iranian pro league','persian gulf pro league','伊朗职业','伊朗','azadegan league'] },
+        { id:'saudi', code:'sa', continent:'asia', name:'沙特阿拉伯', enAbbr:'KSA', enFull:'Saudi Arabia',
+          keywords:['saudi','saudi pro league','pro league saudi','沙特联','沙特职业','沙特','saudi first division'] },
+        { id:'qatar', code:'qa', continent:'asia', name:'卡塔尔', enAbbr:'QAT', enFull:'Qatar',
+          keywords:['qatar','stars league','卡塔尔联','卡塔尔','qatar stars'] },
+        { id:'uae', code:'ae', continent:'asia', name:'阿联酋', enAbbr:'UAE', enFull:'United Arab Emirates',
+          keywords:['uae','emirati','阿联酋联','阿联酋','uae pro league','arabian gulf'] },
+        { id:'thailand', code:'th', continent:'asia', name:'泰国', enAbbr:'THA', enFull:'Thailand',
+          keywords:['thai','thai league','泰超','泰甲','泰国','thai league 1','thai league 2'] },
+        { id:'india', code:'in', continent:'asia', name:'印度', enAbbr:'IND', enFull:'India',
+          keywords:['indian','indian super league','i-league','印度超','印度','isl'] },
+        { id:'indonesia', code:'id', continent:'asia', name:'印度尼西亚', enAbbr:'IDN', enFull:'Indonesia',
+          keywords:['indonesian','liga 1 indonesia','印尼甲','印尼','indonesia liga'] },
+        { id:'malaysia', code:'my', continent:'asia', name:'马来西亚', enAbbr:'MAS', enFull:'Malaysia',
+          keywords:['malaysian','malaysia super league','马来超','马来西亚','malaysia liga'] },
+        { id:'vietnam', code:'vn', continent:'asia', name:'越南', enAbbr:'VIE', enFull:'Vietnam',
+          keywords:['vietnamese','v.league','越南甲','越南','vietnam league'] },
+        { id:'uzbekistan', code:'uz', continent:'asia', name:'乌兹别克斯坦', enAbbr:'UZB', enFull:'Uzbekistan',
+          keywords:['uzbek','uzbekistan super league','乌兹别克','乌兹别克斯坦','uzbek league'] },
+        { id:'kuwait', code:'kw', continent:'asia', name:'科威特', enAbbr:'KUW', enFull:'Kuwait',
+          keywords:['kuwaiti','kuwait premier league','科威特联','科威特','kuwait league'] },
+        { id:'singapore', code:'sg', continent:'asia', name:'新加坡', enAbbr:'SGP', enFull:'Singapore',
+          keywords:['singaporean','singapore premier league','新加坡联','新加坡','spl singapore'] },
+        { id:'philippines', code:'ph', continent:'asia', name:'菲律宾', enAbbr:'PHI', enFull:'Philippines',
+          keywords:['philippine','philippines football league','菲律宾甲','菲律宾','pfl'] },
+        { id:'myanmar', code:'mm', continent:'asia', name:'缅甸', enAbbr:'MYA', enFull:'Myanmar',
+          keywords:['myanmar','myanmar national league','缅甸甲','缅甸'] },
+        { id:'bangladesh', code:'bd', continent:'asia', name:'孟加拉国', enAbbr:'BAN', enFull:'Bangladesh',
+          keywords:['bangladesh','bangladesh premier league','孟加拉甲','孟加拉'] },
+        { id:'turkmenistan', code:'tm', continent:'asia', name:'土库曼斯坦', enAbbr:'TKM', enFull:'Turkmenistan',
+          keywords:['turkmen','turkmenistan league','土库曼甲','土库曼'] },
+        { id:'lebanon', code:'lb', continent:'asia', name:'黎巴嫩', enAbbr:'LBN', enFull:'Lebanon',
+          keywords:['lebanese','lebanese premier league','黎巴嫩甲','黎巴嫩'] },
+        { id:'syria', code:'sy', continent:'asia', name:'叙利亚', enAbbr:'SYR', enFull:'Syria',
+          keywords:['syrian','syrian premier league','叙利亚甲','叙利亚'] },
+        { id:'jordan', code:'jo', continent:'asia', name:'约旦', enAbbr:'JOR', enFull:'Jordan',
+          keywords:['jordanian','jordanian pro league','约旦甲','约旦'] },
+        { id:'iraq', code:'iq', continent:'asia', name:'伊拉克', enAbbr:'IRQ', enFull:'Iraq',
+          keywords:['iraqi','iraqi premier league','伊拉克甲','伊拉克'] },
+        { id:'bahrain', code:'bh', continent:'asia', name:'巴林', enAbbr:'BHR', enFull:'Bahrain',
+          keywords:['bahraini','bahraini premier league','巴林甲','巴林'] },
+        { id:'oman', code:'om', continent:'asia', name:'阿曼', enAbbr:'OMA', enFull:'Oman',
+          keywords:['omani','oman professional league','阿曼甲','阿曼'] },
+        { id:'pakistan', code:'pk', continent:'asia', name:'巴基斯坦', enAbbr:'PAK', enFull:'Pakistan',
+          keywords:['pakistani','pakistan premier league','巴基斯坦甲','巴基斯坦'] },
+        { id:'nepal', code:'np', continent:'asia', name:'尼泊尔', enAbbr:'NEP', enFull:'Nepal',
+          keywords:['nepalese','nepal national league','尼泊尔甲','尼泊尔'] },
+        { id:'cambodia', code:'kh', continent:'asia', name:'柬埔寨', enAbbr:'CAM', enFull:'Cambodia',
+          keywords:['cambodian','cambodian league','柬埔寨甲','柬埔寨'] },
+        { id:'laos', code:'la', continent:'asia', name:'老挝', enAbbr:'LAO', enFull:'Laos',
+          keywords:['laotian','lao premier league','老挝甲','老挝'] },
+
+        // ==================== AMERICAS ====================
+        { id:'brazil', code:'br', continent:'americas', name:'巴西', enAbbr:'BRA', enFull:'Brazil',
+          keywords:['brasileirão','brasileirao','brazilian','campeonato brasileiro','巴甲','巴西','campeonato brasileiro série'] },
+        { id:'argentina', code:'ar', continent:'americas', name:'阿根廷', enAbbr:'ARG', enFull:'Argentina',
+          keywords:['argentina','argentine','primera división argentina','liga profesional argentina','阿超','阿根廷','primera nacional argentina','primera b argentina','argentine primera','argentine league','argentina league','superliga argentina'] },
+        { id:'usa', code:'us', continent:'americas', name:'美国', enAbbr:'USA', enFull:'United States',
+          keywords:['mls','major league soccer','usl','usl championship','美职联','美国','united states','us open cup','mls next pro'] },
+        { id:'mexico', code:'mx', continent:'americas', name:'墨西哥', enAbbr:'MEX', enFull:'Mexico',
+          keywords:['mexican','liga mx','墨超','墨西哥','ascenso mx','liga de expansión'] },
+        { id:'colombia', code:'co', continent:'americas', name:'哥伦比亚', enAbbr:'COL', enFull:'Colombia',
+          keywords:['colombian','categoría primera a','哥伦比亚甲','哥伦比亚','liga betplay','dimayor'] },
+        { id:'chile', code:'cl', continent:'americas', name:'智利', enAbbr:'CHI', enFull:'Chile',
+          keywords:['chilean','chile','primera división chilena','智利甲','智利','campeonato chileno','primera division de chile','chilean primera','chilean league','chile primera'] },
+        { id:'uruguay', code:'uy', continent:'americas', name:'乌拉圭', enAbbr:'URU', enFull:'Uruguay',
+          keywords:['uruguayan','primera división uruguaya','乌拉圭甲','乌拉圭','campeonato uruguayo'] },
+        { id:'paraguay', code:'py', continent:'americas', name:'巴拉圭', enAbbr:'PAR', enFull:'Paraguay',
+          keywords:['paraguayan','primera división paraguaya','巴拉圭甲','巴拉圭'] },
+        { id:'peru', code:'pe', continent:'americas', name:'秘鲁', enAbbr:'PER', enFull:'Peru',
+          keywords:['peruvian','liga 1 peru','秘鲁甲','秘鲁','primera división peruana'] },
+        { id:'ecuador', code:'ec', continent:'americas', name:'厄瓜多尔', enAbbr:'ECU', enFull:'Ecuador',
+          keywords:['ecuadorian','serie a ecuador','厄瓜多尔甲','厄瓜多尔','liga pro ecuador'] },
+        { id:'canada', code:'ca', continent:'americas', name:'加拿大', enAbbr:'CAN', enFull:'Canada',
+          keywords:['canadian','canadian premier league','加拿大','canpl','canadian championship'] },
+        { id:'bolivia', code:'bo', continent:'americas', name:'玻利维亚', enAbbr:'BOL', enFull:'Bolivia',
+          keywords:['bolivian','primera división boliviana','玻利维亚甲','玻利维亚'] },
+        { id:'venezuela', code:'ve', continent:'americas', name:'委内瑞拉', enAbbr:'VEN', enFull:'Venezuela',
+          keywords:['venezuelan','primera división venezolana','委内瑞拉甲','委内瑞拉','liga futve'] },
+        { id:'costaRica', code:'cr', continent:'americas', name:'哥斯达黎加', enAbbr:'CRC', enFull:'Costa Rica',
+          keywords:['costa rican','primera división costa rica','哥斯达黎加甲','哥斯达黎加','liga fpd'] },
+        { id:'honduras', code:'hn', continent:'americas', name:'洪都拉斯', enAbbr:'HON', enFull:'Honduras',
+          keywords:['honduran','liga nacional honduras','洪都拉斯甲','洪都拉斯','honduras league'] },
+        { id:'elSalvador', code:'sv', continent:'americas', name:'萨尔瓦多', enAbbr:'SLV', enFull:'El Salvador',
+          keywords:['salvadoran','primera división salvador','萨尔瓦多甲','萨尔瓦多'] },
+        { id:'guatemala', code:'gt', continent:'americas', name:'危地马拉', enAbbr:'GUA', enFull:'Guatemala',
+          keywords:['guatemalan','liga nacional guatemala','危地马拉甲','危地马拉'] },
+        { id:'panama', code:'pa', continent:'americas', name:'巴拿马', enAbbr:'PAN', enFull:'Panama',
+          keywords:['panamanian','liga panameña','巴拿马甲','巴拿马'] },
+        { id:'nicaragua', code:'ni', continent:'americas', name:'尼加拉瓜', enAbbr:'NCA', enFull:'Nicaragua',
+          keywords:['nicaraguan','primera división nicaragua','尼加拉瓜甲','尼加拉瓜'] },
+        { id:'jamaica', code:'jm', continent:'americas', name:'牙买加', enAbbr:'JAM', enFull:'Jamaica',
+          keywords:['jamaican','jamaican premier league','牙买加甲','牙买加'] },
+        { id:'trinidad', code:'tt', continent:'americas', name:'特立尼达和多巴哥', enAbbr:'TRI', enFull:'Trinidad & Tobago',
+          keywords:['trinidadian','trinidad','tt pro league','特立尼达甲'] },
+        { id:'haiti', code:'ht', continent:'americas', name:'海地', enAbbr:'HAI', enFull:'Haiti',
+          keywords:['haitian','haitian league','海地甲','海地'] },
+        { id:'cuba', code:'cu', continent:'americas', name:'古巴', enAbbr:'CUB', enFull:'Cuba',
+          keywords:['cuban','cuban national league','古巴甲','古巴'] },
+        { id:'suriname', code:'sr', continent:'americas', name:'苏里南', enAbbr:'SUR', enFull:'Suriname',
+          keywords:['suriname','suriname league','苏里南甲','苏里南'] },
+        { id:'guyana', code:'gy', continent:'americas', name:'圭亚那', enAbbr:'GUY', enFull:'Guyana',
+          keywords:['guyana','guyana league','圭亚那甲','圭亚那'] },
+        { id:'dominican', code:'do', continent:'americas', name:'多米尼加', enAbbr:'DOM', enFull:'Dominican Republic',
+          keywords:['dominican','多米尼加','liga dominicana'] },
+
+        // ==================== AFRICA ====================
+        { id:'egypt', code:'eg', continent:'africa', name:'埃及', enAbbr:'EGY', enFull:'Egypt',
+          keywords:['egyptian','egyptian premier league','埃及超','埃及','egypt league'] },
+        { id:'southAfrica', code:'za', continent:'africa', name:'南非', enAbbr:'RSA', enFull:'South Africa',
+          keywords:['south african','south africa premier','南非超','南非','psl south africa','dstv premiership'] },
+        { id:'morocco', code:'ma', continent:'africa', name:'摩洛哥', enAbbr:'MAR', enFull:'Morocco',
+          keywords:['moroccan','botola','摩洛哥甲','摩洛哥','morocco league'] },
+        { id:'tunisia', code:'tn', continent:'africa', name:'突尼斯', enAbbr:'TUN', enFull:'Tunisia',
+          keywords:['tunisian','tunisian ligue','突尼斯甲','突尼斯','tunisia league'] },
+        { id:'algeria', code:'dz', continent:'africa', name:'阿尔及利亚', enAbbr:'ALG', enFull:'Algeria',
+          keywords:['algerian','algerian ligue','阿尔及利亚甲','阿尔及利亚','algeria league'] },
+        { id:'nigeria', code:'ng', continent:'africa', name:'尼日利亚', enAbbr:'NGA', enFull:'Nigeria',
+          keywords:['nigerian','nigerian premier','尼日利亚甲','尼日利亚','nigeria league','npfl'] },
+        { id:'ghana', code:'gh', continent:'africa', name:'加纳', enAbbr:'GHA', enFull:'Ghana',
+          keywords:['ghanaian','ghana premier league','加纳甲','加纳','ghana league'] },
+        { id:'cameroon', code:'cm', continent:'africa', name:'喀麦隆', enAbbr:'CMR', enFull:'Cameroon',
+          keywords:['cameroonian','cameroon elite','喀麦隆甲','喀麦隆','cameroon league'] },
+        { id:'ivoryCoast', code:'ci', continent:'africa', name:'科特迪瓦', enAbbr:'CIV', enFull:'Côte d\'Ivoire',
+          keywords:['ivorian','ivorian ligue','科特迪瓦甲','科特迪瓦','côte d\'ivoire league','ivory coast'] },
+        { id:'senegal', code:'sn', continent:'africa', name:'塞内加尔', enAbbr:'SEN', enFull:'Senegal',
+          keywords:['senegalese','senegal premier league','塞内加尔甲','塞内加尔','senegal league'] },
+        { id:'zambia', code:'zm', continent:'africa', name:'赞比亚', enAbbr:'ZAM', enFull:'Zambia',
+          keywords:['zambian','zambia super league','赞比亚甲','赞比亚'] },
+        { id:'zimbabwe', code:'zw', continent:'africa', name:'津巴布韦', enAbbr:'ZIM', enFull:'Zimbabwe',
+          keywords:['zimbabwean','zimbabwe premier league','津巴布韦甲','津巴布韦'] },
+        { id:'uganda', code:'ug', continent:'africa', name:'乌干达', enAbbr:'UGA', enFull:'Uganda',
+          keywords:['ugandan','uganda premier league','乌干达甲','乌干达'] },
+        { id:'angola', code:'ao', continent:'africa', name:'安哥拉', enAbbr:'ANG', enFull:'Angola',
+          keywords:['angolan','girabola','安哥拉甲','安哥拉','angola league'] },
+        { id:'ethiopia', code:'et', continent:'africa', name:'埃塞俄比亚', enAbbr:'ETH', enFull:'Ethiopia',
+          keywords:['ethiopian','ethiopian premier league','埃塞俄比亚甲','埃塞俄比亚'] },
+        { id:'sudan', code:'sd', continent:'africa', name:'苏丹', enAbbr:'SUD', enFull:'Sudan',
+          keywords:['sudanese','sudan premier league','苏丹甲','苏丹'] },
+        { id:'libya', code:'ly', continent:'africa', name:'利比亚', enAbbr:'LBY', enFull:'Libya',
+          keywords:['libyan','libyan premier league','利比亚甲','利比亚'] },
+        { id:'mali', code:'ml', continent:'africa', name:'马里', enAbbr:'MLI', enFull:'Mali',
+          keywords:['malian','malian premiere division','马里甲','马里'] },
+        { id:'burkinaFaso', code:'bf', continent:'africa', name:'布基纳法索', enAbbr:'BFA', enFull:'Burkina Faso',
+          keywords:['burkinabe','burkina faso premier','布基纳法索甲'] },
+        { id:'togo', code:'tg', continent:'africa', name:'多哥', enAbbr:'TOG', enFull:'Togo',
+          keywords:['togolese','togolese championnat','多哥甲','多哥'] },
+        { id:'congo', code:'cg', continent:'africa', name:'刚果', enAbbr:'CGO', enFull:'Congo',
+          keywords:['congolese','congo premier league','刚果甲','刚果','congo league'] },
+        { id:'guinea', code:'gn', continent:'africa', name:'几内亚', enAbbr:'GUI', enFull:'Guinea',
+          keywords:['guinean','guinee championnat','几内亚甲','几内亚'] },
+        { id:'botswana', code:'bw', continent:'africa', name:'博茨瓦纳', enAbbr:'BOT', enFull:'Botswana',
+          keywords:['botswana','botswana premier league','博茨瓦纳甲'] },
+        { id:'kenya', code:'ke', continent:'africa', name:'肯尼亚', enAbbr:'KEN', enFull:'Kenya',
+          keywords:['kenyan','kenyan premier league','肯尼亚甲','肯尼亚'] },
+        { id:'tanzania', code:'tz', continent:'africa', name:'坦桑尼亚', enAbbr:'TAN', enFull:'Tanzania',
+          keywords:['tanzanian','tanzania premier league','坦桑尼亚甲','坦桑尼亚'] },
+        { id:'mozambique', code:'mz', continent:'africa', name:'莫桑比克', enAbbr:'MOZ', enFull:'Mozambique',
+          keywords:['mozambique','moçambola','莫桑比克甲','莫桑比克'] },
+
+        // ==================== OCEANIA ====================
+        { id:'australia', code:'au', continent:'oceania', name:'澳大利亚', enAbbr:'AUS', enFull:'Australia',
+          keywords:['australian','a-league','a league','澳超','澳大利亚'] },
+        { id:'newZealand', code:'nz', continent:'oceania', name:'新西兰', enAbbr:'NZL', enFull:'New Zealand',
+          keywords:['new zealand','new zealand football championship','新西兰甲','新西兰','nzfc'] },
+        { id:'fiji', code:'fj', continent:'oceania', name:'斐济', enAbbr:'FIJ', enFull:'Fiji',
+          keywords:['fiji','fiji premier league','斐济甲','斐济'] },
+        { id:'tahiti', code:'pf', continent:'oceania', name:'塔希提', enAbbr:'TAH', enFull:'Tahiti',
+          keywords:['tahiti','tahitian league','塔希提甲','塔希提','大溪地'] },
+        { id:'newCaledonia', code:'nc', continent:'oceania', name:'新喀里多尼亚', enAbbr:'NCL', enFull:'New Caledonia',
+          keywords:['new caledonia','新喀里多尼亚','caledonian league'] },
+        { id:'solomon', code:'sb', continent:'oceania', name:'所罗门群岛', enAbbr:'SOL', enFull:'Solomon Islands',
+          keywords:['solomon islands','solomon league','所罗门群岛甲'] },
+        { id:'vanuatu', code:'vu', continent:'oceania', name:'瓦努阿图', enAbbr:'VAN', enFull:'Vanuatu',
+          keywords:['vanuatu','vanuatu league','瓦努阿图甲'] },
+        { id:'papuaNewGuinea', code:'pg', continent:'oceania', name:'巴布亚新几内亚', enAbbr:'PNG', enFull:'Papua New Guinea',
+          keywords:['papua new guinea','png league','巴布亚新几内亚甲'] }
+    ];
+
+    function getFlagUrl(code) {
+        if (!code) return '';
+        return 'https://flagcdn.com/w80/' + code + '.png';
+    }
+
+    // Get continent order for sorting
+    function getContinentOrder(continentId) {
+        for (var i = 0; i < CONTINENTS.length; i++) {
+            if (CONTINENTS[i].id === continentId) return CONTINENTS[i].order;
+        }
+        return 99;
+    }
+
+    function guessCountry(leagueKey, lg) {
+        var rawName = (lg.en || lg.cn || leagueKey).toLowerCase();
+        var parts = rawName.split('/');
+        
+        // Generic league names that need club-voting disambiguation
+        var genericNames = ['primera división', 'primera division', 'premier league', 'first division', 
+            'second division', 'liga 1', 'super league', 'super lig', 'premier liga',
+            'serie a', 'serie b', 'top division', 'national league', 'first league',
+            'championship', 'pro league', 'elite league', 'premier soccer league'];
+        var isGeneric = false;
+        for (var gi = 0; gi < genericNames.length; gi++) {
+            if (rawName === genericNames[gi] || rawName.indexOf(genericNames[gi]) === 0) {
+                isGeneric = true; break;
+            }
+        }
+        
+        var bestMatch = null;
+        var bestLen = 0;
+        
+        // Longest keyword wins (skip if generic name - rely on club voting)
+        if (!isGeneric) {
+            for (var p = 0; p < parts.length; p++) {
+                var en = parts[p].trim();
+                if (!en) continue;
+                for (var i = 0; i < COUNTRY_CONFIG.length; i++) {
+                    var cfg = COUNTRY_CONFIG[i];
+                    for (var j = 0; j < cfg.keywords.length; j++) {
+                        var kw = cfg.keywords[j];
+                        if (en.indexOf(kw) >= 0 && kw.length > bestLen) {
+                            bestMatch = cfg.id;
+                            bestLen = kw.length;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Fallback: try to guess from club names within this league
+        if (!bestMatch && lg && lg.clubs && lg.clubs.length > 0) {
+            var clubVotes = {};
+            var maxVotes = 0;
+            for (var ci = 0; ci < lg.clubs.length; ci++) {
+                var clubKey = lg.clubs[ci];
+                var clubObj = aggData.clubs[clubKey];
+                if (!clubObj) continue;
+                var clubName = (clubObj.cn || clubObj.en || clubKey).toLowerCase();
+                // Also check the league's translated name for hints
+                var leagueCN = (lg.cn || '').toLowerCase();
+                for (var i = 0; i < COUNTRY_CONFIG.length; i++) {
+                    var cfg = COUNTRY_CONFIG[i];
+                    for (var j = 0; j < cfg.keywords.length; j++) {
+                        var kw = cfg.keywords[j];
+                        // Check club name AND league CN name for keyword matches
+                        if (clubName.indexOf(kw) >= 0 || leagueCN.indexOf(kw) >= 0) {
+                            clubVotes[cfg.id] = (clubVotes[cfg.id] || 0) + (clubName.indexOf(kw) >= 0 ? 1 : 0.5);
+                            if (clubVotes[cfg.id] > maxVotes) {
+                                maxVotes = clubVotes[cfg.id];
+                                bestMatch = cfg.id;
+                            }
+                            break; // one keyword match per country per club
+                        }
+                    }
+                }
+            }
+        }
+        
+        return bestMatch; // may be null if no match found
+    }
+
+    // ========== League Name Translation Map ==========
+    var LEAGUE_TRANSLATION = {
+        // 英格兰
+        'premier league': '英超联赛',
+        'efl championship': '英冠联赛',
+        'league one': '英甲联赛',
+        'league two': '英乙联赛',
+        'national league': '英格兰全国联赛',
+        'fa cup': '英格兰足总杯',
+        // 西班牙
+        'la liga': '西甲联赛',
+        'laliga': '西甲联赛',
+        'la liga 2': '西班牙足球乙级联赛',
+        'laliga2': '西班牙足球乙级联赛',
+        'la liga 2nd division': '西班牙足球乙级联赛',
+        'segunda división': '西班牙足球乙级联赛',
+        'segunda division': '西班牙足球乙级联赛',
+        'spanish primera división': '西班牙甲级联赛',
+        'spanish primera division': '西班牙甲级联赛',
+        'primera federación': '西班牙皇家足协甲级联赛',
+        // 意大利
+        'serie a': '意甲联赛',
+        'serie b': '意乙联赛',
+        'serie c': '意丙联赛',
+        // 德国
+        'bundesliga': '德甲联赛',
+        '2. bundesliga': '德乙联赛',
+        '3. liga': '德丙联赛',
+        // 法国
+        'ligue 1': '法甲联赛',
+        'ligue 2': '法乙联赛',
+        'national 1': '法丙联赛',
+        // 荷兰
+        'eredivisie': '荷甲联赛',
+        'eerste divisie': '荷乙联赛',
+        // 葡萄牙
+        'primeira liga': '葡超联赛',
+        'liga portugal 2': '葡甲联赛',
+        // 比利时
+        'belgian pro league': '比利时甲级联赛',
+        'jupiler pro league': '比利时甲级联赛',
+        'challenger pro league': '比利时乙级联赛',
+        // 土耳其
+        'süper lig': '土耳其超级联赛',
+        'super lig': '土耳其超级联赛',
+        'tff 1. lig': '土耳其甲级联赛',
+        // 俄罗斯
+        'russian premier league': '俄超联赛',
+        'russian first league': '俄甲联赛',
+        // 巴西
+        'brasileirão': '巴西甲级联赛',
+        'brasileirao': '巴西甲级联赛',
+        'campeonato brasileiro série a': '巴西甲级联赛',
+        'campeonato brasileiro série b': '巴西乙级联赛',
+        // 阿根廷
+        'argentine primera': '阿根廷甲级联赛',
+        'primera división argentina': '阿根廷甲级联赛',
+        'liga profesional argentina': '阿根廷职业联赛',
+        // 美国/加拿大
+        'mls': '美国职业足球大联盟',
+        'major league soccer': '美国职业足球大联盟',
+        'usl championship': '美国USL冠军联赛',
+        'canadian premier league': '加拿大超级联赛',
+        // 墨西哥
+        'liga mx': '墨西哥超级联赛',
+        'ascenso mx': '墨西哥甲级联赛',
+        // 沙特
+        'saudi pro league': '沙特职业足球联赛',
+        'saudi first division': '沙特甲级联赛',
+        // 卡塔尔
+        'qatar stars league': '卡塔尔星级联赛',
+        // 阿联酋
+        'uae pro league': '阿联酋职业联赛',
+        'arabian gulf league': '阿联酋阿拉伯海湾联赛',
+        // 埃及
+        'egyptian premier league': '埃及超级联赛',
+        // 中国
+        'chinese super league': '中超联赛',
+        'csl': '中超联赛',
+        'china league one': '中甲联赛',
+        'china league two': '中乙联赛',
+        // 日本
+        'j.league': '日本J联赛',
+        'j1 league': '日本J1联赛',
+        'j2 league': '日本J2联赛',
+        'j3 league': '日本J3联赛',
+        // 韩国
+        'k league': '韩国K联赛',
+        'k league 1': '韩国K1联赛',
+        'k league 2': '韩国K2联赛',
+        // 苏格兰
+        'scottish premiership': '苏格兰超级联赛',
+        'scottish championship': '苏格兰冠军联赛',
+        // 瑞士
+        'swiss super league': '瑞士超级联赛',
+        'swiss challenge league': '瑞士挑战联赛',
+        // 希腊
+        'super league greece': '希腊超级联赛',
+        'superleague greece': '希腊超级联赛',
+        // 瑞典
+        'allsvenskan': '瑞典超级联赛',
+        'superettan': '瑞典甲级联赛',
+        // 丹麦
+        'superligaen': '丹麦超级联赛',
+        // 挪威
+        'eliteserien': '挪威超级联赛',
+        'obos-ligaen': '挪威甲级联赛',
+        // 波兰
+        'ekstraklasa': '波兰甲级联赛',
+        'i liga polska': '波兰乙级联赛',
+        // 克罗地亚
+        'prva hnl': '克罗地亚甲级联赛',
+        'hnl': '克罗地亚甲级联赛',
+        // 塞尔维亚
+        'serbian superliga': '塞尔维亚超级联赛',
+        'super liga srbije': '塞尔维亚超级联赛',
+        // 乌克兰
+        'ukrainian premier league': '乌克兰超级联赛',
+        // 捷克
+        'czech first league': '捷克甲级联赛',
+        'fortuna liga': '捷克甲级联赛',
+        // 罗马尼亚
+        'liga i': '罗马尼亚甲级联赛',
+        // 澳大利亚
+        'a-league': '澳大利亚A联赛',
+        'a league': '澳大利亚A联赛',
+        // 奥地利
+        'bundesliga austria': '奥地利超级联赛',
+        'austrian bundesliga': '奥地利超级联赛',
+        // 伊朗
+        'persian gulf pro league': '伊朗职业足球联赛',
+        'iranian pro league': '伊朗职业足球联赛',
+        // 印度
+        'indian super league': '印度超级联赛',
+        'i-league': '印度甲级联赛',
+        // 哥伦比亚
+        'categoría primera a': '哥伦比亚甲级联赛',
+        'liga betplay': '哥伦比亚甲级联赛',
+        // 智利
+        'primera división chilena': '智利甲级联赛',
+        'campeonato chileno': '智利甲级联赛',
+        // 乌拉圭
+        'primera división uruguaya': '乌拉圭甲级联赛',
+        'campeonato uruguayo': '乌拉圭甲级联赛',
+        // 巴拉圭
+        'primera división paraguaya': '巴拉圭甲级联赛',
+        // 秘鲁
+        'liga 1 peru': '秘鲁甲级联赛',
+        // 厄瓜多尔
+        'serie a ecuador': '厄瓜多尔甲级联赛',
+        'liga pro ecuador': '厄瓜多尔甲级联赛',
+        // 摩洛哥
+        'botola': '摩洛哥甲级联赛',
+        'botola pro': '摩洛哥甲级联赛',
+        // 南非
+        'dstv premiership': '南非超级联赛',
+        'psl south africa': '南非超级联赛',
+        // 泰国
+        'thai league 1': '泰国甲级联赛',
+        'thai league': '泰国超级联赛',
+        // 越南
+        'v.league': '越南甲级联赛',
+        // 印尼
+        'liga 1 indonesia': '印尼甲级联赛',
+        // 马来西亚
+        'malaysia super league': '马来西亚超级联赛',
+        // 保加利亚
+        'parva liga': '保加利亚甲级联赛',
+        'efbet league': '保加利亚甲级联赛',
+        // 匈牙利
+        'nb i': '匈牙利甲级联赛',
+        'nemzeti bajnokság': '匈牙利甲级联赛',
+        'otp bank liga': '匈牙利甲级联赛',
+        // 斯洛伐克
+        'fortuna liga slovakia': '斯洛伐克甲级联赛',
+        // 斯洛文尼亚
+        'prva liga slovenia': '斯洛文尼亚甲级联赛',
+        // 以色列
+        'ligat ha\'al': '以色列超级联赛',
+        'israeli premier league': '以色列超级联赛',
+        // 芬兰
+        'veikkausliiga': '芬兰超级联赛',
+        // 冰岛
+        'besta deild': '冰岛超级联赛',
+        'úrvalsdeild': '冰岛超级联赛',
+                'qatar league': '卡塔尔联赛',
+                'croatian first league': '克罗地亚甲级联赛',
+                'croatian league': '克罗地亚甲级联赛',
+                'norwegian league': '挪威超级联赛',
+                'austrian league': '奥地利超级联赛',
+        
+        // === Chinese aliases (normalize variants) ===
+        '俄超': '俄超联赛',
+        '俄甲': '俄甲联赛',
+        '土超': '土耳其超级联赛',
+        '希腊超': '希腊超级联赛',
+        '丹超': '丹麦超级联赛',
+        '瑞典超': '瑞典超级联赛',
+        '挪超': '挪威超级联赛',
+        '瑞士超': '瑞士超级联赛',
+        '奥超': '奥地利超级联赛',
+        '奥甲': '奥地利甲级联赛',
+        '苏超': '苏格兰超级联赛',
+        '捷甲': '捷克甲级联赛',
+        '克甲': '克罗地亚甲级联赛',
+        '塞尔维亚超': '塞尔维亚超级联赛',
+        '波兰甲': '波兰甲级联赛',
+        '乌克兰超': '乌克兰超级联赛',
+        '罗马尼亚甲': '罗马尼亚甲级联赛',
+        '保加利亚甲': '保加利亚甲级联赛',
+        '匈牙利甲': '匈牙利甲级联赛',
+        '斯洛伐克甲': '斯洛伐克甲级联赛',
+        '斯洛文尼亚甲': '斯洛文尼亚甲级联赛',
+        '以色列超': '以色列超级联赛',
+        '芬兰超': '芬兰超级联赛',
+        '冰岛超': '冰岛超级联赛',
+        '哥伦比亚甲': '哥伦比亚甲级联赛',
+        '智利甲': '智利甲级联赛',
+        '乌拉圭甲': '乌拉圭甲级联赛',
+        '巴拉圭甲': '巴拉圭甲级联赛',
+        '秘鲁甲': '秘鲁甲级联赛',
+        '厄瓜多尔甲': '厄瓜多尔甲级联赛',
+        '埃及超': '埃及超级联赛',
+        '南非超': '南非超级联赛',
+        '摩洛哥甲': '摩洛哥甲级联赛',
+        '伊朗超': '伊朗职业足球联赛',
+        '伊朗职业': '伊朗职业足球联赛',
+        '卡塔尔联': '卡塔尔星级联赛',
+        '阿联酋联': '阿联酋职业联赛',
+        '沙特联': '沙特职业足球联赛',
+        '沙特职业': '沙特职业足球联赛',
+        '泰超': '泰国超级联赛',
+        '泰甲': '泰国甲级联赛',
+        '越南甲': '越南甲级联赛',
+        '印尼甲': '印尼甲级联赛',
+        '马来超': '马来西亚超级联赛',
+        '印度超': '印度超级联赛',
+        'J联赛': '日本J联赛',
+        'K联赛': '韩国K联赛',
+        '墨超': '墨西哥超级联赛',
+        '美职联': '美国职业足球大联盟',
+        '北美足球联赛': '北美足球联赛',
+        '比甲': '比利时甲级联赛',
+        '意丙': '意丙联赛',
+        '英冠': '英冠联赛',
+        '英甲': '英甲联赛',
+        '英乙': '英乙联赛',
+        '西乙': '西班牙足球乙级联赛',
+        '法乙': '法乙联赛',
+        '德乙': '德乙联赛',
+        '德丙': '德丙联赛',
+        '荷乙': '荷乙联赛',
+        '葡甲': '葡甲联赛',
+        '意乙': '意乙联赛',
+        '巴甲': '巴西甲级联赛',
+        '巴乙': '巴西乙级联赛',
+        '阿超': '阿根廷甲级联赛',
+        '澳超': '澳大利亚A联赛',
+        '中超': '中超联赛',
+        '中甲': '中甲联赛',
+        '中乙': '中乙联赛',
+        '俄超联赛': '俄超联赛',
+        '英超联赛': '英超联赛',
+        '西甲联赛': '西甲联赛',
+        '意甲联赛': '意甲联赛',
+        '德甲联赛': '德甲联赛',
+        '法甲联赛': '法甲联赛',
+        '荷甲联赛': '荷甲联赛',
+        '葡超联赛': '葡超联赛',
+        // 通用兜底
+        'primera división': '甲级联赛',
+        'primera division': '甲级联赛',
+        'russian premier league': '俄罗斯超级联赛',
+        'russian first league': '俄罗斯甲级联赛',
+        'russian first division': '俄罗斯甲级联赛',
+        'chilean primera division': '智利甲级联赛',
+        'chilean league': '智利联赛',
+        'argentine primera division': '阿根廷甲级联赛',
+        'argentine league': '阿根廷联赛',
+        'colombian primera a': '哥伦比亚甲级联赛',
+        'uruguayan primera division': '乌拉圭甲级联赛',
+        'paraguayan primera division': '巴拉圭甲级联赛',
+        'peruvian liga 1': '秘鲁甲级联赛',
+        'venezuelan primera division': '委内瑞拉甲级联赛',
+        'bolivian primera division': '玻利维亚甲级联赛',
+        'ecuadorian serie a': '厄瓜多尔甲级联赛',
+        'costa rican primera division': '哥斯达黎加甲级联赛',
+        'honduran league': '洪都拉斯联赛',
+        'guatemalan league': '危地马拉联赛',
+        'panamanian league': '巴拿马联赛',
+        'moroccan league': '摩洛哥联赛',
+        'tunisian league': '突尼斯联赛',
+        'algerian league': '阿尔及利亚联赛',
+        'nigerian league': '尼日利亚联赛',
+        'national team': '国家队'
+    };
+
+    function translateLeagueName(rawName) {
+        if (!rawName) return rawName;
+        if (/[\u4e00-\u9fff]/.test(rawName)) return rawName;
+        // 优先使用引擎的 formatStandardName
+        if (typeof window.formatStandardName === 'function') {
+            var stdResult = window.formatStandardName('league', rawName);
+            if (stdResult && stdResult !== rawName && stdResult !== '?') return stdResult;
+        }
+        // Try external translate first
+        if (typeof window.translate === 'object' && typeof window.translate.league === 'function') {
+            var tl = window.translate.league(rawName);
+            if (tl && tl !== rawName && tl !== '?') return tl;
+        }
+        // Try local map
+        var low = rawName.toLowerCase().trim();
+        if (LEAGUE_TRANSLATION[low]) return LEAGUE_TRANSLATION[low];
+        for (var k in LEAGUE_TRANSLATION) {
+            if (low.indexOf(k) >= 0 || k.indexOf(low) >= 0) return LEAGUE_TRANSLATION[k];
+        }
+        return rawName;
+    }
+
+    // ========== Utilities ==========
+    function escHtml(s) {
+        if (!s) return '';
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function showToast(msg) {
+        var t = document.getElementById('toast');
+        t.textContent = msg; t.classList.add('show');
+        clearTimeout(t._to);
+        t._to = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+    }
+
+    // ========== Data Aggregation ==========
+    function buildAggregation() {
+        if (typeof window.getAggregatedData === 'function') {
+            var d = window.getAggregatedData();
+            if (d && d.leagues && Object.keys(d.leagues).length > 0) return d;
+        }
+        return buildFromPlayerDB();
+    }
+
+    function buildFromPlayerDB() {
+        var clubs = {}, leagues = {};
+        if (typeof playerDB === 'undefined') return { clubs: {}, leagues: {} };
+
+        function normKey(s) {
+            if (!s) return '';
+            return s.toLowerCase().replace(/\s*fc$/i,'').replace(/\s*sc$/i,'').replace(/\s*cf$/i,'')
+                .replace(/\s*ac$/i,'').replace(/\s*as$/i,'').replace(/\s*ssc$/i,'')
+                .replace(/\s*afc$/i,'').replace(/[&.,'\-–—()\[\]{}]/g,' ').replace(/\s+/g,' ').trim();
+        }
+
+        // Helper: split multi-club entries (e.g. "埃弗顿/桑普多利亚" with league "英超/意甲")
+        function splitEntries(entries) {
+            var result = [];
+            for (var i = 0; i < entries.length; i++) {
+                var e = entries[i];
+                var cn = (e.t || e.team || '');
+                var ln = (e.l || e.league || '');
+                var hasSlashT = cn.indexOf('/') >= 0;
+                var hasSlashL = ln.indexOf('/') >= 0;
+                var isChineseClub = /[\u4e00-\u9fff]/.test(cn);
+                
+                // Case 1: Chinese multi-club (e.g. "埃弗顿/桑普多利亚" + "英超/意甲")
+                if (hasSlashT && isChineseClub) {
+                    var teamParts = cn.split('/');
+                    var leagueParts = hasSlashL ? ln.split('/') : [];
+                    // Clean parenthetical notes like (租借), (租借在外)
+                    teamParts = teamParts.map(function(t) { return t.replace(/[（(][^)）]*[)）]/g, '').trim(); });
+                    if (leagueParts.length > 0) {
+                        leagueParts = leagueParts.map(function(l) { return l.trim(); });
+                    }
+                    for (var j = 0; j < teamParts.length; j++) {
+                        if (!teamParts[j]) continue;
+                        var newEntry = {};
+                        for (var k in e) { if (e.hasOwnProperty(k)) newEntry[k] = e[k]; }
+                        newEntry.t = teamParts[j];
+                        // Assign league: if equal parts, pair them; otherwise use last known league
+                        if (leagueParts.length === teamParts.length) {
+                            newEntry.l = leagueParts[j] || ln;
+                        } else if (leagueParts.length > 0 && j < leagueParts.length) {
+                            newEntry.l = leagueParts[j];
+                        } else {
+                            newEntry.l = ln;
+                        }
+                        // nt flag preserved for downstream filtering
+                        result.push(newEntry);
+                    }
+                }
+                // Case 2: Single club but multi-league (e.g. "阿森纳(租借在外)" + "英超/德甲")
+                else if (!hasSlashT && hasSlashL && isChineseClub) {
+                    var cleanCn = cn.replace(/[（(][^)）]*[)）]/g, '').trim();
+                    var leagueParts = ln.split('/');
+                    for (var j = 0; j < leagueParts.length; j++) {
+                        var lp = leagueParts[j].trim();
+                        if (!lp) continue;
+                        var newEntry = {};
+                        for (var k in e) { if (e.hasOwnProperty(k)) newEntry[k] = e[k]; }
+                        newEntry.t = cleanCn;
+                        newEntry.l = lp;
+                        // nt flag preserved for downstream filtering
+                        result.push(newEntry);
+                    }
+                }
+                // Case 3: No splitting needed
+                else {
+                    result.push(e);
+                }
+            }
+            return result;
+        }
+        for (var pn in playerDB) {
+            var pd = playerDB[pn];
+            var rawEntries = (pd.cr && pd.cr.length > 0) ? pd.cr : [{ t: pd.t || pd.team, l: pd.l || pd.league }];
+            var entries = splitEntries(rawEntries);
+            for (var i = 0; i < entries.length; i++) {
+                var e = entries[i];
+                var cn = e.t || e.team || '';
+                var ln = e.l || e.league || '';
+                // Skip national team entries
+                if (e.nt === true) continue;
+                if (!cn || cn === '?' || cn === 'Unknown') continue;
+                if (/国家队|national team|國際隊|selección|selecao|nationalmannschaft/i.test(cn)) continue;
+                if (/国家队|national team/i.test(ln) && ln !== '英超' && ln !== '西甲' && ln !== '意甲' && ln !== '德甲' && ln !== '法甲') continue;
+                var ck = normKey(cn);
+                if (!clubs[ck]) clubs[ck] = { id: ck.replace(/\s+/g,'_'), en: cn, cn: cn, league: ln, players: [], worldCupGoals: 0 };
+                if (clubs[ck].players.indexOf(pn) < 0) clubs[ck].players.push(pn);
+                if (ln && ln !== '?' && ln !== 'Unknown' && !clubs[ck].league) clubs[ck].league = ln;
+            }
+        }
+
+        for (var ck in clubs) {
+            var cb = clubs[ck];
+            var ln = cb.league || 'Unknown';
+            var lk = normKey(ln);
+            if (!leagues[lk]) leagues[lk] = { id: lk.replace(/\s+/g,'_'), en: ln, cn: translateLeagueName(ln), clubs: [], playerCount: 0, worldCupGoals: 0 };
+            if (leagues[lk].clubs.indexOf(ck) < 0) leagues[lk].clubs.push(ck);
+            leagues[lk].playerCount += cb.players.length;
+        }
+
+        for (var lk in leagues) {
+            leagues[lk].clubs.sort(function(a, b) { return (clubs[b].players||[]).length - (clubs[a].players||[]).length; });
+        }
+
+        return { clubs: clubs, leagues: leagues };
+    }
+
+    // ========== Country Aggregation (by Continent) ==========
+    function buildCountryData() {
+        var d = aggData;
+        var leagues = d.leagues;
+        var countries = {};
+
+        // Initialize all countries
+        for (var i = 0; i < COUNTRY_CONFIG.length; i++) {
+            countries[COUNTRY_CONFIG[i].id] = {
+                cfg: COUNTRY_CONFIG[i],
+                leagues: [],
+                totalClubs: 0,
+                totalPlayers: 0,
+                totalGoals: 0
+            };
+        }
+
+        // Assign leagues to countries
+        var unmatchedLeagues = [];
+        for (var lk in leagues) {
+            var lg = leagues[lk];
+            var cid = guessCountry(lk, lg);
+            if (cid && countries[cid]) {
+                countries[cid].leagues.push({ key: lk, lg: lg });
+                countries[cid].totalClubs += (lg.clubs ? lg.clubs.length : 0);
+                countries[cid].totalPlayers += (lg.playerCount || 0);
+                countries[cid].totalGoals += (lg.worldCupGoals || 0);
+            } else {
+                unmatchedLeagues.push({ key: lk, lg: lg });
+            }
+        }
+
+        // Sort leagues within each country
+        for (var cid in countries) {
+            countries[cid].leagues.sort(function(a, b) {
+                return (b.lg.playerCount || 0) - (a.lg.playerCount || 0);
+            });
+        }
+
+        // Group by continent
+        var continentData = {};
+        for (var ci = 0; ci < CONTINENTS.length; ci++) {
+            var contId = CONTINENTS[ci].id;
+            continentData[contId] = {
+                continent: CONTINENTS[ci],
+                countries: []
+            };
+        }
+
+        for (var cid in countries) {
+            var cd = countries[cid];
+            if (cd.leagues.length === 0) continue; // skip countries with no leagues
+            var contId = cd.cfg.continent;
+            if (!continentData[contId]) continue;
+            continentData[contId].countries.push(cd);
+        }
+
+        // Sort countries within each continent by totalPlayers DESC
+        for (var contId in continentData) {
+            continentData[contId].countries.sort(function(a, b) {
+                return b.totalPlayers - a.totalPlayers;
+            });
+        }
+
+        return continentData;
+    }
+
+    // ========== Update Stats ==========
+    function updateStats() {
+        var d = aggData;
+        var clubs = d.clubs, leagues = d.leagues;
+        var lcount = Object.keys(leagues).length;
+        var ccount = Object.keys(clubs).length;
+        var pcount = 0, gcount = 0;
+        for (var ck in clubs) {
+            pcount += (clubs[ck].players ? clubs[ck].players.length : 0);
+            gcount += (clubs[ck].worldCupGoals || 0);
+        }
+        document.getElementById('statLeagues').textContent = lcount;
+        document.getElementById('statClubs').textContent = ccount;
+        document.getElementById('statPlayers').textContent = pcount.toLocaleString();
+        document.getElementById('statGoals').textContent = gcount;
+    }
+
+    // ========== Update Continent Nav Counts ==========
+    function updateContinentCounts() {
+        var cd = buildCountryData();
+        var totalAll = 0;
+        for (var ci = 0; ci < CONTINENTS.length; ci++) {
+            var contId = CONTINENTS[ci].id;
+            var cntEl = document.getElementById('cnt' + contId.charAt(0).toUpperCase() + contId.slice(1));
+            if (cntEl && cd[contId]) {
+                var n = cd[contId].countries.length;
+                cntEl.textContent = n + '国';
+                totalAll += n;
+            }
+        }
+        // Update 'all' count
+        var cntAll = document.getElementById('cntAll');
+        if (cntAll) cntAll.textContent = totalAll + '国';
+    }
+
+    // ========== Search ==========
+    function onSearch() {
+        searchTerm = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+        if (currentView === 'countries') renderCountryView();
+        else if (currentView === 'leagues') renderLeagueView(currentCountryId);
+        else if (currentView === 'clubs') renderClubView(currentLeagueKey);
+    }
+
+    function updateBreadcrumb() {
+        var bc = document.getElementById('breadcrumb');
+        var html = '<span onclick="goToCountries()">🌍 全部地区</span>';
+        if (currentView === 'leagues' || currentView === 'clubs') {
+            var ccfg = null;
+            for (var i = 0; i < COUNTRY_CONFIG.length; i++) {
+                if (COUNTRY_CONFIG[i].id === currentCountryId) { ccfg = COUNTRY_CONFIG[i]; break; }
+            }
+            var flagHtml = '';
+            if (ccfg && ccfg.code) {
+                flagHtml = '<img src="' + getFlagUrl(ccfg.code) + '" style="width:18px;height:12px;vertical-align:middle;margin-right:2px;border-radius:1px;" onerror="this.style.display=\'none\'">';
+            }
+            html += ' <span class="sep">›</span> <span onclick="goToLeagues(\'' + currentCountryId + '\')">' + flagHtml + ' ' + (ccfg ? ccfg.name : currentCountryId) + '</span>';
+        }
+        if (currentView === 'clubs') {
+            var d = aggData;
+            var lg = d.leagues[currentLeagueKey];
+            html += ' <span class="sep">›</span> <span class="current">' + escHtml(lg ? translateLeagueName(lg.cn || lg.en || currentLeagueKey) : currentLeagueKey) + '</span>';
+        }
+        bc.innerHTML = html;
+    }
+
+    // ========== Filter by Continent (like WC Edition Selector) ==========
+    function filterByContinent(contId) {
+        currentContinentFilter = contId;
+        // Update active tab
+        var tabs = document.querySelectorAll('.continent-tab');
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+            if (tabs[i].getAttribute('data-continent') === contId) {
+                tabs[i].classList.add('active');
+            }
+        }
+        // Re-render country view with filter
+        renderCountryView();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== COUNTRY VIEW (by Continent) =====
+    function renderCountryView() {
+        currentView = 'countries';
+        currentCountryId = null;
+        currentLeagueKey = null;
+        updateBreadcrumb();
+
+        var cd = buildCountryData();
+        var hasSearch = searchTerm && searchTerm.length > 0;
+
+        var html = '';
+
+        if (hasSearch) {
+            // In search mode, flatten all countries and filter
+            var allCountries = [];
+            for (var ci = 0; ci < CONTINENTS.length; ci++) {
+                var contId = CONTINENTS[ci].id;
+                if (cd[contId]) {
+                    for (var j = 0; j < cd[contId].countries.length; j++) {
+                        allCountries.push(cd[contId].countries[j]);
+                    }
+                }
+            }
+            allCountries = allCountries.filter(function(c) {
+                if (c.cfg.name.toLowerCase().indexOf(searchTerm) >= 0) return true;
+                if ((c.cfg.enAbbr || '').toLowerCase().indexOf(searchTerm) >= 0) return true;
+                if ((c.cfg.enFull || '').toLowerCase().indexOf(searchTerm) >= 0) return true;
+                for (var i = 0; i < c.leagues.length; i++) {
+                    var lg = c.leagues[i].lg;
+                    if ((lg.cn || '').toLowerCase().indexOf(searchTerm) >= 0) return true;
+                    if ((lg.en || '').toLowerCase().indexOf(searchTerm) >= 0) return true;
+                }
+                return false;
+            });
+
+            if (allCountries.length === 0) {
+                html = '<div class="no-data">🔍 没有找到匹配的国家或联赛</div>';
+            } else {
+                html += '<div class="country-grid">';
+                html += renderCountryCards(allCountries);
+                html += '</div>';
+            }
+        } else {
+            // Full view by continent (with optional filter)
+            var totalCountries = 0;
+            for (var ci = 0; ci < CONTINENTS.length; ci++) {
+                var contId = CONTINENTS[ci].id;
+                var cont = CONTINENTS[ci];
+                var countries = cd[contId] ? cd[contId].countries : [];
+                if (countries.length === 0) continue;
+                
+                // Skip if filtering to a specific continent
+                if (currentContinentFilter !== 'all' && currentContinentFilter !== contId) continue;
+                
+                totalCountries += countries.length;
+
+                html += '<div class="continent-section" id="section-' + contId + '">';
+                html += '<div class="continent-section-header">';
+                html += '<span class="continent-icon">' + cont.icon + '</span>';
+                html += '<span class="continent-name">' + cont.name + '</span>';
+                html += '<span class="continent-stats">' + countries.length + ' 个国家/地区</span>';
+                html += '</div>';
+                html += '<div class="continent-section-body">';
+                html += '<div class="country-grid">';
+                html += renderCountryCards(countries);
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+            }
+        }
+
+        document.getElementById('mainView').innerHTML = html;
+        document.getElementById('continentNav').style.display = hasSearch ? 'none' : 'flex';
+        updateContinentCounts();
+
+        // No scroll listener needed (filter mode)
+    }
+
+    function renderCountryCards(countryList) {
+        var html = '';
+        for (var i = 0; i < countryList.length; i++) {
+            var c = countryList[i];
+            var cfg = c.cfg;
+            var flagUrl = getFlagUrl(cfg.code);
+            html += '<div class="country-card" onclick="goToLeagues(\'' + cfg.id + '\')">';
+            html += '<div class="country-header">';
+            if (flagUrl) {
+                html += '<img class="country-flag" src="' + flagUrl + '" onerror="this.style.display=\'none\'" loading="lazy">';
+            } else {
+                html += '<div class="country-flag-placeholder">' + cfg.enAbbr + '</div>';
+            }
+            html += '<div class="country-name-block">';
+            html += '<div class="country-name-zh">' + cfg.name + '</div>';
+            html += '<div class="country-name-en">' + cfg.enAbbr + ' · ' + cfg.enFull + '</div>';
+            html += '</div></div>';
+            html += '<div class="country-stats">';
+            html += '<div class="country-stat"><div class="val">' + c.leagues.length + '</div><div class="lbl">联赛</div></div>';
+            html += '<div class="country-stat"><div class="val">' + c.totalClubs + '</div><div class="lbl">俱乐部</div></div>';
+            html += '<div class="country-stat"><div class="val">' + c.totalPlayers + '</div><div class="lbl">球员</div></div>';
+            html += '<div class="country-stat"><div class="val">' + c.totalGoals + '</div><div class="lbl">⚽进球</div></div>';
+            html += '</div></div>';
+        }
+        return html;
+    }
+
+    window.goToCountries = function() {
+        document.getElementById('searchInput').value = '';
+        searchTerm = '';
+        currentContinentFilter = 'all';
+        // Reset active tab to 'all'
+        var tabs = document.querySelectorAll('.continent-tab');
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+            if (tabs[i].getAttribute('data-continent') === 'all') {
+                tabs[i].classList.add('active');
+            }
+        }
+        document.getElementById('continentNav').style.display = 'flex';
+        renderCountryView();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // ===== LEAGUE VIEW =====
+    window.goToLeagues = function(countryId) {
+        currentView = 'leagues';
+        currentCountryId = countryId;
+        currentLeagueKey = null;
+        document.getElementById('searchInput').value = '';
+        searchTerm = '';
+        updateBreadcrumb();
+        renderLeagueView(countryId);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    function renderLeagueView(countryId) {
+        var d = aggData;
+        var ccfg = null;
+        for (var i = 0; i < COUNTRY_CONFIG.length; i++) {
+            if (COUNTRY_CONFIG[i].id === countryId) { ccfg = COUNTRY_CONFIG[i]; break; }
+        }
+
+        var leagueItems = [];
+        for (var lk in d.leagues) {
+            var lg = d.leagues[lk];
+            var cid = guessCountry(lk, lg);
+            if (cid === countryId) {
+                leagueItems.push({ key: lk, lg: lg });
+            }
+        }
+
+        leagueItems.sort(function(a, b) { return (b.lg.playerCount || 0) - (a.lg.playerCount || 0); });
+
+        if (searchTerm) {
+            leagueItems = leagueItems.filter(function(item) {
+                var lg = item.lg;
+                if ((lg.cn || '').toLowerCase().indexOf(searchTerm) >= 0) return true;
+                if ((lg.en || '').toLowerCase().indexOf(searchTerm) >= 0) return true;
+                return false;
+            });
+        }
+
+        var html = '<button class="back-btn" onclick="goToCountries()">← 返回全部地区</button>';
+
+        // Region header with flag
+        html += '<div class="region-header">';
+        if (ccfg && ccfg.code) {
+            html += '<img class="region-flag" src="' + getFlagUrl(ccfg.code) + '" onerror="this.style.display=\'none\'" loading="lazy">';
+        }
+        html += '<div class="region-info">';
+        html += '<div class="region-name-zh">' + (ccfg ? ccfg.name : countryId) + '</div>';
+        if (ccfg) html += '<div class="region-name-en">' + ccfg.enAbbr + ' · ' + ccfg.enFull + '</div>';
+        html += '</div>';
+        html += '<div class="region-league-count">' + leagueItems.length + ' 个联赛</div>';
+        html += '</div>';
+
+        if (leagueItems.length === 0) {
+            html += '<div class="no-data">🔍 该地区没有找到匹配的联赛</div>';
+        } else {
+            html += '<div class="lc-grid">';
+            for (var i = 0; i < leagueItems.length; i++) {
+                var item = leagueItems[i];
+                var lg = item.lg;
+                var cnName = translateLeagueName(lg.cn || lg.en || item.key);
+                var enName = lg.en || item.key;
+                var safeKey = item.key.replace(/'/g, "\'");
+                html += '<div class="lc-card" onclick="goToClubs(\'' + safeKey + '\')">';
+                html += '<div class="lc-card-header">';
+                html += '<div class="lc-card-name">' + escHtml(cnName) + '<small>' + escHtml(enName) + '</small></div>';
+                html += '</div>';
+                html += '<div class="lc-card-stats">';
+                html += '<div class="lc-card-stat"><div class="val">' + (lg.clubs ? lg.clubs.length : 0) + '</div><div class="lbl">俱乐部</div></div>';
+                html += '<div class="lc-card-stat"><div class="val">' + (lg.playerCount || 0) + '</div><div class="lbl">球员</div></div>';
+                html += '<div class="lc-card-stat"><div class="val">' + (lg.worldCupGoals || 0) + '</div><div class="lbl">⚽进球</div></div>';
+                html += '</div></div>';
+            }
+            html += '</div>';
+        }
+
+        document.getElementById('mainView').innerHTML = html;
+        // Hide continent nav in league view
+        document.getElementById('continentNav').style.display = 'none';
+    }
+
+    // ===== CLUB VIEW =====
+    window.goToClubs = function(leagueKey) {
+        currentView = 'clubs';
+        currentLeagueKey = leagueKey;
+        document.getElementById('searchInput').value = '';
+        searchTerm = '';
+        updateBreadcrumb();
+        renderClubView(leagueKey);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    function renderClubView(leagueKey) {
+        var d = aggData;
+        var lg = d.leagues[leagueKey];
+        if (!lg) {
+            document.getElementById('mainView').innerHTML = '<div class="no-data">⚠️ 未找到联赛数据</div>';
+            return;
+        }
+
+        var html = '<button class="back-btn" onclick="goToLeagues(\'' + currentCountryId + '\')">← 返回联赛列表</button>';
+        html += '<div class="league-info-bar"><strong>' + escHtml(translateLeagueName(lg.cn || lg.en || leagueKey)) + '</strong> · ' + escHtml(lg.en || leagueKey) + ' · ' + (lg.clubs ? lg.clubs.length : 0) + ' 个俱乐部 · ' + (lg.playerCount || 0) + ' 名球员 · ⚽ ' + (lg.worldCupGoals || 0) + ' 个世界杯进球</div>';
+
+        if (!lg.clubs || lg.clubs.length === 0) {
+            html += '<div class="no-data">该联赛暂无俱乐部数据</div>';
+        } else {
+            var clubKeys = lg.clubs.slice();
+            if (searchTerm) {
+                clubKeys = clubKeys.filter(function(ck) {
+                    var cb = d.clubs[ck];
+                    if (!cb) return false;
+                    if ((cb.cn || '').toLowerCase().indexOf(searchTerm) >= 0) return true;
+                    if ((cb.en || '').toLowerCase().indexOf(searchTerm) >= 0) return true;
+                    return false;
+                });
+            }
+
+            html += '<div class="table-wrap"><table class="data-table"><thead><tr>';
+            html += '<th class="rank-col">#</th><th>俱乐部</th><th class="num-col">球员数</th><th class="goals-col">⚽ 世界杯进球</th>';
+            html += '</tr></thead><tbody>';
+
+            for (var i = 0; i < clubKeys.length; i++) {
+                var ck = clubKeys[i];
+                var cb = d.clubs[ck];
+                if (!cb) continue;
+                var cnName = cb.cn || cb.en || ck;
+                var enName = cb.en || ck;
+                var pCount = cb.players ? cb.players.length : 0;
+                var wcGoals = cb.worldCupGoals || 0;
+                var rowId = 'club-row-' + i;
+
+                html += '<tr>';
+                html += '<td class="rank-col">' + (i + 1) + '</td>';
+                html += '<td><span style="font-weight:600;">' + escHtml(cnName) + '</span>';
+                if (enName !== cnName) html += ' <span style="font-size:0.68rem;color:var(--text-secondary);">(' + escHtml(enName) + ')</span>';
+                if (pCount > 0) html += ' <span class="clickable" onclick="togglePlayers(\'' + rowId + '\', \'' + ck.replace(/'/g, "\'") + '\')" style="font-size:0.65rem;">[查看球员]</span>';
+                html += '</td>';
+                html += '<td class="num-col">' + pCount + '</td>';
+                html += '<td class="goals-col">' + wcGoals + '</td>';
+                html += '</tr>';
+
+                if (pCount > 0) {
+                    html += '<tr class="player-sub-row" id="' + rowId + '"><td class="player-sub-cell" colspan="4"><div class="player-sublist" id="' + rowId + '-list"></div></td></tr>';
+                }
+            }
+            html += '</tbody></table></div>';
+
+            if (clubKeys.length < lg.clubs.length) {
+                html += '<div style="text-align:center;padding:8px;font-size:0.7rem;color:var(--text-secondary);">显示 ' + clubKeys.length + ' 个俱乐部（共 ' + lg.clubs.length + ' 个），使用搜索框筛选</div>';
+            }
+        }
+
+        document.getElementById('mainView').innerHTML = html;
+        document.getElementById('continentNav').style.display = 'none';
+    }
+
+    // ========== Toggle Players ==========
+    window.togglePlayers = function(rowId, clubKey) {
+        var row = document.getElementById(rowId);
+        var list = document.getElementById(rowId + '-list');
+        if (!row || !list) return;
+
+        if (row.classList.contains('show')) {
+            row.classList.remove('show');
+            return;
+        }
+
+        if (list.children.length === 0) {
+            var cb = aggData.clubs[clubKey];
+            if (cb && cb.players) {
+                var frag = document.createDocumentFragment();
+                for (var i = 0; i < cb.players.length; i++) {
+                    var playerKey = cb.players[i];
+                    var tag = document.createElement('span');
+                    tag.className = 'player-tag';
+                    tag.textContent = playerKey;
+                    tag.title = '点击查看 ' + playerKey + ' 的详细资料';
+                    tag.onclick = (function(pk) {
+                        return function(e) {
+                            e.stopPropagation();
+                            showPlayerDetailModal(pk);
+                        };
+                    })(playerKey);
+                    frag.appendChild(tag);
+                }
+                list.appendChild(frag);
+            }
+        }
+
+        row.classList.add('show');
+    };
+
+    // ========== Player Detail Modal ==========
+    function showPlayerDetailModal(playerKey) {
+        if (typeof window.showPlayerDetail === 'function') {
+            var modal = document.getElementById('playerDetailModal');
+            if (modal) {
+                window.showPlayerDetail(playerKey);
+                setTimeout(function() {
+                    if (!modal.classList.contains('visible')) {
+                        modal.classList.add('visible');
+                    }
+                }, 100);
+                return;
+            }
+        }
+        renderBasicPlayerDetail(playerKey);
+    }
+
+    function renderBasicPlayerDetail(playerKey) {
+        var modal = document.getElementById('playerDetailModal');
+        var content = document.getElementById('playerDetailContent');
+        var subtitle = document.getElementById('playerDetailSubtitle');
+
+        if (!modal || !content) return;
+
+        var pd = null;
+        if (typeof playerDB !== 'undefined') pd = playerDB[playerKey];
+        if (!pd) {
+            if (typeof playerDB !== 'undefined') {
+                for (var k in playerDB) {
+                    if (playerDB[k].n === playerKey || playerDB[k].cn === playerKey || playerDB[k].nn === playerKey) {
+                        pd = playerDB[k];
+                        playerKey = k;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!pd) {
+            subtitle.textContent = '';
+            content.innerHTML = '<div class="no-data">⚠️ 未找到球员 "' + escHtml(playerKey) + '" 的详细数据</div>';
+            modal.classList.add('visible');
+            return;
+        }
+
+        var cnName = (typeof translate !== 'undefined' && translate.player) ? translate.player(pd) : (pd.n || playerKey);
+        var enName = pd.nn || pd.n || '';
+        var stdPlayerName = (typeof window.formatStandardName === 'function') ? window.formatStandardName('player', pd) : (cnName + (enName !== cnName ? ' (' + enName + ')' : ''));
+        subtitle.textContent = '— ' + stdPlayerName;
+
+        var html = '<div class="pd-header-card">';
+        html += '<div class="pd-avatar">' + cnName.charAt(0) + '</div>';
+        html += '<div class="pd-info">';
+        html += '<div class="pd-name">' + escHtml(stdPlayerName) + '</div>';
+        html += '<div class="pd-meta">';
+        if (pd.nat) {
+            var natStd = (typeof window.formatStandardName === 'function') ? window.formatStandardName('nation', pd.nat) : pd.nat;
+            html += '<span>🏴 ' + escHtml(natStd) + '</span>';
+        }
+        if (pd.ht) html += '<span>📏 ' + escHtml(pd.ht) + '</span>';
+        if (pd.wt) html += '<span>⚖️ ' + escHtml(pd.wt) + '</span>';
+        if (pd.bd) html += '<span>🎂 ' + escHtml(pd.bd) + '</span>';
+        html += '</div></div></div>';
+
+        if (pd.cr && pd.cr.length > 0) {
+            var clubEntries = pd.cr.filter(function(c) { return !c.nt; });
+            var ntEntries = pd.cr.filter(function(c) { return c.nt; });
+
+            if (ntEntries.length > 0) {
+                html += '<div class="pd-section-title">🇺🇳 国家队生涯</div>';
+                html += '<div style="overflow-x:auto;"><table class="pd-table"><thead><tr><th>时期</th><th>国家队</th><th>赛事</th><th>位置</th><th>身价</th><th>号码</th></tr></thead><tbody>';
+                ntEntries.forEach(function(c) {
+                    var clubStd = (typeof window.formatStandardName === 'function') ? window.formatStandardName('club', c.t) : (c.t || '—');
+                    var leagueStd = (typeof window.formatStandardName === 'function') ? window.formatStandardName('league', c.l) : (c.l || '—');
+                    var posStd = (typeof translate !== 'undefined' && translate.position) ? translate.position(c.ps) : (c.ps || '—');
+                    var valStd = (typeof window.formatValueWan === 'function') ? window.formatValueWan(c.mv) : (c.mv || '—');
+                    html += '<tr class="nt-row"><td>' + escHtml(c.p || '—') + '</td><td>' + escHtml(clubStd || '—') + '</td><td>' + escHtml(leagueStd || '—') + '</td><td>' + escHtml(posStd || '—') + '</td><td>' + escHtml(valStd || '—') + '</td><td>' + escHtml(c.no || '—') + '</td></tr>';
+                });
+                html += '</tbody></table></div>';
+            }
+
+            if (clubEntries.length > 0) {
+                html += '<div class="pd-section-title" style="margin-top:14px;">🏟️ 俱乐部生涯</div>';
+                html += '<div style="overflow-x:auto;"><table class="pd-table"><thead><tr><th>时期</th><th>俱乐部</th><th>联赛</th><th>位置</th><th>身价</th><th>号码</th></tr></thead><tbody>';
+                clubEntries.forEach(function(c) {
+                    var clubStd = (typeof window.formatStandardName === 'function') ? window.formatStandardName('club', c.t) : (c.t || '—');
+                    var leagueStd = (typeof window.formatStandardName === 'function') ? window.formatStandardName('league', c.l) : (c.l || '—');
+                    var posStd = (typeof translate !== 'undefined' && translate.position) ? translate.position(c.ps) : (c.ps || '—');
+                    var valStd = (typeof window.formatValueWan === 'function') ? window.formatValueWan(c.mv) : (c.mv || '—');
+                    html += '<tr><td>' + escHtml(c.p || '—') + '</td><td>' + escHtml(clubStd || '—') + '</td><td>' + escHtml(leagueStd || '—') + '</td><td>' + escHtml(posStd || '—') + '</td><td>' + escHtml(valStd || '—') + '</td><td>' + escHtml(c.no || '—') + '</td></tr>';
+                });
+                html += '</tbody></table></div>';
+            }
+        }
+
+        content.innerHTML = html;
+        modal.classList.add('visible');
+    }
+
+    window.closePlayerDetail = function() {
+        var modal = document.getElementById('playerDetailModal');
+        if (modal) modal.classList.remove('visible');
+    };
+
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'playerDetailModal') {
+            document.getElementById('playerDetailModal').classList.remove('visible');
+        }
+    });
+
+    // ========== Init ==========
+    function init() {
+        console.log('[league V1.60] 🗺️ 五大洲架构初始化中...');
+        if (!aggData || Object.keys(aggData.leagues).length === 0) {
+            aggData = buildAggregation();
+        }
+        console.log('[league V1.60] 联赛总数:', Object.keys(aggData.leagues).length, '俱乐部总数:', Object.keys(aggData.clubs).length);
+        document.getElementById('statusText').textContent = '✅ 数据就绪 | 联赛: ' + Object.keys(aggData.leagues).length + ' | 俱乐部: ' + Object.keys(aggData.clubs).length;
+        updateStats();
+        renderCountryView();
+        document.getElementById('continentNav').style.display = 'flex';
+        console.log('[league V1.60] ✅ 五大洲视图渲染完成');
+    }
+
+    // ===== Welcome Loading (League) =====
+    var progressBar = document.getElementById('welcomeProgressBar');
+    var loadingText = document.getElementById('welcomeLoadingText');
+    var loadingPercent = document.getElementById('welcomeLoadingPercent');
+    var progressGroup = document.getElementById('welcomeProgressGroup');
+    var redirectGroup = document.getElementById('welcomeRedirectGroup');
+    var startTime = Date.now();
+    var duration = 8000;
+    var readyTriggered = false;
+    // Fast path: session cache hit → skip animation
+    var _sessionFastPath = false;
+    try {
+      if (sessionStorage.getItem('engineDataBuilt') === 'V1.60') {
+        _sessionFastPath = true;
+        sessionStorage.removeItem('engineDataBuilt');
+      }
+    } catch(e) {}
+    // Robust cross-tab detection for file:// protocol where window.opener may be null
+    var _isCrossTab = false;
+    try { if (window.opener && window.opener !== window && !window.opener.closed) _isCrossTab = true; } catch(e) {}
+    try { if (sessionStorage.getItem('_xtab_open') === '1') { _isCrossTab = true; sessionStorage.removeItem('_xtab_open'); } } catch(e) {}
+    if (_sessionFastPath && !_isCrossTab) {
+      console.log('[league] 会话缓存命中，快速就绪');
+      duration = 100; // 极短动画 → 立即进入 showRedirectAndHide 轮询
+      // Don't return - let the rest of the IIFE execute but skip loading
+    } else {
+
+    // Aggregation deferred to after animation (init() handles it)
+    // to avoid blocking the requestAnimationFrame progress bar
+
+    function showRedirectAndHide() {
+      if (readyTriggered) return;
+      if (!window.__playerDataReady) {
+        setTimeout(showRedirectAndHide, 200);
+        return;
+      }
+      readyTriggered = true;
+      // Add glow to progress bar
+      progressBar.classList.add('has-glow');
+      loadingText.textContent = 'Ready';
+      loadingPercent.textContent = '100%';
+      // Fade out progress group
+      setTimeout(function() {
+        progressGroup.style.opacity = '0';
+        // Show redirect text
+        redirectGroup.style.display = 'flex';
+        redirectGroup.classList.add('show');
+        // After delay, hide entire overlay
+        setTimeout(function() {
+          var overlay = document.getElementById('welcomeOverlay');
+          overlay.classList.add('welcome-hide');
+          setTimeout(function() {
+            overlay.style.display = 'none';
+            // Call init to start the app
+            init();
+          }, 500);
+        }, 1200);
+      }, 400);
+    }
+
+    // Main animation loop
+    function animate() {
+      var elapsed = Date.now() - startTime;
+      var rawPercent = Math.min(100, (elapsed / duration) * 100);
+
+      var easedPercent = rawPercent;
+      if (rawPercent > 80) {
+        var t = (rawPercent - 80) / 20;
+        easedPercent = 80 + (1 - Math.pow(1 - t, 2)) * 20;
+      }
+
+      progressBar.style.width = easedPercent.toFixed(1) + '%';
+      var displayPercent = Math.floor(easedPercent);
+      loadingPercent.textContent = displayPercent + '%';
+
+      // Dynamic loading messages
+      if (displayPercent < 15) {
+        loadingText.textContent = 'Initializing';
+      } else if (displayPercent < 35) {
+        loadingText.textContent = 'Loading Data';
+      } else if (displayPercent < 55) {
+        loadingText.textContent = 'Processing';
+      } else if (displayPercent < 75) {
+        loadingText.textContent = 'Almost Ready';
+      } else if (displayPercent < 95) {
+        loadingText.textContent = 'Preparing';
+      } else {
+        loadingText.textContent = 'Complete';
+      }
+
+      if (rawPercent >= 100) {
+        showRedirectAndHide();
+        return;
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // Start animation
+    requestAnimationFrame(animate);
+
+    } // end else (not fast path)
+
+    // Expose globals
+    window.goToCountries = goToCountries;
+    window.goToLeagues = goToLeagues;
+    window.goToClubs = goToClubs;
+    window.onSearch = onSearch;
+    window.filterByContinent = filterByContinent;
+window.scrollToContinent = filterByContinent; // backward compat
+})();
+</script>
+<div class="footer-note">* 联赛&俱乐部，提供对现有数据库内容进行汇总和查询的功能。版本 V1.60</div>
+
+<script>
+// === 跨页面标签切换 ===
+(function() {
+  if (!window.name || window.name === '') window.name = 'league_tab';
+  
+  window.switchToTab = function(url, tabName) {
+    // Check heartbeat to see if target tab is alive
+    var hb = localStorage.getItem('tab_heartbeat_' + tabName);
+    var isAlive = (hb && (Date.now() - parseInt(hb, 10) < 5000));
+    
+    if (isAlive) {
+        // Target tab exists — reuse without navigating (empty URL)
+        try {
+            var existing = window.open('', tabName);
+            if (existing && !existing.closed) { existing.focus(); return; }
+        } catch(e) {}
+        window.open(url, tabName);
+    } else {
+        window.open(url, tabName);
+    }
+  };
+})();
+
+// 心跳保活
+(function() {
+  var hbKey = 'tab_heartbeat_' + window.name;
+  var alKey = 'tab_alive_' + window.name;
+  localStorage.setItem(alKey, '1');
+  localStorage.setItem(hbKey, Date.now().toString());
+  setInterval(function() {
+    localStorage.setItem(hbKey, Date.now().toString());
+  }, 1000);
+  window.addEventListener('beforeunload', function() {
+    localStorage.removeItem(alKey);
+    localStorage.removeItem(hbKey);
+  });
+	})();
+</script>
+
+<script>
+// ===== PlayerDB 安全代理 + 动态加载器 =====
+(function() {
+	'use strict';
+	// 安全代理：避免 engine.js 因 playerDB 未定义而报错
+	if (typeof playerDB === 'undefined') {
+		window.__playerDBPlaceholder = true;
+		window.playerDB = {};
+		window.__playerDBReady = false;
+		console.log('[League] playerDB 占位已设置，等待动态加载...');
+	}
+
+	var playerDataFiles = [
+		'playerdata_core.js',
+		'playerdata_media.js',
+		'playerdata_career.js',
+		'playerdata_meta.js'
+	];
+	var loadedCount = 0;
+	var totalFiles = playerDataFiles.length;
+
+	function loadNext(index) {
+		if (index >= totalFiles) {
+			console.log('[dynamicLoader] 所有球员数据加载完成 (' + totalFiles + ' 文件)');
+			// 重置 engine.js 聚合索引，强制用真实数据重建
+			if (window.buildClubIndex && typeof window.buildClubIndex.reset === 'function') {
+				window.buildClubIndex.reset();
+				window.buildClubIndex.build();
+				console.log('[dynamicLoader] 聚合索引已用真实数据重建');
+			}
+			// 重建搜索索引
+			if (typeof window.buildSearchIndex === 'function') {
+				try { window.buildSearchIndex(); } catch(e) {}
+			}
+			window.__playerDataReady = true;
+			window.__playerDBReady = true;
+			try { sessionStorage.setItem('engineDataBuilt', 'V1.60'); } catch(e) {}
+			return;
+		}
+		var script = document.createElement('script');
+		script.src = playerDataFiles[index];
+		script.onload = function() {
+			loadedCount++;
+			console.log('[dynamicLoader] 已加载: ' + playerDataFiles[index] + ' (' + loadedCount + '/' + totalFiles + ')');
+			setTimeout(function() { loadNext(index + 1); }, 50);
+		};
+		script.onerror = function() {
+			console.warn('[dynamicLoader] 加载失败: ' + playerDataFiles[index] + ', 跳过');
+			setTimeout(function() { loadNext(index + 1); }, 50);
+		};
+		document.head.appendChild(script);
+	}
+
+	// 延迟启动，确保 defer 脚本（teamdata/matchdata/engine.js）已完成
+	setTimeout(function() {
+		console.log('[dynamicLoader] 开始后台加载球员数据...');
+		loadNext(0);
+	}, 300);
+})();
+</script>
+<div class="footer-note" style="padding:12px 20px;text-align:center;font-size:0.7rem;color:var(--text-secondary);border-top:1px solid var(--border);">Copyright: © 2026 ZHENTAO LI. All rights reserved.</div>
+</body>
+</html>
