@@ -1009,4 +1009,24 @@ matchStats["2022|H|URU|KOR"] = {p1:"53%",p2:"47%",ps1:446,ps2:396,sh1:9,sh2:2,so
 matchStats["2022|H|KOR|GHA"] = {p1:"49%",p2:"51%",ps1:398,ps2:415,sh1:10,sh2:12,so1:7,so2:4,co1:3,co2:3,fo1:16,fo2:19,os1:0,os2:2,yc1:0,yc2:2,rc1:0,rc2:0,tk1:16,tk2:15};
 matchStats["2022|H|POR|URU"] = {p1:"48%",p2:"52%",ps1:333,ps2:361,sh1:14,sh2:9,so1:4,so2:1,co1:4,co2:2,fo1:6,fo2:8,os1:2,os2:3,yc1:0,yc2:2,rc1:0,rc2:0,tk1:10,tk2:15};
 matchStats["2022|H|GHA|URU"] = {p1:"48%",p2:"52%",ps1:336,ps2:364,sh1:11,sh2:6,so1:4,so2:3,co1:5,co2:5,fo1:14,fo2:15,os1:2,os2:2,yc1:0,yc2:2,rc1:0,rc2:0,tk1:18,tk2:21};
+
+// ========== 2026世界杯 已完成比赛数据 ==========
+const wc2026MatchDetails = {
+  "2026|A|MEX|RSA": {
+    score: { sh: 2, sa: 0 },
+    goals: [
+      { min: 9, side: "home", scorer: "基尼奥内斯 (Julián Quiñones)", type: "shot" },
+      { min: 67, side: "home", scorer: "R.希门尼斯 (Raúl Jiménez)", type: "header" }
+    ],
+    cards: {
+      home: { yellow: 1, red: 1 },
+      away: { yellow: 2, red: 2 }
+    },
+    attendance: 87523,
+    referee: "Wilton Sampaio (BRA)"
+  }
+};
+
+// ========== 2026世界杯 比赛统计数据 ==========
+matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
 ;

@@ -715,6 +715,8 @@ window.getMatchDetailKey=function(year, stage, h, a) {
   var keys = [year+'|'+stage+'|'+h+'|'+a, year+'|'+stage+'|'+a+'|'+h];
   for (var i=0; i<keys.length; i++) {
     if (wcMatchDetails[keys[i]]) return keys[i];
+    // Also check 2026 match details
+    if (typeof wc2026MatchDetails !== 'undefined' && wc2026MatchDetails[keys[i]]) return keys[i];
   }
   return null;
 }
@@ -722,7 +724,7 @@ window.getMatchDetailKey=function(year, stage, h, a) {
 window.showMatchDetail=function(year, stage, h, a, isKnockout) {
   try {
   var key = window.getMatchDetailKey(year, stage, h, a);
-  var detail = key ? wcMatchDetails[key] : null;
+  var detail = key ? (wcMatchDetails[key] || (typeof wc2026MatchDetails !== 'undefined' && wc2026MatchDetails[key]) || null) : null;
   var hn = getPastTeamName(h), an = getPastTeamName(a);
   
   document.getElementById('matchDetailSubtitle').textContent = '— ' + hn.zh + ' vs ' + an.zh;
@@ -735,6 +737,10 @@ window.showMatchDetail=function(year, stage, h, a, isKnockout) {
   // Find score from data
   var data = year==='2022'?wc2022Data:year==='2018'?wc2018Data:year==='2014'?wc2014Data:year==='2010'?wc2010Data:year==='2006'?wc2006Data:wc2002Data;
   var matchFound = null;
+  // 2026: look up score from wc2026MatchDetails
+  if (year === '2026' && detail && detail.score) {
+    matchFound = { h: h, a: a, sh: detail.score.sh, sa: detail.score.sa };
+  }
   if (isKnockout && data.knockout) {
     data.knockout.forEach(function(kr) {
       if (kr.stage === stage) {
@@ -797,11 +803,13 @@ window.showMatchDetail=function(year, stage, h, a, isKnockout) {
       statsHtml += '<div class="detail-section"><div class="detail-section-title">📊 比赛统计</div>';
       statsHtml += '<table class="backtest-table"><thead><tr><th>统计项</th><th style="color:#5b9bd5;">' + homeName + '</th><th style="color:#e74c3c;">' + awayName + '</th></tr></thead><tbody>';
       statsHtml += '<tr><td>控球率</td><td>' + ms.p1 + '</td><td>' + ms.p2 + '</td></tr>';
-      statsHtml += '<tr><td>抢断</td><td>' + ms.tk1 + '</td><td>' + ms.tk2 + '</td></tr>';
-      statsHtml += '<tr><td>传球</td><td>' + ms.ps1 + '</td><td>' + ms.ps2 + '</td></tr>';
-      statsHtml += '<tr><td>射门</td><td>' + ms.sh1 + '</td><td>' + ms.sh2 + '</td></tr>';
+      // 2026: 新增进攻/危险进攻字段
+      if (ms.at1 !== undefined) statsHtml += '<tr><td>进攻</td><td>' + ms.at1 + '</td><td>' + ms.at2 + '</td></tr>';
+      if (ms.da1 !== undefined) statsHtml += '<tr><td>危险进攻</td><td>' + ms.da1 + '</td><td>' + ms.da2 + '</td></tr>';
       statsHtml += '<tr><td>射正</td><td>' + ms.so1 + '</td><td>' + ms.so2 + '</td></tr>';
+      if (ms.sb1 !== undefined) statsHtml += '<tr><td>射偏</td><td>' + ms.sb1 + '</td><td>' + ms.sb2 + '</td></tr>';
       statsHtml += '<tr><td>角球</td><td>' + ms.co1 + '</td><td>' + ms.co2 + '</td></tr>';
+      if (ms.pk1 !== undefined) statsHtml += '<tr><td>点球</td><td>' + ms.pk1 + '</td><td>' + ms.pk2 + '</td></tr>';
       statsHtml += '<tr><td>越位</td><td>' + ms.os1 + '</td><td>' + ms.os2 + '</td></tr>';
       statsHtml += '<tr><td>犯规</td><td>' + ms.fo1 + '</td><td>' + ms.fo2 + '</td></tr>';
       statsHtml += '<tr><td>🟨 黄牌</td><td>' + ms.yc1 + '</td><td>' + ms.yc2 + '</td></tr>';
