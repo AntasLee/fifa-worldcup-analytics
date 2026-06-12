@@ -1,8 +1,8 @@
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
-// ===== 阵容名单弹窗 V1.60 (V3a 杂志排版 + 中文名修复) =====
+// ===== 阵容名单弹窗 V1.62 (V3a 杂志排版 + 中文名修复) =====
 // 依赖: squaddata.js (squadDB), playerdata_*.js (playerDB), teamdata.js (teamMap/pastFlag/pastTeamNames), engine.js (translate/formatStandardName/showUnifiedPlayerDetail/formatValueWan)
-// 更新时间: 2026-07-14 (V1.60 - V3a杂志排版Hero+浮动卡片+下划线Tab+页脚)
+// 更新时间: 2026-07-14 (V1.62 - V3a杂志排版Hero+浮动卡片+下划线Tab+页脚)
 
 (function() {
   'use strict';
@@ -46,8 +46,8 @@
     document.head.appendChild(style);
   })();
 
-  // ===== FIFA世界排名数据 V1.60 (基于2025年11月FIFA官方排名) =====
-  // V1.61 基于FIFA官方2026年4月排名 (联网核对修正)
+  // ===== FIFA世界排名数据 V1.62 (基于2025年11月FIFA官方排名) =====
+  // V1.62 基于FIFA官方2026年4月排名 (联网核对修正)
   window.fifaWorldRanking = {
     'FRA':1,'ESP':2,'ARG':3,'ENG':4,'POR':5,'BRA':6,'NED':7,'MAR':8,'BEL':9,'GER':10,
     'CRO':11,'COL':13,'SEN':14,'MEX':15,'USA':16,'URU':17,'JPN':18,'SUI':19,'IRN':21,'TUR':22,
@@ -83,11 +83,11 @@
   }
 
 
-  // ===== 统一球员名称解析 V1.49: 优先从 playerDB 获取准确中文名 =====
+  // ===== 统一球员名称解析 V1.62: 优先从 playerDB 获取准确中文名 =====
   // 确保阵容列表显示的名称与球员详情弹窗一致
   // 查找策略: playerDB直接key → __playerSearchIndex → getPlayerKey → 算法翻译
   function resolveSquadPlayerName(engName, squadPlayer) {
-    // V1.49: 优先使用 squaddata 中的 cn 字段（来自官方CSV）
+    // V1.62: 优先使用 squaddata 中的 cn 字段（来自官方CSV）
     if (squadPlayer && squadPlayer.cn && /[\u4e00-\u9fff]/.test(squadPlayer.cn)) {
       return squadPlayer.cn + ' (' + (engName || '') + ')';
     }
@@ -172,7 +172,7 @@
   
   // ===== Show Squad Modal =====
   
-// V1.60: 修复中文队名显示 — 使用 window.groupsData/teamMap (HTML已暴露全局)
+// V1.62: 修复中文队名显示 — 使用 window.groupsData/teamMap (HTML已暴露全局)
 var _zhNameMap = {};
 (function _buildZhMap() {
     try {
@@ -190,7 +190,7 @@ var _zhNameMap = {};
     } catch(e) { console.warn('_buildZhMap failed:', e); }
 })();
 window.showSquadModal = function(code, btnEl, clickTime) {
-    // V1.61: 流光效果 — 仅当直接从外部调用（非 wrapper）时才查找/添加动画
+    // V1.62: 流光效果 — 仅当直接从外部调用（非 wrapper）时才查找/添加动画
     if (!btnEl) {
         var visibleBtns = document.querySelectorAll('.btn-squad-gold');
         for (var _bi = 0; _bi < visibleBtns.length; _bi++) {
@@ -208,14 +208,14 @@ window.showSquadModal = function(code, btnEl, clickTime) {
         }
     }
     var _shimmerStart = clickTime || Date.now();
-    // V1.49: 重置球员数据数组，避免多次打开阵容时索引错乱
+    // V1.62: 重置球员数据数组，避免多次打开阵容时索引错乱
     window._squadPlayerData = [];
     var squad = typeof squadDB !== 'undefined' ? squadDB[code] : null;
     // Use teamMap as global (defined with const, accessible via closure)
     var teamMapRef = window.teamMap || {};
     var team = teamMapRef[code];
     window._currentSquadTeamCode = code;
-    // V1.54: 从 groupsData 获取 en 名称（teamMap 来自 allTeams 无 en 字段）
+    // V1.62: 从 groupsData 获取 en 名称（teamMap 来自 allTeams 无 en 字段）
     var _enNat = '';
     var _zhNat = '';
     if (window.groupsData) {
@@ -227,7 +227,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
         if (_enNat) break;
       }
     }
-    // V1.55: 回退链增强 — pastTeamNames 确保有 en 字段
+    // V1.62: 回退链增强 — pastTeamNames 确保有 en 字段
     var _ptnEn = (typeof pastTeamNames !== 'undefined' && pastTeamNames[code]) ? pastTeamNames[code].en : '';
     window._currentSquadTeamNat = _enNat || _ptnEn || (team ? team.en : '') || (team ? team.flag : '');
     window._currentSquadTeamFlag = team ? team.flag : '';
@@ -243,7 +243,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
       return;
     }
     
-    // V1.60: 标题栏重新布局 — 左侧队名，右侧关闭+导出按钮，数据来源置于导出按钮下方
+    // V1.62: 标题栏重新布局 — 左侧队名，右侧关闭+导出按钮，数据来源置于导出按钮下方
     // V3a 杂志排版: 先处理无数据情况
     if (!squad) {
       titleEl.innerHTML = 
@@ -293,7 +293,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
 
     var totalPlayers = allPlayers.length;
 
-    // V1.60: 计算总身价、总身价排名、FIFA世界排名
+    // V1.62: 计算总身价、总身价排名、FIFA世界排名
     var totalValue = 0;
     allPlayers.forEach(function(p) {
       var v = parseFloat(p.v);
@@ -399,7 +399,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
       }
       var valueDisplay = (typeof formatValueWan === 'function') ? formatValueWan(p.v) : (p.v || '—');
 
-      // V1.52: 加权多因素评分 _dbKey — 名称门槛+DOB(20)+国籍(10)+位置(5)，兼容双Schema
+      // V1.62: 加权多因素评分 _dbKey — 名称门槛+DOB(20)+国籍(10)+位置(5)，兼容双Schema
       if (!window._squadPlayerData) window._squadPlayerData = [];
     if (!window._squadPlayerQuestList) window._squadPlayerQuestList = [];
     if (!window._playerQuestList) window._playerQuestList = (function(){try{var v=sessionStorage.getItem('_playerQuestList');return v?JSON.parse(v):[];}catch(e){return[];}})();
@@ -421,7 +421,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
         for (var _k in playerDB) {
           if (!playerDB.hasOwnProperty(_k)) continue;
           var _pl = playerDB[_k];
-          // V1.60: 名称来源 nn>n>key, 去特殊字符后匹配
+          // V1.62: 名称来源 nn>n>key, 去特殊字符后匹配
           var _pnSrc = _pl.nn || _pl.n || _k;
           var _stripSpecial = function(s){return s.toLowerCase().replace(/[-'`.·]/g,'').replace(/\s+/g,'').normalize('NFD').replace(/[\u0300-\u036f]/g,'');};
           var _pnStripped = _stripSpecial(_pnSrc);
@@ -445,7 +445,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
           var _plNat = (_pl.nt||'').toLowerCase().trim();
           var _plNatCode = (_pl.nat||'').toUpperCase().trim();
           var _teamCode = (window._currentSquadTeamCode||'').toUpperCase().trim();
-          // V1.60: 国籍匹配增强 — 拆分逗号分隔格式 (如 "Korea, South")
+          // V1.62: 国籍匹配增强 — 拆分逗号分隔格式 (如 "Korea, South")
           var _natMatch = false;
           if (_sn && _plNat) {
             var _snLower = _sn.toLowerCase().trim();
@@ -471,7 +471,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
           _cands.sort(function(a,b){return b.ts-a.ts;});
           var _best = _cands[0];
           if (_best.ts >= 55) _dbKey = _best.k;
-          // V1.52: 记录低置信度匹配到questlist
+          // V1.62: 记录低置信度匹配到questlist
           else if (window._squadPlayerQuestList) window._squadPlayerQuestList.push({sq:_origName,tm:_sn,dob:_sd,pos:_sp,best:_best.k,score:Math.round(_best.ts*10)/10});
         } else if (window._squadPlayerQuestList) {
           window._squadPlayerQuestList.push({sq:_origName,tm:_sn,dob:_sd,pos:_sp,best:'(无匹配)',score:0});
@@ -514,7 +514,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
     html += '</div>';
 
     contentEl.innerHTML = html;
-    // V1.61: 确保流光动画至少播放1秒后再显示弹窗
+    // V1.62: 确保流光动画至少播放1秒后再显示弹窗
     var _shimmerElapsed = Date.now() - _shimmerStart;
     var _shimmerDelay = Math.max(0, 1000 - _shimmerElapsed);
     var _showModal = function() { modalEl.classList.add('visible'); };
@@ -567,7 +567,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
     if (el && typeof window.switchSquadTabV3 === 'function') {
       window.switchSquadTabV3(tabId, el);
     }
-  };  // ===== Player Detail Popup (V1.50 — 出生日期/国籍交叉验证 + 精准匹配 + QuestList) =====
+  };  // ===== Player Detail Popup (V1.62 — 出生日期/国籍交叉验证 + 精准匹配 + QuestList) =====
   // QuestList: 收集无法精确匹配的球员，供后续核对和补全数据
   window._playerQuestList = window._playerQuestList || [];
   
@@ -810,5 +810,5 @@ window.showSquadModal = function(code, btnEl, clickTime) {
     document.head.appendChild(style);
   }, 300);
   
-  console.log('✅ squadmodal.js V1.60 — V3a杂志排版: Hero大区+浮动统计卡片+下划线标签+数据来源页脚');
+  console.log('✅ squadmodal.js V1.62 — V3a杂志排版: Hero大区+浮动统计卡片+下划线标签+数据来源页脚');
 })();

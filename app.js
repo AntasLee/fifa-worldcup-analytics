@@ -7,7 +7,7 @@
 
 // FIFA World Cup Data Analysis - Player & Match Database
 // Auto-generated from HTML data section. Update this file to modify data.
-// Version: V1.60 | Generated: 2026-07-19
+// Version: V1.62 | Generated: 2026-07-19
 // These variables are at global scope and accessible from the main application.
 
 // ===== Global shared state (used by both data & UI) =====
@@ -57,7 +57,7 @@ setTimeout(function(){var bm=document.getElementById('backtestModal');if(bm)bm.a
   if(e.target===this)closeBacktestModal();
 });},100);
 
-// switchPastWCStage → 已委托给 switchPastWCStageMain（V1.48 统一入口）
+// switchPastWCStage → 已委托给 switchPastWCStageMain（V1.62 统一入口）
 window.switchPastWCStage=function(stage){
   switchPastWCStageMain(stage);
 };

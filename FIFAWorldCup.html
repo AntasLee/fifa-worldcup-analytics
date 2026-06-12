@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA WORLD CUP - DATA ANALYSIS | V1.60</title>
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.62</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -551,6 +551,59 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     transform: translateY(-1px); box-shadow: 0 4px 15px rgba(91,155,213,0.4);
 }
 
+/* ===== Probability Update Capsule (click-to-expand) ===== */
+.prob-update-wrapper {
+    position: relative; display: inline-block;
+}
+.prob-update-capsule {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 7px 18px; border-radius: 22px;
+    font-size: 0.76rem; font-weight: 700; white-space: nowrap;
+    background: linear-gradient(135deg, #1e1230, #2d1a4a);
+    color: #b894f0; border: 1.5px solid #7c4dff;
+    cursor: pointer; user-select: none;
+    transition: all 0.3s ease;
+    animation: probCapsuleGlow 2.0s ease-in-out infinite;
+}
+.prob-update-capsule:hover {
+    border-color: #b388ff;
+    box-shadow: 0 0 18px rgba(179,136,255,0.5), 0 0 36px rgba(124,77,255,0.25);
+    color: #d4bfff;
+}
+.prob-update-capsule.expanded {
+    border-color: #b388ff;
+    box-shadow: 0 0 22px rgba(179,136,255,0.6), 0 0 44px rgba(124,77,255,0.35), 0 0 66px rgba(124,77,255,0.15);
+    background: linear-gradient(135deg, #2d1a4a, #3d2a5a);
+    color: #e0d0ff;
+}
+@keyframes probCapsuleGlow {
+    0%, 100% { border-color: #7c4dff; box-shadow: 0 0 10px rgba(124,77,255,0.35); }
+    50% { border-color: #b388ff; box-shadow: 0 0 20px rgba(179,136,255,0.6), 0 0 40px rgba(124,77,255,0.3); }
+}
+.prob-update-dropdown {
+    position: absolute; top: 100%; left: 0; margin-top: 6px;
+    min-width: 200px; background: #1a1030;
+    border: 1.5px solid #7c4dff; border-radius: 12px;
+    padding: 8px 0; overflow: hidden;
+    max-height: 0; opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    z-index: 10; pointer-events: none;
+}
+.prob-update-dropdown.expanded {
+    max-height: 120px; opacity: 1; padding: 10px 0;
+    pointer-events: auto;
+}
+.prob-update-item {
+    padding: 7px 16px; font-size: 0.78rem; font-weight: 600;
+    color: #c8b8f0; white-space: nowrap;
+    transition: background 0.2s;
+    display: flex; align-items: center; gap: 8px;
+}
+.prob-update-item:hover {
+    background: rgba(124,77,255,0.15); color: #fff;
+}
+
 		/* ===== Welcome Overlay ===== */
 		#welcomeOverlay {
 		  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -669,7 +722,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 		.welcome-btn-sub { font-size: 0.85rem; color: #7a8a9a; display: block; margin-top: 8px; font-weight: bold; }
 
 
-/* ===== 阵容名单弹窗 V1.58 ===== */
+/* ===== 阵容名单弹窗 V1.62 ===== */
 .squad-modal{max-width:1050px;width:95vw}
 .squad-modal .modal-box{max-height:85vh;overflow-y:auto}
 .squad-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
@@ -1252,7 +1305,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .rules-modal iframe{width:100%;height:70vh;border:none;border-radius:8px;background:var(--bg)}
 
 /* =============================================
-   V4 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
+   V1.62 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
    霓虹紫分割线 · 三色概率 · 双栏对比 · AI推演
    ============================================= */
 /* -- 头部 -- */
@@ -1408,7 +1461,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   // Fast path: if engine data was already built in this session, skip animation entirely
   var _hasEngineData = false;
   try {
-    if (sessionStorage.getItem('engineDataBuilt') === 'V1.60') {
+    if (sessionStorage.getItem('engineDataBuilt') === 'V1.62') {
       _hasEngineData = true;
       sessionStorage.removeItem('engineDataBuilt');
     }
@@ -1563,9 +1616,25 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   document.getElementById('btnEdition2026').onclick = makeClickHandler('2026');
   document.getElementById('btnEdition2022').onclick = makeClickHandler('2022');
 })();
+
+function toggleProbUpdate() {
+    const dropdown = document.getElementById('probUpdateDropdown');
+    const capsule = document.querySelector('.prob-update-capsule');
+    if (!dropdown || !capsule) return;
+    const isExpanded = dropdown.classList.contains('expanded');
+    if (isExpanded) {
+        dropdown.classList.remove('expanded');
+        capsule.classList.remove('expanded');
+        capsule.innerHTML = '📊 【概率】已更新 ▾';
+    } else {
+        dropdown.classList.add('expanded');
+        capsule.classList.add('expanded');
+        capsule.innerHTML = '📊 【概率】已更新 ▴';
+    }
+}
 </script>
 <div class="sticky-top-group">
-<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.60 | Author: Antas Lee</div></div>
+<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.62 | Author: Antas Lee</div></div>
 
 <!-- WC Edition Selector -->
 <div class="wc-edition-bar" id="wcEditionBar">
@@ -1579,9 +1648,16 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   <div class="wc-edition-tab past-edition" data-edition="2002" onclick="switchEdition('2002')">🇰🇷🇯🇵 2002 韩日</div>
 </div>
 
-<!-- League & Club Float Button [TEMPORARILY HIDDEN - 待 League 功能开发完成后启用] -->
-<div style="display:none;align-items:center;justify-content:flex-end;padding:4px 18px 0 18px;">
-  <button class="league-club-float-btn" onclick="switchToTab('league.html','league_tab')" title="联赛 & 俱乐部数据">
+<!-- Float Capsule Row: 概率更新通知 (左·可展开) + 联赛&俱乐部入口 (右·隐藏) -->
+<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 18px 0 18px;">
+  <div class="prob-update-wrapper">
+    <span class="prob-update-capsule" onclick="toggleProbUpdate()">📊 【概率】已更新 ▾</span>
+    <div class="prob-update-dropdown" id="probUpdateDropdown">
+      <div class="prob-update-item">🔄 概率模型优化</div>
+      <div class="prob-update-item">⚽ 新增比分推荐</div>
+    </div>
+  </div>
+  <button class="league-club-float-btn" style="display:none;" onclick="switchToTab('league.html','league_tab')" title="联赛 & 俱乐部数据">
     ⚽ 联赛&俱乐部
   </button>
 </div>
@@ -1677,7 +1753,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 <h3>👤 球员详情 <span style="font-size:0.65rem;color:var(--text-secondary);" id="playerDetailSubtitle"></span> <span class="modal-close" onclick="closePlayerDetail()">✕</span></h3>
 <div id="playerDetailContent" style="max-height:68vh;overflow-y:auto;"></div>
 </div></div>
-<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.60</div>
+<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.62</div>
 </div>
 
 <div class="modal-overlay" id="summaryModal"><div class="modal-box" style="max-width:600px"><h3>📋 我的预测汇总 <span class="modal-close" onclick="closeSummaryModal()">✕</span></h3><div id="summaryContent"></div></div></div>
@@ -1686,7 +1762,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 </div>
 <!-- 赛场分析弹窗 -->
 <div class="modal-overlay" id="venueAnalysisModal"><div class="modal-box venue-analysis-modal"><h3>🏟️ 赛场分析 <span style="display:flex;align-items:center;gap:12px"><button class="btn btn-update" id="btnRefreshWeather" onclick="window._vaWeatherLoaded=null;var v=window._vaVenue;if(v&&v.coordinates)fetchWeatherForVenue(document.getElementById('venueAnalysisContent'),v);">🔄 更新天气</button><span class="modal-close" onclick="closeVenueAnalysis()">✕</span></span></h3><div id="venueAnalysisContent"></div></div></div>
-<!-- 阵容名单弹窗 V1.58 -->
+<!-- 阵容名单弹窗 V1.62 -->
 <div class="modal-overlay" id="squadModal"><div class="modal-box squad-modal">
 <h3 id="squadModalTitle">📋 阵容名单 <span class="modal-close" onclick="closeSquadModal()">✕</span></h3>
 <div id="squadContent"></div>
@@ -2186,6 +2262,7 @@ console.log('🏆 Bracket V8 embedded — ready');
 <script src="venuedata.js" defer></script>
 <script src="oddsdata.js" defer></script>
 <script src="groupsdata.js" defer></script>
+<script src="matchdata_2026.js" defer></script>
 <script src="prob_engine.js" defer></script>
 
 
@@ -2278,7 +2355,7 @@ console.log('🏆 Bracket V8 embedded — ready');
             window.__playerDataReady = true;
             // Set sessionStorage for fast reload on next visit
             try {
-                sessionStorage.setItem('engineDataBuilt', 'V1.60');
+                sessionStorage.setItem('engineDataBuilt', 'V1.62');
             } catch(e) {}
             return;
         }
