@@ -1024,9 +1024,24 @@ const wc2026MatchDetails = {
     },
     attendance: 87523,
     referee: "Wilton Sampaio (BRA)"
+  },
+  "2026|A|KOR|CZE": {
+    score: { sh: 2, sa: 1 },
+    goals: [
+      { min: 59, side: "away", scorer: "拉吉斯拉夫·克雷伊奇 (Ladislav Krejčí)", type: "header" },
+      { min: 67, side: "home", scorer: "黄仁范 (Hwang In-beom)", type: "shot" },
+      { min: 80, side: "home", scorer: "吴贤揆 (Oh Hyeon-gyu)", type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 1, red: 0 },
+      away: { yellow: 0, red: 0 }
+    },
+    attendance: 62345,
+    referee: "Daniele Orsato (ITA)"
   }
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
+matchStats["2026|A|KOR|CZE"] = {p1:"62%",p2:"38%",ps1:480,ps2:390,sh1:11,sh2:7,so1:6,so2:4,sb1:5,sb2:3,co1:4,co2:5,fo1:12,fo2:14,os1:2,os2:2,yc1:1,yc2:0,rc1:0,rc2:0,tk1:14,tk2:16,at1:98,at2:90,da1:38,da2:42,pk1:0,pk2:0};
 ;
