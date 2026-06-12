@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA WORLD CUP - DATA ANALYSIS | V1.63</title>
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.64</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -591,7 +591,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     z-index: 10; pointer-events: none;
 }
 .prob-update-dropdown.expanded {
-    max-height: 120px; opacity: 1; padding: 10px 0;
+    max-height: 260px; opacity: 1; padding: 10px 0;
     pointer-events: auto;
 }
 .prob-update-item {
@@ -602,6 +602,16 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 }
 .prob-update-item:hover {
     background: rgba(124,77,255,0.15); color: #fff;
+}
+.prob-update-divider {
+    margin: 6px 12px 4px 12px;
+    border-top: 1px solid rgba(124,77,255,0.35);
+}
+.prob-update-hint {
+    padding: 6px 14px 4px 14px;
+    font-size: 0.68rem; font-weight: 500;
+    color: #9a8ac0; line-height: 1.5;
+    text-align: center; white-space: nowrap;
 }
 
 		/* ===== Welcome Overlay ===== */
@@ -722,7 +732,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 		.welcome-btn-sub { font-size: 0.85rem; color: #7a8a9a; display: block; margin-top: 8px; font-weight: bold; }
 
 
-/* ===== 阵容名单弹窗 V1.63 ===== */
+/* ===== 阵容名单弹窗 V1.64 ===== */
 .squad-modal{max-width:1050px;width:95vw}
 .squad-modal .modal-box{max-height:85vh;overflow-y:auto}
 .squad-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
@@ -1305,7 +1315,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .rules-modal iframe{width:100%;height:70vh;border:none;border-radius:8px;background:var(--bg)}
 
 /* =============================================
-   V1.63 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
+   V1.64 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
    霓虹紫分割线 · 三色概率 · 双栏对比 · AI推演
    ============================================= */
 /* -- 头部 -- */
@@ -1461,7 +1471,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   // Fast path: if engine data was already built in this session, skip animation entirely
   var _hasEngineData = false;
   try {
-    if (sessionStorage.getItem('engineDataBuilt') === 'V1.63') {
+    if (sessionStorage.getItem('engineDataBuilt') === 'V1.64') {
       _hasEngineData = true;
       sessionStorage.removeItem('engineDataBuilt');
     }
@@ -1634,7 +1644,7 @@ function toggleProbUpdate() {
 }
 </script>
 <div class="sticky-top-group">
-<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.63 | Author: Antas Lee</div></div>
+<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.64 | Author: Antas Lee</div></div>
 
 <!-- WC Edition Selector -->
 <div class="wc-edition-bar" id="wcEditionBar">
@@ -1651,10 +1661,13 @@ function toggleProbUpdate() {
 <!-- Float Capsule Row: 概率更新通知 (左·可展开) + 联赛&俱乐部入口 (右·隐藏) -->
 <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 18px 0 18px;">
   <div class="prob-update-wrapper">
-    <span class="prob-update-capsule" onclick="toggleProbUpdate()">📊 【概率】已更新 ▾</span>
-    <div class="prob-update-dropdown" id="probUpdateDropdown">
-      <div class="prob-update-item">🔄 概率模型优化</div>
+    <span class="prob-update-capsule expanded" onclick="toggleProbUpdate()">📊 【概率】已更新 ▴</span>
+    <div class="prob-update-dropdown expanded" id="probUpdateDropdown">
+      <div class="prob-update-item">🔄 赔率重新校准</div>
+      <div class="prob-update-item">📊 概率模型优化</div>
       <div class="prob-update-item">⚽ 新增比分推荐</div>
+      <div class="prob-update-divider"></div>
+      <div class="prob-update-hint">非首次使用请按<br>CTRL+SHIFT+R<br>强刷新进入新版</div>
     </div>
   </div>
   <button class="league-club-float-btn" style="display:none;" onclick="switchToTab('league.html','league_tab')" title="联赛 & 俱乐部数据">
@@ -1753,7 +1766,7 @@ function toggleProbUpdate() {
 <h3>👤 球员详情 <span style="font-size:0.65rem;color:var(--text-secondary);" id="playerDetailSubtitle"></span> <span class="modal-close" onclick="closePlayerDetail()">✕</span></h3>
 <div id="playerDetailContent" style="max-height:68vh;overflow-y:auto;"></div>
 </div></div>
-<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.63</div>
+<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.64</div>
 </div>
 
 <div class="modal-overlay" id="summaryModal"><div class="modal-box" style="max-width:600px"><h3>📋 我的预测汇总 <span class="modal-close" onclick="closeSummaryModal()">✕</span></h3><div id="summaryContent"></div></div></div>
@@ -1762,7 +1775,7 @@ function toggleProbUpdate() {
 </div>
 <!-- 赛场分析弹窗 -->
 <div class="modal-overlay" id="venueAnalysisModal"><div class="modal-box venue-analysis-modal"><h3>🏟️ 赛场分析 <span style="display:flex;align-items:center;gap:12px"><button class="btn btn-update" id="btnRefreshWeather" onclick="window._vaWeatherLoaded=null;var v=window._vaVenue;if(v&&v.coordinates)fetchWeatherForVenue(document.getElementById('venueAnalysisContent'),v);">🔄 更新天气</button><span class="modal-close" onclick="closeVenueAnalysis()">✕</span></span></h3><div id="venueAnalysisContent"></div></div></div>
-<!-- 阵容名单弹窗 V1.63 -->
+<!-- 阵容名单弹窗 V1.64 -->
 <div class="modal-overlay" id="squadModal"><div class="modal-box squad-modal">
 <h3 id="squadModalTitle">📋 阵容名单 <span class="modal-close" onclick="closeSquadModal()">✕</span></h3>
 <div id="squadContent"></div>
@@ -2355,7 +2368,7 @@ console.log('🏆 Bracket V8 embedded — ready');
             window.__playerDataReady = true;
             // Set sessionStorage for fast reload on next visit
             try {
-                sessionStorage.setItem('engineDataBuilt', 'V1.63');
+                sessionStorage.setItem('engineDataBuilt', 'V1.64');
             } catch(e) {}
             return;
         }

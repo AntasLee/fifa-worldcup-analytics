@@ -1,4 +1,4 @@
-// matchdata_2026.js — 2026世界杯比赛数据层 | V1.63
+// matchdata_2026.js — 2026世界杯比赛数据层 | V1.64
 // ===== matchdata_2026.js — 2026世界杯完整比赛数据层 =====
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.

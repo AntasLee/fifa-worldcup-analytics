@@ -1,4 +1,4 @@
-// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.63 =====
+// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.64 =====
 // 依赖: teamdata.js (playerDB, clubNameMap, clubLeagueMap, supplementalPlayers)
 
 // ==================== 1. 字符串规范化 ====================
@@ -1104,7 +1104,7 @@ if (typeof document !== 'undefined') {
         setTimeout(function() {
             buildClubIndex.build();
             console.log('[engine.js] 聚合索引构建完成');
-            try { sessionStorage.setItem('engineDataBuilt', 'V1.63'); } catch(e) {}
+            try { sessionStorage.setItem('engineDataBuilt', 'V1.64'); } catch(e) {}
         }, 500);
     });
 }

@@ -2,7 +2,7 @@
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 /**
  * ============================================================
- *  prob_engine.js — 增强概率计算引擎 (V1.62)
+ *  prob_engine.js — 增强概率计算引擎 (V1.64)
  *  Phase 3: AI融合推算(8因子) + 历史底蕴 + 本届表现 + 综合推算
  *  依赖: oddsdata.js, groupsdata_v2.js, matchdata_2026.js
  *        squaddata.js, coachdata.js, venuedata.js
@@ -239,7 +239,7 @@
    * @returns {{ delta: number, completedMatches: number, formWeight: number }}
    */
   function calcTournamentForm(code, currentMatchRound) {
-    // V1.62: 第1轮小组赛时，本届表现因子暂不激活（样本量n=1无统计意义）
+    // V1.64: 第1轮小组赛时，本届表现因子暂不激活（样本量n=1无统计意义）
     if (currentMatchRound === 1) {
       return { delta: 0, completedMatches: 0, formWeight: 0, details: [] };
     }
@@ -429,11 +429,11 @@
   }
 
   // ================================================================
-  //  🔥 AI 融合概率推算 (V1.62: 8因子 + 历史底蕴 + 本届表现)
+  //  🔥 AI 融合概率推算 (V1.64: 8因子 + 历史底蕴 + 本届表现)
   // ================================================================
 
   /**
-   * calcAIPbs — AI多参数融合概率计算 (V1.62)
+   * calcAIPbs — AI多参数融合概率计算 (V1.64)
    * 
    * 8大因子:
    *   1. FIFA排名差 → 实力基础分
@@ -793,7 +793,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
       suggestion = '🔥 完全背离信号，潜在价值与风险并存。AI模型可能存在未被市场定价的洞察，但也需警惕AI模型的盲区。建议小注试探或观望。';
     }
 
-    // V1.62: 四维度子卡片数据
+    // V1.64: 四维度子卡片数据
     var subDims = {
       wdl: {
         aiPh: aiPH, oddsPh: odPH,
@@ -823,7 +823,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
   }
 
   // ================================================================
-  //  📊 V1.62 概率弹窗渲染 (匹配 preview_composite_v3.html)
+  //  📊 V1.64 概率弹窗渲染 (匹配 preview_composite_v3.html)
   // ================================================================
 
   function renderProbModalV4(mid) {
@@ -965,13 +965,19 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     var homeCode = m.home.code, awayCode = m.away.code;
     var homeName = m.home.zh, awayName = m.away.zh;
 
-    // 赔率数据
-    var ho = liveOdds[homeCode] || { w: 2.50, d: 3.20, l: 2.80 };
-    var ao = liveOdds[awayCode] || { w: 2.80, d: 3.20, l: 2.50 };
+    // 赔率数据 - 优先使用当场比赛赔率(matchOdds)，回退至球队平均赔率(liveOdds)
+    var md = matchOdds[mid] || null;
+    var ho, ao;
+    if (md) {
+        ho = { w: md.hw, d: md.d, l: md.aw };
+        ao = { w: md.aw, d: md.d, l: md.hw };
+    } else {
+        ho = liveOdds[homeCode] || { w: 2.50, d: 3.20, l: 2.80 };
+        ao = liveOdds[awayCode] || { w: 2.80, d: 3.20, l: 2.50 };
+    }
     var oddsPbs = calcOddsPbs(ho, ao);
 
     // 让球/大小球数据
-    var md = matchOdds[mid] || null;
     var ahData = null, ouData = null;
     if (md) {
       if (md.ahLine !== undefined) ahData = calcAsianHandicapPbs(md.ahLine, md.ahHome, md.ahAway);
@@ -1166,11 +1172,11 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
   window.calcTournamentForm = calcTournamentForm;
   window.computeCompositeAnalysis = computeCompositeAnalysis;
 
-  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.62 + 综合推算');
+  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.64 + 综合推算');
   console.log('   calcAIPbs(8因子) | calcHistoryPedigree | calcTournamentForm | renderProbModalV4');
 
   // ================================================================
-  //  🔗 V1.62 桥接
+  //  🔗 V1.64 桥接
   // ================================================================
   (function installV161Bridge() {
     if (typeof window.calcP === 'function') {
@@ -1185,7 +1191,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
         var modal = document.getElementById('probModal');
         if (modal) modal.classList.add('visible');
       };
-      console.log('🔗 V1.62 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
+      console.log('🔗 V1.64 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
     }
   })();
 
