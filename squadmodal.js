@@ -1,8 +1,8 @@
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
-// ===== 阵容名单弹窗 V1.62 (V3a 杂志排版 + 中文名修复) =====
+// ===== 阵容名单弹窗 V1.63 (V3a 杂志排版 + 中文名修复) =====
 // 依赖: squaddata.js (squadDB), playerdata_*.js (playerDB), teamdata.js (teamMap/pastFlag/pastTeamNames), engine.js (translate/formatStandardName/showUnifiedPlayerDetail/formatValueWan)
-// 更新时间: 2026-07-14 (V1.62 - V3a杂志排版Hero+浮动卡片+下划线Tab+页脚)
+// 更新时间: 2026-07-14 (V1.63 - V3a杂志排版Hero+浮动卡片+下划线Tab+页脚)
 
 (function() {
   'use strict';
@@ -46,8 +46,8 @@
     document.head.appendChild(style);
   })();
 
-  // ===== FIFA世界排名数据 V1.62 (基于2025年11月FIFA官方排名) =====
-  // V1.62 基于FIFA官方2026年4月排名 (联网核对修正)
+  // ===== FIFA世界排名数据 V1.63 (基于2025年11月FIFA官方排名) =====
+  // V1.63 基于FIFA官方2026年4月排名 (联网核对修正)
   window.fifaWorldRanking = {
     'FRA':1,'ESP':2,'ARG':3,'ENG':4,'POR':5,'BRA':6,'NED':7,'MAR':8,'BEL':9,'GER':10,
     'CRO':11,'COL':13,'SEN':14,'MEX':15,'USA':16,'URU':17,'JPN':18,'SUI':19,'IRN':21,'TUR':22,
@@ -83,11 +83,11 @@
   }
 
 
-  // ===== 统一球员名称解析 V1.62: 优先从 playerDB 获取准确中文名 =====
+  // ===== 统一球员名称解析 V1.63: 优先从 playerDB 获取准确中文名 =====
   // 确保阵容列表显示的名称与球员详情弹窗一致
   // 查找策略: playerDB直接key → __playerSearchIndex → getPlayerKey → 算法翻译
   function resolveSquadPlayerName(engName, squadPlayer) {
-    // V1.62: 优先使用 squaddata 中的 cn 字段（来自官方CSV）
+    // V1.63: 优先使用 squaddata 中的 cn 字段（来自官方CSV）
     if (squadPlayer && squadPlayer.cn && /[\u4e00-\u9fff]/.test(squadPlayer.cn)) {
       return squadPlayer.cn + ' (' + (engName || '') + ')';
     }
@@ -172,7 +172,7 @@
   
   // ===== Show Squad Modal =====
   
-// V1.62: 修复中文队名显示 — 使用 window.groupsData/teamMap (HTML已暴露全局)
+// V1.63: 修复中文队名显示 — 使用 window.groupsData/teamMap (HTML已暴露全局)
 var _zhNameMap = {};
 (function _buildZhMap() {
     try {
@@ -190,7 +190,7 @@ var _zhNameMap = {};
     } catch(e) { console.warn('_buildZhMap failed:', e); }
 })();
 window.showSquadModal = function(code, btnEl, clickTime) {
-    // V1.62: 流光效果 — 仅当直接从外部调用（非 wrapper）时才查找/添加动画
+    // V1.63: 流光效果 — 仅当直接从外部调用（非 wrapper）时才查找/添加动画
     if (!btnEl) {
         var visibleBtns = document.querySelectorAll('.btn-squad-gold');
         for (var _bi = 0; _bi < visibleBtns.length; _bi++) {
@@ -208,14 +208,14 @@ window.showSquadModal = function(code, btnEl, clickTime) {
         }
     }
     var _shimmerStart = clickTime || Date.now();
-    // V1.62: 重置球员数据数组，避免多次打开阵容时索引错乱
+    // V1.63: 重置球员数据数组，避免多次打开阵容时索引错乱
     window._squadPlayerData = [];
     var squad = typeof squadDB !== 'undefined' ? squadDB[code] : null;
     // Use teamMap as global (defined with const, accessible via closure)
     var teamMapRef = window.teamMap || {};
     var team = teamMapRef[code];
     window._currentSquadTeamCode = code;
-    // V1.62: 从 groupsData 获取 en 名称（teamMap 来自 allTeams 无 en 字段）
+    // V1.63: 从 groupsData 获取 en 名称（teamMap 来自 allTeams 无 en 字段）
     var _enNat = '';
     var _zhNat = '';
     if (window.groupsData) {
@@ -227,7 +227,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
         if (_enNat) break;
       }
     }
-    // V1.62: 回退链增强 — pastTeamNames 确保有 en 字段
+    // V1.63: 回退链增强 — pastTeamNames 确保有 en 字段
     var _ptnEn = (typeof pastTeamNames !== 'undefined' && pastTeamNames[code]) ? pastTeamNames[code].en : '';
     window._currentSquadTeamNat = _enNat || _ptnEn || (team ? team.en : '') || (team ? team.flag : '');
     window._currentSquadTeamFlag = team ? team.flag : '';
@@ -243,7 +243,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
       return;
     }
     
-    // V1.62: 标题栏重新布局 — 左侧队名，右侧关闭+导出按钮，数据来源置于导出按钮下方
+    // V1.63: 标题栏重新布局 — 左侧队名，右侧关闭+导出按钮，数据来源置于导出按钮下方
     // V3a 杂志排版: 先处理无数据情况
     if (!squad) {
       titleEl.innerHTML = 
@@ -293,7 +293,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
 
     var totalPlayers = allPlayers.length;
 
-    // V1.62: 计算总身价、总身价排名、FIFA世界排名
+    // V1.63: 计算总身价、总身价排名、FIFA世界排名
     var totalValue = 0;
     allPlayers.forEach(function(p) {
       var v = parseFloat(p.v);
@@ -399,7 +399,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
       }
       var valueDisplay = (typeof formatValueWan === 'function') ? formatValueWan(p.v) : (p.v || '—');
 
-      // V1.62: 加权多因素评分 _dbKey — 名称门槛+DOB(20)+国籍(10)+位置(5)，兼容双Schema
+      // V1.63: 加权多因素评分 _dbKey — 名称门槛+DOB(20)+国籍(10)+位置(5)，兼容双Schema
       if (!window._squadPlayerData) window._squadPlayerData = [];
     if (!window._squadPlayerQuestList) window._squadPlayerQuestList = [];
     if (!window._playerQuestList) window._playerQuestList = (function(){try{var v=sessionStorage.getItem('_playerQuestList');return v?JSON.parse(v):[];}catch(e){return[];}})();
@@ -412,7 +412,9 @@ window.showSquadModal = function(code, btnEl, clickTime) {
         var _sd = (p.dob || '').trim();
         var _sp = (p.p || '').trim();
         var _qn = _origName.trim();
-        var _qnn = _qn.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        // ★ V1.63: 剥离后缀避免 "JR"/"JUNIOR" 被当作独立单词导致名称阈值失败
+        var _qnClean = _qn.replace(/\s+(Jr|Sr|II|III|IV|Júnior|Junior|Senior)\.?$/i, '').trim();
+        var _qnn = _qnClean.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         var _qw = _qnn.split(/\s+/).filter(function(w){return w.length>0;});
         // DOB标准化: 兼容 YYYY-MM-DD 和 "YYYY年MM月DD日"
         var _normDob = function(bd){if(!bd)return'';var m=bd.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);if(m)return m[1]+'-'+('0'+m[2]).slice(-2)+'-'+('0'+m[3]).slice(-2);var cm=bd.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);if(cm)return cm[1]+'-'+('0'+cm[2]).slice(-2)+'-'+('0'+cm[3]).slice(-2);return'';};
@@ -421,31 +423,54 @@ window.showSquadModal = function(code, btnEl, clickTime) {
         for (var _k in playerDB) {
           if (!playerDB.hasOwnProperty(_k)) continue;
           var _pl = playerDB[_k];
-          // V1.62: 名称来源 nn>n>key, 去特殊字符后匹配
-          var _pnSrc = _pl.nn || _pl.n || _k;
+          // ★ V1.63: 多源名称匹配 — 保证 key(常用名) 与 nn(法定全名) 都参与匹配
+          // 修复: "RAPHINHA" vs key="Raphinha" 因 nn="Raphael Lourenço Santos" 被跳过
+          // 修复: "VINICIUS JUNIOR" 去后缀后错匹配守门员 "Vinícius"
           var _stripSpecial = function(s){return s.toLowerCase().replace(/[-'`.·]/g,'').replace(/\s+/g,'').normalize('NFD').replace(/[\u0300-\u036f]/g,'');};
-          var _pnStripped = _stripSpecial(_pnSrc);
-          var _qnStripped = _stripSpecial(_origName);
+          var _computeNameScore = function(_pSrc, _qSrc){
+            var _ps = _stripSpecial(_pSrc);
+            var _qs = _stripSpecial(_qSrc);
+            var _pw = _pSrc.toLowerCase().replace(/[-'`.·]/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(/\s+/).filter(function(w){return w.length>0;});
+            var _qw = _qSrc.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(/\s+/).filter(function(w){return w.length>0;});
+            var _s = 0;
+            if (_ps === _qs) _s = 100;
+            else if (_pw.join(' ') === _qw.join(' ')) _s = 100;
+            else if (_qw.length>0 && _pw.length>0 && _qw.join('') === _pw.join('')) _s = 95;
+            else if (_qw.length>0 && _pw.length>0 && _qw.every(function(w){return _pw.indexOf(w)>=0;}) && _pw.every(function(w){return _qw.indexOf(w)>=0;})) _s = 95;
+            else if (_qw.length>0 && _qw.every(function(w){return _pw.indexOf(w)>=0;})) _s = 80;
+            else if (_qw.length>0 && _qw.some(function(w){return _pw.some(function(p){return p.indexOf(w)>=0||w.indexOf(p)>=0;});})) _s = 50;
+            return _s;
+          };
+          var _pnSrc = _pl.nn || _pl.n || _k;
+          // 名称源: nn(法定全名) + key(常用名) + n(简称) 全部参与
+          var _nameSources = [_pnSrc];
+          if (_k !== _pnSrc) _nameSources.push(_k);
+          if (_pl.n && _pl.n !== _pnSrc && _pl.n !== _k) _nameSources.push(_pl.n);
+          // 查询名: 去后缀版本 与 原始版本 都尝试
+          var _queryNames = [_qnClean];
+          if (_qnClean !== _qn) _queryNames.push(_qn);
+          var _ns = 0;
+          for (var _si=0; _si<_nameSources.length; _si++) {
+            for (var _qi=0; _qi<_queryNames.length; _qi++) {
+              var _sc = _computeNameScore(_nameSources[_si], _queryNames[_qi]);
+              if (_sc > _ns) _ns = _sc;
+            }
+          }
+          // 向后兼容变量 (后续 DOB/位置 代码仍引用)
+          var _qnStripped = _stripSpecial(_qnClean);
           var _pn = _pnSrc.toLowerCase().replace(/[-'`.·]/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
           var _pw = _pn.split(/\s+/).filter(function(w){return w.length>0;});
-          // Phase 1: 名称门槛（不通过则淘汰）
-          var _ns = 0;
-          if (_pnStripped === _qnStripped) _ns = 100;
-          else if (_pn === _qnn) _ns = 100;
-          else if (_qw.length>0 && _pw.length>0 && _qw.join('') === _pw.join('')) _ns = 95;
-          else if (_qw.length>0 && _pw.length>0 && _qw.every(function(w){return _pw.indexOf(w)>=0;}) && _pw.every(function(w){return _qw.indexOf(w)>=0;})) _ns = 95;
-          else if (_qw.length>0 && _qw.every(function(w){return _pw.indexOf(w)>=0;})) _ns = 80;
-          else if (_qw.length>0 && _qw.some(function(w){return _pw.some(function(p){return p.indexOf(w)>=0||w.indexOf(p)>=0;});})) _ns = 50;
+          var _qnn = _qnClean.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
           if (_ns < 50) continue; // 名称门槛淘汰
           // Phase 2: 加分项
           var _ts = _ns * 0.50;
           // DOB (+20): 标准化后比较
-          if (_sdNorm && _normDob(_pl.bd||'') === _sdNorm) _ts += 20;
+          var _dobHit = false; if (_sdNorm && _normDob(_pl.bd||'') === _sdNorm) { _ts += 20; _dobHit = true; }
           // 国籍 (+10): Schema1 nt(完整英文), Schema2 nat(FIFA缩写)
           var _plNat = (_pl.nt||'').toLowerCase().trim();
           var _plNatCode = (_pl.nat||'').toUpperCase().trim();
           var _teamCode = (window._currentSquadTeamCode||'').toUpperCase().trim();
-          // V1.62: 国籍匹配增强 — 拆分逗号分隔格式 (如 "Korea, South")
+          // V1.63: 国籍匹配增强 — 拆分逗号分隔格式 (如 "Korea, South")
           var _natMatch = false;
           if (_sn && _plNat) {
             var _snLower = _sn.toLowerCase().trim();
@@ -459,19 +484,32 @@ window.showSquadModal = function(code, btnEl, clickTime) {
           if (_natMatch) _ts += 10;
           else if (_plNatCode && ((_sf && _plNatCode === _sf.toUpperCase().trim()) || (_teamCode && _plNatCode === _teamCode))) _ts += 10;
           // 位置 (+5): Schema1 ps(英文详细), Schema2 pos(中文)
-          var _pm = {'守门员':'goalkeeper','后卫':'defender','中场':'midfield','前锋':'forward'};
-          var _mp = ''; for (var _pk in _pm) { if (_sp.indexOf(_pk)>=0) { _mp = _pm[_pk]; break; } }
-          if (_mp) {
-            if ((_pl.ps||'').toLowerCase().indexOf(_mp)>=0) _ts += 5;
-            else if (_pl.pos && _sp && _pl.pos.indexOf(_sp)>=0) _ts += 5;
+          // ★ V1.63: 大小写不敏感 + 英文首字母大写变体，修复 squad "Forward" vs map "forward" 不匹配
+          var _pm = {'守门员':'goalkeeper','后卫':'defender','中场':'midfield','前锋':'forward','goalkeeper':'goalkeeper','defender':'defender','midfield':'midfield','forward':'forward','Goalkeeper':'goalkeeper','Defender':'defender','Midfield':'midfield','Forward':'forward','gk':'goalkeeper','df':'defender','mf':'midfield','fw':'forward'};
+          var _spLower = _sp.toLowerCase(); var _mp = ''; for (var _pk in _pm) { if (_sp.indexOf(_pk)>=0 || _spLower.indexOf(_pk)>=0) { _mp = _pm[_pk]; break; } }
+          var _posHit = false; if (_mp) {
+            var _psLow = (_pl.ps||'').toLowerCase();
+            var _mpLow = (_pl.mp||'').toLowerCase();
+            // ★ V1.63: 语义位置匹配 — "Attack"≈"Forward" (修复 squad "Forward" vs playerDB "Attack-Left Winger" / "Midfield-Attacking Midfield")
+            if (_psLow.indexOf(_mp)>=0) { _ts += 5; _posHit = true; }
+            else if (_mpLow.indexOf(_mp)>=0) { _ts += 5; _posHit = true; }
+            else if (_mp === 'forward' && (_psLow.indexOf('attack')>=0 || _mpLow === 'attack')) { _ts += 5; _posHit = true; }
+            else if (_mp === 'midfield' && (_psLow.indexOf('midfield')>=0 || _mpLow === 'midfield')) { _ts += 5; _posHit = true; }
+            else if (_pl.pos && _sp && _pl.pos.indexOf(_sp)>=0) { _ts += 5; _posHit = true; }
           }
-          _cands.push({k:_k, ns:_ns, ts:_ts});
+          _cands.push({k:_k, ns:_ns, ts:_ts, _dobHit:_dobHit, _posHit:_posHit});
         }
         if (_cands.length > 0) {
           _cands.sort(function(a,b){return b.ts-a.ts;});
           var _best = _cands[0];
-          if (_best.ts >= 55) _dbKey = _best.k;
-          // V1.62: 记录低置信度匹配到questlist
+          // ★ V1.63: 动态阈值 — DOB+位置双失配时提高门槛，防止同名不同人误匹配
+          var _minTs = 55;
+          if (!_best._dobHit && !_best._posHit && _best.ns >= 100) _minTs = 70;
+          if (_best.ts >= _minTs) _dbKey = _best.k;
+          else if (_best.ts >= 55) { /* 低于动态门槛但高于55，记录为低置信度 */
+            if (window._squadPlayerQuestList) window._squadPlayerQuestList.push({sq:_origName,tm:_sn,dob:_sd,pos:_sp,best:_best.k,score:Math.round(_best.ts*10)/10,reason:"同名但DOB/位置双失配"});
+          }
+          // V1.63: 记录低置信度匹配到questlist
           else if (window._squadPlayerQuestList) window._squadPlayerQuestList.push({sq:_origName,tm:_sn,dob:_sd,pos:_sp,best:_best.k,score:Math.round(_best.ts*10)/10});
         } else if (window._squadPlayerQuestList) {
           window._squadPlayerQuestList.push({sq:_origName,tm:_sn,dob:_sd,pos:_sp,best:'(无匹配)',score:0});
@@ -514,7 +552,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
     html += '</div>';
 
     contentEl.innerHTML = html;
-    // V1.62: 确保流光动画至少播放1秒后再显示弹窗
+    // V1.63: 确保流光动画至少播放1秒后再显示弹窗
     var _shimmerElapsed = Date.now() - _shimmerStart;
     var _shimmerDelay = Math.max(0, 1000 - _shimmerElapsed);
     var _showModal = function() { modalEl.classList.add('visible'); };
@@ -567,7 +605,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
     if (el && typeof window.switchSquadTabV3 === 'function') {
       window.switchSquadTabV3(tabId, el);
     }
-  };  // ===== Player Detail Popup (V1.62 — 出生日期/国籍交叉验证 + 精准匹配 + QuestList) =====
+  };  // ===== Player Detail Popup (V1.63 — 出生日期/国籍交叉验证 + 精准匹配 + QuestList) =====
   // QuestList: 收集无法精确匹配的球员，供后续核对和补全数据
   window._playerQuestList = window._playerQuestList || [];
   
@@ -608,7 +646,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
         if (pbd === nd) { candidates.push(k); }
       }
       if (candidates.length === 0) return null;
-      // V1.54: 必须验证国籍，不再盲目返回唯一DOB匹配
+      // V1.63: 必须验证国籍，不再盲目返回唯一DOB匹配
       var nl = natStr ? natStr.toLowerCase().trim() : '';
       var fl = teamFlag ? teamFlag.toUpperCase().trim() : '';
       var tc = (window._currentSquadTeamCode || '').toUpperCase().trim();
@@ -665,12 +703,23 @@ window.showSquadModal = function(code, btnEl, clickTime) {
     }
     
     // 策略2: 出生日期匹配（最可靠）
+    // ★ V1.63: 添加名称重叠验证，防止DOB碰撞导致错误匹配（如Vinícius Júnior→Ronaldo, 同DOB同国籍）
     if (squadDob && typeof playerDB !== 'undefined') {
       var dobKey = findByDobAndNat(squadDob, teamNat, window._currentSquadTeamFlag);
       if (dobKey && playerDB[dobKey]) {
-        if (typeof showUnifiedPlayerDetail === 'function') {
-          showUnifiedPlayerDetail(dobKey);
-          return;
+        // V1.63: 验证名称重叠 — 至少一个单词匹配（避免DOB碰撞）
+        var _dobPd = playerDB[dobKey];
+        var _dobNameStr = ((_dobPd.nn||'') + ' ' + (_dobPd.n||'') + ' ' + dobKey + ' ' + (_dobPd.en||'')).toLowerCase();
+        var _squadNameCheck = (origName || data.n || '').toLowerCase().replace(/\s+(jr|sr|ii|iii|iv|júnior|junior|senior)\.?$/i, '');
+        var _nameWords = _squadNameCheck.split(/[\s\-]+/).filter(function(w){return w.length>=2;});
+        var _nameOverlap = _nameWords.length === 0 || _nameWords.some(function(w){return _dobNameStr.indexOf(w) >= 0;});
+        if (_nameOverlap) {
+          if (typeof showUnifiedPlayerDetail === 'function') {
+            showUnifiedPlayerDetail(dobKey);
+            return;
+          }
+        } else {
+          console.warn('[squadmodal] DOB匹配 ' + dobKey + ' 但名称无重叠: squad=' + _squadNameCheck + ' player=' + _dobNameStr.substring(0,60));
         }
       }
       if (!dobKey && squadDob.length >= 10) {
@@ -678,14 +727,47 @@ window.showSquadModal = function(code, btnEl, clickTime) {
       }
     }
     
-    // 策略3: 原始英文名精确匹配 + 国籍验证
-    if (origName && typeof playerDB !== 'undefined' && playerDB[origName]) {
-      var pnat1 = (playerDB[origName].nt || '').toLowerCase().trim();
+    // 策略3: 原始英文名精确匹配 + 国籍验证 (V1.63: 大小写不敏感回退)
+    var _s3Key = null;
+    if (origName && typeof playerDB !== 'undefined') {
+      if (playerDB[origName]) { _s3Key = origName; }
+      else {
+        // V1.63: 大小写不敏感查找 ("VINICIUS JUNIOR" → "Vinicius Junior")
+        var _s3Lower = origName.toLowerCase();
+        for (var _s3k in playerDB) {
+          if (playerDB.hasOwnProperty(_s3k) && _s3k.toLowerCase() === _s3Lower) { _s3Key = _s3k; break; }
+        }
+      }
+    }
+    if (_s3Key && playerDB[_s3Key]) {
+      var _s3pl = playerDB[_s3Key];
+      var pnat1 = (_s3pl.nt || '').toLowerCase().trim();
       var tnat1 = teamNat.toLowerCase().trim();
       if (!tnat1 || pnat1 === tnat1 || pnat1.indexOf(tnat1) >= 0 || tnat1.indexOf(pnat1) >= 0) {
-        if (typeof showUnifiedPlayerDetail === 'function') {
-          showUnifiedPlayerDetail(origName);
-          return;
+        // ★ V1.63: 名称匹配后验证 DOB/位置兼容性，防止同名不同人误匹配
+        // (如 squad RAPHINHA Forward 1996 vs playerDB Raphinha Defender 1999)
+        var _s3DobYear = ''; var _s3PlDobYear = '';
+        if (squadDob) { var _m3 = squadDob.match(/^(\d{4})/); if (_m3) _s3DobYear = _m3[1]; }
+        if (_s3pl.bd) { var _m3b = _s3pl.bd.match(/^(\d{4})/); if (_m3b) _s3PlDobYear = _m3b[1]; }
+        var _s3PosCompat = true;
+        if (data.p && _s3pl.mp) {
+          var _s3sPos = (data.p || '').toLowerCase();
+          var _s3pMp = (_s3pl.mp || '').toLowerCase();
+          // 位置大类映射
+          var _posGroups = {forward:['forward','attack','striker','winger'],midfield:['midfield','midfielder'],defender:['defender','defence','back'],goalkeeper:['goalkeeper','goalie','gk']};
+          var _s3sGroup = ''; for (var _g in _posGroups) { if (_posGroups[_g].some(function(x){return _s3sPos.indexOf(x)>=0;})) { _s3sGroup = _g; break; } }
+          var _s3pGroup = ''; for (var _g in _posGroups) { if (_posGroups[_g].some(function(x){return _s3pMp.indexOf(x)>=0;})) { _s3pGroup = _g; break; } }
+          if (_s3sGroup && _s3pGroup && _s3sGroup !== _s3pGroup) _s3PosCompat = false;
+        }
+        if (!_s3PosCompat || (_s3DobYear && _s3PlDobYear && Math.abs(parseInt(_s3DobYear)-parseInt(_s3PlDobYear)) > 3)) {
+          console.warn('[squadmodal] 策略3 名称匹配 ' + _s3Key + ' 但DOB/位置不兼容: squadDOB=' + _s3DobYear + ' playerDOB=' + _s3PlDobYear + ' squadPos=' + (data.p||'') + ' playerMp=' + (_s3pl.mp||''));
+          addToQuestList('名称匹配但DOB/位置不兼容', 'key=' + _s3Key + ' squadDOB=' + squadDob + ' playerDOB=' + (_s3pl.bd||'') + ' squadPos=' + (data.p||'') + ' playerMp=' + (_s3pl.mp||''));
+          // 不返回，继续后续策略
+        } else {
+          if (typeof showUnifiedPlayerDetail === 'function') {
+            showUnifiedPlayerDetail(_s3Key);
+            return;
+          }
         }
       }
     }
@@ -707,13 +789,14 @@ window.showSquadModal = function(code, btnEl, clickTime) {
       }
     }
     
-    // 策略5: 遍历playerDB按dob+国籍查找 (V1.54: 必须国籍验证+code匹配)
+    // 策略5: 遍历playerDB按dob+国籍查找 (V1.63: 添加名称重叠验证防DOB碰撞，如 Vinícius Júnior→Ronaldo)
     if (squadDob && typeof playerDB !== 'undefined') {
       var nd2 = normDob(squadDob);
       if (nd2) {
         var nl5 = teamNat.toLowerCase().trim();
         var fl5 = (window._currentSquadTeamFlag || '').toUpperCase().trim();
         var tc5 = (window._currentSquadTeamCode || '').toUpperCase().trim();
+        var _s5NameCheck = (origName || data.n || '').toLowerCase().replace(/\s+(jr|sr|ii|iii|iv|júnior|junior|senior)\.?$/i, '').trim();
         for (var k in playerDB) {
           if (!playerDB.hasOwnProperty(k)) continue;
           if (normDob(playerDB[k].bd || '') === nd2) {
@@ -721,6 +804,11 @@ window.showSquadModal = function(code, btnEl, clickTime) {
             var pc5 = (playerDB[k].nat || '').toUpperCase().trim();
             if ((nl5 && pn5 && (pn5 === nl5 || pn5.indexOf(nl5) >= 0 || nl5.indexOf(pn5) >= 0)) ||
                 (pc5 && ((fl5 && pc5 === fl5) || (tc5 && pc5 === tc5)))) {
+              // V1.63: 名称重叠验证 — 至少一个单词匹配，防止同DOB同国籍错误匹配
+              var _s5NameStr = ((playerDB[k].nn||'') + ' ' + (playerDB[k].n||'') + ' ' + k + ' ' + (playerDB[k].en||'')).toLowerCase();
+              var _s5Words = _s5NameCheck.split(/[\s\-]+/).filter(function(w){return w.length>=2;});
+              var _s5Overlap = _s5Words.length === 0 || _s5Words.some(function(w){return _s5NameStr.indexOf(w) >= 0;});
+              if (!_s5Overlap) { console.warn('[squadmodal] 策略5 DOB匹配 ' + k + ' 但名称无重叠: squad=' + _s5NameCheck + ' player=' + _s5NameStr.substring(0,60)); continue; }
               if (typeof showUnifiedPlayerDetail === 'function') {
                 showUnifiedPlayerDetail(k);
                 return;
@@ -743,7 +831,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
       return;
     }
     
-    // V1.55: 所有策略失败 — 不再回退到不可靠的引擎查询，弹窗提示用户
+    // V1.63: 所有策略失败 — 不再回退到不可靠的引擎查询，弹窗提示用户
     addToQuestList('所有策略未匹配(含DOB+国籍验证)', 'orig=' + origName + ' dob=' + squadDob + ' nat=' + teamNat);
     console.warn('[squadmodal] 球员未在playerDB中精确匹配: ' + formattedName + ' | DOB=' + squadDob + ' | 国籍=' + teamNat);
     if (typeof showToast === 'function') {
@@ -752,7 +840,7 @@ window.showSquadModal = function(code, btnEl, clickTime) {
     // 不再调用 showUnifiedPlayerDetail（避免显示错误球员）
   };
 
-  // ===== QuestList CSV Export V1.53 =====
+  // ===== QuestList CSV Export V1.63 =====
   window.exportQuestListCSV = function() {
     var ql = window._playerQuestList || [];
     if (ql.length === 0) { alert('QuestList 为空 — 没有未匹配球员。'); return; }
@@ -810,5 +898,5 @@ window.showSquadModal = function(code, btnEl, clickTime) {
     document.head.appendChild(style);
   }, 300);
   
-  console.log('✅ squadmodal.js V1.62 — V3a杂志排版: Hero大区+浮动统计卡片+下划线标签+数据来源页脚');
+  console.log('✅ squadmodal.js V1.63 — V3a杂志排版: Hero大区+浮动统计卡片+下划线标签+数据来源页脚');
 })();
