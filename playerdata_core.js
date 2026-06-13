@@ -387411,8 +387411,8 @@ var playerDB = {
   "ps": "?",
   "mp": "?",
   "nk": "lukasprovod",
-  "_ext": 1
- }
+   "_ext": 1,
+  },
 
 "MONTERO Alvaro": {
   "nt": "Colombia",
