@@ -1,4 +1,4 @@
-// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.64 =====
+// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.66 =====
 // 依赖: teamdata.js (playerDB, clubNameMap, clubLeagueMap, supplementalPlayers)
 
 // ==================== 1. 字符串规范化 ====================
@@ -1104,7 +1104,7 @@ if (typeof document !== 'undefined') {
         setTimeout(function() {
             buildClubIndex.build();
             console.log('[engine.js] 聚合索引构建完成');
-            try { sessionStorage.setItem('engineDataBuilt', 'V1.64'); } catch(e) {}
+            try { sessionStorage.setItem('engineDataBuilt', 'V1.66'); } catch(e) {}
         }, 500);
     });
 }
@@ -1261,7 +1261,7 @@ function formatStandardName(type, input, orig) {
             }
         } else {
             var nameStr = String(p || '');
-            // ★ V1.65 修复: 输入已是 "中文名 (English Name)" 格式时，解析提取
+            // ★ V1.66 修复: 输入已是 "中文名 (English Name)" 格式时，解析提取
             var reStored = /^(.+)\s+\(([^)]+)\)$/;
             var mStored = nameStr.match(reStored);
             if (mStored) {
@@ -1557,9 +1557,16 @@ function buildPlayerDetailDOMV3(pd, resolvedKey) {
     textArea.style.cssText = 'flex:1;';
 
     var nameMain = document.createElement('div');
-    nameMain.style.cssText = 'font-size:1.4rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:2px;';
-    nameMain.textContent = mainName;
+    nameMain.style.cssText = 'font-size:1.4rem;font-weight:700;color:#fff;line-height:1.3;';
+    nameMain.textContent = cnName;
     textArea.appendChild(nameMain);
+
+    if (enName && enName !== cnName) {
+        var nameEn = document.createElement('div');
+        nameEn.style.cssText = 'font-size:0.85rem;color:rgba(255,255,255,0.7);margin-bottom:4px;';
+        nameEn.textContent = '(' + enName + ')';
+        textArea.appendChild(nameEn);
+    }
 
     if (subName) {
         var nameSub = document.createElement('div');
@@ -1611,8 +1618,8 @@ function buildPlayerDetailDOMV3(pd, resolvedKey) {
 
     infoGrid.appendChild(makeInfoItem('年龄', ageStr));
     infoGrid.appendChild(makeInfoItem('身高', ht));
-    infoGrid.appendChild(makeInfoItem('体重', wt));
     infoGrid.appendChild(makeInfoItem('出生日期', bd));
+    infoGrid.appendChild(makeInfoItem('体重', wt));
     infoGrid.appendChild(makeInfoItem('国籍', natDisplay));
     infoGrid.appendChild(makeInfoItem('当前身价', latestValue, true));
     card.appendChild(infoGrid);
@@ -1998,7 +2005,7 @@ window.showUnifiedPlayerDetail = function(playerKeyOrName) {
     if (!document.getElementById('pd-v3-anim-style')) {
         var style = document.createElement('style');
         style.id = 'pd-v3-anim-style';
-        style.textContent = '@keyframes fadeInV3{from{opacity:0}to{opacity:1}}@keyframes slideUpV3{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}.player-detail-card{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.15) transparent;}.player-detail-card::-webkit-scrollbar{width:5px;}.player-detail-card::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:10px;}';
+        style.textContent = '@keyframes fadeInV3{from{opacity:0}to{opacity:1}}@keyframes slideUpV3{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}.player-detail-card{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.15) transparent;}.player-detail-card::-webkit-scrollbar{width:5px;}.player-detail-card::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:10px;}@media(max-width:480px){.player-detail-card{max-height:92vh!important;border-radius:12px!important}.player-detail-card>div:first-child{padding:14px 12px 12px!important;gap:12px!important;border-radius:12px 12px 0 0!important;flex-wrap:nowrap!important}.player-detail-card>div:first-child>div:first-child{width:56px!important;height:56px!important;min-width:56px!important;font-size:1.5rem!important;border-width:2px!important}.player-detail-card>div:first-child>div:last-child>div:first-child{font-size:0.92rem!important;line-height:1.2!important}.player-detail-card>div:first-child>div:last-child>div:nth-child(2){font-size:0.7rem!important;margin-bottom:3px!important}.player-detail-card>div:first-child>div:last-child>div:nth-child(2)[style*="0.85rem"]{font-size:0.72rem!important;margin-bottom:2px!important}.player-detail-card>div:first-child>div:last-child>div:last-child{gap:6px!important}.player-detail-card>div:first-child>div:last-child>div:last-child>span:first-child{padding:2px 10px!important;font-size:0.68rem!important}.player-detail-card>div:first-child>div:last-child>div:last-child>span:last-child{font-size:0.65rem!important}.player-detail-card>div:first-child>span{top:6px!important;right:8px!important;width:26px!important;height:26px!important;font-size:0.9rem!important}.player-detail-card>div:nth-child(2){padding:8px 4px!important;grid-template-columns:repeat(2,1fr)!important;gap:2px!important}.player-detail-card>div:nth-child(2)>div{padding:10px 6px!important}.player-detail-card>div:nth-child(2)>div>div:first-child{font-size:0.5rem!important;margin-bottom:2px!important;letter-spacing:0!important}.player-detail-card>div:nth-child(2)>div>div:last-child{font-size:0.72rem!important}.player-detail-card>div:nth-child(2)>div>div:last-child[style*="0.95rem"]{font-size:0.78rem!important}.player-detail-card div[style*="padding:14px 24px 8px"],.player-detail-card div[style*="padding:14px 24px 8px;"]{padding:10px 4px 6px!important;font-size:0.7rem!important}.player-detail-card div[style*="padding:6px 24px 10px"]{padding:4px 4px 8px!important;font-size:0.65rem!important}.player-detail-card div[style*="padding:0 24px 10px"]{padding:0 2px 8px!important}.player-detail-card div[style*="padding:4px 24px 10px"]{padding:4px 4px 8px!important}.player-detail-card table{font-size:0.6rem!important}.player-detail-card th{padding:5px 4px!important;font-size:0.52rem!important}.player-detail-card td{padding:5px 4px!important;font-size:0.55rem!important}.player-detail-card ul{padding:4px 8px 8px!important;gap:4px!important}.player-detail-card ul li{padding:4px 8px!important;font-size:0.62rem!important}.player-detail-card>div:last-child{padding:8px 10px 10px!important;font-size:0.5rem!important}}';
         document.head.appendChild(style);
     }
 };
