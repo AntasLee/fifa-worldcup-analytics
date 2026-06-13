@@ -1261,10 +1261,29 @@ function formatStandardName(type, input, orig) {
             }
         } else {
             var nameStr = String(p || '');
-            // 优先从 playerDB 查找，利用 nn (原生名) 获取准确翻译
-            var pObj = (typeof playerDB !== 'undefined' && playerDB[nameStr]) ? playerDB[nameStr] : { n: nameStr };
-            cn = translate.player(pObj) || nameStr;
-            en = orig || nameStr;
+            // ★ V1.65 修复: 输入已是 "中文名 (English Name)" 格式时，解析提取
+            var reStored = /^(.+)\s+\(([^)]+)\)$/;
+            var mStored = nameStr.match(reStored);
+            if (mStored) {
+                var cnPart = mStored[1].trim();
+                var enPart = mStored[2].trim();
+                // 尝试从 playerDB 查找（优先用英文名查找）
+                var pFound = (typeof playerDB !== 'undefined' && (playerDB[enPart] || playerDB[cnPart])) ? (playerDB[enPart] || playerDB[cnPart]) : null;
+                if (pFound) {
+                    cn = translate.player(pFound) || cnPart;
+                    en = orig || pFound.en || pFound.nn || enPart;
+                    // 确保 en 为拉丁名
+                    if (en && RE_CJK.test(en) && pFound.nn && !RE_CJK.test(pFound.nn)) en = pFound.nn;
+                } else {
+                    cn = cnPart;
+                    en = enPart;
+                }
+            } else {
+                // 优先从 playerDB 查找，利用 nn (原生名) 获取准确翻译
+                var pObj = (typeof playerDB !== 'undefined' && playerDB[nameStr]) ? playerDB[nameStr] : { n: nameStr };
+                cn = translate.player(pObj) || nameStr;
+                en = orig || nameStr;
+            }
         }
         if (!cn && !en) return '未知球员';
         // 安全兜底：确保 cn/en 均为字符串
