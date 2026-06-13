@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA WORLD CUP - DATA ANALYSIS | V1.64</title>
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.68</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -1424,7 +1424,828 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .prob-v4-1x2-item{min-width:80px}
 }
 
-@keyframes finishPulse{0%,100%{opacity:0.5;transform:scale(1.01)}50%{opacity:1;transform:scale(1.04)}}</style>
+@keyframes finishPulse{0%,100%{opacity:0.5;transform:scale(1.01)}50%{opacity:1;transform:scale(1.04)}}
+/* ================================================================
+   📱 MOBILE PORTRAIT LAYOUT — V1.64 (max-width: 480px)
+   ================================================================ */
+@media (max-width: 480px) {
+
+  /* ── 1. LOADING / WELCOME OVERLAY ── */
+  #welcomeOverlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+  }
+  .welcome-title-group {
+    position: relative !important;
+    top: auto !important; left: auto !important;
+    transform: none !important;
+    margin-bottom: 24px;
+  }
+  .welcome-logo { font-size: 2.4rem; margin-bottom: 8px; }
+  .welcome-title {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .welcome-progress-group {
+    position: relative !important;
+    top: auto !important; left: auto !important;
+    transform: none !important;
+    width: 100%;
+  }
+  .welcome-progress-container {
+    width: 100% !important;
+    max-width: 85vw !important;
+    height: 5px;
+    margin-bottom: 14px;
+  }
+  .welcome-loading-percent {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+  .welcome-loading-text {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+  #welcomeChoicePanel {
+    position: relative !important;
+    top: auto !important; left: auto !important;
+    transform: none !important;
+    width: 100%;
+    padding: 0 12px;
+    gap: 16px;
+  }
+  .welcome-choice-subtitle {
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+  .welcome-choice-title {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .welcome-btn-row {
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    align-items: stretch;
+  }
+  .welcome-btn {
+    width: 100% !important;
+    padding: 24px 20px !important;
+    border-radius: 18px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .welcome-btn-icon { font-size: 2rem; }
+  .welcome-btn-label { font-size: 1rem; }
+  .welcome-btn-sub { font-size: 0.7rem; }
+
+  /* ── 2. HEADER & GLOBAL ── */
+  .header {
+    padding: 12px 10px;
+  }
+  .header h1 {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    line-height: 1.3;
+  }
+  .header .subtitle {
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .container {
+    padding: 10px 6px;
+  }
+
+  /* ── 3. WC EDITION BAR ── */
+  .wc-edition-bar {
+    padding: 8px 8px;
+    gap: 4px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  }
+  .wc-edition-bar .edition-label {
+    font-size: 0.65rem;
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+  .wc-edition-tab {
+    padding: 4px 8px;
+    font-size: 0.62rem;
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ── 4. TOOLBAR (COMPACT · V1.65 40% height) ── */
+  #mainToolbar {
+    padding: 1px 3px !important;
+    gap: 1px !important;
+    margin-bottom: 3px !important;
+    flex-direction: column !important;
+  }
+  #mainToolbar .toolbar-left {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 2px !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+  }
+  #mainToolbar .toolbar-left .btn,
+  #mainToolbar .toolbar-left button {
+    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+    min-height: 26px !important;
+    height: auto !important;
+    border-radius: 4px !important;
+    flex: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+  }
+  #mainToolbar .btn-bracket-primary {
+    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+    min-height: 26px !important;
+    height: auto !important;
+    width: auto !important;
+    flex: 1 !important;
+    line-height: 1.2 !important;
+  }
+  /* Second row: 3 small buttons in one row */
+  #mainToolbar > div:last-of-type {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 2px !important;
+    width: 100% !important;
+    flex-wrap: nowrap !important;
+  }
+  #mainToolbar > div:last-of-type .btn,
+  #mainToolbar > div:last-of-type button {
+    padding: 3px 6px !important;
+    font-size: 0.68rem !important;
+    min-height: 24px !important;
+    height: auto !important;
+    border-radius: 4px !important;
+    flex: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+  }
+  /* General toolbar fallback (for past WC, etc.) */
+  .toolbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 5px 6px;
+    margin-bottom: 8px;
+  }
+  .toolbar-left {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    flex: 1 1 auto;
+  }
+  .toolbar-left .btn,
+  .toolbar .btn {
+    width: auto;
+    text-align: center;
+    justify-content: center;
+    padding: 5px 8px;
+    font-size: 0.72rem;
+    min-height: 32px;
+    border-radius: 6px;
+    letter-spacing: 0;
+  }
+  .btn-bracket-primary {
+    padding: 5px 8px !important;
+    font-size: 0.72rem !important;
+    width: auto !important;
+    min-height: 32px;
+  }
+
+  /* ── 4b. SEARCH ROW (COMPACT · V1.65) ── */
+  .search-input {
+    width: auto !important;
+    font-size: 0.7rem !important;
+    padding: 3px 6px !important;
+    border-radius: 4px;
+    min-height: 26px !important;
+    height: auto !important;
+  }
+  #searchInput {
+    width: 90px !important;
+    flex: 0 0 auto;
+    font-size: 0.7rem !important;
+    min-height: 26px !important;
+  }
+  .search-row-toolbar {
+    padding: 2px 3px !important;
+    flex-direction: column !important;
+    gap: 1px !important;
+  }
+  .search-row-toolbar .toolbar-left {
+    gap: 2px !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .search-row-toolbar .toolbar-left > span:first-child {
+    font-size: 0.65rem !important;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  /* Player search input + button in same row */
+  .search-row-toolbar .toolbar-left > span {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+    flex-direction: row !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  #playerSearchInput {
+    width: 100px !important;
+    flex: 1 1 auto !important;
+    font-size: 0.7rem !important;
+    min-width: 55px !important;
+    min-height: 26px !important;
+    padding: 2px 5px !important;
+  }
+  .search-row-toolbar .toolbar-left .btn,
+  .search-row-toolbar .toolbar-left button {
+    padding: 3px 7px !important;
+    font-size: 0.68rem !important;
+    min-height: 26px !important;
+    height: auto !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    line-height: 1.2 !important;
+  }
+  .player-search-dropdown {
+    min-width: auto;
+    width: 100%;
+    font-size: 0.7rem !important;
+  }
+  /* Hint text smaller */
+  .search-row-toolbar > div:last-child {
+    font-size: 0.62rem !important;
+    margin-top: 1px !important;
+    width: 100%;
+    line-height: 1.2 !important;
+  }
+
+/* ── 5. TABS ── */
+  .tabs {
+    gap: 2px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+  }
+  .tab {
+    padding: 5px 10px;
+    font-size: 0.68rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-height: 32px;
+  }
+
+  /* ── 6. GROUPS GRID ── */
+  .groups-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .group-card {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  /* Compact group header: "A组 小组赛 已预测 X/6" — V1.68 shrunk */
+  .group-header {
+    padding: 3px 6px !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 0 !important;
+    gap: 2px !important;
+    min-height: 24px !important;
+  }
+  .group-badge {
+    padding: 1px 5px !important;
+    font-size: 0.55rem !important;
+  }
+  /* The inline "已预测" span inside group-header */
+  .group-header > span[style*="margin-left:auto"] {
+    font-size: 0.5rem !important;
+  }
+  .match-list {
+    padding: 2px 3px;
+  }
+  .group-table {
+    font-size: 0.55rem;
+  }
+  .group-table th,
+  .group-table td {
+    padding: 3px 2px;
+    font-size: 0.55rem;
+  }
+
+  /* ── Match items: clean 2-row (Row1: flag+name+score / Row2: buttons) ── */
+  .match-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px 4px;
+    align-items: center;
+    padding: 4px 5px;
+    font-size: 0.62rem;
+    overflow-x: hidden;
+    min-height: auto;
+  }
+  /* Hide predict-indicator on mobile */
+  .match-item > .predict-indicator {
+    display: none;
+  }
+  /* Force line break between row 1 & row 2 via ::after */
+  .match-item::after {
+    content: '';
+    flex-basis: 100%;
+    order: 1;
+    height: 0;
+    font-size: 0;
+  }
+
+  /* Row 1: time — hidden on mobile */
+  .match-time {
+    display: none;
+  }
+
+  /* Row 1: team blocks — compact: flag + short name */
+  .team-block {
+    flex: 1 1 0;
+    max-width: 35%;
+    min-width: 0;
+    font-size: 0.62rem;
+    gap: 2px;
+  }
+  .team-block img,
+  .team-block .team-flag {
+    width: 18px !important;
+    height: 12px !important;
+    flex-shrink: 0;
+  }
+  /* Show only Chinese name on mobile; hide code */
+  .team-name-zh {
+    font-size: 0.62rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 56px;
+    display: block;
+  }
+  .team-code {
+    display: none;
+  }
+
+  /* Row 1: VS badge */
+  .vs-badge {
+    font-size: 0.48rem;
+    flex: 0 0 auto;
+    padding: 0 1px;
+    color: var(--text-secondary);
+    min-width: 12px;
+    text-align: center;
+  }
+
+  /* Row 1: score group */
+  .score-input-group {
+    flex: 0 0 auto;
+    font-size: 0.72rem;
+    padding: 1px 3px !important;
+    border-radius: 4px;
+  }
+  .score-input-group span {
+    font-size: 0.72rem !important;
+    width: auto !important;
+    min-width: 16px !important;
+  }
+  .score-input-group .score-colon {
+    margin: 0 1px;
+  }
+
+  /* Row 2: action buttons — order: 2 after ::after break */
+  .match-item .btn-prob,
+  .match-item .btn-analysis,
+  .match-item .btn-venue {
+    order: 2 !important;
+    flex: 1 1 0 !important;
+    min-width: 48px !important;
+    font-size: 0.62rem !important;
+    padding: 3px 6px !important;
+    margin: 2px 1px !important;
+    white-space: nowrap !important;
+    min-height: 26px !important;
+    border-radius: 4px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* ── 7. KNOCKOUT PANEL ── */
+  .knockout-panel {
+    margin-top: 6px;
+  }
+  /* Knockout match cards */
+  .ko-match-card {
+    font-size: 0.64rem;
+    padding: 6px 4px;
+  }
+
+  /* ── 8. BRACKET OVERLAY ── */
+  #bracketOverlay .bk-header {
+    padding: 6px 8px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  #bracketOverlay .bk-header-left {
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+  }
+  #bracketOverlay .bk-header-trophy { font-size: 1.1rem; }
+  #bracketOverlay .bk-header-title {
+    font-size: 0.85rem;
+    letter-spacing: 0;
+  }
+  #bracketOverlay .bk-header-subtitle {
+    font-size: 0.58rem;
+    display: none;
+  }
+  #bracketOverlay .bk-header-right {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  #bracketOverlay .bk-btn {
+    padding: 5px 10px;
+    font-size: 0.65rem;
+    border-radius: 4px;
+  }
+  #bracketOverlay .bk-btn-close {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    margin-left: 2px;
+  }
+  #bracketOverlay .bk-toolbar {
+    padding: 4px 8px;
+    gap: 6px;
+    font-size: 0.6rem;
+    flex-wrap: wrap;
+  }
+  #bracketOverlay .bk-progress-bar { width: 80px; height: 4px; }
+  #bracketOverlay .bk-scene-wrap {
+    min-height: 280px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  #bracketOverlay .bk-card {
+    width: 100px !important;
+    font-size: 0.6rem !important;
+  }
+  #bracketOverlay .bk-col-header {
+    font-size: 0.52rem;
+  }
+  #bracketOverlay .bk-footer {
+    padding: 6px 10px;
+    font-size: 0.58rem;
+  }
+  #bracketOverlay .bk-picker-popup {
+    min-width: auto;
+    width: 90vw;
+    max-width: 90vw;
+    max-height: 55vh;
+    padding: 6px 0;
+  }
+  #bracketOverlay .bk-save-box {
+    margin: 0 16px;
+    padding: 14px;
+  }
+  #bracketOverlay .bk-save-box h3 { font-size: 0.9rem; }
+
+  /* ── 9. MODALS (ALL) ── */
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .modal-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+    padding: 16px 12px;
+    margin: 0;
+  }
+  .modal-box h3 {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+  .modal-close {
+    font-size: 1.1rem;
+    padding: 8px;
+  }
+
+  /* Player detail modal */
+  .player-detail-modal {
+    padding: 14px 10px !important;
+  }
+  .player-detail-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  /* Probability modal */
+  .prob-modal {
+    padding: 12px 8px !important;
+  }
+  .prob-v4-dual-panel {
+    grid-template-columns: 1fr;
+  }
+  .prob-v4-divider { display: none; }
+  .prob-v4-1x2-row { flex-wrap: wrap; }
+  .prob-v4-1x2-item { min-width: 70px; }
+
+  /* Analysis modal */
+  .analysis-modal {
+    padding: 12px 8px !important;
+  }
+
+  /* Backtest modal */
+  .backtest-modal {
+    padding: 12px 8px !important;
+  }
+  .backtest-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .backtest-summary-card {
+    padding: 12px 10px;
+  }
+
+  /* Match detail modal */
+  .match-detail-modal {
+    padding: 12px 8px !important;
+  }
+
+  /* Rules modal */
+  .rules-modal {
+    padding: 12px 8px !important;
+    max-height: 92vh;
+  }
+
+  /* Squad modal */
+  .squad-modal {
+    padding: 12px 8px !important;
+  }
+
+  /* Data overview modal */
+  .data-overview-modal {
+    padding: 12px 8px !important;
+  }
+
+  /* Venue analysis modal */
+  .venue-analysis-modal {
+    padding: 12px 8px !important;
+  }
+
+  /* ── 10. PAST WC MAIN ── */
+  .past-wc-main-container {
+    padding: 10px 8px;
+  }
+  .past-wc-main-toolbar {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .past-wc-main-toolbar .btn {
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 8px 12px;
+  }
+  .past-wc-subtabs {
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+  }
+  .past-wc-main-info {
+    font-size: 0.68rem;
+    padding: 6px 10px;
+  }
+  .past-match-row {
+    grid-template-columns: 1fr !important;
+    gap: 3px;
+    font-size: 0.7rem;
+    text-align: center;
+    padding: 6px 4px;
+  }
+
+  /* ── 11. PROB UPDATE CAPSULE ── */
+  .prob-update-wrapper {
+    display: block;
+    width: 100%;
+  }
+  .prob-update-capsule {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.7rem;
+    padding: 6px 12px;
+  }
+
+  /* ── 12. BRACKET TOGGLE BUTTON ── */
+  .btn-bracket-primary {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 0.82rem;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* ── 13. FOOTER ── */
+  .footer-note {
+    padding: 14px 10px;
+    font-size: 0.65rem;
+  }
+
+  /* ── 14. FLOAT / STICKY ── */
+  .sticky-top-group {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  /* ── 15. MISC TOUCH IMPROVEMENTS ── */
+  button, .btn, .wc-edition-tab {
+    min-height: 40px; /* touch-friendly tap targets */
+  }
+  .match-item {
+    min-height: auto; /* match-item uses its own compact min-height */
+  }
+  .tabs .tab {
+    min-height: 32px; /* tab-specific: balanced for data-dense UI */
+  }
+  .match-item:active {
+    background: var(--surface2);
+    transform: scale(0.98);
+  }
+  .btn:active, .tab:active, .wc-edition-tab:active {
+    transform: scale(0.96);
+  }
+
+  /* Hide desktop-only elements */
+  .header .subtitle br { display: none; }
+
+  /* Scroll containers */
+  .wc-edition-bar::-webkit-scrollbar,
+  .tabs::-webkit-scrollbar,
+  .past-wc-subtabs::-webkit-scrollbar {
+    height: 2px;
+  }
+  /* ── 16. ADDITIONAL MOBILE REFINEMENTS ── */
+
+  /* Prob update dropdown */
+  .prob-update-dropdown {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+  .prob-update-item {
+    padding: 8px 12px;
+    font-size: 0.68rem;
+  }
+
+  /* Player search dropdown */
+  #playerSearchDropdown {
+    max-height: 200px;
+    font-size: 0.72rem;
+  }
+
+  /* Analysis hero layout */
+  .analysis-hero {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .analysis-hero-refined {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .ah-vs {
+    flex-direction: row;
+    gap: 8px;
+    padding: 6px 0;
+  }
+  .fm-dual-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Group card table horizontal scroll */
+  .group-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Modal inner scroll areas */
+  #matchDetailContent,
+  #probContent,
+  #analysisContent,
+  #squadContent,
+  #backtestContent,
+  #dataOverviewContent,
+  #venueAnalysisContent,
+  #playerDetailContent {
+    max-height: 60vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Rules iframe */
+  #rulesIframe {
+    height: 70vh;
+  }
+
+  /* Match detail modal inner grids */
+  .match-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  /* Buttons inside modals */
+  .modal-box .btn {
+    padding: 7px 12px;
+    font-size: 0.7rem;
+  }
+
+  /* Progress bar text */
+  .bk-progress-wrap span {
+    font-size: 0.55rem;
+  }
+
+  /* Bracket scene area touch scroll */
+  #bkSceneWrap {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Past WC content area */
+  #pastWCContentMain {
+    max-height: 45vh;
+    font-size: 0.7rem;
+  }
+
+  /* Smooth scrolling for all scroll containers */
+  .groups-grid,
+  .knockout-panel,
+  .group-card-body,
+  .modal-box {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure images don't overflow */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Flag images in team blocks */
+  .team-block img,
+  .team-block .flag {
+    width: 14px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  /* Improve readability on small screens */
+  body {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+}
+
+</style>
 </head>
 <body>
 <div id="welcomeOverlay">
@@ -2455,5 +3276,125 @@ function switchMainTab(tabName) {
 </script>
 
 <div class="footer-note" style="padding:12px 20px;text-align:center;font-size:0.7rem;color:var(--text-secondary);border-top:1px solid var(--border);">Copyright: © 2026 ZHENTAO LI. All rights reserved.</div>
+
+<!-- Mobile Preview Mode Script (V1.64) -->
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var previewMode = params.get('preview');
+  if (!previewMode) return;
+
+  console.log('[preview] Mode:', previewMode);
+
+  // Override welcome overlay behavior for preview modes
+  var welcomeOverlay = document.getElementById('welcomeOverlay');
+  var progressGroup = document.getElementById('welcomeProgressGroup');
+  var choicePanel = document.getElementById('welcomeChoicePanel');
+  var progressBar = document.getElementById('welcomeProgressBar');
+  var loadingText = document.getElementById('welcomeLoadingText');
+  var loadingPercent = document.getElementById('welcomeLoadingPercent');
+
+  if (previewMode === 'loading') {
+    // Keep welcome overlay visible - simulate loading state at 65%
+    if (progressBar) progressBar.style.width = '65%';
+    if (loadingPercent) loadingPercent.textContent = '65%';
+    if (loadingText) loadingText.textContent = 'Processing';
+    if (progressGroup) progressGroup.style.display = 'flex';
+    if (choicePanel) choicePanel.style.display = 'none';
+    if (welcomeOverlay) {
+      welcomeOverlay.style.display = 'flex';
+      welcomeOverlay.style.flexDirection = 'column';
+      welcomeOverlay.style.justifyContent = 'center';
+      welcomeOverlay.style.alignItems = 'center';
+    }
+    // Show choice panel after a delay to simulate the transition
+    setTimeout(function() {
+      if (progressGroup) progressGroup.style.opacity = '0';
+      setTimeout(function() {
+        if (progressGroup) progressGroup.style.display = 'none';
+        if (choicePanel) {
+          choicePanel.style.display = 'flex';
+          choicePanel.style.opacity = '1';
+          choicePanel.style.position = 'relative';
+          choicePanel.style.top = 'auto';
+          choicePanel.style.left = 'auto';
+          choicePanel.style.transform = 'none';
+        }
+      }, 350);
+    }, 1500);
+    return;
+  }
+
+  // For non-loading previews, hide overlay immediately
+  if (welcomeOverlay) welcomeOverlay.style.display = 'none';
+
+  // Wait for switchEdition to be available
+  function waitForApp() {
+    if (typeof switchEdition !== 'function') {
+      setTimeout(waitForApp, 100);
+      return;
+    }
+
+    switchEdition('2026');
+
+    // Then switch to appropriate tab after a short delay
+    setTimeout(function() {
+      if (previewMode === 'groups') {
+        if (typeof switchMainTab === 'function') switchMainTab('groups');
+        // Show toolbar
+        var toolbar = document.getElementById('mainToolbar');
+        if (toolbar) toolbar.style.display = 'flex';
+        var searchToolbar = document.getElementById('searchToolbar');
+        if (searchToolbar) searchToolbar.style.display = 'block';
+        var groupsContainer = document.getElementById('groupsContainer');
+        if (groupsContainer) groupsContainer.style.display = 'block';
+        var knockoutPanel = document.getElementById('knockoutPanel');
+        if (knockoutPanel) knockoutPanel.style.display = 'none';
+        var pastWC = document.getElementById('pastWCMainContainer');
+        if (pastWC) pastWC.style.display = 'none';
+        var tabContainer = document.getElementById('tabContainer');
+        if (tabContainer) tabContainer.style.display = 'flex';
+      } else if (previewMode === 'knockout') {
+        if (typeof switchMainTab === 'function') switchMainTab('knockout');
+        // Show toolbar
+        var toolbar = document.getElementById('mainToolbar');
+        if (toolbar) toolbar.style.display = 'flex';
+        var searchToolbar = document.getElementById('searchToolbar');
+        if (searchToolbar) searchToolbar.style.display = 'block';
+        var groupsContainer = document.getElementById('groupsContainer');
+        if (groupsContainer) groupsContainer.style.display = 'none';
+        var knockoutPanel = document.getElementById('knockoutPanel');
+        if (knockoutPanel) knockoutPanel.style.display = 'block';
+        var pastWC = document.getElementById('pastWCMainContainer');
+        if (pastWC) pastWC.style.display = 'none';
+        var tabContainer = document.getElementById('tabContainer');
+        if (tabContainer) tabContainer.style.display = 'flex';
+      } else if (previewMode === 'modals') {
+        if (typeof switchMainTab === 'function') switchMainTab('groups');
+        var toolbar = document.getElementById('mainToolbar');
+        if (toolbar) toolbar.style.display = 'flex';
+        var searchToolbar = document.getElementById('searchToolbar');
+        if (searchToolbar) searchToolbar.style.display = 'block';
+        var groupsContainer = document.getElementById('groupsContainer');
+        if (groupsContainer) groupsContainer.style.display = 'block';
+        var pastWC = document.getElementById('pastWCMainContainer');
+        if (pastWC) pastWC.style.display = 'none';
+        var tabContainer = document.getElementById('tabContainer');
+        if (tabContainer) tabContainer.style.display = 'flex';
+        // Show a sample modal after delay
+        setTimeout(function() {
+          // Try to show match detail or player modal
+          if (typeof showRulesModal === 'function') {
+            showRulesModal();
+          }
+        }, 2000);
+      }
+    }, 800);
+  }
+
+  waitForApp();
+})();
+</script>
+
 </body>
 </html>

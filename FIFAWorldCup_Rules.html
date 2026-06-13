@@ -459,10 +459,101 @@ body {
   .flow-arrow { transform: rotate(90deg); }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+/* ===== Mobile (≤480px) Enhanced Rules Display V1.65 ===== */
+@media (max-width: 480px) {
+  /* ── Header ── */
+  .header { padding: 12px 8px !important; }
+  .header h1 { font-size: 1.15rem !important; letter-spacing: 1px !important; }
+  .header .subtitle { font-size: 0.7rem !important; letter-spacing: 0.5px !important; }
+  .header .badge-row { gap: 5px !important; margin-top: 6px !important; }
+  .header .badge { font-size: 0.65rem !important; padding: 3px 8px !important; }
+
+  /* ── Container ── */
+  .container { padding: 8px 6px 20px !important; max-width: 100% !important; }
+
+  /* ── Section Titles / Subtitles (reduce 1 size) ── */
+  .section-title { font-size: 1.05rem !important; margin: 18px 0 8px !important; padding-bottom: 5px !important; letter-spacing: 0.5px !important; }
+  .section-title .icon { font-size: 1rem !important; }
+  .section-subtitle { font-size: 0.75rem !important; margin-bottom: 8px !important; }
+
+  /* ── Overview Grid ── */
+  .overview-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 6px !important; margin-bottom: 14px !important; }
+  .overview-card { padding: 10px 6px !important; }
+  .overview-card .card-icon { font-size: 1.2rem !important; margin-bottom: 4px !important; }
+  .overview-card .card-number { font-size: 1.2rem !important; }
+  .overview-card .card-label { font-size: 0.68rem !important; }
+  .overview-card .card-detail { font-size: 0.62rem !important; }
+
+  /* ── Flow Diagram ── */
+  .flow-section { padding: 12px 8px !important; margin: 10px 0 !important; }
+  .flow-box { padding: 8px 10px !important; min-width: 70px !important; }
+  .flow-box .big-num { font-size: 1.2rem !important; }
+  .flow-box .box-label { font-size: 0.65rem !important; }
+  .flow-arrow { font-size: 1rem !important; padding: 0 4px !important; }
+  .flow-plus { font-size: 0.65rem !important; }
+
+  /* ── Groups Mini Grid ── */
+  .groups-mini-grid { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)) !important; gap: 4px !important; margin: 10px 0 !important; }
+  .group-mini { padding: 5px 3px !important; }
+  .group-mini .g-letter { font-size: 0.75rem !important; }
+  .group-mini .g-detail { font-size: 0.58rem !important; }
+
+  /* ── Advance Panel: 3 CARDS IN 1 ROW ── */
+  .advance-panel {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 5px !important;
+    margin: 8px 0 !important;
+  }
+  .advance-card { padding: 7px 4px !important; border-radius: 8px !important; }
+  .advance-card.top { border-top-width: 2px !important; }
+  .advance-card.mid { border-top-width: 2px !important; }
+  .advance-card.third { border-top-width: 2px !important; }
+  .advance-card .rank-badge {
+    font-size: 0.55rem !important;
+    padding: 2px 6px !important;
+    margin-bottom: 3px !important;
+    border-radius: 10px !important;
+  }
+  .advance-card .adv-num { font-size: 0.85rem !important; margin: 3px 0 !important; }
+  .advance-card .adv-desc { font-size: 0.58rem !important; line-height: 1.35 !important; }
+  .advance-card .adv-desc strong { font-weight: 600 !important; }
+
+  /* ── Info Box ── */
+  .info-box { padding: 10px 12px !important; font-size: 0.72rem !important; margin: 10px 0 !important; line-height: 1.55 !important; }
+
+  /* ── Bracket Visualization: scale to ~2x viewport ── */
+  .bracket-visual { padding: 8px 6px !important; margin: 10px 0 !important; }
+  .bracket-visual h4 { font-size: 0.78rem !important; margin-bottom: 8px !important; letter-spacing: 0.5px !important; }
+  .bracket-svg-container { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+  .bracket-svg-container svg {
+    min-width: 180% !important;
+    max-width: none !important;
+    width: 180% !important;
+    height: auto !important;
+  }
+
+  /* ── Halves Grid ── */
+  .halves-grid { grid-template-columns: 1fr !important; gap: 8px !important; margin: 10px 0 !important; }
+  .half-card { padding: 10px !important; }
+  .half-card h4 { font-size: 0.8rem !important; margin-bottom: 6px !important; }
+  .half-card .half-group-tag { font-size: 0.65rem !important; padding: 3px 6px !important; }
+  .half-card .half-desc { font-size: 0.68rem !important; margin-top: 5px !important; }
+
+  /* ── Knockout Round Cards ── */
+  .ko-rounds-grid { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)) !important; gap: 6px !important; }
+  .ko-round-card { padding: 8px 6px !important; }
+  .ko-round-card .round-name { font-size: 0.72rem !important; letter-spacing: 0.5px !important; }
+  .ko-round-card .round-matches { font-size: 1rem !important; margin: 4px 0 !important; }
+  .ko-round-card .round-teams { font-size: 0.62rem !important; }
+
+  /* ── FAQ ── */
+  .faq-item { padding: 8px 10px !important; }
+  .faq-item .q { font-size: 0.78rem !important; }
+  .faq-item .a { font-size: 0.72rem !important; }
+
+  /* ── Footer ── */
+  .footer { padding: 12px !important; font-size: 0.65rem !important; }
+}
 </style>
 </head>
 <body>
