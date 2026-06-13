@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA WORLD CUP - DATA ANALYSIS | V1.68</title>
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.65</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -732,7 +732,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 		.welcome-btn-sub { font-size: 0.85rem; color: #7a8a9a; display: block; margin-top: 8px; font-weight: bold; }
 
 
-/* ===== 阵容名单弹窗 V1.64 ===== */
+/* ===== 阵容名单弹窗 V1.65 ===== */
 .squad-modal{max-width:1050px;width:95vw}
 .squad-modal .modal-box{max-height:85vh;overflow-y:auto}
 .squad-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
@@ -1315,7 +1315,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .rules-modal iframe{width:100%;height:70vh;border:none;border-radius:8px;background:var(--bg)}
 
 /* =============================================
-   V1.64 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
+   V1.65 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
    霓虹紫分割线 · 三色概率 · 双栏对比 · AI推演
    ============================================= */
 /* -- 头部 -- */
@@ -1426,7 +1426,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
 @keyframes finishPulse{0%,100%{opacity:0.5;transform:scale(1.01)}50%{opacity:1;transform:scale(1.04)}}
 /* ================================================================
-   📱 MOBILE PORTRAIT LAYOUT — V1.64 (max-width: 480px)
+   📱 MOBILE PORTRAIT LAYOUT — V1.65 (max-width: 480px)
    ================================================================ */
 @media (max-width: 480px) {
 
@@ -1545,10 +1545,14 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     flex-shrink: 0;
   }
   .wc-edition-tab {
-    padding: 4px 8px;
+    padding: 5px 10px;
     font-size: 0.62rem;
     border-radius: 14px;
     flex-shrink: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* ── 4. TOOLBAR (COMPACT · V1.65 40% height) ── */
@@ -1567,9 +1571,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
   #mainToolbar .toolbar-left .btn,
   #mainToolbar .toolbar-left button {
-    padding: 4px 8px !important;
+    padding: 5px 10px !important;
     font-size: 0.72rem !important;
-    min-height: 26px !important;
+    min-height: 30px !important;
     height: auto !important;
     border-radius: 4px !important;
     flex: 1 !important;
@@ -1578,9 +1582,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     line-height: 1.2 !important;
   }
   #mainToolbar .btn-bracket-primary {
-    padding: 4px 8px !important;
+    padding: 5px 10px !important;
     font-size: 0.72rem !important;
-    min-height: 26px !important;
+    min-height: 30px !important;
     height: auto !important;
     width: auto !important;
     flex: 1 !important;
@@ -1703,11 +1707,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.7rem !important;
   }
   /* Hint text smaller */
+  /* Hide search hint on mobile */
   .search-row-toolbar > div:last-child {
-    font-size: 0.62rem !important;
-    margin-top: 1px !important;
-    width: 100%;
-    line-height: 1.2 !important;
+    display: none !important;
   }
 
 /* ── 5. TABS ── */
@@ -1735,7 +1737,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     border-radius: 8px;
     overflow: hidden;
   }
-  /* Compact group header: "A组 小组赛 已预测 X/6" — V1.68 shrunk */
+  /* Compact group header: "A组 小组赛 已预测 X/6" — V1.65 shrunk */
   .group-header {
     padding: 3px 6px !important;
     font-size: 0.6rem !important;
@@ -1797,7 +1799,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     flex: 1 1 0;
     max-width: 35%;
     min-width: 0;
-    font-size: 0.62rem;
+    font-size: 0.7rem;
     gap: 2px;
   }
   .team-block img,
@@ -1808,7 +1810,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
   /* Show only Chinese name on mobile; hide code */
   .team-name-zh {
-    font-size: 0.62rem;
+    font-size: 0.7rem;
     font-weight: 600;
     line-height: 1.2;
     white-space: nowrap;
@@ -1823,7 +1825,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
   /* Row 1: VS badge */
   .vs-badge {
-    font-size: 0.48rem;
+    font-size: 0.55rem;
     flex: 0 0 auto;
     padding: 0 1px;
     color: var(--text-secondary);
@@ -1854,7 +1856,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     order: 2 !important;
     flex: 1 1 0 !important;
     min-width: 48px !important;
-    font-size: 0.62rem !important;
+    font-size: 0.6rem !important;
     padding: 3px 6px !important;
     margin: 2px 1px !important;
     white-space: nowrap !important;
@@ -2026,9 +2028,102 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     padding: 12px 8px !important;
   }
 
-  /* Venue analysis modal */
+  /* ── V1.65 赛场分析弹窗 — 移动端全面优化 ── */
   .venue-analysis-modal {
-    padding: 12px 8px !important;
+    padding: 10px 5px !important;
+  }
+  .venue-analysis-modal h3 {
+    font-size: 0.82rem !important;
+    gap: 4px !important;
+  }
+  .venue-analysis-modal .btn-update {
+    padding: 3px 8px !important;
+    font-size: 0.58rem !important;
+    min-height: 24px !important;
+  }
+  /* Hero header: 垂直堆叠均匀间距 */
+  #venueAnalysisContent > div:first-child {
+    flex-direction: column !important;
+    gap: 5px !important;
+    padding: 6px !important;
+    text-align: center !important;
+  }
+  #venueAnalysisContent > div:first-child > div {
+    width: 100% !important;
+    text-align: center !important;
+    min-width: auto !important;
+  }
+  #venueAnalysisContent > div:first-child > div:first-child > div:first-child {
+    font-size: 0.75rem !important;
+  }
+  #venueAnalysisContent > div:first-child > div:first-child > div:nth-child(2) {
+    font-size: 0.55rem !important;
+  }
+  /* 8 gauge cards: 2列等大 */
+  #venueAnalysisContent > div:nth-child(2) {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 3px !important;
+    margin-bottom: 8px !important;
+  }
+  #venueAnalysisContent > div:nth-child(2) > div {
+    padding: 5px 3px !important;
+    min-height: 60px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+  }
+  #venueAnalysisContent > div:nth-child(2) > div > div:first-child {
+    font-size: 0.52rem !important;
+    min-height: auto !important;
+    margin-bottom: 1px !important;
+  }
+  #venueAnalysisContent > div:nth-child(2) > div > div:nth-child(2) {
+    font-size: 0.85rem !important;
+  }
+  #venueAnalysisContent > div:nth-child(2) > div > div:nth-child(3),
+  #venueAnalysisContent > div:nth-child(2) > div > div:last-child {
+    font-size: 0.48rem !important;
+    margin-top: 1px !important;
+  }
+  /* Comparison section: 去掉VS城市, 左右对撑+分割线 */
+  #venueAnalysisContent > div:nth-child(3) {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+    margin-top: 4px !important;
+  }
+  #venueAnalysisContent > div:nth-child(3) > div:nth-child(2) {
+    display: none !important;
+  }
+  #venueAnalysisContent > div:nth-child(3) > div:first-child {
+    border-right: 1px solid var(--border) !important;
+    padding: 6px 4px !important;
+  }
+  #venueAnalysisContent > div:nth-child(3) > div:last-child {
+    border-left: none !important;
+    padding: 6px 4px !important;
+  }
+  #venueAnalysisContent > div:nth-child(3) > div:first-child > div:first-child,
+  #venueAnalysisContent > div:nth-child(3) > div:last-child > div:first-child {
+    font-size: 0.68rem !important;
+    margin-bottom: 4px !important;
+  }
+  #venueAnalysisContent > div:nth-child(3) .factors-row {
+    font-size: 0.55rem !important;
+    padding: 2px 3px !important;
+  }
+  /* Verdict section: 缩小 */
+  #venueAnalysisContent > div:nth-child(4) {
+    padding: 8px 6px !important;
+    font-size: 0.6rem !important;
+    margin-top: 8px !important;
+  }
+  #venueAnalysisContent > div:nth-child(4) > div:first-child {
+    font-size: 0.75rem !important;
+  }
+  /* 禁止横向滚动 */
+  #venueAnalysisContent {
+    overflow-x: hidden !important;
   }
 
   /* ── 10. PAST WC MAIN ── */
@@ -2143,23 +2238,77 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.72rem;
   }
 
-  /* Analysis hero layout */
+  /* ── V1.65 对阵详情弹窗 — 时间完全隐藏，左右对撑仅分割线，风格标签不换行 ── */
   .analysis-hero {
     flex-direction: column;
-    gap: 10px;
-  }
-  .analysis-hero-refined {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  .ah-vs {
-    flex-direction: row;
     gap: 8px;
-    padding: 6px 0;
   }
-  .fm-dual-row {
-    grid-template-columns: 1fr;
+  /* 对阵详情：左右对撑，vs-center 完全隐藏 */
+  .analysis-hero-refined {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 0;
   }
+  .analysis-hero-refined .team-card-refined {
+    flex: 1 1 50%;
+    min-width: 0;
+    padding: 6px 4px !important;
+  }
+  .analysis-hero-refined .team-card-refined.home {
+    border-right: 1px solid rgba(255,255,255,0.10);
+    padding-right: 6px !important;
+  }
+  .analysis-hero-refined .team-card-refined.away {
+    padding-left: 6px !important;
+  }
+  /* 时间信息 & VS 完全隐藏 */
+  .analysis-hero-refined > .vs-center-refined {
+    display: none !important;
+  }
+  .vs-center-refined {
+    display: none !important;
+  }
+  .vs-badge-refined { display: none; }
+  .vs-center-refined .vs-info,
+  .vs-center-refined .vs-date-info,
+  .vs-center-refined .vs-time-info { display: none !important; }
+  .analysis-hero-refined > div:nth-child(2) { display: none !important; }
+  .analysis-hero-refined > :not(.team-card-refined):not(.team-card-refined.home):not(.team-card-refined.away) { display: none !important; }
+  /* 队伍风格标签 — 3个不换行，单行显示 */
+  .style-tags { flex-wrap: nowrap !important; gap: 2px; margin-top: 2px; }
+  .style-tag { font-size: 0.46rem !important; padding: 1px 3px !important; border-radius: 6px; white-space: nowrap; }
+  .style-desc { font-size: 0.55rem !important; margin-top: 3px; }
+  /* 球队标签 */
+  .team-name-lg { font-size: 0.68rem !important; margin: 2px 0 0; }
+  .team-code-sm { font-size: 0.46rem !important; }
+  .flag-lg { width: 26px !important; height: 17px !important; margin-top: 2px; }
+  .data-pill { font-size: 0.50rem !important; padding: 2px 4px !important; gap: 1px; }
+  /* 旧版 AH-VS */
+  .ah-vs { display: none !important; }
+  .ah-vs-badge { display: none; }
+  .ah-vs-group { display: none; }
+  .ah-vs-date { display: none; }
+  .ah-vs-time { display: none; }
+  /* FIFA排名 & 身价总和 同一行 */
+  .fm-dual-row { grid-template-columns: 1fr 1fr !important; gap: 5px; padding: 2px 6px 6px; }
+  .fm-section-header { font-size: 0.56rem; margin-bottom: 2px; }
+  /* 球队卡内部元素缩小 */
+  .team-card-refined { padding: 6px 4px !important; }
+  .team-card-refined .card-stripe { height: 1px; }
+  .coach-mini { font-size: 0.52rem; padding: 2px 3px; gap: 2px; }
+  .coach-dot { width: 18px; height: 18px; font-size: 0.6rem; }
+  .pl-row { font-size: 0.50rem; padding: 1px 2px; gap: 1px; }
+  .pl-num { font-size: 0.48rem; width: 10px; }
+  .pl-name { font-size: 0.50rem; }
+  .pl-val { font-size: 0.46rem; }
+  .player-rank-num { font-size: 0.55rem !important; width: 16px; }
+  .player-name { font-size: 0.58rem; }
+  .player-value { font-size: 0.55rem; }
+  .h2h-table-refined { font-size: 0.50rem; }
+  .h2h-table-refined td { padding: 3px 5px; }
+  /* 完整阵容按钮 — 略微减小高度 */
+  .btn-squad-gold { font-size: 0.55rem; padding: 2px 8px; min-height: 20px; }
 
   /* Group card table horizontal scroll */
   .group-table-wrap {
@@ -2292,7 +2441,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   // Fast path: if engine data was already built in this session, skip animation entirely
   var _hasEngineData = false;
   try {
-    if (sessionStorage.getItem('engineDataBuilt') === 'V1.64') {
+    if (sessionStorage.getItem('engineDataBuilt') === 'V1.65') {
       _hasEngineData = true;
       sessionStorage.removeItem('engineDataBuilt');
     }
@@ -2465,7 +2614,7 @@ function toggleProbUpdate() {
 }
 </script>
 <div class="sticky-top-group">
-<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.64 | Author: Antas Lee</div></div>
+<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.65 | Author: Antas Lee</div></div>
 
 <!-- WC Edition Selector -->
 <div class="wc-edition-bar" id="wcEditionBar">
@@ -2587,7 +2736,7 @@ function toggleProbUpdate() {
 <h3>👤 球员详情 <span style="font-size:0.65rem;color:var(--text-secondary);" id="playerDetailSubtitle"></span> <span class="modal-close" onclick="closePlayerDetail()">✕</span></h3>
 <div id="playerDetailContent" style="max-height:68vh;overflow-y:auto;"></div>
 </div></div>
-<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.64</div>
+<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.65</div>
 </div>
 
 <div class="modal-overlay" id="summaryModal"><div class="modal-box" style="max-width:600px"><h3>📋 我的预测汇总 <span class="modal-close" onclick="closeSummaryModal()">✕</span></h3><div id="summaryContent"></div></div></div>
@@ -2596,7 +2745,7 @@ function toggleProbUpdate() {
 </div>
 <!-- 赛场分析弹窗 -->
 <div class="modal-overlay" id="venueAnalysisModal"><div class="modal-box venue-analysis-modal"><h3>🏟️ 赛场分析 <span style="display:flex;align-items:center;gap:12px"><button class="btn btn-update" id="btnRefreshWeather" onclick="window._vaWeatherLoaded=null;var v=window._vaVenue;if(v&&v.coordinates)fetchWeatherForVenue(document.getElementById('venueAnalysisContent'),v);">🔄 更新天气</button><span class="modal-close" onclick="closeVenueAnalysis()">✕</span></span></h3><div id="venueAnalysisContent"></div></div></div>
-<!-- 阵容名单弹窗 V1.64 -->
+<!-- 阵容名单弹窗 V1.65 -->
 <div class="modal-overlay" id="squadModal"><div class="modal-box squad-modal">
 <h3 id="squadModalTitle">📋 阵容名单 <span class="modal-close" onclick="closeSquadModal()">✕</span></h3>
 <div id="squadContent"></div>
@@ -3189,7 +3338,7 @@ console.log('🏆 Bracket V8 embedded — ready');
             window.__playerDataReady = true;
             // Set sessionStorage for fast reload on next visit
             try {
-                sessionStorage.setItem('engineDataBuilt', 'V1.64');
+                sessionStorage.setItem('engineDataBuilt', 'V1.65');
             } catch(e) {}
             return;
         }
@@ -3277,7 +3426,7 @@ function switchMainTab(tabName) {
 
 <div class="footer-note" style="padding:12px 20px;text-align:center;font-size:0.7rem;color:var(--text-secondary);border-top:1px solid var(--border);">Copyright: © 2026 ZHENTAO LI. All rights reserved.</div>
 
-<!-- Mobile Preview Mode Script (V1.64) -->
+<!-- Mobile Preview Mode Script (V1.65) -->
 <script>
 (function() {
   var params = new URLSearchParams(window.location.search);
@@ -3393,6 +3542,33 @@ function switchMainTab(tabName) {
   }
 
   waitForApp();
+})();
+</script>
+
+<!-- V1.65: Mobile probability dropdown — collapse on load -->
+<script>
+(function() {
+  if (window.innerWidth <= 480) {
+    var dropdown = document.getElementById('probUpdateDropdown');
+    var capsule = document.querySelector('.prob-update-capsule');
+    if (dropdown && capsule && dropdown.classList.contains('expanded')) {
+      dropdown.classList.remove('expanded');
+      capsule.classList.remove('expanded');
+      capsule.innerHTML = '📊 【概率】已更新 ▾';
+    }
+  }
+})();
+</script>
+
+
+<script>
+// Mobile: collapse probability update floating window by default
+(function(){
+  if(window.innerWidth<=480){
+    var d=document.getElementById('probUpdateDropdown');
+    var c=document.querySelector('.prob-update-capsule');
+    if(d&&c){d.classList.remove('expanded');c.classList.remove('expanded');c.innerHTML='📊 【概率】已更新 ▾';}
+  }
 })();
 </script>
 
