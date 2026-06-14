@@ -2,7 +2,7 @@
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 /**
  * ============================================================
- *  prob_engine.js — 增强概率计算引擎 (V1.66)
+ *  prob_engine.js — 增强概率计算引擎 (V1.70)
  *  Phase 3: AI融合推算(8因子) + 历史底蕴 + 本届表现 + 综合推算
  *  依赖: oddsdata.js, groupsdata_v2.js, matchdata_2026.js
  *        squaddata.js, coachdata.js, venuedata.js
@@ -155,39 +155,92 @@
   }
 
   /** 计算赛场因素综合分 (海拔/草皮/时区/驻地距离) */
+  // V1.70 修复: 通过 venueMatchMapping → venues2026 正确链路获取场馆数据
   function computeVenueFactor(homeCode, awayCode, mid) {
     let score = 0;
     try {
       const VFC = window.VENUE_FACTOR_CONFIG;
       if (!VFC) return 0;
       
-      // 获取比赛场地信息
-      const m = allGM.find(function(x) { return x.id === mid; });
-      const venueName = m ? m.venue : null;
+      // ── 步骤1: 通过 venueMatchMapping 获取比赛对应场馆 ──
+      // 注意: venueMatchMapping 是 var 声明 (在 window 上), venues2026/teamBaseCamps2026 是 const 声明 (全局作用域但不在 window 上)
+      const mapping = (typeof window.venueMatchMapping !== 'undefined') ? window.venueMatchMapping : null;
+      const venues  = (typeof venues2026 !== 'undefined') ? venues2026 : null;
+      if (!mapping || !venues) return 0;
       
-      // 尝试从 venues2026 获取海拔等数据
-      if (window.venues2026 && venueName) {
-        const vData = window.venues2026[venueName];
-        if (vData) {
-          // 海拔影响
-          const alt = vData.altitude || 0;
-          const altKeys = Object.keys(VFC.altitudeEffect).map(Number).sort((a,b) => a-b);
-          let altAdj = 0;
-          for (const k of altKeys) {
-            if (alt >= k) altAdj = VFC.altitudeEffect[k].adj;
+      // 优先 match.id 精确匹配，回退到其他 key 格式
+      let venueEntry = null;
+      if (mid && mapping[mid]) {
+        venueEntry = mapping[mid];
+      }
+      if (!venueEntry && mid) {
+        // 尝试从 allGM 获取 group 信息
+        const m = allGM.find(function(x) { return x.id === mid; });
+        if (m && m.gid && mapping[m.gid]) {
+          venueEntry = mapping[m.gid];
+        }
+      }
+      if (!venueEntry) return 0;
+      
+      const venueId = venueEntry.id;
+      const vData = venues[venueId];
+      if (!vData) return 0;
+      
+      // ── 步骤2: 海拔影响 ──
+      const elev = vData.elevation || 0;
+      const altKeys = Object.keys(VFC.altitudeEffect).map(Number).sort((a,b) => a-b);
+      let altAdj = 0;
+      for (const k of altKeys) {
+        if (elev >= k) altAdj = VFC.altitudeEffect[k].adj;
+      }
+      score += altAdj;
+      
+      // ── 步骤3: 草皮影响 (英→中转译) ──
+      const grassMap = { 'natural': '天然草', 'hybrid': '混合草', 'artificial': '人工草' };
+      const surface = grassMap[vData.grass] || '天然草';
+      if (VFC.surfaceEffect[surface]) {
+        score += VFC.surfaceEffect[surface].adj;
+      }
+      
+      // ── 步骤4: 时区差异影响 ──
+      const teamBaseCamps = (typeof teamBaseCamps2026 !== 'undefined') ? teamBaseCamps2026 : null;
+      if (teamBaseCamps) {
+        const campH = teamBaseCamps[homeCode];
+        const campA = teamBaseCamps[awayCode];
+        const venueTzOffset = (typeof getTimezoneOffset === 'function') 
+          ? getTimezoneOffset(vData.timezone) : 0;
+        if (campH && campA) {
+          const baseTzOffsetH = Math.round(campH.coord.lng / 15);
+          const baseTzOffsetA = Math.round(campA.coord.lng / 15);
+          const tzDiffH = Math.abs(venueTzOffset - baseTzOffsetH);
+          const tzDiffA = Math.abs(venueTzOffset - baseTzOffsetA);
+          const tzKeys = Object.keys(VFC.timezoneEffect).map(Number).sort((a,b) => a-b);
+          let tzAdjH = 0, tzAdjA = 0;
+          for (const k of tzKeys) {
+            if (tzDiffH >= k) tzAdjH = VFC.timezoneEffect[k].adj;
+            if (tzDiffA >= k) tzAdjA = VFC.timezoneEffect[k].adj;
           }
-          score += altAdj;
-          
-          // 草皮影响
-          const surface = vData.surface || '天然草';
-          if (VFC.surfaceEffect[surface]) {
-            score += VFC.surfaceEffect[surface].adj;
-          }
+          score += (tzAdjH - tzAdjA) * 0.5; // 时区差异净影响
         }
       }
       
-      // 时区差异 (简化: 如果有 squadDB 中的时区数据)
-      // 驻地距离 (简化: 从 venues2026 获取)
+      // ── 步骤5: 驻地距离影响 ──
+      if (teamBaseCamps && typeof haversineKm === 'function') {
+        const campH = teamBaseCamps[homeCode];
+        const campA = teamBaseCamps[awayCode];
+        if (campH && campA) {
+          const distH = haversineKm(campH.coord.lat, campH.coord.lng, vData.coord.lat, vData.coord.lng);
+          const distA = haversineKm(campA.coord.lat, campA.coord.lng, vData.coord.lat, vData.coord.lng);
+          const distKeys = Object.keys(VFC.baseDistanceEffect).map(Number).sort((a,b) => a-b);
+          let distAdjH = 0, distAdjA = 0;
+          for (const k of distKeys) {
+            if (distH >= k) distAdjH = VFC.baseDistanceEffect[k].adj;
+            if (distA >= k) distAdjA = VFC.baseDistanceEffect[k].adj;
+          }
+          score += (distAdjH - distAdjA) * 0.7; // 距离差异净影响
+        }
+      }
+      
     } catch (e) { /* 静默回退 */ }
     return score;
   }
@@ -198,7 +251,7 @@
    * calcHistoryPedigree — 计算球队的"世界杯血统"分数
    * 数据源: window.HISTORY_INDEX (来自 matchdata_2026.js)
    * 半衰期: 8年，越久远的成绩影响越小
-   * @returns {number} 归一化到 [-0.06, +0.06] 的调整值
+   * @returns {number} 归一化到 [-0.12, +0.12] 的调整值 (V1.70 扩大)
    */
   function calcHistoryPedigree(code) {
     const HI = window.HISTORY_INDEX;
@@ -225,9 +278,9 @@
     });
     
     // 归一化: 理论最大值约为 7*1.0 + 7*0.71 + ... ≈ 14
-    // 输出范围 [-0.06, +0.06]
-    const normalized = (totalScore / 10) * 0.06;
-    return Math.max(-0.06, Math.min(0.06, normalized - 0.02));
+    // 输出范围 [-0.12, +0.12]  V1.70: 扩大范围以增强差距感知
+    const normalized = (totalScore / 10) * 0.10;
+    return Math.max(-0.12, Math.min(0.12, normalized - 0.03));
   }
 
   // ========== 🆕 本届表现因子 (Tournament Form) ==========
@@ -239,7 +292,7 @@
    * @returns {{ delta: number, completedMatches: number, formWeight: number }}
    */
   function calcTournamentForm(code, currentMatchRound) {
-    // V1.66: 第1轮小组赛时，本届表现因子暂不激活（样本量n=1无统计意义）
+    // V1.70: 第1轮小组赛时，本届表现因子暂不激活（样本量n=1无统计意义）
     if (currentMatchRound === 1) {
       return { delta: 0, completedMatches: 0, formWeight: 0, details: [] };
     }
@@ -429,11 +482,11 @@
   }
 
   // ================================================================
-  //  🔥 AI 融合概率推算 (V1.66: 8因子 + 历史底蕴 + 本届表现)
+   //  🔥 AI 融合概率推算 (V1.70: 8因子 + 历史底蕴 + 本届表现)
   // ================================================================
 
   /**
-   * calcAIPbs — AI多参数融合概率计算 (V1.66)
+   * calcAIPbs — AI多参数融合概率计算 (V1.70)
    * 
    * 8大因子:
    *   1. FIFA排名差 → 实力基础分
@@ -545,7 +598,9 @@
     // ===== A. 历史底蕴因子 =====
     const histH = calcHistoryPedigree(homeCode);
     const histA = calcHistoryPedigree(awayCode);
-    const historyDelta = (histH - histA) * 0.04;
+    // V1.70: 非线性映射 — 小差距温和，大差距加速放大（巴西vs新军 > 德vs荷）
+    const rawHistDiff = histH - histA;
+    const historyDelta = Math.sign(rawHistDiff) * Math.pow(Math.abs(rawHistDiff) * 8, 1.5) * 0.06;
 
     // ===== B. 本届表现因子 =====
     const formH = calcTournamentForm(homeCode, round);
@@ -793,7 +848,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
       suggestion = '🔥 完全背离信号，潜在价值与风险并存。AI模型可能存在未被市场定价的洞察，但也需警惕AI模型的盲区。建议小注试探或观望。';
     }
 
-    // V1.66: 四维度子卡片数据
+    // V1.70: 四维度子卡片数据
     var subDims = {
       wdl: {
         aiPh: aiPH, oddsPh: odPH,
@@ -823,7 +878,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
   }
 
   // ================================================================
-  //  📊 V1.66 概率弹窗渲染 (匹配 preview_composite_v3.html)
+   //  📊 V1.70 概率弹窗渲染 (匹配 preview_composite_v3.html)
   // ================================================================
 
   function renderProbModalV4(mid) {
@@ -1064,8 +1119,8 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     h += '<div class="di"><span class="k">平均年龄</span><span class="v">主 ' + (f.avgAgeH||27) + '岁 · 客 ' + (f.avgAgeA||27) + '岁</span></div>';
     h += '<div class="di"><span class="k">五大联赛占比</span><span class="v">主 ' + (f.top5H!==null?f.top5H:0) + '% · 客 ' + (f.top5A!==null?f.top5A:0) + '%</span></div>';
     h += '<div class="di"><span class="k">身高对抗</span><span class="v">主 ' + (f.heightH||180) + 'cm · 客 ' + (f.heightA||180) + 'cm</span></div>';
-    h += '<div class="di"><span class="k">赛场因素</span><span class="v">综合评分 ' + ((f.venueFactor||0)>=0?'+':'') + (f.venueFactor||0).toFixed(2) + '</span></div>';
-    h += '<div class="di"><span class="k">历史底蕴</span><span class="v">' + ((f.historyDelta||0)>=0?'+':'') + (f.historyDelta||0).toFixed(3) + ' (六届世界杯时间衰减)</span></div>';
+    h += '<div class="di"><span class="k">赛场因素</span><span class="v">综合评分 ' + ((f.venueFactor||0)>=0?'+':'') + ((f.venueFactor||0)*100).toFixed(1) + '%</span></div>';
+    h += '<div class="di"><span class="k">历史底蕴</span><span class="v">' + ((f.historyDelta||0)>=0?'+':'') + ((f.historyDelta||0)*100).toFixed(1) + '% (六届世界杯·非线性)</span></div>';
     if (f.formH && f.formH.completedMatches > 0) {
       h += '<div class="di"><span class="k">本届表现</span><span class="v">主 ' + f.formH.completedMatches + '场(wt' + (f.formH.formWeight*100).toFixed(0) + '%) · 客 ' + f.formA.completedMatches + '场(wt' + (f.formA.formWeight*100).toFixed(0) + '%)</span></div>';
     } else {
@@ -1172,11 +1227,11 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
   window.calcTournamentForm = calcTournamentForm;
   window.computeCompositeAnalysis = computeCompositeAnalysis;
 
-  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.66 + 综合推算');
+  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.70 + 综合推算');
   console.log('   calcAIPbs(8因子) | calcHistoryPedigree | calcTournamentForm | renderProbModalV4');
 
   // ================================================================
-  //  🔗 V1.66 桥接
+  //  🔗 V1.70 桥接
   // ================================================================
   (function installV161Bridge() {
     if (typeof window.calcP === 'function') {
@@ -1191,7 +1246,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
         var modal = document.getElementById('probModal');
         if (modal) modal.classList.add('visible');
       };
-      console.log('🔗 V1.66 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
+      console.log('🔗 V1.70 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
     }
   })();
 

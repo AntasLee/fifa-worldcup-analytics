@@ -1,4 +1,4 @@
-// matchdata_2026.js — 2026世界杯比赛数据层 | V1.69
+// matchdata_2026.js — 2026世界杯比赛数据层 | V1.70
 // ===== matchdata_2026.js — 2026世界杯完整比赛数据层 =====
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
@@ -15,7 +15,7 @@
 
 const wc2026AllMatches = {
 
-  // ========== 小组赛 (16组×3队=48场) ==========
+  // ========== 小组赛 (12组×4队=72场) ==========
   // A组
   "2026|A|MEX|RSA": {
     score: { sh: 2, sa: 0 },
@@ -50,7 +50,7 @@ const wc2026AllMatches = {
   "2026|A|KOR|CZE": {
     score: { sh: 2, sa: 1 },
     date: "2026-06-11",
-    venue: "阿兹台克球场",
+    venue: "阿克伦球场",
     stage: "group",
     round: 1,
     goals: [
@@ -69,7 +69,7 @@ const wc2026AllMatches = {
       attacks:         { h: 92, a: 65 },
       dangerousAttacks:{ h: 44, a: 30 }
     },
-    attendance: 87523,
+    attendance: 48071,
     referee: "Facundo Tello (ARG)",
     xg: null,
     mediaRating: null,

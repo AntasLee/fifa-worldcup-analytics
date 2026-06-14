@@ -223,6 +223,9 @@ const teamBaseCamps2026 = {
   USA: { city: { zh: '洛杉矶', en: 'Los Angeles' },    country: 'USA', coord: { lat: 33.9535, lng: -118.3390 } },
   MEX: { city: { zh: '墨西哥城', en: 'Mexico City' },   country: 'MEX', coord: { lat: 19.4326, lng: -99.1332 } },
   CAN: { city: { zh: '多伦多', en: 'Toronto' },         country: 'CAN', coord: { lat: 43.6532, lng: -79.3832 } },
+  CUW: { city: { zh: '博卡拉顿', en: 'Boca Raton, FL' },country: 'USA', coord: { lat: 26.3683, lng: -80.1289 }, site: 'Florida Atlantic University' },
+  HAI: { city: { zh: '加洛韦', en: 'Galloway, NJ' },    country: 'USA', coord: { lat: 39.4890, lng: -74.5360 }, site: 'Stockton University' },
+  PAN: { city: { zh: '新特库姆塞斯', en: 'New Tecumseth, ON' }, country: 'CAN', coord: { lat: 44.0865, lng: -79.8640 }, site: 'Nottawasaga Training Site' },
 
   // ── 南美球队 (多数选择美国南部/墨西哥作为驻地) ──
   ARG: { city: { zh: '迈阿密', en: 'Miami' },           country: 'USA', coord: { lat: 25.7617, lng: -80.1918 } },
@@ -247,6 +250,13 @@ const teamBaseCamps2026 = {
   DEN: { city: { zh: '纽约', en: 'New York' },           country: 'USA', coord: { lat: 40.7128, lng: -74.0060 } },
   SUI: { city: { zh: '纽约', en: 'New York' },           country: 'USA', coord: { lat: 40.7128, lng: -74.0060 } },
   SRB: { city: { zh: '芝加哥', en: 'Chicago' },          country: 'USA', coord: { lat: 41.8781, lng: -87.6298 } },
+  SCO: { city: { zh: '夏洛特', en: 'Charlotte, NC' },    country: 'USA', coord: { lat: 35.2271, lng: -80.8431 }, site: 'Charlotte FC / Atrium Health Performance Park' },
+  AUT: { city: { zh: '圣巴巴拉', en: 'Santa Barbara, CA' }, country: 'USA', coord: { lat: 34.4370, lng: -119.8346 }, site: 'UC Santa Barbara – Harder Stadium' },
+  BIH: { city: { zh: '桑迪', en: 'Sandy, UT' },          country: 'USA', coord: { lat: 40.5648, lng: -111.8388 }, site: 'RSL Stadium / Real Salt Lake Training Center' },
+  CZE: { city: { zh: '曼斯菲尔德', en: 'Mansfield, TX' }, country: 'USA', coord: { lat: 32.5632, lng: -97.1417 }, site: 'Mansfield Multipurpose Stadium' },
+  NOR: { city: { zh: '格林斯伯勒', en: 'Greensboro, NC' }, country: 'USA', coord: { lat: 36.0726, lng: -79.7920 }, site: 'UNC Greensboro' },
+  SWE: { city: { zh: '弗里斯科', en: 'Frisco, TX' },     country: 'USA', coord: { lat: 33.1507, lng: -96.8236 }, site: 'FC Dallas Stadium / Toyota Stadium' },
+  TUR: { city: { zh: '梅萨', en: 'Mesa, AZ' },           country: 'USA', coord: { lat: 33.4152, lng: -111.8315 }, site: 'Arizona Athletic Grounds' },
 
   // ── 非洲球队 ──
   MAR: { city: { zh: '蒙特利尔', en: 'Montreal' },      country: 'CAN', coord: { lat: 45.5017, lng: -73.5673 } },
@@ -259,6 +269,8 @@ const teamBaseCamps2026 = {
   CIV: { city: { zh: '波士顿', en: 'Boston' },           country: 'USA', coord: { lat: 42.3601, lng: -71.0589 } },
   TUN: { city: { zh: '蒙特利尔', en: 'Montreal' },      country: 'CAN', coord: { lat: 45.5017, lng: -73.5673 } },
   RSA: { city: { zh: '休斯顿', en: 'Houston' },          country: 'USA', coord: { lat: 29.7604, lng: -95.3698 } },
+  COD: { city: { zh: '休斯顿', en: 'Houston, TX' },      country: 'USA', coord: { lat: 29.7604, lng: -95.3698 }, site: 'Houston Training Centre' },
+  CPV: { city: { zh: '坦帕', en: 'Tampa, FL' },          country: 'USA', coord: { lat: 27.9506, lng: -82.4572 }, site: 'Waters Sportsplex' },
 
   // ── 亚洲球队 ──
   JPN: { city: { zh: '洛杉矶', en: 'Los Angeles' },      country: 'USA', coord: { lat: 34.0522, lng: -118.2437 } },
@@ -270,6 +282,8 @@ const teamBaseCamps2026 = {
   UAE: { city: { zh: '迈阿密', en: 'Miami' },           country: 'USA', coord: { lat: 25.7617, lng: -80.1918 } },
   UZB: { city: { zh: '休斯顿', en: 'Houston' },          country: 'USA', coord: { lat: 29.7604, lng: -95.3698 } },
   CHN: { city: { zh: '洛杉矶', en: 'Los Angeles' },      country: 'USA', coord: { lat: 34.0522, lng: -118.2437 } },
+  IRQ: { city: { zh: '格林布赖尔县', en: 'Greenbrier County, WV' }, country: 'USA', coord: { lat: 37.7965, lng: -80.2975 }, site: 'The Greenbrier Sports Performance Centre' },
+  JOR: { city: { zh: '波特兰', en: 'Portland, OR' },     country: 'USA', coord: { lat: 45.5152, lng: -122.6784 }, site: 'University of Portland' },
 
   // ── 大洋洲 ──
   NZL: { city: { zh: '洛杉矶', en: 'Los Angeles' },      country: 'USA', coord: { lat: 34.0522, lng: -118.2437 } }
@@ -538,61 +552,163 @@ function assessTeamFactors(venueId, teamCode, isHome) {
 // ============================================================
 //  五-A、2026世界杯 赛场映射 (分组/轮次 → 场馆)
 // ============================================================
-// 数据来源: FIFA 2026 Match Schedule (2024.02.04 公布)
-// 映射逻辑: 每个小组的"主要"场馆 + 淘汰赛指定场馆
+//  五-A、2026世界杯 赛场映射 (逐场精确映射)
+// ============================================================
+// 数据来源: FIFA 2026 Official Match Schedule (fifa.com)
+// 校验: 交叉比对 ESPN / fifawc-2026.com / worldcuppass 等多源
+// 更新时间: 2025-07-12
+// 映射逻辑: match.id (格式: 组别_主队索引_客队索引) → 场馆
+//           knockout则以 R32_N / R16_N / QF_N / SF_N / TP / FINAL 为key
 
 var venueMatchMapping = {
-  // ── 小组赛 (A-L) ──
-  'A': { id: 'mexicoCity',     name: '阿兹特克球场' },
-  'B': { id: 'guadalajara',    name: '阿克伦球场' },
-  'C': { id: 'monterrey',      name: 'BBVA球场' },
-  'D': { id: 'inglewood',      name: 'SoFi体育场' },
-  'E': { id: 'eastRutherford', name: '大都会人寿体育场' },
-  'F': { id: 'arlington',      name: 'AT&T体育场' },
-  'G': { id: 'atlanta',        name: '梅赛德斯-奔驰体育场' },
-  'H': { id: 'miamiGardens',   name: '硬石体育场' },
-  'I': { id: 'kansasCity',     name: '箭头体育场' },
-  'J': { id: 'houston',        name: 'NRG体育场' },
-  'K': { id: 'philadelphia',   name: '林肯金融体育场' },
-  'L': { id: 'seattle',        name: '流明球场' },
-  // ── 淘汰赛 (1/16决赛 16场 → 8个场馆轮换) ──
-  'R32_1':  { id: 'mexicoCity',     name: '阿兹特克球场' },
-  'R32_2':  { id: 'guadalajara',    name: '阿克伦球场' },
-  'R32_3':  { id: 'monterrey',      name: 'BBVA球场' },
-  'R32_4':  { id: 'inglewood',      name: 'SoFi体育场' },
-  'R32_5':  { id: 'eastRutherford', name: '大都会人寿体育场' },
-  'R32_6':  { id: 'arlington',      name: 'AT&T体育场' },
-  'R32_7':  { id: 'atlanta',        name: '梅赛德斯-奔驰体育场' },
-  'R32_8':  { id: 'miamiGardens',   name: '硬石体育场' },
-  'R32_9':  { id: 'kansasCity',     name: '箭头体育场' },
-  'R32_10': { id: 'houston',        name: 'NRG体育场' },
-  'R32_11': { id: 'philadelphia',   name: '林肯金融体育场' },
-  'R32_12': { id: 'seattle',        name: '流明球场' },
-  'R32_13': { id: 'santaClara',     name: '李维斯体育场' },
-  'R32_14': { id: 'foxborough',     name: '吉列体育场' },
-  'R32_15': { id: 'toronto',        name: 'BMO球场' },
-  'R32_16': { id: 'vancouver',      name: 'BC Place体育场' },
-  // ── 1/8决赛 ──
-  'R16_1': { id: 'arlington',       name: 'AT&T体育场' },
-  'R16_2': { id: 'atlanta',         name: '梅赛德斯-奔驰体育场' },
-  'R16_3': { id: 'eastRutherford',  name: '大都会人寿体育场' },
-  'R16_4': { id: 'inglewood',       name: 'SoFi体育场' },
-  'R16_5': { id: 'houston',         name: 'NRG体育场' },
-  'R16_6': { id: 'kansasCity',      name: '箭头体育场' },
-  'R16_7': { id: 'miamiGardens',    name: '硬石体育场' },
-  'R16_8': { id: 'philadelphia',    name: '林肯金融体育场' },
+  // ══════════════════════════════════════════════
+  //  小组赛 (12组 × 6场 = 72场 · 逐场精确映射)
+  // ══════════════════════════════════════════════
+  
+  // ── A组: MEX(0) RSA(1) KOR(2) CZE(3) ──
+  'A_0_1': { id: 'mexicoCity',     name: '阿兹特克球场' },       // MEX vs RSA · Jun11
+  'A_2_3': { id: 'guadalajara',    name: '阿克伦球场' },         // KOR vs CZE · Jun11
+  'A_3_1': { id: 'atlanta',        name: '梅赛德斯-奔驰体育场' }, // CZE vs RSA · Jun18
+  'A_0_2': { id: 'guadalajara',    name: '阿克伦球场' },         // MEX vs KOR · Jun18
+  'A_1_2': { id: 'monterrey',      name: 'BBVA球场' },           // RSA vs KOR · Jun24
+  'A_3_0': { id: 'mexicoCity',     name: '阿兹特克球场' },       // CZE vs MEX · Jun24
+
+  // ── B组: CAN(0) BIH(1) QAT(2) SUI(3) ──
+  'B_0_1': { id: 'toronto',        name: 'BMO球场' },            // CAN vs BIH · Jun12
+  'B_2_3': { id: 'santaClara',     name: '李维斯体育场' },       // QAT vs SUI · Jun13
+  'B_3_1': { id: 'inglewood',      name: 'SoFi体育场' },         // SUI vs BIH · Jun18
+  'B_0_2': { id: 'vancouver',      name: 'BC Place体育场' },     // CAN vs QAT · Jun18
+  'B_3_0': { id: 'vancouver',      name: 'BC Place体育场' },     // SUI vs CAN · Jun24
+  'B_1_2': { id: 'seattle',        name: '流明球场' },           // BIH vs QAT · Jun24
+
+  // ── C组: BRA(0) MAR(1) HAI(2) SCO(3) ──
+  'C_0_1': { id: 'eastRutherford', name: '大都会人寿体育场' },   // BRA vs MAR · Jun13
+  'C_2_3': { id: 'foxborough',     name: '吉列体育场' },         // HAI vs SCO · Jun13
+  'C_3_1': { id: 'foxborough',     name: '吉列体育场' },         // SCO vs MAR · Jun19
+  'C_0_2': { id: 'philadelphia',   name: '林肯金融体育场' },     // BRA vs HAI · Jun19
+  'C_3_0': { id: 'miamiGardens',   name: '硬石体育场' },         // SCO vs BRA · Jun24
+  'C_1_2': { id: 'atlanta',        name: '梅赛德斯-奔驰体育场' }, // MAR vs HAI · Jun24
+
+  // ── D组: USA(0) PAR(1) AUS(2) TUR(3) ──
+  'D_0_1': { id: 'inglewood',      name: 'SoFi体育场' },         // USA vs PAR · Jun12
+  'D_2_3': { id: 'vancouver',      name: 'BC Place体育场' },     // AUS vs TUR · Jun13
+  'D_0_2': { id: 'seattle',        name: '流明球场' },           // USA vs AUS · Jun19
+  'D_3_1': { id: 'santaClara',     name: '李维斯体育场' },       // TUR vs PAR · Jun19
+  'D_3_0': { id: 'inglewood',      name: 'SoFi体育场' },         // TUR vs USA · Jun25
+  'D_1_2': { id: 'santaClara',     name: '李维斯体育场' },       // PAR vs AUS · Jun25
+
+  // ── E组: GER(0) CUW(1) CIV(2) ECU(3) ──
+  'E_0_1': { id: 'houston',        name: 'NRG体育场' },          // GER vs CUW · Jun14
+  'E_2_3': { id: 'philadelphia',   name: '林肯金融体育场' },     // CIV vs ECU · Jun14
+  'E_0_2': { id: 'toronto',        name: 'BMO球场' },            // GER vs CIV · Jun20
+  'E_3_1': { id: 'kansasCity',     name: '箭头体育场' },         // ECU vs CUW · Jun20
+  'E_3_0': { id: 'eastRutherford', name: '大都会人寿体育场' },   // ECU vs GER · Jun25
+  'E_1_2': { id: 'philadelphia',   name: '林肯金融体育场' },     // CUW vs CIV · Jun25
+
+  // ── F组: NED(0) JPN(1) SWE(2) TUN(3) ──
+  'F_0_1': { id: 'arlington',      name: 'AT&T体育场' },         // NED vs JPN · Jun14
+  'F_2_3': { id: 'monterrey',      name: 'BBVA球场' },           // SWE vs TUN · Jun14
+  'F_0_2': { id: 'houston',        name: 'NRG体育场' },          // NED vs SWE · Jun20
+  'F_3_1': { id: 'monterrey',      name: 'BBVA球场' },           // TUN vs JPN · Jun20
+  'F_1_2': { id: 'arlington',      name: 'AT&T体育场' },         // JPN vs SWE · Jun25
+  'F_3_0': { id: 'kansasCity',     name: '箭头体育场' },         // TUN vs NED · Jun25
+
+  // ── G组: BEL(0) EGY(1) IRN(2) NZL(3) ──
+  'G_0_1': { id: 'seattle',        name: '流明球场' },           // BEL vs EGY · Jun15
+  'G_2_3': { id: 'inglewood',      name: 'SoFi体育场' },         // IRN vs NZL · Jun15
+  'G_0_2': { id: 'inglewood',      name: 'SoFi体育场' },         // BEL vs IRN · Jun21
+  'G_3_1': { id: 'vancouver',      name: 'BC Place体育场' },     // NZL vs EGY · Jun21
+  'G_1_2': { id: 'seattle',        name: '流明球场' },           // EGY vs IRN · Jun26
+  'G_3_0': { id: 'vancouver',      name: 'BC Place体育场' },     // NZL vs BEL · Jun26
+
+  // ── H组: ESP(0) CPV(1) KSA(2) URU(3) ──
+  'H_0_1': { id: 'atlanta',        name: '梅赛德斯-奔驰体育场' }, // ESP vs CPV · Jun15
+  'H_2_3': { id: 'miamiGardens',   name: '硬石体育场' },         // KSA vs URU · Jun15
+  'H_0_2': { id: 'atlanta',        name: '梅赛德斯-奔驰体育场' }, // ESP vs KSA · Jun21
+  'H_3_1': { id: 'miamiGardens',   name: '硬石体育场' },         // URU vs CPV · Jun21
+  'H_1_2': { id: 'houston',        name: 'NRG体育场' },          // CPV vs KSA · Jun26
+  'H_3_0': { id: 'guadalajara',    name: '阿克伦球场' },         // URU vs ESP · Jun26
+
+  // ── I组: FRA(0) SEN(1) IRQ(2) NOR(3) ──
+  'I_0_1': { id: 'eastRutherford', name: '大都会人寿体育场' },   // FRA vs SEN · Jun16
+  'I_2_3': { id: 'foxborough',     name: '吉列体育场' },         // IRQ vs NOR · Jun16
+  'I_0_2': { id: 'philadelphia',   name: '林肯金融体育场' },     // FRA vs IRQ · Jun22
+  'I_3_1': { id: 'eastRutherford', name: '大都会人寿体育场' },   // NOR vs SEN · Jun22
+  'I_3_0': { id: 'foxborough',     name: '吉列体育场' },         // NOR vs FRA · Jun26
+  'I_1_2': { id: 'toronto',        name: 'BMO球场' },            // SEN vs IRQ · Jun26
+
+  // ── J组: ARG(0) ALG(1) AUT(2) JOR(3) ──
+  'J_0_1': { id: 'kansasCity',     name: '箭头体育场' },         // ARG vs ALG · Jun16
+  'J_2_3': { id: 'santaClara',     name: '李维斯体育场' },       // AUT vs JOR · Jun16
+  'J_0_2': { id: 'arlington',      name: 'AT&T体育场' },         // ARG vs AUT · Jun22
+  'J_3_1': { id: 'santaClara',     name: '李维斯体育场' },       // JOR vs ALG · Jun22
+  'J_1_2': { id: 'kansasCity',     name: '箭头体育场' },         // ALG vs AUT · Jun27
+  'J_3_0': { id: 'arlington',      name: 'AT&T体育场' },         // JOR vs ARG · Jun27
+
+  // ── K组: POR(0) COD(1) UZB(2) COL(3) ──
+  'K_0_1': { id: 'houston',        name: 'NRG体育场' },          // POR vs COD · Jun17
+  'K_2_3': { id: 'mexicoCity',     name: '阿兹特克球场' },       // UZB vs COL · Jun17
+  'K_0_2': { id: 'houston',        name: 'NRG体育场' },          // POR vs UZB · Jun23
+  'K_3_1': { id: 'guadalajara',    name: '阿克伦球场' },         // COL vs COD · Jun23
+  'K_3_0': { id: 'miamiGardens',   name: '硬石体育场' },         // COL vs POR · Jun27
+  'K_1_2': { id: 'atlanta',        name: '梅赛德斯-奔驰体育场' }, // COD vs UZB · Jun27
+
+  // ── L组: ENG(0) CRO(1) GHA(2) PAN(3) ──
+  'L_0_1': { id: 'arlington',      name: 'AT&T体育场' },         // ENG vs CRO · Jun17
+  'L_2_3': { id: 'toronto',        name: 'BMO球场' },            // GHA vs PAN · Jun17
+  'L_0_2': { id: 'foxborough',     name: '吉列体育场' },         // ENG vs GHA · Jun23
+  'L_3_1': { id: 'toronto',        name: 'BMO球场' },            // PAN vs CRO · Jun23
+  'L_3_0': { id: 'eastRutherford', name: '大都会人寿体育场' },   // PAN vs ENG · Jun27
+  'L_1_2': { id: 'philadelphia',   name: '林肯金融体育场' },     // CRO vs GHA · Jun27
+
+  // ══════════════════════════════════════════════
+  //  淘汰赛 (R32 / R16 / QF / SF / TP / FINAL)
+  //  经官方赛程校验调整
+  // ══════════════════════════════════════════════
+  
+  // ── 1/16决赛 (R32) 16场 ──
+  'R32_1':  { id: 'inglewood',      name: 'SoFi体育场' },         // M73
+  'R32_2':  { id: 'foxborough',     name: '吉列体育场' },         // M74
+  'R32_3':  { id: 'monterrey',      name: 'BBVA球场' },           // M75
+  'R32_4':  { id: 'houston',        name: 'NRG体育场' },          // M76
+  'R32_5':  { id: 'eastRutherford', name: '大都会人寿体育场' },   // M77
+  'R32_6':  { id: 'arlington',      name: 'AT&T体育场' },         // M78
+  'R32_7':  { id: 'mexicoCity',     name: '阿兹特克球场' },       // M79
+  'R32_8':  { id: 'atlanta',        name: '梅赛德斯-奔驰体育场' }, // M80
+  'R32_9':  { id: 'santaClara',     name: '李维斯体育场' },       // M81
+  'R32_10': { id: 'seattle',        name: '流明球场' },           // M82
+  'R32_11': { id: 'toronto',        name: 'BMO球场' },            // M83
+  'R32_12': { id: 'inglewood',      name: 'SoFi体育场' },         // M84
+  'R32_13': { id: 'vancouver',      name: 'BC Place体育场' },     // M85
+  'R32_14': { id: 'miamiGardens',   name: '硬石体育场' },         // M86
+  'R32_15': { id: 'kansasCity',     name: '箭头体育场' },         // M87
+  'R32_16': { id: 'arlington',      name: 'AT&T体育场' },         // M88
+
+  // ── 1/8决赛 (R16) 8场 ──
+  'R16_1': { id: 'philadelphia',    name: '林肯金融体育场' },     // M89
+  'R16_2': { id: 'houston',         name: 'NRG体育场' },          // M90
+  'R16_3': { id: 'eastRutherford',  name: '大都会人寿体育场' },   // M91
+  'R16_4': { id: 'mexicoCity',      name: '阿兹特克球场' },       // M92
+  'R16_5': { id: 'arlington',       name: 'AT&T体育场' },         // M93
+  'R16_6': { id: 'seattle',         name: '流明球场' },           // M94
+  'R16_7': { id: 'atlanta',         name: '梅赛德斯-奔驰体育场' }, // M95
+  'R16_8': { id: 'vancouver',       name: 'BC Place体育场' },     // M96
+
   // ── 1/4决赛 ──
-  'QF_1': { id: 'inglewood',        name: 'SoFi体育场' },
-  'QF_2': { id: 'eastRutherford',   name: '大都会人寿体育场' },
-  'QF_3': { id: 'arlington',        name: 'AT&T体育场' },
-  'QF_4': { id: 'atlanta',          name: '梅赛德斯-奔驰体育场' },
+  'QF_1': { id: 'foxborough',       name: '吉列体育场' },         // M97
+  'QF_2': { id: 'inglewood',        name: 'SoFi体育场' },         // M98
+  'QF_3': { id: 'miamiGardens',     name: '硬石体育场' },         // M99
+  'QF_4': { id: 'kansasCity',       name: '箭头体育场' },         // M100
+
   // ── 半决赛 ──
-  'SF_1': { id: 'arlington',        name: 'AT&T体育场' },
-  'SF_2': { id: 'atlanta',          name: '梅赛德斯-奔驰体育场' },
+  'SF_1': { id: 'arlington',        name: 'AT&T体育场' },         // M101
+  'SF_2': { id: 'atlanta',          name: '梅赛德斯-奔驰体育场' }, // M102
+
   // ── 季军赛 ──
-  'TP': { id: 'miamiGardens',       name: '硬石体育场' },
+  'TP': { id: 'miamiGardens',       name: '硬石体育场' },         // M103
+
   // ── 决赛 ──
-  'FINAL': { id: 'eastRutherford',  name: '大都会人寿体育场' }
+  'FINAL': { id: 'eastRutherford',  name: '大都会人寿体育场' }    // M104
 };
 
 /**
@@ -603,23 +719,27 @@ var venueMatchMapping = {
 function getVenueFor2026Match(match) {
   if (!match) return null;
 
-  // 1. 确定查找key
+  // 1. 确定查找key (V1.70: 优先 match.id 精确匹配)
   var lookupKey = null;
-  // 优先: round + group 精确匹配 (如 'R32_1')
-  if (match.round && match.group) {
+  // 最优先: match.id 逐场精确匹配 (如 'A_0_1', 'R32_5')
+  if (match.id && venueMatchMapping[match.id]) {
+    lookupKey = match.id;
+  }
+  // 其次: match.sid (如 'R32', 'R16', 'QF', 'SF', 'TP', 'FINAL')
+  if (!lookupKey && match.sid && venueMatchMapping[match.sid]) {
+    lookupKey = match.sid;
+  }
+  // 再次: round + group 组合 (如 'R32_1')
+  if (!lookupKey && match.round && match.group) {
     var combined = match.round + '_' + match.group;
     if (venueMatchMapping[combined]) lookupKey = combined;
   }
-  // 其次: 仅 group (小组赛)
-  if (!lookupKey && match.group && venueMatchMapping[match.group]) {
-    lookupKey = match.group;
-  }
-  // 再次: match.gid
+  // 再次: match.gid (小组字母)
   if (!lookupKey && match.gid && venueMatchMapping[match.gid]) {
     lookupKey = match.gid;
   }
   // 兜底
-  if (!lookupKey) lookupKey = 'A';  // 默认墨西哥城·阿兹特克
+  if (!lookupKey) lookupKey = 'A_0_1';  // 默认揭幕战·阿兹特克
 
   var mapping = venueMatchMapping[lookupKey];
   var venueId = mapping ? mapping.id : 'mexicoCity';

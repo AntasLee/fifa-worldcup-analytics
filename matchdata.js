@@ -1137,7 +1137,23 @@ const wc2026MatchDetails = {
     },
     attendance: null,
     referee: "TBD"
-  }
+  },
+
+  "2026|F|NED|JPN": {
+    score: { sh: 2, sa: 2 },
+    goals: [
+      { min: 51, side: "home", scorer: "维吉尔·范戴克 (Virgil van Dijk)", type: "header" },
+      { min: 57, side: "away", scorer: "中村敬斗 (Keito Nakamura)", type: "shot" },
+      { min: 64, side: "home", scorer: "克莱森西奥·萨默维尔 (Crysencio Summerville)", type: "shot" },
+      { min: 88, side: "away", scorer: "镰田大地 (Daichi Kamada)", type: "header" }
+    ],
+    cards: {
+      home: { yellow: 3, red: 0 },
+      away: { yellow: 0, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1149,5 +1165,6 @@ matchStats["2026|B|QAT|SUI"] = {p1:"32%",p2:"68%",ps1:null,ps2:null,sh1:6,sh2:17
 matchStats["2026|C|BRA|MAR"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:9,sh2:8,so1:5,so2:3,sb1:4,sb2:5,co1:6,co2:2,fo1:16,fo2:14,os1:0,os2:1,yc1:2,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:101,at2:103,da1:33,da2:47,pk1:0,pk2:0};
 matchStats["2026|C|HAI|SCO"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:11,sh2:7,so1:2,so2:2,sb1:9,sb2:5,co1:4,co2:3,fo1:23,fo2:21,os1:3,os2:1,yc1:1,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:111,at2:76,da1:47,da2:39,pk1:0,pk2:0};
 matchStats["2026|D|AUS|TUR"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:8,sh2:18,so1:4,so2:8,sb1:4,sb2:10,co1:5,co2:8,fo1:12,fo2:4,os1:1,os2:3,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:51,at2:150,da1:35,da2:104,pk1:0,pk2:0};
+matchStats["2026|F|NED|JPN"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:9,sh2:9,so1:6,so2:3,sb1:3,sb2:6,co1:5,co2:4,fo1:7,fo2:7,os1:1,os2:0,yc1:3,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:106,at2:76,da1:60,da2:43,pk1:0,pk2:0};
 
 matchStats["2026|E|GER|CUW"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:18,sh2:8,so1:12,so2:2,sb1:6,sb2:6,co1:8,co2:1,fo1:18,fo2:11,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:137,at2:76,da1:81,da2:21,pk1:1,pk2:0};

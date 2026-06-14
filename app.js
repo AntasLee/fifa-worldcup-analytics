@@ -7,7 +7,7 @@
 
 // FIFA World Cup Data Analysis - Player & Match Database
 // Auto-generated from HTML data section. Update this file to modify data.
-// Version: V1.69 | Generated: 2026-07-19
+// Version: V1.70 | Generated: 2026-07-19
 // These variables are at global scope and accessible from the main application.
 
 // ===== Global shared state (used by both data & UI) =====
@@ -57,7 +57,7 @@ setTimeout(function(){var bm=document.getElementById('backtestModal');if(bm)bm.a
   if(e.target===this)closeBacktestModal();
 });},100);
 
-// switchPastWCStage → 已委托给 switchPastWCStageMain（V1.69 统一入口）
+// switchPastWCStage → 已委托给 switchPastWCStageMain（V1.70 统一入口）
 window.switchPastWCStage=function(stage){
   switchPastWCStageMain(stage);
 };
@@ -90,8 +90,10 @@ function collectAllMatches(data) {
 window.runBacktest=function(){
   var data=pastWCYear==='2022'?wc2022Data:pastWCYear==='2018'?wc2018Data:pastWCYear==='2014'?wc2014Data:pastWCYear==='2010'?wc2010Data:pastWCYear==='2006'?wc2006Data:wc2002Data;
   var yearLabel={'2022':'🇶🇦 2022 卡塔尔','2018':'🇷🇺 2018 俄罗斯','2014':'🇧🇷 2014 巴西','2010':'🇿🇦 2010 南非','2006':'🇩🇪 2006 德国','2002':'🇰🇷🇯🇵 2002 韩日'}[pastWCYear]||pastWCYear;
+  var bt = document.getElementById('backtestModalTitle');
+  if (bt) bt.textContent = '🎯 优选策略';
   var bl = document.getElementById('backtestYearLabel');
-  if (bl) bl.textContent = '— ' + yearLabel;
+  if (bl) bl.textContent = yearLabel.split(' ').slice(1).join('');
   
   var allMatches = collectAllMatches(data);
   
@@ -470,8 +472,10 @@ window.runFlatBacktestMain=function(){
   var data=pastWCYear==='2022'?wc2022Data:pastWCYear==='2018'?wc2018Data:pastWCYear==='2014'?wc2014Data:pastWCYear==='2010'?wc2010Data:pastWCYear==='2006'?wc2006Data:wc2002Data;
   if(!data||!data.groups){showToast('⚠️ 暂无 '+pastWCYear+' 年世界杯数据');return;}
   var yearLabel={'2022':'🇶🇦 2022 卡塔尔','2018':'🇷🇺 2018 俄罗斯','2014':'🇧🇷 2014 巴西','2010':'🇿🇦 2010 南非','2006':'🇩🇪 2006 德国','2002':'🇰🇷🇯🇵 2002 韩日'}[pastWCYear]||pastWCYear;
+  var bt=document.getElementById('backtestModalTitle');
+  if(bt)bt.textContent='📊 均注策略';
   var bl=document.getElementById('backtestYearLabel');
-  if(bl)bl.textContent='— '+yearLabel+' · 均注策略（预算本金 ¥10,000，每场 ¥1,000，耗尽后追加）';
+  if(bl)bl.textContent=yearLabel.split(' ').slice(1).join('');
   
   var allMatches=collectAllMatches(data);
   

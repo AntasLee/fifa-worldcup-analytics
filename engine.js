@@ -1,4 +1,4 @@
-// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.66 =====
+// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.70 =====
 // 依赖: teamdata.js (playerDB, clubNameMap, clubLeagueMap, supplementalPlayers)
 
 // ==================== 1. 字符串规范化 ====================
@@ -1104,7 +1104,7 @@ if (typeof document !== 'undefined') {
         setTimeout(function() {
             buildClubIndex.build();
             console.log('[engine.js] 聚合索引构建完成');
-            try { sessionStorage.setItem('engineDataBuilt', 'V1.66'); } catch(e) {}
+            try { sessionStorage.setItem('engineDataBuilt', 'V1.70'); } catch(e) {}
         }, 500);
     });
 }
@@ -1261,7 +1261,7 @@ function formatStandardName(type, input, orig) {
             }
         } else {
             var nameStr = String(p || '');
-            // ★ V1.66 修复: 输入已是 "中文名 (English Name)" 格式时，解析提取
+            // ★ V1.70 修复: 输入已是 "中文名 (English Name)" 格式时，解析提取
             var reStored = /^(.+)\s+\(([^)]+)\)$/;
             var mStored = nameStr.match(reStored);
             if (mStored) {
