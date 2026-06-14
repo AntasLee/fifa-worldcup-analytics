@@ -7,7 +7,7 @@
 
 // FIFA World Cup Data Analysis - Player & Match Database
 // Auto-generated from HTML data section. Update this file to modify data.
-// Version: V1.67 | Generated: 2026-07-19
+// Version: V1.69 | Generated: 2026-07-19
 // These variables are at global scope and accessible from the main application.
 
 // ===== Global shared state (used by both data & UI) =====
@@ -57,7 +57,7 @@ setTimeout(function(){var bm=document.getElementById('backtestModal');if(bm)bm.a
   if(e.target===this)closeBacktestModal();
 });},100);
 
-// switchPastWCStage → 已委托给 switchPastWCStageMain（V1.67 统一入口）
+// switchPastWCStage → 已委托给 switchPastWCStageMain（V1.69 统一入口）
 window.switchPastWCStage=function(stage){
   switchPastWCStageMain(stage);
 };
@@ -781,7 +781,7 @@ window.showMatchDetail=function(year, stage, h, a, isKnockout) {
       detail.goals.forEach(function(g) {
         var sideClass = g.side === 'home' ? 'goal-home' : 'goal-away';
         var typeLabel = g.type === 'penalty' ? '点球' : g.type === 'header' ? '头球' : g.type === 'free_kick' ? '任意球' : g.type === 'own_goal' ? '乌龙球' : '射门';
-        var typeClass = g.type;
+        var typeClass = g.type === 'header' ? 'headed' : g.type;
         var minDisplay = g.min > 90 ? '90+'+(g.min-90)+"'": g.min+"'";
         if (g.min > 105 && g.min <= 120) minDisplay = '105+'+(g.min-105)+"' (加时)";
         html += '<div class="goal-event '+sideClass+'"><span class="goal-min">'+minDisplay+'</span><span class="goal-scorer">'+makePlayerClickable(g.scorer)+'</span><span class="goal-type '+typeClass+'">'+typeLabel+'</span></div>';

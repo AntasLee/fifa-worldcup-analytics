@@ -1118,6 +1118,25 @@ const wc2026MatchDetails = {
     },
     attendance: null,
     referee: "TBD"
+  },
+  "2026|E|GER|CUW": {
+    score: { sh: 7, sa: 1 },
+    goals: [
+      { min: 6, side: "home", scorer: "费利克斯·恩梅查 (Felix Nmecha)", type: "shot" },
+      { min: 21, side: "away", scorer: "利瓦诺·科梅内西亚 (Livano Comenencia)", type: "shot" },
+      { min: 38, side: "home", scorer: "尼科·施洛特贝克 (Nico Schlotterbeck)", type: "header" },
+      { min: 50, side: "home", scorer: "凯·哈弗茨 (Kai Havertz)", type: "penalty" },
+      { min: 47, side: "home", scorer: "贾马尔·穆西亚拉 (Jamal Musiala)", type: "shot" },
+      { min: 68, side: "home", scorer: "纳撒尼尔·布朗 (Nathaniel Brown)", type: "shot" },
+      { min: 78, side: "home", scorer: "德尼茨·翁达夫 (Deniz Undav)", type: "shot" },
+      { min: 88, side: "home", scorer: "凯·哈弗茨 (Kai Havertz)", type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 0, red: 0 },
+      away: { yellow: 0, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
   }
 };
 
@@ -1130,3 +1149,5 @@ matchStats["2026|B|QAT|SUI"] = {p1:"32%",p2:"68%",ps1:null,ps2:null,sh1:6,sh2:17
 matchStats["2026|C|BRA|MAR"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:9,sh2:8,so1:5,so2:3,sb1:4,sb2:5,co1:6,co2:2,fo1:16,fo2:14,os1:0,os2:1,yc1:2,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:101,at2:103,da1:33,da2:47,pk1:0,pk2:0};
 matchStats["2026|C|HAI|SCO"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:11,sh2:7,so1:2,so2:2,sb1:9,sb2:5,co1:4,co2:3,fo1:23,fo2:21,os1:3,os2:1,yc1:1,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:111,at2:76,da1:47,da2:39,pk1:0,pk2:0};
 matchStats["2026|D|AUS|TUR"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:8,sh2:18,so1:4,so2:8,sb1:4,sb2:10,co1:5,co2:8,fo1:12,fo2:4,os1:1,os2:3,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:51,at2:150,da1:35,da2:104,pk1:0,pk2:0};
+
+matchStats["2026|E|GER|CUW"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:18,sh2:8,so1:12,so2:2,sb1:6,sb2:6,co1:8,co2:1,fo1:18,fo2:11,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:137,at2:76,da1:81,da2:21,pk1:1,pk2:0};
