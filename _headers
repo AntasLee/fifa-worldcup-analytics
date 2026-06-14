@@ -1,77 +1,33 @@
 # ============================================================
-# 智能分层缓存策略 — Cloudflare Pages Headers
-# ============================================================
-# 原则：数据常变用短缓存 + stale-while-revalidate
-#      静态资源不变用长缓存（带版本指纹需配合文件名 hash）
+# 高频更新缓存策略
+# 图片长期缓存 / 其他内容 5 分钟自动刷新
 # ============================================================
 
-# ---- HTML 页面（小体积，每次验证即可）----
+# HTML 页面 — 每次都验证最新版本
 /*.html
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: no-cache
 
-# ---- 数据 JS 文件（常更新，短缓存 + 后台静默刷新）----
-/groupsdata.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+# JavaScript 数据 & 引擎 — 5分钟缓存 + 后台静默刷新
+/*.js
+  Cache-Control: max-age=300, stale-while-revalidate=3600
 
-/teamdata.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+# CSS 样式 — 5分钟缓存 + 后台静默刷新
+/*.css
+  Cache-Control: max-age=300, stale-while-revalidate=3600
 
-/squaddata.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-
-/matchdata.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-
-/clubdata.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-
-/coachdata.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-
-/venuedata.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-
-/bracket_overlay.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-
-/squadmodal.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-
-# ---- 球员数据 JS（体积最大，中等缓存）----
-/playerdata_core.js
-  Cache-Control: public, max-age=7200, stale-while-revalidate=86400
-
-/playerdata_career.js
-  Cache-Control: public, max-age=7200, stale-while-revalidate=86400
-
-/playerdata_media.js
-  Cache-Control: public, max-age=7200, stale-while-revalidate=86400
-
-/playerdata_meta.js
-  Cache-Control: public, max-age=7200, stale-while-revalidate=86400
-
-# ---- 核心引擎 JS（变动少，长缓存）----
-/app.js
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-/engine.js
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-/server.js
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-# ---- 图片 & 字体（几乎不变）----
+# 图片 — 球员头像 / 国旗等几乎不变，30天缓存
 /*.png
-  Cache-Control: public, max-age=2592000
-
-/*.svg
-  Cache-Control: public, max-age=2592000
+  Cache-Control: max-age=2592000, immutable
 
 /*.jpg
-  Cache-Control: public, max-age=2592000
+  Cache-Control: max-age=2592000, immutable
+
+/*.svg
+  Cache-Control: max-age=2592000, immutable
 
 /*.webp
-  Cache-Control: public, max-age=2592000
+  Cache-Control: max-age=2592000, immutable
 
+# 字体 — 永久缓存
 /*.woff2
-  Cache-Control: public, max-age=2592000, immutable
+  Cache-Control: max-age=2592000, immutable
