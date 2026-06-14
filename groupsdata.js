@@ -1239,7 +1239,7 @@ window.searchPlayer = function() {
         return;
     }
     
-    // 尝试在比赛数据中搜索 scorer（V1.66: 仅当查询≥3字符且匹配整个单词时才触发，避免误匹配）
+    // 尝试在比赛数据中搜索 scorer（V1.67: 仅当查询≥3字符且匹配整个单词时才触发，避免误匹配）
     if (typeof wcMatchDetails !== 'undefined' && ql.length >= 3) {
         for (var mk2 in wcMatchDetails) {
             var detail = wcMatchDetails[mk2];
