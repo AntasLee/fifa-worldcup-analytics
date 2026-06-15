@@ -621,6 +621,30 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     color: #9a8ac0; line-height: 1.5;
     text-align: center; white-space: nowrap;
 }
+.btn-hard-refresh {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 18px;
+    font-size: 0.72rem; font-weight: 700;
+    color: #e0d0ff;
+    background: linear-gradient(135deg, #3d1a6a, #5a2a9a);
+    border: 1.5px solid #9a6aff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    animation: probCapsuleGlow 2.0s ease-in-out infinite;
+}
+.btn-hard-refresh:hover {
+    border-color: #c0a0ff;
+    box-shadow: 0 0 20px rgba(154,106,255,0.6), 0 0 40px rgba(124,77,255,0.35);
+    color: #fff;
+    transform: translateY(-1px);
+}
+.btn-hard-refresh:active {
+    transform: scale(0.95);
+    background: linear-gradient(135deg, #5a2a9a, #7a3aba);
+}
 
 		/* ===== Welcome Overlay ===== */
 		#welcomeOverlay {
@@ -3225,12 +3249,41 @@ function toggleProbUpdate() {
     if (isExpanded) {
         dropdown.classList.remove('expanded');
         capsule.classList.remove('expanded');
-        capsule.innerHTML = '📊 【概率】已更新 ▾';
+        capsule.innerHTML = '📊 版本已更新 ▾';
     } else {
         dropdown.classList.add('expanded');
         capsule.classList.add('expanded');
-        capsule.innerHTML = '📊 【概率】已更新 ▴';
+        capsule.innerHTML = '📊 版本已更新 ▴';
     }
+}
+
+// ===== 强制刷新：清除缓存并重新加载到 Loading 页 =====
+function hardRefresh() {
+    // 1. 清除所有 Cache API 缓存
+    if ('caches' in window) {
+        caches.keys().then(function(names) {
+            for (var i = 0; i < names.length; i++) {
+                caches.delete(names[i]);
+            }
+        }).catch(function(){});
+    }
+    // 2. 注销所有 Service Worker
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+            for (var i = 0; i < regs.length; i++) {
+                regs[i].unregister();
+            }
+        }).catch(function(){});
+    }
+    // 3. 清除 sessionStorage（保留跨标签页标记）
+    try {
+        var xtab = sessionStorage.getItem('_xtab_open');
+        sessionStorage.clear();
+        if (xtab) sessionStorage.setItem('_xtab_open', xtab);
+    } catch(e) {}
+    // 4. 带时间戳强刷，绕过浏览器 HTTP 缓存
+    var url = window.location.href.split('#')[0].split('?')[0];
+    window.location.href = url + '?_v=' + Date.now();
 }
 </script>
 <div class="sticky-top-group">
@@ -3251,13 +3304,16 @@ function toggleProbUpdate() {
 <!-- Float Capsule Row: 概率更新通知 (左·可展开) + 联赛&俱乐部入口 (右·隐藏) -->
 <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 18px 0 18px;">
   <div class="prob-update-wrapper">
-    <span class="prob-update-capsule expanded" onclick="toggleProbUpdate()">📊 【概率】已更新 ▴</span>
+    <span class="prob-update-capsule expanded" onclick="toggleProbUpdate()">📊 版本已更新 ▴</span>
     <div class="prob-update-dropdown expanded" id="probUpdateDropdown">
       <div class="prob-update-item">🔄 赔率重新校准</div>
       <div class="prob-update-item">📊 概率模型优化</div>
-      <div class="prob-update-item">⚽ 新增比分推荐</div>
+      <div class="prob-update-item">显示布局优化</div>
       <div class="prob-update-divider"></div>
-      <div class="prob-update-hint">非首次使用请按<br>CTRL+SHIFT+R<br>强刷新进入新版</div>
+      <div class="prob-update-hint">
+      <button class="btn-hard-refresh" onclick="hardRefresh()" title="清除浏览器缓存并加载新版本，回到加载页">🔄 点击加载新版</button>
+      <div style="font-size:0.6rem;color:#7a6aa0;margin-top:3px;">或按 CTRL+SHIFT+R</div>
+    </div>
     </div>
   </div>
   <button class="league-club-float-btn" style="display:none;" onclick="switchToTab('league.html','league_tab')" title="联赛 & 俱乐部数据">
@@ -4174,7 +4230,7 @@ function switchMainTab(tabName) {
     if (dropdown && capsule && dropdown.classList.contains('expanded')) {
       dropdown.classList.remove('expanded');
       capsule.classList.remove('expanded');
-      capsule.innerHTML = '📊 【概率】已更新 ▾';
+      capsule.innerHTML = '📊 版本已更新 ▾';
     }
   }
 })();
@@ -4187,7 +4243,7 @@ function switchMainTab(tabName) {
   if(window.innerWidth<=480){
     var d=document.getElementById('probUpdateDropdown');
     var c=document.querySelector('.prob-update-capsule');
-    if(d&&c){d.classList.remove('expanded');c.classList.remove('expanded');c.innerHTML='📊 【概率】已更新 ▾';}
+    if(d&&c){d.classList.remove('expanded');c.classList.remove('expanded');c.innerHTML='📊 版本已更新 ▾';}
   }
 })();
 </script>
