@@ -13,7 +13,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .header{background:linear-gradient(135deg,#0d1b2a,#1a2740,#0d1b2a);border-bottom:2px solid var(--gold);padding:18px 24px;text-align:center}
 .header h1{font-size:1.8rem;font-weight:800;letter-spacing:2px;background:linear-gradient(180deg,#f0d070 0%,#d4a843 50%,#b8862d 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
 .header .subtitle{font-size:0.85rem;color:var(--text-secondary);letter-spacing:1px}
-.sticky-top-group{position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,0.5)}
+.sticky-top-group{position:sticky;top:0;z-index:100;background:#0d1b2a;box-shadow:0 2px 20px rgba(0,0,0,0.5)}
 .container{max-width:1400px;margin:0 auto;padding:20px 16px}
 .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:20px;padding:14px 18px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border)}
 .toolbar-left{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -596,7 +596,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     max-height: 0; opacity: 0;
     transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
     box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    z-index: 10; pointer-events: none;
+    z-index: 60; pointer-events: none;
 }
 .prob-update-dropdown.expanded {
     max-height: 260px; opacity: 1; padding: 10px 0;
@@ -2684,6 +2684,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     position: sticky;
     top: 0;
     z-index: 100;
+    background: #0d1b2a;
   }
 
   /* ── 15. MISC TOUCH IMPROVEMENTS ── */
@@ -3300,15 +3301,16 @@ function hardRefresh() {
   <div class="wc-edition-tab past-edition" data-edition="2006" onclick="switchEdition('2006')">🇩🇪 2006 德国</div>
   <div class="wc-edition-tab past-edition" data-edition="2002" onclick="switchEdition('2002')">🇰🇷🇯🇵 2002 韩日</div>
 </div>
+</div>
+
 
 <!-- Float Capsule Row: 概率更新通知 (左·可展开) + 联赛&俱乐部入口 (右·隐藏) -->
 <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 18px 0 18px;">
   <div class="prob-update-wrapper">
     <span class="prob-update-capsule expanded" onclick="toggleProbUpdate()">📊 版本已更新 ▴</span>
     <div class="prob-update-dropdown expanded" id="probUpdateDropdown">
-      <div class="prob-update-item">🔄 赔率重新校准</div>
-      <div class="prob-update-item">📊 概率模型优化</div>
-      <div class="prob-update-item">显示布局优化</div>
+      <div class="prob-update-item">🎯 概率模型优化</div>
+      <div class="prob-update-item">✨ 显示布局优化</div>
       <div class="prob-update-divider"></div>
       <div class="prob-update-hint">
       <button class="btn-hard-refresh" onclick="hardRefresh()" title="清除浏览器缓存并加载新版本，回到加载页">🔄 点击加载新版</button>
@@ -3319,7 +3321,6 @@ function hardRefresh() {
   <button class="league-club-float-btn" style="display:none;" onclick="switchToTab('league.html','league_tab')" title="联赛 & 俱乐部数据">
     ⚽ 联赛&俱乐部
   </button>
-</div>
 </div>
 
 <div class="container">
