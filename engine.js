@@ -1,4 +1,4 @@
-// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.70 =====
+// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.71 =====
 // 依赖: teamdata.js (playerDB, clubNameMap, clubLeagueMap, supplementalPlayers)
 
 // ==================== 1. 字符串规范化 ====================
@@ -1104,7 +1104,7 @@ if (typeof document !== 'undefined') {
         setTimeout(function() {
             buildClubIndex.build();
             console.log('[engine.js] 聚合索引构建完成');
-            try { sessionStorage.setItem('engineDataBuilt', 'V1.70'); } catch(e) {}
+            try { sessionStorage.setItem('engineDataBuilt', 'V1.71'); } catch(e) {}
         }, 500);
     });
 }
@@ -1261,7 +1261,7 @@ function formatStandardName(type, input, orig) {
             }
         } else {
             var nameStr = String(p || '');
-            // ★ V1.70 修复: 输入已是 "中文名 (English Name)" 格式时，解析提取
+            // ★ V1.71 修复: 输入已是 "中文名 (English Name)" 格式时，解析提取
             var reStored = /^(.+)\s+\(([^)]+)\)$/;
             var mStored = nameStr.match(reStored);
             if (mStored) {
@@ -1486,31 +1486,44 @@ function buildPlayerDetailDOMV3(pd, resolvedKey) {
         var last = pd.cr[pd.cr.length - 1];
         latestValue = formatValueWanV3(last.mv || '');
     }
-    // 如果 playerDB 中没有身价数据，尝试从 squadDB 补充
+    // 如果 playerDB 中没有身价数据，尝试从 squadDB 补充 (V1.71: 优先查_squadValueMap + 单词级匹配)
     if ((latestValue === '—' || !latestValue) && typeof squadDB !== 'undefined' && resolvedKey) {
-        var enLookup = resolvedKey || pd.en || pd.n || '';
-        var normEnLookup = enLookup.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        for (var teamCode in squadDB) {
-            if (!squadDB.hasOwnProperty(teamCode)) continue;
-            var squadTeam = squadDB[teamCode];
-            var categories = ['gk','df','mf','fw'];
-            var foundVal = false;
-            for (var sci = 0; sci < categories.length && !foundVal; sci++) {
-                var squadPlayers = squadTeam[categories[sci]] || [];
-                for (var spi = 0; spi < squadPlayers.length; spi++) {
-                    var sp = squadPlayers[spi];
-                    var spNorm = (sp.n || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-                    // 匹配: 原始名、playerDB的n/en、去重音归一化名
-                    if (sp.n === enLookup || sp.n === (pd.n || '') || sp.n === (pd.en || '') || spNorm === normEnLookup) {
-                        if (sp.v && sp.v !== '—' && sp.v !== '?' && sp.v !== '? €' && sp.v !== '?€') {
-                            latestValue = formatValueWanV3(sp.v);
-                            foundVal = true;
-                            break;
+        // ★ V1.71: 优先从 squadmodal 预存的 _squadValueMap 直接获取（100%准确）
+        if (typeof window._squadValueMap !== 'undefined' && window._squadValueMap[resolvedKey]) {
+            latestValue = formatValueWanV3(window._squadValueMap[resolvedKey]);
+        }
+        // 回退: 单词级匹配遍历 squadDB（处理 LASTNAME Firstname ↔ Firstname Lastname）
+        if (latestValue === '—' || !latestValue) {
+            var enLookup = resolvedKey || pd.en || pd.n || '';
+            var normEnLookup = enLookup.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            // 单词集合匹配辅助函数
+            var wordSet = function(s) {
+                return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[\s\-\.]+/).filter(function(w){return w.length>=2;}).sort().join('|');
+            };
+            var lookupWordSet = wordSet(enLookup);
+            for (var teamCode in squadDB) {
+                if (!squadDB.hasOwnProperty(teamCode)) continue;
+                var squadTeam = squadDB[teamCode];
+                var categories = ['gk','df','mf','fw'];
+                var foundVal = false;
+                for (var sci = 0; sci < categories.length && !foundVal; sci++) {
+                    var squadPlayers = squadTeam[categories[sci]] || [];
+                    for (var spi = 0; spi < squadPlayers.length; spi++) {
+                        var sp = squadPlayers[spi];
+                        var spNorm = (sp.n || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                        var spWordSet = wordSet(sp.n || '');
+                        // 匹配: 原始名精确、归一化精确、单词集合匹配（处理名字顺序不同）
+                        if (sp.n === enLookup || sp.n === (pd.n || '') || sp.n === (pd.en || '') || spNorm === normEnLookup || (lookupWordSet && spWordSet && lookupWordSet === spWordSet)) {
+                            if (sp.v && sp.v !== '—' && sp.v !== '?' && sp.v !== '? €' && sp.v !== '?€') {
+                                latestValue = formatValueWanV3(sp.v);
+                                foundVal = true;
+                                break;
+                            }
                         }
                     }
                 }
+                if (foundVal) break;
             }
-            if (foundVal) break;
         }
     }
 

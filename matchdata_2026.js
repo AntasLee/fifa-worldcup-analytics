@@ -1,4 +1,4 @@
-// matchdata_2026.js — 2026世界杯比赛数据层 | V1.70
+// matchdata_2026.js — 2026世界杯比赛数据层 | V1.71
 // ===== matchdata_2026.js — 2026世界杯完整比赛数据层 =====
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
@@ -71,6 +71,35 @@ const wc2026AllMatches = {
     },
     attendance: 48071,
     referee: "Facundo Tello (ARG)",
+    xg: null,
+    mediaRating: null,
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+  "2026|G|BEL|EGY": {
+    score: { sh: 1, sa: 1 },
+    date: "2026-06-16",
+    time: "03:00",
+    venue: "BMO球场",
+    stage: "group",
+    round: 1,
+    goals: [
+      { min: 19, side: "away", scorer: "伊玛姆·阿舒尔", type: "shot" },
+      { min: 66, side: "home", scorer: "穆罕穆德·哈尼", type: "own_goal" }
+    ],
+    stats: {
+      possession:      { h: 53, a: 47 },
+      shots:           { h: 9,  a: 6 },
+      shotsOnTarget:   { h: 3,  a: 3 },
+      corners:         { h: 2,  a: 7 },
+      fouls:           { h: 15, a: 15 },
+      yellowCards:     { h: 2,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 119,a: 76 },
+      dangerousAttacks:{ h: 64, a: 32 }
+    },
+    attendance: null,
+    referee: "TBD",
     xg: null,
     mediaRating: null,
     aiPreMatch: null,
