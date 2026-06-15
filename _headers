@@ -1,7 +1,17 @@
 # ============================================================
-# 高频更新缓存策略
-# 图片长期缓存 / 其他内容 5 分钟自动刷新
+# 世界杯数据站 — HTTP 缓存策略
 # ============================================================
+
+# === 比分数据文件 — 30秒即过期，必须向服务器验证 ===
+# 用户更新比分后最长 30 秒即可看到最新数据
+/matchdata.js
+  Cache-Control: max-age=30, must-revalidate
+
+/matchdata_2026.js
+  Cache-Control: max-age=30, must-revalidate
+
+/groupsdata.js
+  Cache-Control: max-age=30, must-revalidate
 
 # HTML 页面 — 每次都验证最新版本
 /*.html
