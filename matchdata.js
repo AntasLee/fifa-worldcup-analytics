@@ -1154,6 +1154,37 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
+
+  "2026|E|CIV|ECU": {
+    score: { sh: 1, sa: 0 },
+    goals: [
+      { min: 90, side: "home", scorer: "迪亚洛 (Amad Diallo)", type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 3, red: 0 },
+      away: { yellow: 1, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
+  },
+
+  "2026|F|SWE|TUN": {
+    score: { sh: 5, sa: 1 },
+    goals: [
+      { min: 7, side: "home", scorer: "阿亚里 (Yasin Ayari)", type: "shot" },
+      { min: 30, side: "home", scorer: "伊萨克 (Alexander Isak)", type: "shot" },
+      { min: 43, side: "away", scorer: "雷基克 (Omar Rekik)", type: "header" },
+      { min: 60, side: "home", scorer: "哲凯赖什 (Viktor Gyökeres)", type: "shot" },
+      { min: 86, side: "home", scorer: "斯万贝里 (Mattias Svanberg)", type: "shot" },
+      { min: 96, side: "home", scorer: "阿亚里 (Yasin Ayari)", type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 0, red: 0 },
+      away: { yellow: 1, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1168,3 +1199,5 @@ matchStats["2026|D|AUS|TUR"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:8,sh2:18
 matchStats["2026|F|NED|JPN"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:9,sh2:9,so1:6,so2:3,sb1:3,sb2:6,co1:5,co2:4,fo1:7,fo2:7,os1:1,os2:0,yc1:3,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:106,at2:76,da1:60,da2:43,pk1:0,pk2:0};
 
 matchStats["2026|E|GER|CUW"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:18,sh2:8,so1:12,so2:2,sb1:6,sb2:6,co1:8,co2:1,fo1:18,fo2:11,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:137,at2:76,da1:81,da2:21,pk1:1,pk2:0};
+matchStats["2026|E|CIV|ECU"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:9,so1:4,so2:1,sb1:8,sb2:8,co1:3,co2:5,fo1:10,fo2:13,os1:0,os2:0,yc1:3,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:101,da1:61,da2:47,pk1:0,pk2:0};
+matchStats["2026|F|SWE|TUN"] = {p1:"49%",p2:"51%",ps1:null,ps2:null,sh1:10,sh2:5,so1:7,so2:2,sb1:3,sb2:3,co1:4,co2:2,fo1:10,fo2:8,os1:3,os2:6,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:91,da1:44,da2:41,pk1:0,pk2:0};
