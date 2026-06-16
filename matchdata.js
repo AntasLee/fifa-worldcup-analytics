@@ -1196,6 +1196,19 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
+  "2026|H|KSA|URU": {
+    score: { sh: 1, sa: 1 },
+    goals: [
+      { min: 41, side: "home", scorer: "阿姆里 (Amri)", type: "shot" },
+      { min: 80, side: "away", scorer: "阿劳霍 (Ronald Araújo)", type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 1, red: 0 },
+      away: { yellow: 0, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
+  },
   "2026|G|BEL|EGY": {
     score: { sh: 1, sa: 1 },
     goals: [
@@ -1226,4 +1239,5 @@ matchStats["2026|E|GER|CUW"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:18,sh2:8
 matchStats["2026|E|CIV|ECU"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:9,so1:4,so2:1,sb1:8,sb2:8,co1:3,co2:5,fo1:10,fo2:13,os1:0,os2:0,yc1:3,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:101,da1:61,da2:47,pk1:0,pk2:0};
 matchStats["2026|F|SWE|TUN"] = {p1:"49%",p2:"51%",ps1:null,ps2:null,sh1:10,sh2:5,so1:7,so2:2,sb1:3,sb2:3,co1:4,co2:2,fo1:10,fo2:8,os1:3,os2:6,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:91,da1:44,da2:41,pk1:0,pk2:0};
 matchStats["2026|H|ESP|CPV"] = {p1:"74%",p2:"26%",ps1:null,ps2:null,sh1:19,sh2:4,so1:7,so2:1,sb1:12,sb2:3,co1:11,co2:1,fo1:10,fo2:1,os1:2,os2:3,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:187,at2:32,da1:139,da2:7,pk1:0,pk2:0};
+matchStats["2026|H|KSA|URU"] = {p1:"33%",p2:"67%",ps1:null,ps2:null,sh1:6,sh2:20,so1:3,so2:10,sb1:3,sb2:10,co1:4,co2:14,fo1:11,fo2:6,os1:0,os2:6,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:75,at2:145,da1:27,da2:79,pk1:0,pk2:0};
 matchStats["2026|G|BEL|EGY"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:9,sh2:6,so1:3,so2:3,sb1:6,sb2:3,co1:2,co2:7,fo1:15,fo2:15,os1:0,os2:1,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:119,at2:76,da1:64,da2:32,pk1:0,pk2:0};

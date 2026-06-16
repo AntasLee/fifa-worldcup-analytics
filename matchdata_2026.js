@@ -76,6 +76,36 @@ const wc2026AllMatches = {
     aiPreMatch: null,
     aiPostReview: null
   },
+  "2026|H|KSA|URU": {
+    score: { sh: 1, sa: 1 },
+    date: "2026-06-16",
+    time: "06:00",
+    venue: "大都会人寿球场",
+    stage: "group",
+    round: 1,
+    goals: [
+      { min: 41, side: "home", scorer: "阿姆里", type: "shot" },
+      { min: 80, side: "away", scorer: "阿劳霍", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 33, a: 67 },
+      shots:           { h: 6,  a: 20 },
+      shotsOnTarget:   { h: 3,  a: 10 },
+      corners:         { h: 4,  a: 14 },
+      fouls:           { h: 11, a: 6 },
+      yellowCards:     { h: 1,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 75, a: 145 },
+      dangerousAttacks:{ h: 27, a: 79 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: null,
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   "2026|G|BEL|EGY": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-16",
