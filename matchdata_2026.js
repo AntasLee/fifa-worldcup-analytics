@@ -136,6 +136,38 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|G|IRN|NZL": {
+    score: { sh: 2, sa: 2 },
+    date: "2026-06-17",
+    time: "00:00",
+    venue: "AT&T体育场",
+    stage: "group",
+    round: 1,
+    goals: [
+      { min: 7, side: "away", scorer: "贾斯特", type: "shot" },
+      { min: 32, side: "home", scorer: "雷扎伊安", type: "shot" },
+      { min: 54, side: "away", scorer: "贾斯特", type: "shot" },
+      { min: 64, side: "home", scorer: "莫赫比", type: "header" }
+    ],
+    stats: {
+      possession:      { h: 48, a: 52 },
+      shots:           { h: 12, a: 12 },
+      shotsOnTarget:   { h: 4,  a: 8 },
+      corners:         { h: 4,  a: 1 },
+      fouls:           { h: 10, a: 8 },
+      yellowCards:     { h: 1,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 96, a: 101 },
+      dangerousAttacks:{ h: 56, a: 44 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: null,
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // ---- 未赛预留框架（示例，随赛程推进动态填充）----
   // "2026|A|RSA|KOR": {
   //   score: null, date: "2026-06-15", venue: "...", stage: "group", round: 2,
