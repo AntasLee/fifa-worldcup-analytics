@@ -3266,33 +3266,50 @@ function toggleProbUpdate() {
 }
 
 // ===== 强制刷新：清除缓存并重新加载到 Loading 页 =====
-function hardRefresh() {
-    // 1. 清除所有 Cache API 缓存
-    if ('caches' in window) {
-        caches.keys().then(function(names) {
-            for (var i = 0; i < names.length; i++) {
-                caches.delete(names[i]);
-            }
-        }).catch(function(){});
-    }
-    // 2. 注销所有 Service Worker
-    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-        navigator.serviceWorker.getRegistrations().then(function(regs) {
-            for (var i = 0; i < regs.length; i++) {
-                regs[i].unregister();
-            }
-        }).catch(function(){});
-    }
-    // 3. 清除 sessionStorage（保留跨标签页标记）
-    try {
-        var xtab = sessionStorage.getItem('_xtab_open');
-        sessionStorage.clear();
-        if (xtab) sessionStorage.setItem('_xtab_open', xtab);
-    } catch(e) {}
-    // 4. 带时间戳强刷，绕过浏览器 HTTP 缓存
-    var url = window.location.href.split('#')[0].split('?')[0];
-    window.location.href = url + '?_v=' + Date.now();
-}
+	function hardRefresh() {
+	    var url = window.location.href.split('#')[0].split('?')[0];
+	    var target = url + '?_v=' + Date.now();
+	    var tasks = [];
+
+	    // 1. 清除所有 Cache API 缓存（异步，收集到 tasks）
+	    if ('caches' in window) {
+	        tasks.push(
+	            caches.keys().then(function(names) {
+	                return Promise.all(names.map(function(n) { return caches.delete(n); }));
+	            })
+	        );
+	    }
+	    // 2. 注销所有 Service Worker（异步，收集到 tasks）
+	    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+	        tasks.push(
+	            navigator.serviceWorker.getRegistrations().then(function(regs) {
+	                return Promise.all(regs.map(function(r) { return r.unregister(); }));
+	            })
+	        );
+	    }
+
+	    // 等待所有清理完成后跳转，最多等 3 秒兜底
+	    var done = false;
+	    var redirect = function() {
+	        if (done) return;
+	        done = true;
+	        // 3. 清除 sessionStorage（保留跨标签页标记）
+	        try {
+	            var xtab = sessionStorage.getItem('_xtab_open');
+	            sessionStorage.clear();
+	            if (xtab) sessionStorage.setItem('_xtab_open', xtab);
+	        } catch(e) {}
+	        // 4. 用 location.replace 避免时间戳 URL 污染历史
+	        location.replace(target);
+	    };
+
+	    if (tasks.length > 0) {
+	        Promise.all(tasks).then(redirect).catch(redirect);
+	        setTimeout(redirect, 3000);
+	    } else {
+	        redirect();
+	    }
+	}
 </script>
 <div class="sticky-top-group">
 <div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.72 | Author: Antas Lee</div></div>
