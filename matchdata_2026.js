@@ -168,6 +168,38 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|I|FRA|SEN": {
+    score: { sh: 3, sa: 1 },
+    date: "2026-06-17",
+    time: "03:00",
+    venue: "SoFi体育场",
+    stage: "group",
+    round: 1,
+    goals: [
+      { min: 66,    side: "home", scorer: "姆巴佩",   type: "shot" },
+      { min: 82,    side: "home", scorer: "巴尔科拉", type: "shot" },
+      { min: "90+5",side: "away", scorer: "姆巴耶",   type: "shot" },
+      { min: "90+6",side: "home", scorer: "姆巴佩",   type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 54, a: 46 },
+      shots:           { h: 9,  a: 5 },
+      shotsOnTarget:   { h: 8,  a: 2 },
+      corners:         { h: 6,  a: 4 },
+      fouls:           { h: 5,  a: 9 },
+      yellowCards:     { h: 0,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 113,a: 99 },
+      dangerousAttacks:{ h: 32, a: 27 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: null,
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // ---- 未赛预留框架（示例，随赛程推进动态填充）----
   // "2026|A|RSA|KOR": {
   //   score: null, date: "2026-06-15", venue: "...", stage: "group", round: 2,
