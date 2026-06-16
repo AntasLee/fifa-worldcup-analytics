@@ -19,6 +19,7 @@ const MIME = {
   '.png':'image/png',
   '.svg':'image/svg+xml',
   '.ico':'image/x-icon',
+  '.webmanifest':'application/manifest+json',
   '.txt':'text/plain; charset=utf-8',
 };
 
@@ -93,7 +94,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log('====================================================');
-  console.log('  FIFA World Cup Data Analysis V1.71');
+  console.log('  FIFA World Cup Data Analysis V1.72');
   console.log('  Local server with gzip compression');
   console.log('  http://localhost:' + PORT);
   console.log('====================================================');

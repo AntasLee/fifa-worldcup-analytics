@@ -1,0 +1,13 @@
+{
+  "name": "FIFA WORLD CUP - DATA ANALYSIS",
+  "short_name": "FIFA WC",
+  "description": "2026世界杯数据分析和概率预测平台",
+  "start_url": "/FIFAWorldCup.html",
+  "display": "standalone",
+  "theme_color": "#0a0e14",
+  "background_color": "#0a0e14",
+  "icons": [
+    { "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

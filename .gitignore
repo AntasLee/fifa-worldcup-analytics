@@ -28,3 +28,7 @@ worker/
 tmp/
 temp/
 *.tmp
+
+# Claude Code 本地配置（含密钥）
+.mcp.json
+.claude/

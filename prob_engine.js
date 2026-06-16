@@ -2,7 +2,7 @@
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 /**
  * ============================================================
- *  prob_engine.js — 增强概率计算引擎 (V1.71)
+ *  prob_engine.js — 增强概率计算引擎 (V1.72)
  *  Phase 3: AI融合推算(8因子) + 历史底蕴 + 本届表现 + 综合推算
  *  依赖: oddsdata.js, groupsdata_v2.js, matchdata_2026.js
  *        squaddata.js, coachdata.js, venuedata.js
@@ -155,7 +155,7 @@
   }
 
   /** 计算赛场因素综合分 (海拔/草皮/时区/驻地距离) */
-  // V1.71 修复: 通过 venueMatchMapping → venues2026 正确链路获取场馆数据
+  // V1.72 修复: 通过 venueMatchMapping → venues2026 正确链路获取场馆数据
   function computeVenueFactor(homeCode, awayCode, mid) {
     let score = 0;
     try {
@@ -251,7 +251,7 @@
    * calcHistoryPedigree — 计算球队的"世界杯血统"分数
    * 数据源: window.HISTORY_INDEX (来自 matchdata_2026.js)
    * 半衰期: 8年，越久远的成绩影响越小
-   * @returns {number} 归一化到 [-0.12, +0.12] 的调整值 (V1.71 扩大)
+   * @returns {number} 归一化到 [-0.12, +0.12] 的调整值 (V1.72 扩大)
    */
   function calcHistoryPedigree(code) {
     const HI = window.HISTORY_INDEX;
@@ -278,7 +278,7 @@
     });
     
     // 归一化: 理论最大值约为 7*1.0 + 7*0.71 + ... ≈ 14
-    // 输出范围 [-0.12, +0.12]  V1.71: 扩大范围以增强差距感知
+    // 输出范围 [-0.12, +0.12]  V1.72: 扩大范围以增强差距感知
     const normalized = (totalScore / 10) * 0.10;
     return Math.max(-0.12, Math.min(0.12, normalized - 0.03));
   }
@@ -292,7 +292,7 @@
    * @returns {{ delta: number, completedMatches: number, formWeight: number }}
    */
   function calcTournamentForm(code, currentMatchRound) {
-    // V1.71: 第1轮小组赛时，本届表现因子暂不激活（样本量n=1无统计意义）
+    // V1.72: 第1轮小组赛时，本届表现因子暂不激活（样本量n=1无统计意义）
     if (currentMatchRound === 1) {
       return { delta: 0, completedMatches: 0, formWeight: 0, details: [] };
     }
@@ -482,11 +482,11 @@
   }
 
   // ================================================================
-   //  🔥 AI 融合概率推算 (V1.71: 8因子 + 历史底蕴 + 本届表现)
+   //  🔥 AI 融合概率推算 (V1.72: 8因子 + 历史底蕴 + 本届表现)
   // ================================================================
 
   /**
-   * calcAIPbs — AI多参数融合概率计算 (V1.71)
+   * calcAIPbs — AI多参数融合概率计算 (V1.72)
    * 
    * 8大因子:
    *   1. FIFA排名差 → 实力基础分
@@ -598,7 +598,7 @@
     // ===== A. 历史底蕴因子 =====
     const histH = calcHistoryPedigree(homeCode);
     const histA = calcHistoryPedigree(awayCode);
-    // V1.71: 非线性映射 — 小差距温和，大差距加速放大（巴西vs新军 > 德vs荷）
+    // V1.72: 非线性映射 — 小差距温和，大差距加速放大（巴西vs新军 > 德vs荷）
     const rawHistDiff = histH - histA;
     const historyDelta = Math.sign(rawHistDiff) * Math.pow(Math.abs(rawHistDiff) * 8, 1.5) * 0.06;
 
@@ -848,7 +848,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
       suggestion = '🔥 完全背离信号，潜在价值与风险并存。AI模型可能存在未被市场定价的洞察，但也需警惕AI模型的盲区。建议小注试探或观望。';
     }
 
-    // V1.71: 四维度子卡片数据
+    // V1.72: 四维度子卡片数据
     var subDims = {
       wdl: {
         aiPh: aiPH, oddsPh: odPH,
@@ -878,7 +878,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
   }
 
   // ================================================================
-   //  📊 V1.71 概率弹窗渲染 (匹配 preview_composite_v3.html)
+   //  📊 V1.72 概率弹窗渲染 (匹配 preview_composite_v3.html)
   // ================================================================
 
   function renderProbModalV4(mid) {
@@ -1227,11 +1227,11 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
   window.calcTournamentForm = calcTournamentForm;
   window.computeCompositeAnalysis = computeCompositeAnalysis;
 
-  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.71 + 综合推算');
+  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.72 + 综合推算');
   console.log('   calcAIPbs(8因子) | calcHistoryPedigree | calcTournamentForm | renderProbModalV4');
 
   // ================================================================
-  //  🔗 V1.71 桥接
+  //  🔗 V1.72 桥接
   // ================================================================
   (function installV161Bridge() {
     if (typeof window.calcP === 'function') {
@@ -1246,7 +1246,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
         var modal = document.getElementById('probModal');
         if (modal) modal.classList.add('visible');
       };
-      console.log('🔗 V1.71 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
+      console.log('🔗 V1.72 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
     }
   })();
 

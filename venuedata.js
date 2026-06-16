@@ -1,5 +1,5 @@
 // ===== 2026世界杯 赛场分析数据 — 球场 / 大本营 / 天气配置 =====
-// 版本: V1.71 | 生成: 2025-07-17
+// 版本: V1.72 | 生成: 2025-07-17
 // 依赖: teamdata.js (pastTeamNames, pastFlag, pastFlagMap)
 // 配合: app.js → showVenueAnalysis() 渲染函数
 
@@ -719,7 +719,7 @@ var venueMatchMapping = {
 function getVenueFor2026Match(match) {
   if (!match) return null;
 
-  // 1. 确定查找key (V1.71: 优先 match.id 精确匹配)
+  // 1. 确定查找key (V1.72: 优先 match.id 精确匹配)
   var lookupKey = null;
   // 最优先: match.id 逐场精确匹配 (如 'A_0_1', 'R32_5')
   if (match.id && venueMatchMapping[match.id]) {

@@ -1,4 +1,4 @@
-// matchdata_2026.js — 2026世界杯比赛数据层 | V1.71
+// matchdata_2026.js — 2026世界杯比赛数据层 | V1.72
 // ===== matchdata_2026.js — 2026世界杯完整比赛数据层 =====
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
@@ -138,8 +138,8 @@ const wc2026AllMatches = {
 
   "2026|G|IRN|NZL": {
     score: { sh: 2, sa: 2 },
-    date: "2026-06-17",
-    time: "00:00",
+    date: "2026-06-16",
+    time: "09:00",
     venue: "AT&T体育场",
     stage: "group",
     round: 1,
