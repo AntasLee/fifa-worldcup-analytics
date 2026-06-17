@@ -200,6 +200,39 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|I|IRQ|NOR": {
+    score: { sh: 1, sa: 4 },
+    date: "2026-06-17",
+    time: "06:00",
+    venue: "吉列体育场",
+    stage: "group",
+    round: 1,
+    goals: [
+      { min: 29,    side: "away", scorer: "哈兰德",   type: "shot" },
+      { min: 39,    side: "home", scorer: "侯赛因",   type: "header" },
+      { min: 43,    side: "away", scorer: "哈兰德",   type: "shot" },
+      { min: 76,    side: "away", scorer: "厄斯蒂高", type: "header" },
+      { min: "90+6",side: "away", scorer: "艾曼·侯赛因", type: "own_goal" }
+    ],
+    stats: {
+      possession:      { h: 39, a: 61 },
+      shots:           { h: 9,  a: 10 },
+      shotsOnTarget:   { h: 1,  a: 5 },
+      corners:         { h: 2,  a: 5 },
+      fouls:           { h: 12, a: 13 },
+      yellowCards:     { h: 1,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 79, a: 89 },
+      dangerousAttacks:{ h: 27, a: 39 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: null,
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // ---- 未赛预留框架（示例，随赛程推进动态填充）----
   // "2026|A|RSA|KOR": {
   //   score: null, date: "2026-06-15", venue: "...", stage: "group", round: 2,
