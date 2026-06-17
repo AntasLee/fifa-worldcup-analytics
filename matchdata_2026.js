@@ -19,7 +19,8 @@ const wc2026AllMatches = {
   // A组
   "2026|A|MEX|RSA": {
     score: { sh: 2, sa: 0 },
-    date: "2026-06-11",
+    date: "2026-06-12",
+    time: "03:00",
     venue: "阿兹台克球场",
     stage: "group",
     round: 1,
@@ -49,7 +50,8 @@ const wc2026AllMatches = {
 
   "2026|A|KOR|CZE": {
     score: { sh: 2, sa: 1 },
-    date: "2026-06-11",
+    date: "2026-06-12",
+    time: "10:00",
     venue: "阿克伦球场",
     stage: "group",
     round: 1,
@@ -266,8 +268,8 @@ const wc2026AllMatches = {
 
   "2026|J|AUT|JOR": {
     score: { sh: 3, sa: 1 },
-    date: "2026-06-18",
-    time: "00:00",
+    date: "2026-06-17",
+    time: "12:00",
     venue: "大都会人寿球场",
     stage: "group",
     round: 1,
