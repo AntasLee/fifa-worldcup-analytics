@@ -1268,6 +1268,35 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
+  "2026|J|ARG|ALG": {
+    score: { sh: 3, sa: 0 },
+    goals: [
+      { min: 17, side: "home", scorer: "梅西 (Lionel Messi)",   type: "shot" },
+      { min: 60, side: "home", scorer: "梅西 (Lionel Messi)",   type: "shot" },
+      { min: 76, side: "home", scorer: "梅西 (Lionel Messi)",   type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 0, red: 0 },
+      away: { yellow: 0, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
+  },
+  "2026|J|AUT|JOR": {
+    score: { sh: 3, sa: 1 },
+    goals: [
+      { min: 21,      side: "home", scorer: "施密德 (Romano Schmid)",     type: "shot" },
+      { min: 50,      side: "away", scorer: "乌勒万 (Ali Olwan)",         type: "shot" },
+      { min: 76,      side: "home", scorer: "亚赞 (Yazan Al-Arab)",       type: "own_goal" },
+      { min: "90+12", side: "home", scorer: "阿瑙托维奇 (Marko Arnautović)", type: "penalty" }
+    ],
+    cards: {
+      home: { yellow: 1, red: 0 },
+      away: { yellow: 0, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1290,3 +1319,5 @@ matchStats["2026|G|BEL|EGY"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:9,sh2:6,
 matchStats["2026|G|IRN|NZL"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:12,so1:4,so2:8,sb1:8,sb2:4,co1:4,co2:1,fo1:10,fo2:8,os1:2,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:101,da1:56,da2:44,pk1:0,pk2:0};
 matchStats["2026|I|FRA|SEN"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:5,so1:8,so2:2,sb1:1,sb2:3,co1:6,co2:4,fo1:5,fo2:9,os1:1,os2:3,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:113,at2:99,da1:32,da2:27,pk1:0,pk2:0};
 matchStats["2026|I|IRQ|NOR"] = {p1:"39%",p2:"61%",ps1:null,ps2:null,sh1:9,sh2:10,so1:1,so2:5,sb1:8,sb2:5,co1:2,co2:5,fo1:12,fo2:13,os1:1,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:79,at2:89,da1:27,da2:39,pk1:0,pk2:0};
+matchStats["2026|J|ARG|ALG"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:10,sh2:4,so1:6,so2:0,sb1:4,sb2:4,co1:2,co2:2,fo1:13,fo2:8,os1:3,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:85,at2:119,da1:24,da2:45,pk1:0,pk2:0};
+matchStats["2026|J|AUT|JOR"] = {p1:"63%",p2:"37%",ps1:null,ps2:null,sh1:10,sh2:9,so1:4,so2:4,sb1:6,sb2:5,co1:4,co2:3,fo1:12,fo2:7,os1:3,os2:1,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:132,at2:86,da1:55,da2:45,pk1:1,pk2:0};

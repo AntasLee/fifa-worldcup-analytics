@@ -233,6 +233,69 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|J|ARG|ALG": {
+    score: { sh: 3, sa: 0 },
+    date: "2026-06-17",
+    time: "09:00",
+    venue: "BMO球场",
+    stage: "group",
+    round: 1,
+    goals: [
+      { min: 17, side: "home", scorer: "梅西", type: "shot" },
+      { min: 60, side: "home", scorer: "梅西", type: "shot" },
+      { min: 76, side: "home", scorer: "梅西", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 48, a: 52 },
+      shots:           { h: 10, a: 4 },
+      shotsOnTarget:   { h: 6,  a: 0 },
+      corners:         { h: 2,  a: 2 },
+      fouls:           { h: 13, a: 8 },
+      yellowCards:     { h: 0,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 85, a: 119 },
+      dangerousAttacks:{ h: 24, a: 45 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: null,
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|J|AUT|JOR": {
+    score: { sh: 3, sa: 1 },
+    date: "2026-06-18",
+    time: "00:00",
+    venue: "大都会人寿球场",
+    stage: "group",
+    round: 1,
+    goals: [
+      { min: 21,     side: "home", scorer: "施密德",     type: "shot" },
+      { min: 50,     side: "away", scorer: "乌勒万",     type: "shot" },
+      { min: 76,     side: "home", scorer: "亚赞",       type: "own_goal" },
+      { min: "90+12",side: "home", scorer: "阿瑙托维奇", type: "penalty" }
+    ],
+    stats: {
+      possession:      { h: 63, a: 37 },
+      shots:           { h: 10, a: 9 },
+      shotsOnTarget:   { h: 4,  a: 4 },
+      corners:         { h: 4,  a: 3 },
+      fouls:           { h: 12, a: 7 },
+      yellowCards:     { h: 1,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 132,a: 86 },
+      dangerousAttacks:{ h: 55, a: 45 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: null,
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // ---- 未赛预留框架（示例，随赛程推进动态填充）----
   // "2026|A|RSA|KOR": {
   //   score: null, date: "2026-06-15", venue: "...", stage: "group", round: 2,
