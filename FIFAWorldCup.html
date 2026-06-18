@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <meta name="theme-color" content="#0a0e14">
-<title>FIFA WORLD CUP - DATA ANALYSIS | V1.73</title>
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.74</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -772,7 +772,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 		.welcome-btn-sub { font-size: 0.85rem; color: #7a8a9a; display: block; margin-top: 8px; font-weight: bold; }
 
 
-/* ===== 阵容名单弹窗 V1.73 ===== */
+/* ===== 阵容名单弹窗 V1.74 ===== */
 .squad-modal{max-width:1050px;width:95vw}
 .squad-modal .modal-box{max-height:85vh;overflow-y:auto}
 .squad-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
@@ -1355,7 +1355,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .rules-modal iframe{width:100%;height:70vh;border:none;border-radius:8px;background:var(--bg)}
 
 /* =============================================
-   V1.73 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
+   V1.74 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
    霓虹紫分割线 · 三色概率 · 双栏对比 · AI推演
    ============================================= */
 /* -- 头部 -- */
@@ -1466,7 +1466,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
 @keyframes finishPulse{0%,100%{opacity:0.5;transform:scale(1.01)}50%{opacity:1;transform:scale(1.04)}}
 /* ================================================================
-   📱 MOBILE PORTRAIT LAYOUT — V1.73 (max-width: 480px)
+   📱 MOBILE PORTRAIT LAYOUT — V1.74 (max-width: 480px)
    ================================================================ */
 @media (max-width: 480px) {
 
@@ -1595,7 +1595,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     justify-content: center;
   }
 
-  /* ── 4. TOOLBAR (COMPACT · V1.73 40% height) ── */
+  /* ── 4. TOOLBAR (COMPACT · V1.74 40% height) ── */
   #mainToolbar {
     padding: 1px 3px !important;
     gap: 1px !important;
@@ -1682,7 +1682,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     min-height: 32px;
   }
 
-  /* ── 4b. SEARCH ROW (COMPACT · V1.73) ── */
+  /* ── 4b. SEARCH ROW (COMPACT · V1.74) ── */
   .search-input {
     width: auto !important;
     font-size: 0.7rem !important;
@@ -1777,7 +1777,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     border-radius: 8px;
     overflow: hidden;
   }
-  /* Compact group header: "A组 小组赛 已预测 X/6" — V1.73 shrunk */
+  /* Compact group header: "A组 小组赛 已预测 X/6" — V1.74 shrunk */
   .group-header {
     padding: 3px 6px !important;
     font-size: 0.6rem !important;
@@ -1919,7 +1919,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   /* Row 2: action buttons — order: 2 after ::after break */
   .match-item .btn-prob,
   .match-item .btn-analysis,
-  .match-item .btn-venue {
+  .match-item .btn-venue,
+  .match-item .btn-eval {
     order: 2 !important;
     flex: 1 1 0 !important;
     min-width: 48px !important;
@@ -2086,7 +2087,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     padding: 12px 8px !important;
   }
 
-  /* ── V1.73 策略回测弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
+  /* ── V1.74 策略回测弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
   .backtest-modal {
     padding: 12px !important;
   }
@@ -2186,7 +2187,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     max-height: 92vh;
   }
 
-  /* Squad modal — V1.73 mobile: override V3a injected styles */
+  /* Squad modal — V1.74 mobile: override V3a injected styles */
   .squad-modal {
     padding: 12px 8px !important;
   }
@@ -2308,7 +2309,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.5rem !important;
   }
 
-  /* ── V1.73 数据总览弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
+  /* ── V1.74 数据总览弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
   .data-overview-modal {
     padding: 12px !important;
   }
@@ -2384,7 +2385,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.5rem !important;
   }
 
-  /* ── V1.73 赛场分析弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
+  /* ── V1.74 赛场分析弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
   .venue-analysis-modal {
     padding: 12px !important;
   }
@@ -2486,7 +2487,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .past-wc-main-container {
     padding: 10px 8px;
   }
-  /* ── V1.73 往届世界杯工具栏+比赛行：完全参考2026小组赛移动端布局 ── */
+  /* ── V1.74 往届世界杯工具栏+比赛行：完全参考2026小组赛移动端布局 ── */
   .past-wc-main-toolbar {
     flex-direction: row !important;
     flex-wrap: wrap;
@@ -2536,7 +2537,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     padding: 6px 8px !important;
     margin-bottom: 4px !important;
   }
-  /* V1.73 比赛行：Row0=日期左对齐 / Row1=对阵比分 / Row2=词条+赔率，完全参考2026 */
+  /* V1.74 比赛行：Row0=日期左对齐 / Row1=对阵比分 / Row2=词条+赔率，完全参考2026 */
   .past-match-row {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -2741,7 +2742,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.72rem;
   }
 
-  /* ── V1.73 对阵详情弹窗 — 时间完全隐藏，左右对撑仅分割线，风格标签不换行 ── */
+  /* ── V1.74 对阵详情弹窗 — 时间完全隐藏，左右对撑仅分割线，风格标签不换行 ── */
   .analysis-hero {
     flex-direction: column;
     gap: 8px;
@@ -2824,7 +2825,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Modal inner scroll areas — flex-fill remaining space (V1.73 fix: 0% basis) */
+  /* Modal inner scroll areas — flex-fill remaining space (V1.74 fix: 0% basis) */
   #matchDetailContent,
   #probContent,
   #analysisContent,
@@ -2944,7 +2945,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   #probContent .hdt { font-size: 10px !important; }
   #probContent .hdl { font-size: 10px !important; }
   /* ═══════════════════════════════════════════════════
-     V1.73 移动端 — 核弹级防水平溢出（废弃属性选择器，改用结构约束）
+     V1.74 移动端 — 核弹级防水平溢出（废弃属性选择器，改用结构约束）
      ═══════════════════════════════════════════════════ */
 
   /* ① 所有容器div：强制裁剪溢出 + 宽度锁定 */
@@ -3047,7 +3048,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
 }
 
-/* ===== V1.73 本场表现评价弹窗 — 紫金主题 ===== */
+/* ===== V1.74 本场表现评价弹窗 — 紫金主题 ===== */
 .eval-modal{max-width:720px;background:linear-gradient(180deg,#0d0b1a 0%,#0a0814 100%);border-radius:12px;border:1px solid #7c3aed30;padding:0;overflow:hidden}
 .eval-modal-hd{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #7c3aed15}
 .eval-modal-hd h3{color:#c084fc!important;font-size:0.88rem;font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:7px}
@@ -3060,7 +3061,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .eval-score-num{font-size:2.3rem;font-weight:900;line-height:1;font-family:'Segoe UI',system-ui;color:var(--gold-light,#d4a843)}
 .eval-score-div{font-size:0.9rem;color:#484058;font-weight:300}
 .eval-meta{text-align:center;font-size:0.62rem;color:#888098;margin-top:6px}
-.eval-zone-label{font-size:0.6rem;font-weight:700;text-align:center;margin-top:4px;letter-spacing:1px;padding:2px 10px;border-radius:10px;display:inline-block;border:1px solid}
+.eval-zone-label{font-size:0.7rem;font-weight:700;text-align:center;margin-top:4px;letter-spacing:1px;padding:2px 10px;border-radius:10px;display:inline-block;border:1px solid}
 .eval-motm{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:14px;font-size:0.6rem;font-weight:600;margin-top:4px;background:#fbbf2412;border:1px solid #fbbf2425;color:#ffd54f}
 .eval-rating-section{padding:4px 18px 2px}
 .eval-rating-dual{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:start}
@@ -3115,16 +3116,33 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .eval-btn-wrap{text-align:center;padding:8px 0 4px}
 .eval-btn-eval{background:linear-gradient(135deg,#7c3aed,#a855f7);border:1px solid #a855f7;color:#fff;font-size:0.68rem;padding:6px 14px;border-radius:8px;cursor:pointer;font-weight:700;letter-spacing:0.5px;transition:all .2s}
 .eval-btn-eval:hover{transform:translateY(-1px);box-shadow:0 0 20px #a855f740}
+/* ===== 六边形能力图 (V1.74 hex) ===== */
+.eval-dim-section{padding:6px 12px 8px}
+.hex-dual{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.hex-card-wrap{display:flex;align-items:center;justify-content:center}
+.hex-card-wrap svg{width:100%;height:auto;display:block}
+.hex-ref-fill{fill:rgba(255,255,255,0.022);stroke:rgba(255,255,255,0.12);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.hex-grid-line{fill:none;stroke:rgba(255,255,255,0.05);stroke-width:0.7;vector-effect:non-scaling-stroke}
+.hex-grid-line.major{stroke:rgba(255,255,255,0.08);stroke-width:0.9}
+.hex-axis-line{stroke:rgba(255,255,255,0.035);stroke-width:0.7;vector-effect:non-scaling-stroke}
+.hex-data-face{stroke-width:2.2;vector-effect:non-scaling-stroke}
+.hex-card-wrap.home .hex-data-face{stroke:rgba(255,143,0,0.7)}
+.hex-card-wrap.away .hex-data-face{stroke:rgba(0,188,212,0.7)}
+.hex-dot{vector-effect:non-scaling-stroke}
+.hex-card-wrap.home .hex-dot{fill:#fff;stroke:#ff8f00;stroke-width:1.5}
+.hex-card-wrap.away .hex-dot{fill:#fff;stroke:#00bcd4;stroke-width:1.5}
+.hex-label{font-size:13px;font-weight:700;fill:#9088a0;pointer-events:none;text-anchor:middle}
+.hex-val{font-size:14px;font-weight:900;pointer-events:none;text-anchor:middle}
+.hex-card-wrap.home .hex-val{fill:#ffe0b2}
+.hex-card-wrap.away .hex-val{fill:#b2ebf2}
 @media(max-width:600px){
   .eval-modal{max-width:95vw}
   .eval-score-flag{font-size:1.6rem}
   .eval-score-name{font-size:0.78rem}
   .eval-score-num{font-size:1.8rem}
-  .eval-dim-main{grid-template-columns:22px 50px 28px 1fr 28px;gap:3px}
-  .eval-dim-emoji{font-size:0.68rem}
-  .eval-dim-label{font-size:0.6rem}
-  .eval-dim-hs,.eval-dim-as{font-size:0.68rem}
-  .eval-dim-cmt{display:none}
+  .eval-dim-section{padding:4px 6px 6px}
+  .hex-label{font-size:9px}
+  .hex-val{font-size:10px}
   .eval-modal-hd{padding:8px 10px}
   .eval-modal-hd h3{font-size:0.85rem}
   .eval-dim-hd,.eval-comment-hd,.eval-ai-hd{font-size:0.7rem!important}
@@ -3136,6 +3154,11 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .eval-score-row{gap:8px}
   .eval-score-team{min-width:55px}
   .eval-score-flag img{width:36px!important;height:24px!important}
+}
+@media(max-width:400px){
+  .hex-dual{grid-template-columns:1fr;gap:12px}
+  .hex-label{font-size:10px}
+  .hex-val{font-size:11px}
 }
 
 </style>
@@ -3185,7 +3208,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   // Fast path: if engine data was already built in this session, skip animation entirely
   var _hasEngineData = false;
   try {
-    if (sessionStorage.getItem('engineDataBuilt') === 'V1.73') {
+    if (sessionStorage.getItem('engineDataBuilt') === 'V1.74') {
       _hasEngineData = true;
       sessionStorage.removeItem('engineDataBuilt');
     }
@@ -3404,7 +3427,7 @@ function toggleProbUpdate() {
 	}
 </script>
 <div class="sticky-top-group">
-<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.73 | Author: Antas Lee</div></div>
+<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.74 | Author: Antas Lee</div></div>
 
 <!-- WC Edition Selector -->
 <div class="wc-edition-bar" id="wcEditionBar">
@@ -3425,8 +3448,8 @@ function toggleProbUpdate() {
   <div class="prob-update-wrapper">
     <span class="prob-update-capsule expanded" onclick="toggleProbUpdate()">📊 版本已更新 ▴</span>
     <div class="prob-update-dropdown expanded" id="probUpdateDropdown">
-      <div class="prob-update-item">🎯 概率模型优化</div>
-      <div class="prob-update-item">✨ 显示布局优化</div>
+      <div class="prob-update-item">🎯 赛果命中概率结算</div>
+      <div class="prob-update-item">✨ 新增表现评价引擎</div>
       <div class="prob-update-divider"></div>
       <div class="prob-update-hint">
       <button class="btn-hard-refresh" onclick="hardRefresh()" title="清除浏览器缓存并加载新版本，回到加载页">🔄 点击加载新版</button>
@@ -3529,7 +3552,7 @@ function toggleProbUpdate() {
 <h3>👤 球员详情 <span style="font-size:0.65rem;color:var(--text-secondary);" id="playerDetailSubtitle"></span> <span class="modal-close" onclick="closePlayerDetail()">✕</span></h3>
 <div id="playerDetailContent" style="max-height:68vh;overflow-y:auto;"></div>
 </div></div>
-<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.73</div>
+<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.74</div>
 </div>
 
 <div class="modal-overlay" id="summaryModal"><div class="modal-box" style="max-width:600px"><h3>📋 我的预测汇总 <span class="modal-close" onclick="closeSummaryModal()">✕</span></h3><div id="summaryContent"></div></div></div>
@@ -3538,7 +3561,7 @@ function toggleProbUpdate() {
 </div>
 <!-- 赛场分析弹窗 -->
 <div class="modal-overlay" id="venueAnalysisModal"><div class="modal-box venue-analysis-modal"><h3>🏟️ 赛场分析 <span style="display:flex;align-items:center;gap:12px"><button class="btn btn-update" id="btnRefreshWeather" onclick="window._vaWeatherLoaded=null;var v=window._vaVenue;if(v&&v.coordinates)fetchWeatherForVenue(document.getElementById('venueAnalysisContent'),v);">🔄 更新天气</button><span class="modal-close" onclick="closeVenueAnalysis()">✕</span></span></h3><div id="venueAnalysisContent"></div></div></div>
-<!-- 阵容名单弹窗 V1.73 -->
+<!-- 阵容名单弹窗 V1.74 -->
 <div class="modal-overlay" id="squadModal"><div class="modal-box squad-modal">
 <h3 id="squadModalTitle">📋 阵容名单 <span class="modal-close" onclick="closeSquadModal()">✕</span></h3>
 <div id="squadContent"></div>
@@ -3559,7 +3582,7 @@ function toggleProbUpdate() {
 <div id="matchDetailContent" style="max-height:70vh;overflow-y:auto;"></div>
 </div></div>
 
-<!-- V1.73 本场表现评价弹窗 -->
+<!-- V1.74 本场表现评价弹窗 -->
 <div class="modal-overlay" id="evalModal"><div class="modal-box eval-modal" id="evalModalBox">
 <h3 class="eval-modal-hd"><span>🎮 本场表现评价</span><span class="modal-close" onclick="closeMatchEval()">✕</span></h3>
 <div id="evalContent" style="max-height:68vh;overflow-y:auto;"></div>
@@ -4138,7 +4161,7 @@ console.log('🏆 Bracket V8 embedded — ready');
             window.__playerDataReady = true;
             // Set sessionStorage for fast reload on next visit
             try {
-                sessionStorage.setItem('engineDataBuilt', 'V1.73');
+                sessionStorage.setItem('engineDataBuilt', 'V1.74');
             } catch(e) {}
             return;
         }
@@ -4226,7 +4249,7 @@ function switchMainTab(tabName) {
 
 <div class="footer-note" style="padding:12px 20px;text-align:center;font-size:0.7rem;color:var(--text-secondary);border-top:1px solid var(--border);">Copyright: © 2026 ZHENTAO LI. All rights reserved.</div>
 
-<!-- Mobile Preview Mode Script (V1.73) -->
+<!-- Mobile Preview Mode Script (V1.74) -->
 <script>
 (function() {
   var params = new URLSearchParams(window.location.search);
@@ -4345,7 +4368,7 @@ function switchMainTab(tabName) {
 })();
 </script>
 
-<!-- V1.73: Mobile probability dropdown — collapse on load -->
+<!-- V1.74: Mobile probability dropdown — collapse on load -->
 <script>
 (function() {
   if (window.innerWidth <= 480) {
@@ -4373,7 +4396,7 @@ function switchMainTab(tabName) {
 </script>
 
 <script>
-// V1.73 本场表现评价 — 渲染与交互
+// V1.74 本场表现评价 — 渲染与交互
 (function(){
 'use strict';
 
@@ -4426,18 +4449,41 @@ function renderMatchEval(e) {
     return 'color:rgb('+r+','+g+','+b+')';
   }
 
-  h+='<div class="eval-dim-section"><div class="eval-dim-hd">📊 能力维度</div>';
-  e.dimensions.forEach(function(d){
-    var hPct=d.h, aPct=d.a, total=hPct+aPct||1;
-    var hW=Math.round(hPct/total*100), aW=100-hW;
-    h+='<div class="eval-dim-block"><div class="eval-dim-main">';
-    h+='<span class="eval-dim-emoji">'+d.emoji+'</span><span class="eval-dim-label">'+d.label+'</span>';
-    h+='<span class="eval-dim-hs" style="'+numColor(d.h,true)+'">'+d.h+'</span>';
-    h+='<div class="eval-dim-bar"><div class="ef" style="width:'+hW+'%;'+barColor(d.h,true)+'"></div><div class="eg"></div><div class="er" style="width:'+aW+'%;'+barColor(d.a,false)+'"></div></div>';
-    h+='<span class="eval-dim-as" style="'+numColor(d.a,false)+'">'+d.a+'</span>';
-    h+='</div><div class="eval-dim-cmt">'+d.hSummary+'</div></div>';
-  });
-  h+='</div>';
+  // hex radar chart - replaces horizontal bars
+  var dims=e.dimensions, homeVals=dims.map(function(d){return d.h;}), awayVals=dims.map(function(d){return d.a;});
+  var angles=[-90,-30,30,90,150,210], cosA=[0,0.866,0.866,0,-0.866,-0.866], sinA=[-1,-0.5,0.5,1,0.5,-0.5];
+  var cx=190, cy=175, R=105, Dv=123;
+  function hexOne(vals,gradId,stopC,stopE,teamCls){
+    var ref=[], grids='', axes='', data=[], dots='', vtxt='', lt='';
+    for(var i=0;i<6;i++){
+      var rx=R*cosA[i], ry=R*sinA[i];
+      ref.push((cx+rx).toFixed(1)+','+(cy+ry).toFixed(1));
+      axes+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+rx).toFixed(1)+'" y2="'+(cy+ry).toFixed(1)+'" class="hex-axis-line"/>';
+      var dr=(vals[i]/100)*R;
+      data.push((cx+dr*cosA[i]).toFixed(1)+','+(cy+dr*sinA[i]).toFixed(1));
+      dots+='<circle cx="'+(cx+dr*cosA[i]).toFixed(1)+'" cy="'+(cy+dr*sinA[i]).toFixed(1)+'" r="2.5" class="hex-dot"/>';
+      var vx=(cx+Dv*cosA[i]).toFixed(1), vy=(cy+Dv*sinA[i]).toFixed(1);
+      vtxt+='<text x="'+vx+'" y="'+vy+'" class="hex-val">'+vals[i]+'</text>';
+      var ly=parseFloat(vy)+(sinA[i]<0?-28:28);
+      lt+='<text x="'+vx+'" y="'+ly.toFixed(1)+'" class="hex-label">'+dims[i].emoji+' '+dims[i].label+'</text>';
+    }
+    [0.8,0.6,0.4,0.2].forEach(function(s){
+      var pts=[]; for(var i=0;i<6;i++) pts.push((cx+R*s*cosA[i]).toFixed(1)+','+(cy+R*s*sinA[i]).toFixed(1));
+      grids+='<polygon points="'+pts.join(' ')+'" class="'+(s===0.8?'hex-grid-line major':'hex-grid-line')+'"/>';
+    });
+    var s='<div class="hex-card-wrap '+teamCls+'"><svg viewBox="0 0 380 360" xmlns="http://www.w3.org/2000/svg">';
+    s+='<defs><radialGradient id="'+gradId+'" cx="50%" cy="50%" r="60%">';
+    s+='<stop offset="0%" stop-color="'+stopC+'" stop-opacity="0.03"/><stop offset="35%" stop-color="'+stopC+'" stop-opacity="0.08"/>';
+    s+='<stop offset="70%" stop-color="'+stopC+'" stop-opacity="0.18"/><stop offset="100%" stop-color="'+stopE+'" stop-opacity="0.30"/>';
+    s+='</radialGradient></defs>';
+    s+='<polygon points="'+ref.join(' ')+'" class="hex-ref-fill"/>'+grids+axes;
+    s+='<polygon points="'+data.join(' ')+'" fill="url(#'+gradId+')" class="hex-data-face"/>'+dots+vtxt+lt+'</svg></div>';
+    return s;
+  }
+  h+='<div class="eval-dim-section"><div class="eval-dim-hd">📊 能力维度</div><div class="hex-dual">';
+  h+=hexOne(homeVals,'gHexH','#ff8f00','#ffab40','home');
+  h+=hexOne(awayVals,'gHexA','#00bcd4','#4dd0e1','away');
+  h+='</div></div>';
 
   // Commentator
   var mr=e.mediaRating;
@@ -4522,7 +4568,7 @@ document.addEventListener('keydown', function(e){
   if(e.key==='Escape' && document.getElementById('evalModal').classList.contains('visible')) closeMatchEval();
 });
 
-console.log('✅ 表现评价渲染组件已安装 V1.73');
+console.log('✅ 表现评价渲染组件已安装 V1.74');
 })();
 </script>
 </body>

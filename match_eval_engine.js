@@ -1,4 +1,4 @@
-// match_eval_engine.js — 本场表现评价引擎 | V1.73
+// match_eval_engine.js — 本场表现评价引擎 | V1.74
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 //
@@ -221,13 +221,13 @@ function calcDisciplineResilience(stats, goals, side){
   return {score:score, summary:summary};
 }
 
-// ========== 维度五：出线形势 (15分) ==========
+// ========== 维度五：出线形势 (20分) ==========
 function calcGroupSituation(teamCode, matchKey, matchData){
   var parsed=parseMatchKey(matchKey);
   var stage=parsed.stage, round=matchData?matchData.round:1;
   if(stage==='R32'||stage==='R16'||stage==='QF'||stage==='SF'||stage==='TP'||stage==='FINAL'){
     // 淘汰赛：战意直接拉满
-    return {score:Math.round(stage==='FINAL'?15:stage==='SF'?13:11), summary:'淘汰赛阶段，双方战意均处峰值'};
+    return {score:Math.round(stage==='FINAL'?20:stage==='SF'?17:14), summary:'淘汰赛阶段，双方战意均处峰值'};
   }
 
   // 小组赛：基于轮次和相对实力判断
@@ -240,23 +240,23 @@ function calcGroupSituation(teamCode, matchKey, matchData){
   var score=8, summary='';
 
   if(round===1){
-    if(rankDiff>10){ score=11; summary='首轮面对弱旅，必须拿分建立优势';}
-    else if(rankDiff<-10){ score=10; summary='首轮挑战强敌，可接受小负但需展现斗志';}
-    else { score=10; summary='首轮遭遇实力相当对手，力争不败';}
+    if(rankDiff>10){ score=15; summary='首轮面对弱旅，必须拿分建立优势';}
+    else if(rankDiff<-10){ score=13; summary='首轮挑战强敌，可接受小负但需展现斗志';}
+    else { score=13; summary='首轮遭遇实力相当对手，力争不败';}
   }else if(round===2){
-    if(rankDiff>10){ score=12; summary='次轮面对弱旅，取胜即可占据出线主动';}
-    else if(rankDiff<-10){ score=8; summary='次轮挑战强敌，需全力抢分保留希望';}
-    else { score=10; summary='次轮关键战，结果将直接影响出线形势';}
+    if(rankDiff>10){ score=16; summary='次轮面对弱旅，取胜即可占据出线主动';}
+    else if(rankDiff<-10){ score=12; summary='次轮挑战强敌，需全力抢分保留希望';}
+    else { score=14; summary='次轮关键战，结果将直接影响出线形势';}
   }else if(round===3){
-    score=13; summary='小组末轮生死战，出线形势取决于本场结果';
+    score=17; summary='小组末轮生死战，出线形势取决于本场结果';
   }
 
   // 根据实际结果微调
   var sh=matchData?matchData.score.sh:0, sa=matchData?matchData.score.sa:0;
   var isHome=parsed.home===teamCode;
   var gf=isHome?sh:sa, ga=isHome?sa:sh;
-  if(gf>ga) score=Math.min(15,score+2);
-  else if(gf===ga) score=Math.min(15,score+0);
+  if(gf>ga) score=Math.min(20,score+2);
+  else if(gf===ga) score=Math.min(20,score+0);
   else score=Math.max(3,score-2);
 
   return {score:score, summary:summary};
@@ -321,7 +321,7 @@ function computeMatchEvaluation(matchKey){
   var aiPreMatch=match.aiPreMatch;
   if(!aiPreMatch&&calcAIPbsFn){
     try{
-      aiPreMatch=calcAIPbsFn(homeCode, awayCode, matchKey, 0);
+      aiPreMatch=calcAIPbsFn(homeCode, awayCode, null, 0, matchKey);
       if(aiPreMatch&&!match.aiPreMatch){
         match.aiPreMatch={ph:aiPreMatch.ph, pd:aiPreMatch.pd, pa:aiPreMatch.pa};
       }
@@ -397,7 +397,7 @@ function computeMatchEvaluation(matchKey){
       {emoji:'🎯', label:'预实对比', h:Math.round(evrH.score/30*100), a:Math.round(evrA.score/30*100), hSummary:evrH.summary, aSummary:evrA.summary},
       {emoji:'⚡', label:'进攻效率', h:Math.round(ceH.score/12*100), a:Math.round(ceA.score/12*100), hSummary:ceH.summary, aSummary:ceA.summary},
       {emoji:'🛡️', label:'纪律韧性', h:Math.round(drH.score/8*100),  a:Math.round(drA.score/8*100),  hSummary:drH.summary, aSummary:drA.summary},
-      {emoji:'🗺️', label:'出线形势', h:Math.round(gsH.score/15*100), a:Math.round(gsA.score/15*100), hSummary:gsH.summary, aSummary:gsA.summary},
+      {emoji:'🗺️', label:'出线形势', h:Math.round(gsH.score/20*100), a:Math.round(gsA.score/20*100), hSummary:gsH.summary, aSummary:gsA.summary},
       {emoji:'💬', label:'外部评论', h:Math.round(ecH.score/10*100), a:Math.round(ecA.score/10*100), hSummary:ecH.summary, aSummary:ecA.summary}
     ],
     aiPreMatch:aiPreMatch,
@@ -419,6 +419,6 @@ window.MatchEval={
   parseMatchKey:parseMatchKey
 };
 
-console.log('✅ match_eval_engine.js 加载完成 — 六维评价引擎 V1.73');
+console.log('✅ match_eval_engine.js 加载完成 — 六维评价引擎 V1.74');
 
 })();

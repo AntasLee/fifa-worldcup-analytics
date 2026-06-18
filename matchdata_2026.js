@@ -1,4 +1,4 @@
-// matchdata_2026.js — 2026世界杯比赛数据层 | V1.73
+// matchdata_2026.js — 2026世界杯比赛数据层 | V1.74
 // ===== matchdata_2026.js — 2026世界杯完整比赛数据层 =====
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
@@ -377,6 +377,43 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|K|UZB|COL": {
+    score: { sh: 1, sa: 3 },
+    date: "2026-06-18",
+    time: "10:00",
+    venue: "NRG体育场",
+    stage: "group",
+    round: 1,
+    goals: [
+      { min: 41,      side: "away", scorer: "穆尼奥斯",     type: "shot" },
+      { min: 61,      side: "home", scorer: "法伊祖拉耶夫", type: "header" },
+      { min: 66,      side: "away", scorer: "迪亚斯",        type: "shot" },
+      { min: "90+11", side: "away", scorer: "坎帕斯",        type: "header" }
+    ],
+    stats: {
+      possession:      { h: 40, a: 60 },
+      shots:           { h: 6,  a: 11 },
+      shotsOnTarget:   { h: 2,  a: 4 },
+      corners:         { h: 3,  a: 4 },
+      fouls:           { h: 14, a: 11 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 67, a: 98 },
+      dangerousAttacks:{ h: 28, a: 41 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "路易斯·迪亚斯",
+      sources: ["FIFA", "ESPN", "BBC Sport"],
+      home: {score: 6, quotes: "世界杯新军乌兹别克斯坦收获了队史首球。法伊祖拉耶夫的头球一度扳平振奋全场，但面对迪亚斯领衔的南美攻势，中亚劲旅最终难以抵挡哥伦比亚的持续施压。"},
+      away: {score: 8, quotes: "路易斯·迪亚斯一传一射统治比赛，穆尼奥斯首开纪录、坎帕斯补时锁定胜局。哥伦比亚在阔别世界杯一届后强势回归，开局即占据K组主动。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   "2026|L|ENG|CRO": {
     score: { sh: 4, sa: 2 },
     date: "2026-06-18",
@@ -411,6 +448,40 @@ const wc2026AllMatches = {
       sources: ["England Football", "NYT Athletic"],
       home: {score: 9, quotes: "英格兰以一场酣畅淋漓的4-2开启世界杯征程。凯恩梅开二度主导进攻，贝林厄姆和拉什福德各入一球，17次射门11次射正展现了强大的攻击火力。"},
       away: {score: 6, quotes: "克罗地亚展现了顽强斗志，巴图里纳和穆萨的进球两度将比分追平。但防线最终无法抵挡英格兰的持续施压，首战失利但仍展现了竞争力。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|L|GHA|PAN": {
+    score: { sh: 1, sa: 0 },
+    date: "2026-06-18",
+    time: "07:00",
+    venue: "流明球场",
+    stage: "group",
+    round: 1,
+    goals: [
+      { min: "90+5", side: "home", scorer: "伊伦基", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 38, a: 62 },
+      shots:           { h: 6,  a: 9 },
+      shotsOnTarget:   { h: 2,  a: 4 },
+      corners:         { h: 2,  a: 2 },
+      fouls:           { h: 9,  a: 11 },
+      yellowCards:     { h: 1,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 93, a: 101 },
+      dangerousAttacks:{ h: 35, a: 60 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "安托万·塞梅尼奥",
+      sources: ["FIFA", "ESPN", "BBC Sport"],
+      home: {score: 7, quotes: "加纳在缺少托马斯·帕尔特伊且门将阿蒂-齐吉半场伤退的困境下坚持到了最后。伊伦基第95分钟绝杀让黑色之星在艰难条件下拿到宝贵三分，奎罗斯创纪录连续五届世界杯执教。"},
+      away: {score: 5, quotes: "巴拿马距离队史首个世界杯积分仅差几秒。沃特曼和拉莫斯上半场均错失良机，防线在最后时刻的松懈代价沉重，但球队整体展现了难得的竞争力。"}
     },
     aiPreMatch: null,
     aiPostReview: null
@@ -911,13 +982,13 @@ const VENUE_FACTOR_CONFIG = {
 // ================================================================
 const FORM_WEIGHT_SCHEDULE = {
   0: 0.00,   // 赛前：不激活
-  1: 0.08,   // 第一轮后：谨慎启用
-  2: 0.15,   // 第二轮后：统计意义增强
-  3: 0.20,   // 第三轮后：小组赛完整，权重峰值
-  4: 0.22,   // R32后
-  5: 0.22,   // R16后
-  6: 0.22,   // QF后
-  7: 0.22    // SF后
+  1: 0.25,   // 第一轮后：单场即有统计信号
+  2: 0.35,   // 第二轮后：信号增强
+  3: 0.42,   // 第三轮后：小组赛完整
+  4: 0.47,   // R32后
+  5: 0.50,   // R16后
+  6: 0.50,   // QF后
+  7: 0.50    // SF后
 };
 
 // ================================================================

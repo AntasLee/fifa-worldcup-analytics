@@ -2,7 +2,7 @@
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 /**
  * ============================================================
- *  prob_engine.js — 增强概率计算引擎 (V1.73)
+ *  prob_engine.js — 增强概率计算引擎 (V1.74)
  *  Phase 3: AI融合推算(8因子) + 历史底蕴 + 本届表现 + 综合推算
  *  依赖: oddsdata.js, groupsdata_v2.js, matchdata_2026.js
  *        squaddata.js, coachdata.js, venuedata.js
@@ -155,7 +155,7 @@
   }
 
   /** 计算赛场因素综合分 (海拔/草皮/时区/驻地距离) */
-  // V1.73 修复: 通过 venueMatchMapping → venues2026 正确链路获取场馆数据
+  // V1.74 修复: 通过 venueMatchMapping → venues2026 正确链路获取场馆数据
   function computeVenueFactor(homeCode, awayCode, mid) {
     let score = 0;
     try {
@@ -251,7 +251,7 @@
    * calcHistoryPedigree — 计算球队的"世界杯血统"分数
    * 数据源: window.HISTORY_INDEX (来自 matchdata_2026.js)
    * 半衰期: 8年，越久远的成绩影响越小
-   * @returns {number} 归一化到 [-0.12, +0.12] 的调整值 (V1.73 扩大)
+   * @returns {number} 归一化到 [-0.12, +0.12] 的调整值 (V1.74 扩大)
    */
   function calcHistoryPedigree(code) {
     const HI = window.HISTORY_INDEX;
@@ -278,7 +278,7 @@
     });
     
     // 归一化: 理论最大值约为 7*1.0 + 7*0.71 + ... ≈ 14
-    // 输出范围 [-0.12, +0.12]  V1.73: 扩大范围以增强差距感知
+    // 输出范围 [-0.12, +0.12]  V1.74: 扩大范围以增强差距感知
     const normalized = (totalScore / 10) * 0.10;
     return Math.max(-0.12, Math.min(0.12, normalized - 0.03));
   }
@@ -291,11 +291,8 @@
    * 渐进激活: 赛前0% → 第一轮后8% → 第二轮后15% → ... → 淘汰赛22%
    * @returns {{ delta: number, completedMatches: number, formWeight: number }}
    */
-  function calcTournamentForm(code, currentMatchRound) {
-    // V1.73: 第1轮小组赛时，本届表现因子暂不激活（样本量n=1无统计意义）
-    if (currentMatchRound === 1) {
-      return { delta: 0, completedMatches: 0, formWeight: 0, details: [] };
-    }
+  function calcTournamentForm(code, matchKey) {
+    // V1.74: 通过 matchKey 排除自循环；FORM_WEIGHT_SCHEDULE 用低权重处理小样本
     const allMatches = window.wc2026AllMatches;
     const FWS = window.FORM_WEIGHT_SCHEDULE || { 0:0, 1:0.08, 2:0.15, 3:0.20, 4:0.22, 5:0.22, 6:0.22, 7:0.22 };
     
@@ -310,6 +307,7 @@
       if (parts.length < 4) return;
       const home = parts[2], away = parts[3];
       if (home !== code && away !== code) return;
+      if (key === matchKey) return; // 排除当前比赛自身，防止自循环
       
       const isHome = (home === code);
       const opponentCode = isHome ? away : home;
@@ -320,11 +318,22 @@
       const gf = isHome ? match.score.sh : match.score.sa;
       const ga = isHome ? match.score.sa : match.score.sh;
       
-      // 基础分
-      let baseScore;
-      if (gf > ga) baseScore = 3;
-      else if (gf === ga) baseScore = 1;
-      else baseScore = 0;
+      // 基础分 — 胜3/平1/负0
+      let baseScore = gf > ga ? 3 : (gf === ga ? 1 : 0);
+
+      // 净胜球修正 (±0.6)：大胜加分，惜败少扣
+      const gd = gf - ga;
+      const gdSign = gd > 0 ? 1 : (gd < 0 ? -1 : 0);
+      const gdBonus = Math.tanh(Math.abs(gd) * 0.3) * 0.6 * gdSign;
+
+      // 媒体评分修正 (±0.3)：表现好坏体现为连续值
+      let mediaBonus = 0;
+      if (match.mediaRating) {
+        const mr = isHome ? match.mediaRating.home : match.mediaRating.away;
+        if (mr && typeof mr.score === 'number') mediaBonus = (mr.score - 5) * 0.06;
+      }
+
+      baseScore = baseScore + gdBonus + mediaBonus;
       
       // 阶段系数
       const stage = match.stage === 'group' ? null : match.stage;
@@ -482,11 +491,11 @@
   }
 
   // ================================================================
-   //  🔥 AI 融合概率推算 (V1.73: 8因子 + 历史底蕴 + 本届表现)
+   //  🔥 AI 融合概率推算 (V1.74: 8因子 + 历史底蕴 + 本届表现)
   // ================================================================
 
   /**
-   * calcAIPbs — AI多参数融合概率计算 (V1.73)
+   * calcAIPbs — AI多参数融合概率计算 (V1.74)
    * 
    * 8大因子:
    *   1. FIFA排名差 → 实力基础分
@@ -502,7 +511,7 @@
    *   A. 历史底蕴 → 世界杯血统 (固定权重3~5%)
    *   B. 本届表现 → 动态激活 (渐进权重0%~22%)
    */
-  function calcAIPbs(homeCode, awayCode, mid, round) {
+  function calcAIPbs(homeCode, awayCode, mid, round, matchKey) {
     // ===== 1. FIFA排名因子 =====
     const rankH = getFifaRank(homeCode);
     const rankA = getFifaRank(awayCode);
@@ -598,15 +607,17 @@
     // ===== A. 历史底蕴因子 =====
     const histH = calcHistoryPedigree(homeCode);
     const histA = calcHistoryPedigree(awayCode);
-    // V1.73: 非线性映射 — 小差距温和，大差距加速放大（巴西vs新军 > 德vs荷）
+    // V1.74: 非线性映射 — 小差距温和，大差距加速放大（巴西vs新军 > 德vs荷）
     const rawHistDiff = histH - histA;
     const historyDelta = Math.sign(rawHistDiff) * Math.pow(Math.abs(rawHistDiff) * 8, 1.5) * 0.06;
 
     // ===== B. 本届表现因子 =====
-    const formH = calcTournamentForm(homeCode, round);
-    const formA = calcTournamentForm(awayCode, round);
-    const formDeltaHome = formH.delta * formH.formWeight;
-    const formDeltaAway = formA.delta * formA.formWeight;
+    const formH = calcTournamentForm(homeCode, matchKey);
+    const formA = calcTournamentForm(awayCode, matchKey);
+    // 晋级压力系数：小组后段比赛，历史表现更具参考价值
+    const roundPressure = (round === 3) ? 1.40 : (round === 2) ? 1.20 : 1.0;
+    const formDeltaHome = formH.delta * formH.formWeight * roundPressure;
+    const formDeltaAway = formA.delta * formA.formWeight * roundPressure;
 
     // ===== 综合 λ 计算 =====
     const baseLambda = 1.35;
@@ -848,7 +859,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
       suggestion = '🔥 完全背离信号，潜在价值与风险并存。AI模型可能存在未被市场定价的洞察，但也需警惕AI模型的盲区。建议小注试探或观望。';
     }
 
-    // V1.73: 四维度子卡片数据
+    // V1.74: 四维度子卡片数据
     var subDims = {
       wdl: {
         aiPh: aiPH, oddsPh: odPH,
@@ -878,7 +889,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
   }
 
   // ================================================================
-   //  📊 V1.73 概率弹窗渲染 (匹配 preview_composite_v3.html)
+   //  📊 V1.74 概率弹窗渲染 (匹配 preview_composite_v3.html)
   // ================================================================
 
   function renderProbModalV4(mid) {
@@ -901,7 +912,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
         '#probContent .hc.od .cl{color:#ff6b35}' +
         '#probContent .hc.ai .cl{color:#4fc3f7}' +
         '#probContent .pr{display:flex;gap:6px}' +
-        '#probContent .pi{flex:1;text-align:center;padding:8px 6px;border-radius:8px;background:rgba(0,0,0,.25)}' +
+        '#probContent .pi{flex:1;text-align:center;padding:8px 6px;border-radius:8px;background:rgba(0,0,0,.25);position:relative}' +
         '#probContent .pv{font-size:26px;font-weight:800;letter-spacing:-1px}' +
         '#probContent .pi.w .pv{color:#4caf50}' +
         '#probContent .pi.d .pv{color:#ffb74d}' +
@@ -928,12 +939,12 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
         '#probContent .hdl{font-size:11px;font-weight:600;color:#8899bb}' +
         '#probContent .hdt{font-size:12px;font-weight:700;color:#ffb74d}' +
         '#probContent .hrr{display:flex;gap:8px}' +
-        '#probContent .hci{flex:1;text-align:center;padding:8px 6px;border-radius:8px;background:rgba(255,255,255,.04)}' +
+        '#probContent .hci{flex:1;text-align:center;padding:8px 6px;border-radius:8px;background:rgba(255,255,255,.04);position:relative}' +
         '#probContent .hci.hm .hcn{color:#4caf50;font-weight:800;font-size:22px}' +
         '#probContent .hci.aw .hcn{color:#ef5350;font-weight:800;font-size:22px}' +
         '#probContent .hcg{font-size:10px;color:#5a6888;margin-top:2px}' +
         '#probContent .our{display:flex;gap:8px}' +
-        '#probContent .oui{flex:1;text-align:center;padding:8px 6px;border-radius:8px;background:rgba(255,255,255,.04)}' +
+        '#probContent .oui{flex:1;text-align:center;padding:8px 6px;border-radius:8px;background:rgba(255,255,255,.04);position:relative}' +
         '#probContent .oui.ov .oun{color:#4caf50;font-weight:800;font-size:22px}' +
         '#probContent .oui.un .oun{color:#ef5350;font-weight:800;font-size:22px}' +
         '#probContent .oug{font-size:10px;color:#5a6888;margin-top:2px}' +
@@ -1002,11 +1013,33 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
         '#probContent .score-item:hover{background:rgba(255,255,255,.04)}' +
         '#probContent .score-item .si-score{font-weight:700;color:#d0d8ec;font-variant-numeric:tabular-nums;letter-spacing:.3px;font-size:11px}' +
         '#probContent .score-item .si-pct{font-weight:700;color:#8899bb;font-variant-numeric:tabular-nums;font-size:11px}' +
-        '#probContent .score-other{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding:3px 6px;border-top:1px dashed rgba(255,255,255,.08);font-size:11px;color:#8899bb;font-weight:700;font-variant-numeric:tabular-nums}' +
+        '#probContent .score-other{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding:3px 6px;border-top:1px dashed rgba(255,255,255,.08);font-size:11px;color:#8899bb;font-weight:700;font-variant-numeric:tabular-nums;border-radius:5px}' +
         '#probContent .win-col .score-other{border-top-color:rgba(76,175,80,.15)}' +
         '#probContent .draw-col .score-other{border-top-color:rgba(79,195,247,.15)}' +
         '#probContent .loss-col .score-other{border-top-color:rgba(239,83,80,.15)}' +
         '#probContent .no-scores{flex:1;display:flex;align-items:center;justify-content:center;color:#5a6888;font-size:12px}' +
+        // 命中高亮（熔岩核心 · 霓虹替换风格）
+        '#probContent .pi .hit-badge{display:none;position:absolute;top:-7px;right:-4px;font-size:8px;font-weight:900;padding:2px 7px;border-radius:10px;letter-spacing:.8px;z-index:2}' +
+        '#probContent .pi.hit .hit-badge{display:block;background:#ff6d3a;color:#000}' +
+        '#probContent .hci .hit-badge{display:none;position:absolute;top:-7px;right:-4px;font-size:8px;font-weight:900;padding:2px 7px;border-radius:10px;letter-spacing:.8px;z-index:2}' +
+        '#probContent .hci.hit .hit-badge{display:block;background:#ff6d3a;color:#000}' +
+        '#probContent .oui .hit-badge{display:none;position:absolute;top:-7px;right:-4px;font-size:8px;font-weight:900;padding:2px 7px;border-radius:10px;letter-spacing:.8px;z-index:2}' +
+        '#probContent .oui.hit .hit-badge{display:block;background:#ff6d3a;color:#000}' +
+        '#probContent .pi.hit{background:linear-gradient(180deg,#2a0a00,#0d0200)!important;border:1.5px solid #ff6d3a!important;box-shadow:0 0 14px rgba(255,109,58,.22),inset 0 1px 0 rgba(255,140,80,.1)}' +
+        '#probContent .pi.hit .pv{color:#ff8a50!important;text-shadow:0 0 10px rgba(255,109,58,.6)}' +
+        '#probContent .pi.hit .pbf{background:linear-gradient(90deg,#ff6d3a,#ff9a60)!important;box-shadow:0 0 8px rgba(255,109,58,.5)}' +
+        '#probContent .pi.hit .pl{color:#b85a3a!important}' +
+        '#probContent .pi.hit .ps{color:#ffb899!important}' +
+        '#probContent .hci.hit{background:linear-gradient(180deg,#2a0a00,#0d0200)!important;border:1.5px solid #ff6d3a!important;box-shadow:0 0 14px rgba(255,109,58,.22),inset 0 1px 0 rgba(255,140,80,.1)}' +
+        '#probContent .hci.hit .hcn{color:#ff8a50!important;text-shadow:0 0 6px rgba(255,109,58,.5)}' +
+        '#probContent .hci.hit .hcg{color:#b85a3a!important}' +
+        '#probContent .oui.hit{background:linear-gradient(180deg,#2a0a00,#0d0200)!important;border:1.5px solid #ff6d3a!important;box-shadow:0 0 14px rgba(255,109,58,.22),inset 0 1px 0 rgba(255,140,80,.1)}' +
+        '#probContent .oui.hit .oun{color:#ff8a50!important;text-shadow:0 0 6px rgba(255,109,58,.5)}' +
+        '#probContent .oui.hit .oug{color:#b85a3a!important}' +
+        '#probContent .score-item.hit{background:linear-gradient(180deg,#1f0800,#0a0100)!important;border:1px solid #ff6d3a!important;box-shadow:0 0 6px rgba(255,109,58,.2)}' +
+        '#probContent .score-item.hit .si-score,#probContent .score-item.hit .si-pct{color:#ff8a50!important}' +
+        '#probContent .score-other.hit{background:linear-gradient(180deg,#1f0800,#0a0100)!important;border:1px solid #ff6d3a!important;box-shadow:0 0 6px rgba(255,109,58,.2)}' +
+        '#probContent .score-other.hit span{color:#ff8a50!important}' +
         // // 免责声明 + 响应式
         '#probContent .ds{text-align:center;padding:16px 0 4px;font-size:10px;color:#5a6888;letter-spacing:.8px}' +
         '#probContent .na{font-size:.65rem;color:#5a6888;text-align:center;padding:10px 0;font-style:italic}' +
@@ -1044,8 +1077,27 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     var matchData = window.wc2026AllMatches && window.wc2026AllMatches[matchKey];
     var round = matchData ? matchData.round : null;
 
-    // AI推算 (传入 mid + round 以支持赛场因素 + 本届表现轮次控制)
-    var aiResult = calcAIPbs(homeCode, awayCode, mid, round);
+    // 完赛命中判定
+    var isCompleted = matchData && matchData.score && matchData.score.sh !== null && matchData.score.sa !== null;
+    var actualSh = isCompleted ? matchData.score.sh : null;
+    var actualSa = isCompleted ? matchData.score.sa : null;
+    var actualResult = isCompleted ? (actualSh > actualSa ? 'home' : actualSh === actualSa ? 'draw' : 'away') : null;
+    var totalGoals = isCompleted ? actualSh + actualSa : null;
+    // 让球盘命中 (ahLine>0=主受让)
+    var ahHit = null; // 'home'|'away'|'push'
+    if (isCompleted && md && md.ahLine !== undefined) {
+      var homeEff = actualSh + md.ahLine;
+      ahHit = homeEff > actualSa ? 'home' : homeEff < actualSa ? 'away' : 'push';
+    }
+    // 大小球命中
+    var ouHit = null; // 'over'|'under'|'push'
+    if (isCompleted && md && md.ouLine !== undefined) {
+      ouHit = totalGoals > md.ouLine ? 'over' : totalGoals < md.ouLine ? 'under' : 'push';
+    }
+    var actualScoreStr = isCompleted ? actualSh + ':' + actualSa : null;
+
+    // AI推算 (传入 mid + round + matchKey 以支持赛场因素 + 本届表现自循环排除)
+    var aiResult = calcAIPbs(homeCode, awayCode, mid, round, matchKey);
     var f = aiResult.factors;
 
     // 综合推算分析
@@ -1076,34 +1128,34 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     h += '<div class="cg">';
     // 赔率推算
     h += '<div class="hc od"><div class="cl">📊 赔率推算 <span style="font-weight:400;font-size:10px;color:#5a6888;margin-left:4px">William Hill</span></div><div class="pr">';
-    h += '<div class="pi w"><div class="pv">' + oddsPbs.ph + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.ph + '%"></div></div><div class="pl">主胜</div><div class="ps">' + ho.w.toFixed(2) + '</div></div>';
-    h += '<div class="pi d"><div class="pv">' + oddsPbs.pd + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.pd + '%"></div></div><div class="pl">平局</div><div class="ps">' + ((ho.d + (ao.d || 3.2)) / 2).toFixed(2) + '</div></div>';
-    h += '<div class="pi l"><div class="pv">' + oddsPbs.pa + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.pa + '%"></div></div><div class="pl">客胜</div><div class="ps">' + ao.w.toFixed(2) + '</div></div>';
+    h += '<div class="pi w' + (actualResult==='home'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + oddsPbs.ph + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.ph + '%"></div></div><div class="pl">主胜</div><div class="ps">' + ho.w.toFixed(2) + '</div></div>';
+    h += '<div class="pi d' + (actualResult==='draw'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + oddsPbs.pd + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.pd + '%"></div></div><div class="pl">平局</div><div class="ps">' + ((ho.d + (ao.d || 3.2)) / 2).toFixed(2) + '</div></div>';
+    h += '<div class="pi l' + (actualResult==='away'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + oddsPbs.pa + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.pa + '%"></div></div><div class="pl">客胜</div><div class="ps">' + ao.w.toFixed(2) + '</div></div>';
     h += '</div></div>';
     // 智能推算
     h += '<div class="hc ai"><div class="cl">🤖 智能推算 <span style="font-weight:400;font-size:10px;color:#5a6888;margin-left:4px">泊松 λ</span></div><div class="pr">';
-    h += '<div class="pi w"><div class="pv">' + aiResult.ph + '%</div><div class="pb"><div class="pbf" style="width:' + aiResult.ph + '%"></div></div><div class="pl">主胜</div><div class="ps">λ=' + aiResult.hLambda.toFixed(2) + '</div></div>';
-    h += '<div class="pi d"><div class="pv">' + aiResult.pd + '%</div><div class="pb"><div class="pbf" style="width:' + aiResult.pd + '%"></div></div><div class="pl">平局</div><div class="ps">—</div></div>';
-    h += '<div class="pi l"><div class="pv">' + aiResult.pa + '%</div><div class="pb"><div class="pbf" style="width:' + aiResult.pa + '%"></div></div><div class="pl">客胜</div><div class="ps">λ=' + aiResult.aLambda.toFixed(2) + '</div></div>';
+    h += '<div class="pi w' + (actualResult==='home'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + aiResult.ph + '%</div><div class="pb"><div class="pbf" style="width:' + aiResult.ph + '%"></div></div><div class="pl">主胜</div><div class="ps">λ=' + aiResult.hLambda.toFixed(2) + '</div></div>';
+    h += '<div class="pi d' + (actualResult==='draw'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + aiResult.pd + '%</div><div class="pb"><div class="pbf" style="width:' + aiResult.pd + '%"></div></div><div class="pl">平局</div><div class="ps">—</div></div>';
+    h += '<div class="pi l' + (actualResult==='away'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + aiResult.pa + '%</div><div class="pb"><div class="pbf" style="width:' + aiResult.pa + '%"></div></div><div class="pl">客胜</div><div class="ps">λ=' + aiResult.aLambda.toFixed(2) + '</div></div>';
     h += '</div></div>';
     h += '</div>'; // .cg
 
     // === 下栏：赔率详情 + 影响参数 ===
     h += '<div class="dr">';
     // 赔率详情
-    h += '<div class="db odds-detail"><div class="btr"><span class="bt">赔率详情</span><span class="dsi">William Hill</span></div><div class="os">';
+    h += '<div class="db odds-detail"><div class="btr"><span class="bt">赔率详情</span><span class="dsi">William Hill · 盘前赔率</span></div><div class="os">';
     if (ahData && md) {
       h += '<div class="osi"><div class="htr"><span class="hdl">让球盘</span><span class="hdt">' + (md.ahLine > 0 ? '主+' + md.ahLine.toFixed(2) : '主' + md.ahLine.toFixed(2)) + '</span></div><div class="hrr">';
-      h += '<div class="hci hm"><div class="hcn">' + md.ahHome.toFixed(2) + '</div><div class="hcg">主队</div></div>';
-      h += '<div class="hci aw"><div class="hcn">' + md.ahAway.toFixed(2) + '</div><div class="hcg">客队</div></div>';
+      h += '<div class="hci hm' + (ahHit==='home'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="hcn">' + md.ahHome.toFixed(2) + '</div><div class="hcg">主队</div></div>';
+      h += '<div class="hci aw' + (ahHit==='away'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="hcn">' + md.ahAway.toFixed(2) + '</div><div class="hcg">客队</div></div>';
       h += '</div></div>';
     } else {
       h += '<div class="osi"><div class="htr"><span class="hdl">让球盘</span></div><div class="na">暂无让球盘数据</div></div>';
     }
     if (ouData && md) {
       h += '<div class="osi"><div class="htr"><span class="hdl">大小球</span><span class="hdt">O/U ' + md.ouLine.toFixed(1) + '</span></div><div class="our">';
-      h += '<div class="oui ov"><div class="oun">' + md.ouOver.toFixed(2) + '</div><div class="oug">大</div></div>';
-      h += '<div class="oui un"><div class="oun">' + md.ouUnder.toFixed(2) + '</div><div class="oug">小</div></div>';
+      h += '<div class="oui ov' + (ouHit==='over'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="oun">' + md.ouOver.toFixed(2) + '</div><div class="oug">大</div></div>';
+      h += '<div class="oui un' + (ouHit==='under'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="oun">' + md.ouUnder.toFixed(2) + '</div><div class="oug">小</div></div>';
       h += '</div></div>';
     } else {
       h += '<div class="osi"><div class="htr"><span class="hdl">大小球</span></div><div class="na">暂无大小球数据</div></div>';
@@ -1122,7 +1174,12 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     h += '<div class="di"><span class="k">赛场因素</span><span class="v">综合评分 ' + ((f.venueFactor||0)>=0?'+':'') + ((f.venueFactor||0)*100).toFixed(1) + '%</span></div>';
     h += '<div class="di"><span class="k">历史底蕴</span><span class="v">' + ((f.historyDelta||0)>=0?'+':'') + ((f.historyDelta||0)*100).toFixed(1) + '% (六届世界杯·非线性)</span></div>';
     if (f.formH && f.formH.completedMatches > 0) {
-      h += '<div class="di"><span class="k">本届表现</span><span class="v">主 ' + f.formH.completedMatches + '场(wt' + (f.formH.formWeight*100).toFixed(0) + '%) · 客 ' + f.formA.completedMatches + '场(wt' + (f.formA.formWeight*100).toFixed(0) + '%)</span></div>';
+      var rp = (round === 3) ? 1.40 : (round === 2) ? 1.20 : 1.0;
+      var fdH = f.formH.delta * f.formH.formWeight * rp * 100;
+      var fdA = f.formA.delta * f.formA.formWeight * rp * 100;
+      var trendH = f.formH.delta > 0.03 ? '↑' : (f.formH.delta < -0.03 ? '↓' : '→');
+      var trendA = f.formA.delta > 0.03 ? '↑' : (f.formA.delta < -0.03 ? '↓' : '→');
+      h += '<div class="di"><span class="k">本届表现</span><span class="v">主 ' + (fdH>=0?'+':'') + fdH.toFixed(1) + '% (' + f.formH.completedMatches + '场' + trendH + ') · 客 ' + (fdA>=0?'+':'') + fdA.toFixed(1) + '% (' + f.formA.completedMatches + '场' + trendA + ')</span></div>';
     } else {
       h += '<div class="di"><span class="k">本届表现</span><span class="v">暂无数据 (首轮比赛后自动激活)</span></div>';
     }    h += '</div></div>';
@@ -1152,6 +1209,10 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
 
     // 右栏：V3 三列瀑布比分（融合赔率+AI）
     var blended = calcBlendedScores(aiResult, ho, ao, comp);
+    // 其他命中判定：真实比分未在枚举列表中时，高亮对应列的"其他"行
+    var winExact = blended.winScores.some(function(s){return s.score===actualScoreStr;});
+    var drawExact = blended.drawScores.some(function(s){return s.score===actualScoreStr;});
+    var lossExact = blended.lossScores.some(function(s){return s.score===actualScoreStr;});
     // 综合推算内部权重（赔率+(blended.oddsWeight*100).toFixed(0)+'% / AI'+(blended.aiWeight*100).toFixed(0)+'%）——仅作代码批注，不向用户展示
     h += '<div class=\"cb-right\"><div class=\"sr-title\">🎯 可能比分（综合推算）</div>';
     h += '<div class="score-columns">';
@@ -1161,10 +1222,10 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     h += '<div class="score-col-header"><span class="col-emoji">🟢</span><span class="col-label">主胜</span><span class="col-pct">' + blended.winTotalPct + '%</span></div>';
     h += '<div class="score-col-items">';
     blended.winScores.forEach(function(s) {
-      h += '<div class="score-item"><span class="si-score">' + s.score + '</span><span class="si-pct">' + s.prob.toFixed(1) + '%</span></div>';
+      h += '<div class="score-item' + (s.score===actualScoreStr?' hit':'') + '"><span class="si-score">' + s.score + '</span><span class="si-pct">' + s.prob.toFixed(1) + '%</span></div>';
     });
     h += '</div>';
-    h += '<div class=\"score-other\"><span>主胜其他</span><span>' + blended.winOther + '%</span></div>';
+    h += '<div class=\"score-other' + (actualResult==='home'&&!winExact?' hit':'') + '\"><span>主胜其他</span><span>' + blended.winOther + '%</span></div>';
     h += '</div>';
     
     // 平局列
@@ -1172,10 +1233,10 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     h += '<div class="score-col-header"><span class="col-emoji">🔵</span><span class="col-label">平局</span><span class="col-pct">' + blended.drawTotalPct + '%</span></div>';
     h += '<div class="score-col-items">';
     blended.drawScores.forEach(function(s) {
-      h += '<div class="score-item"><span class="si-score">' + s.score + '</span><span class="si-pct">' + s.prob.toFixed(1) + '%</span></div>';
+      h += '<div class="score-item' + (s.score===actualScoreStr?' hit':'') + '"><span class="si-score">' + s.score + '</span><span class="si-pct">' + s.prob.toFixed(1) + '%</span></div>';
     });
     h += '</div>';
-    h += '<div class=\"score-other\"><span>平局其他</span><span>' + blended.drawOther + '%</span></div>';
+    h += '<div class=\"score-other' + (actualResult==='draw'&&!drawExact?' hit':'') + '\"><span>平局其他</span><span>' + blended.drawOther + '%</span></div>';
     h += '</div>';
     
     // 客胜列
@@ -1183,10 +1244,10 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     h += '<div class="score-col-header"><span class="col-emoji">🔴</span><span class="col-label">客胜</span><span class="col-pct">' + blended.lossTotalPct + '%</span></div>';
     h += '<div class="score-col-items">';
     blended.lossScores.forEach(function(s) {
-      h += '<div class="score-item"><span class="si-score">' + s.score + '</span><span class="si-pct">' + s.prob.toFixed(1) + '%</span></div>';
+      h += '<div class="score-item' + (s.score===actualScoreStr?' hit':'') + '"><span class="si-score">' + s.score + '</span><span class="si-pct">' + s.prob.toFixed(1) + '%</span></div>';
     });
     h += '</div>';
-    h += '<div class=\"score-other\"><span>客胜其他</span><span>' + blended.lossOther + '%</span></div>';
+    h += '<div class=\"score-other' + (actualResult==='away'&&!lossExact?' hit':'') + '\"><span>客胜其他</span><span>' + blended.lossOther + '%</span></div>';
     h += '</div>';
     
     h += '</div>'; // .score-columns
@@ -1227,11 +1288,11 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
   window.calcTournamentForm = calcTournamentForm;
   window.computeCompositeAnalysis = computeCompositeAnalysis;
 
-  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.73 + 综合推算');
+  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.74 + 综合推算');
   console.log('   calcAIPbs(8因子) | calcHistoryPedigree | calcTournamentForm | renderProbModalV4');
 
   // ================================================================
-  //  🔗 V1.73 桥接
+  //  🔗 V1.74 桥接
   // ================================================================
   (function installV161Bridge() {
     if (typeof window.calcP === 'function') {
@@ -1246,7 +1307,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
         var modal = document.getElementById('probModal');
         if (modal) modal.classList.add('visible');
       };
-      console.log('🔗 V1.73 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
+      console.log('🔗 V1.74 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
     }
   })();
 
