@@ -87,6 +87,41 @@ const wc2026AllMatches = {
     aiPreMatch: null,
     aiPostReview: null
   },
+
+  "2026|A|CZE|RSA": {
+    score: { sh: 1, sa: 1 },
+    date: "2026-06-19",
+    time: "00:00",
+    venue: "阿兹台克球场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 6,  side: "home", scorer: "萨迪莱克", type: "shot" },
+      { min: 83, side: "away", scorer: "莫科纳",   type: "penalty" }
+    ],
+    stats: {
+      possession:      { h: 38, a: 62 },
+      shots:           { h: 11, a: 9 },
+      shotsOnTarget:   { h: 3,  a: 4 },
+      corners:         { h: 5,  a: 5 },
+      fouls:           { h: 12, a: 10 },
+      yellowCards:     { h: 1,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 69, a: 119 },
+      dangerousAttacks:{ h: 31, a: 40 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "拉吉斯拉夫·克雷伊奇",
+      sources: ["FIFA", "BBC Sport", "France24"],
+      home: {score: 6, quotes: "捷克开局闪电破门——萨迪莱克5分08秒的进球成本届最快。克雷伊奇统领防线几乎守住胜利，但苏尔克的手球让三分变一分。两轮仅积1分出线形势严峻。"},
+      away: {score: 6, quotes: "南非连续两场早早落后但展现了顽强韧性。莫科纳点球一蹴而就，巴法纳巴法纳拒绝连败。雨果·布鲁斯的换人调整注入活力，球队仍保有出线希望。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
   "2026|H|KSA|URU": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-16",
@@ -496,6 +531,44 @@ const wc2026AllMatches = {
     attendance: null, referee: "TBD", xg: null,
     mediaRating: { motm: "拉林", sources: ["ESPN", "AP News"], home: {score: 7, quotes: "加拿大在主场球迷面前展现了顽强斗志，拉林的替补扳平球为球队赢得历史性的首个世界杯积分。戴维斯全场活跃但未能破门。"}, away: {score: 6, quotes: "波黑凭借德米罗维奇的进球一度看到胜利希望，但未能守住领先。球队整体防守组织尚可，进攻端创造力不足是最大问题。"} },
     aiPreMatch: null, aiPostReview: null
+  },
+
+  "2026|B|SUI|BIH": {
+    score: { sh: 4, sa: 1 },
+    date: "2026-06-19",
+    time: "03:00",
+    venue: "SoFi体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 74,    side: "home", scorer: "曼赞比",   type: "shot" },
+      { min: 84,    side: "home", scorer: "巴尔加斯", type: "shot" },
+      { min: 90,    side: "home", scorer: "曼赞比",   type: "shot" },
+      { min: "90+3",side: "away", scorer: "马赫米奇", type: "shot" },
+      { min: "90+7",side: "home", scorer: "扎卡",     type: "penalty" }
+    ],
+    stats: {
+      possession:      { h: 62, a: 38 },
+      shots:           { h: 10, a: 4 },
+      shotsOnTarget:   { h: 7,  a: 3 },
+      corners:         { h: 7,  a: 3 },
+      fouls:           { h: 7,  a: 18 },
+      yellowCards:     { h: 1,  a: 2 },
+      redCards:        { h: 0,  a: 1 },
+      attacks:         { h: 115,a: 65 },
+      dangerousAttacks:{ h: 60, a: 21 }
+    },
+    attendance: 70026,
+    referee: "João Pinheiro (POR)",
+    xg: null,
+    mediaRating: {
+      motm: "曼赞比",
+      sources: ["FIFA", "BBC Sport", "Wikipedia"],
+      home: {score: 9, quotes: "瑞士替补奇兵曼赞比梅开二度导演大逆转，第72分钟上场后彻底改写战局。扎卡全场统治中场并罚入点球，巴尔加斯锦上添花。瑞士4-1大胜后积4分领跑B组。"},
+      away: {score: 3, quotes: "波黑在前74分钟顽强守住平局，但瑞士换上三名替补后防线瞬间崩盘。哲科仅踢63分钟便被换下，全场18次犯规暴露了球队的无奈与失控。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
   },
   "2026|B|QAT|SUI": {
     score: { sh: 1, sa: 1 },
