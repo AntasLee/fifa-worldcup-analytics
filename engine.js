@@ -1,4 +1,4 @@
-// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.72 =====
+// ===== engine.js - 翻译引擎 + 搜索引擎 + 聚合引擎 V1.73 =====
 // 依赖: teamdata.js (playerDB, clubNameMap, clubLeagueMap, supplementalPlayers)
 
 // ==================== 1. 字符串规范化 ====================
@@ -1104,7 +1104,7 @@ if (typeof document !== 'undefined') {
         setTimeout(function() {
             buildClubIndex.build();
             console.log('[engine.js] 聚合索引构建完成');
-            try { sessionStorage.setItem('engineDataBuilt', 'V1.72'); } catch(e) {}
+            try { sessionStorage.setItem('engineDataBuilt', 'V1.73'); } catch(e) {}
         }, 500);
     });
 }
@@ -1261,7 +1261,7 @@ function formatStandardName(type, input, orig) {
             }
         } else {
             var nameStr = String(p || '');
-            // ★ V1.72 修复: 输入已是 "中文名 (English Name)" 格式时，解析提取
+            // ★ V1.73 修复: 输入已是 "中文名 (English Name)" 格式时，解析提取
             var reStored = /^(.+)\s+\(([^)]+)\)$/;
             var mStored = nameStr.match(reStored);
             if (mStored) {
@@ -1486,9 +1486,9 @@ function buildPlayerDetailDOMV3(pd, resolvedKey) {
         var last = pd.cr[pd.cr.length - 1];
         latestValue = formatValueWanV3(last.mv || '');
     }
-    // 如果 playerDB 中没有身价数据，尝试从 squadDB 补充 (V1.72: 优先查_squadValueMap + 单词级匹配)
+    // 如果 playerDB 中没有身价数据，尝试从 squadDB 补充 (V1.73: 优先查_squadValueMap + 单词级匹配)
     if ((latestValue === '—' || !latestValue) && typeof squadDB !== 'undefined' && resolvedKey) {
-        // ★ V1.72: 优先从 squadmodal 预存的 _squadValueMap 直接获取（100%准确）
+        // ★ V1.73: 优先从 squadmodal 预存的 _squadValueMap 直接获取（100%准确）
         if (typeof window._squadValueMap !== 'undefined' && window._squadValueMap[resolvedKey]) {
             latestValue = formatValueWanV3(window._squadValueMap[resolvedKey]);
         }

@@ -6,13 +6,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Favicon: fifaseek.com 专属图标 -->
-<link rel="icon" type="image/x-icon" href="/icons/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-<link rel="manifest" href="/icons/site.webmanifest">
+<link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <meta name="theme-color" content="#0a0e14">
-<title>FIFA WORLD CUP - DATA ANALYSIS | V1.72</title>
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.73</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -37,6 +36,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .btn-accent:hover{border-color:#6ecc98;color:#a0f0c0;box-shadow:0 0 18px rgba(76,175,132,0.45),0 0 36px rgba(76,175,132,0.18),inset 0 0 14px rgba(76,175,132,0.08)}
 .btn-danger{background:var(--accent2);border-color:var(--accent2);color:#fff}
 .btn-prob{background:var(--blue);border-color:var(--blue);color:#fff;font-size:0.7rem;padding:4px 8px;margin-left:2px}
+.btn-eval{background:#00bfff;border-color:#00bfff;color:#fff;font-size:0.7rem;padding:4px 8px;margin-left:2px}
+.btn-eval:hover{background:#33ccff;border-color:#33ccff}
 .btn-prob:hover{background:var(--blue-light);border-color:var(--blue-light)}
 .btn-analysis{background:var(--orange);border-color:var(--orange);color:#fff;font-size:0.7rem;padding:4px 8px;margin-left:2px}
 .btn-analysis:hover{background:var(--orange-light);border-color:var(--orange-light)}
@@ -771,7 +772,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 		.welcome-btn-sub { font-size: 0.85rem; color: #7a8a9a; display: block; margin-top: 8px; font-weight: bold; }
 
 
-/* ===== 阵容名单弹窗 V1.72 ===== */
+/* ===== 阵容名单弹窗 V1.73 ===== */
 .squad-modal{max-width:1050px;width:95vw}
 .squad-modal .modal-box{max-height:85vh;overflow-y:auto}
 .squad-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
@@ -1354,7 +1355,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .rules-modal iframe{width:100%;height:70vh;border:none;border-radius:8px;background:var(--bg)}
 
 /* =============================================
-   V1.72 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
+   V1.73 概率弹窗 — 538 Navy 优化版 (prob-v4-*)
    霓虹紫分割线 · 三色概率 · 双栏对比 · AI推演
    ============================================= */
 /* -- 头部 -- */
@@ -1465,7 +1466,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
 @keyframes finishPulse{0%,100%{opacity:0.5;transform:scale(1.01)}50%{opacity:1;transform:scale(1.04)}}
 /* ================================================================
-   📱 MOBILE PORTRAIT LAYOUT — V1.72 (max-width: 480px)
+   📱 MOBILE PORTRAIT LAYOUT — V1.73 (max-width: 480px)
    ================================================================ */
 @media (max-width: 480px) {
 
@@ -1594,7 +1595,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     justify-content: center;
   }
 
-  /* ── 4. TOOLBAR (COMPACT · V1.72 40% height) ── */
+  /* ── 4. TOOLBAR (COMPACT · V1.73 40% height) ── */
   #mainToolbar {
     padding: 1px 3px !important;
     gap: 1px !important;
@@ -1681,7 +1682,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     min-height: 32px;
   }
 
-  /* ── 4b. SEARCH ROW (COMPACT · V1.72) ── */
+  /* ── 4b. SEARCH ROW (COMPACT · V1.73) ── */
   .search-input {
     width: auto !important;
     font-size: 0.7rem !important;
@@ -1776,7 +1777,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     border-radius: 8px;
     overflow: hidden;
   }
-  /* Compact group header: "A组 小组赛 已预测 X/6" — V1.72 shrunk */
+  /* Compact group header: "A组 小组赛 已预测 X/6" — V1.73 shrunk */
   .group-header {
     padding: 3px 6px !important;
     font-size: 0.6rem !important;
@@ -2085,7 +2086,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     padding: 12px 8px !important;
   }
 
-  /* ── V1.72 策略回测弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
+  /* ── V1.73 策略回测弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
   .backtest-modal {
     padding: 12px !important;
   }
@@ -2185,7 +2186,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     max-height: 92vh;
   }
 
-  /* Squad modal — V1.72 mobile: override V3a injected styles */
+  /* Squad modal — V1.73 mobile: override V3a injected styles */
   .squad-modal {
     padding: 12px 8px !important;
   }
@@ -2307,7 +2308,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.5rem !important;
   }
 
-  /* ── V1.72 数据总览弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
+  /* ── V1.73 数据总览弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
   .data-overview-modal {
     padding: 12px !important;
   }
@@ -2383,7 +2384,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.5rem !important;
   }
 
-  /* ── V1.72 赛场分析弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
+  /* ── V1.73 赛场分析弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
   .venue-analysis-modal {
     padding: 12px !important;
   }
@@ -2485,7 +2486,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .past-wc-main-container {
     padding: 10px 8px;
   }
-  /* ── V1.72 往届世界杯工具栏+比赛行：完全参考2026小组赛移动端布局 ── */
+  /* ── V1.73 往届世界杯工具栏+比赛行：完全参考2026小组赛移动端布局 ── */
   .past-wc-main-toolbar {
     flex-direction: row !important;
     flex-wrap: wrap;
@@ -2535,7 +2536,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     padding: 6px 8px !important;
     margin-bottom: 4px !important;
   }
-  /* V1.72 比赛行：Row0=日期左对齐 / Row1=对阵比分 / Row2=词条+赔率，完全参考2026 */
+  /* V1.73 比赛行：Row0=日期左对齐 / Row1=对阵比分 / Row2=词条+赔率，完全参考2026 */
   .past-match-row {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -2740,7 +2741,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.72rem;
   }
 
-  /* ── V1.72 对阵详情弹窗 — 时间完全隐藏，左右对撑仅分割线，风格标签不换行 ── */
+  /* ── V1.73 对阵详情弹窗 — 时间完全隐藏，左右对撑仅分割线，风格标签不换行 ── */
   .analysis-hero {
     flex-direction: column;
     gap: 8px;
@@ -2823,7 +2824,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Modal inner scroll areas — flex-fill remaining space (V1.72 fix: 0% basis) */
+  /* Modal inner scroll areas — flex-fill remaining space (V1.73 fix: 0% basis) */
   #matchDetailContent,
   #probContent,
   #analysisContent,
@@ -2943,7 +2944,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   #probContent .hdt { font-size: 10px !important; }
   #probContent .hdl { font-size: 10px !important; }
   /* ═══════════════════════════════════════════════════
-     V1.72 移动端 — 核弹级防水平溢出（废弃属性选择器，改用结构约束）
+     V1.73 移动端 — 核弹级防水平溢出（废弃属性选择器，改用结构约束）
      ═══════════════════════════════════════════════════ */
 
   /* ① 所有容器div：强制裁剪溢出 + 宽度锁定 */
@@ -3046,6 +3047,97 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
 }
 
+/* ===== V1.73 本场表现评价弹窗 — 紫金主题 ===== */
+.eval-modal{max-width:720px;background:linear-gradient(180deg,#0d0b1a 0%,#0a0814 100%);border-radius:12px;border:1px solid #7c3aed30;padding:0;overflow:hidden}
+.eval-modal-hd{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #7c3aed15}
+.eval-modal-hd h3{color:#c084fc!important;font-size:0.88rem;font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:7px}
+.eval-score-hero{text-align:center;padding:18px 18px 4px}
+.eval-score-row{display:flex;align-items:center;justify-content:center;gap:16px}
+.eval-score-team{text-align:center;min-width:70px}
+.eval-score-flag{font-size:2rem;line-height:1}
+.eval-score-name{font-size:0.9rem;font-weight:800;margin-top:3px;letter-spacing:1px;color:#d8d0e8}
+.eval-score-nums{display:flex;align-items:center;gap:6px}
+.eval-score-num{font-size:2.3rem;font-weight:900;line-height:1;font-family:'Segoe UI',system-ui;color:var(--gold-light,#d4a843)}
+.eval-score-div{font-size:0.9rem;color:#484058;font-weight:300}
+.eval-meta{text-align:center;font-size:0.62rem;color:#888098;margin-top:6px}
+.eval-zone-label{font-size:0.6rem;font-weight:700;text-align:center;margin-top:4px;letter-spacing:1px;padding:2px 10px;border-radius:10px;display:inline-block;border:1px solid}
+.eval-motm{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:14px;font-size:0.6rem;font-weight:600;margin-top:4px;background:#fbbf2412;border:1px solid #fbbf2425;color:#ffd54f}
+.eval-rating-section{padding:4px 18px 2px}
+.eval-rating-dual{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:start}
+.eval-rating-cell{text-align:center;display:flex;flex-direction:column;align-items:center}
+.eval-rating-big{font-size:2.3rem;font-weight:900;line-height:1}
+.eval-rating-sub{font-size:0.6rem;color:#9088a0;margin-top:2px}
+.eval-rating-grade{font-size:0.65rem;font-weight:700;margin-top:3px;color:#c8b8e0}
+.eval-rating-grade.low{color:#c8a080}
+.eval-rating-bar{height:5px;border-radius:3px;background:#1a1028;margin:4px auto 0;overflow:hidden;width:75%}
+.eval-rating-bar div{height:100%;border-radius:3px}
+.eval-rating-bar .ebar-home{background:linear-gradient(90deg,#e65100,#ff8f00)}
+.eval-rating-bar .ebar-away{background:linear-gradient(90deg,#006064,#00bcd4)}
+.eval-rating-vs{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 4px;gap:4px}
+.eval-rating-vs-inner{font-size:0.56rem;font-weight:800;padding:3px 7px;border-radius:5px;letter-spacing:1px;background:#7c3aed15;border:1px solid #7c3aed28;color:#c084fc}
+.eval-ach-wrap{display:flex;justify-content:center;min-height:22px;align-items:center;margin-top:4px}
+.eval-ach-row{display:flex;justify-content:center;gap:3px;flex-wrap:wrap}
+.eval-ach{font-size:0.54rem;font-weight:700;padding:2px 6px;border-radius:7px;letter-spacing:0.2px;white-space:nowrap}
+.eval-ach.gold{color:#fbbf24;background:#fbbf2412;border:1px solid #fbbf2428}
+.eval-ach.silver{color:#b0b8c8;background:#b0b8c812;border:1px solid #b0b8c828}
+.eval-ach.bronze{color:#f97316;background:#f9731612;border:1px solid #f9731628}
+.eval-ach-placeholder{visibility:hidden}
+.eval-dim-section{padding:6px 18px}
+.eval-dim-hd{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin:14px 0 8px;color:#786ea0}
+.eval-dim-block{margin-bottom:2px;border-bottom:1px solid #7c3aed08}
+.eval-dim-main{display:grid;grid-template-columns:26px 62px 40px 1fr 40px;gap:5px;align-items:center;padding:4px 0}
+.eval-dim-emoji{font-size:0.78rem;text-align:center}
+.eval-dim-label{font-weight:700;font-size:0.68rem;white-space:nowrap;color:#d8d0e8}
+.eval-dim-hs{font-weight:800;text-align:right;font-size:0.82rem}
+.eval-dim-as{font-weight:800;text-align:left;font-size:0.82rem}
+.eval-dim-bar{flex:1;height:5px;border-radius:3px;background:#1a1028;overflow:hidden;display:flex}
+.eval-dim-bar .ef{height:100%;border-radius:3px 0 0 3px}
+.eval-dim-bar .er{height:100%;border-radius:0 3px 3px 0}
+.eval-dim-bar .eg{width:2px;background:transparent;flex-shrink:0}
+.eval-dim-cmt{font-size:0.58rem;line-height:1.4;color:#a098b8;padding:1px 0 4px 136px}
+.eval-commentator{padding:4px 18px}
+.eval-comment-hd{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin:14px 0 8px;color:#786ea0}
+.eval-comment-box{border-radius:10px;padding:12px 14px;font-size:0.68rem;line-height:1.65;background:#7c3aed06;border:1px solid #7c3aed18;color:#c8b8a8}
+.eval-comment-box .esrc{font-size:0.58rem;margin-top:8px;font-weight:600;color:#c084fc}
+.eval-comment-box .edisclaimer{font-size:0.55rem;margin-top:8px;opacity:0.25;font-style:italic}
+.eval-ai-review{padding:12px 18px 18px}
+.eval-ai-hd{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;color:#786ea0}
+.eval-ai-card{border-radius:10px;padding:14px 16px;border:1px solid #7c3aed18;background:#7c3aed04}
+.eval-ai-prob-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.eval-ai-cell{text-align:center;padding:8px 4px;border-radius:8px;border:1px solid #7c3aed12}
+.eval-ai-cell .ealabel{font-size:0.6rem;color:#9088a8;margin-bottom:3px}
+.eval-ai-cell .eaval{font-size:1.2rem;font-weight:900;line-height:1.1}
+.eval-ai-cell .eabar{height:4px;border-radius:2px;background:#ffffff06;margin-top:6px;overflow:hidden}
+.eval-ai-cell .eabar div{height:100%;border-radius:2px}
+.eval-ai-result{display:flex;align-items:center;gap:10px;font-size:0.68rem;padding:8px 10px;border-radius:6px;flex-wrap:wrap;color:#c8c0d8;background:#7c3aed05;border:1px dashed #7c3aed18}
+.eval-ai-result .ea-arrow{opacity:0.2}
+.eval-ai-result .ea-verdict{font-weight:700;color:#c084fc}
+.eval-btn-wrap{text-align:center;padding:8px 0 4px}
+.eval-btn-eval{background:linear-gradient(135deg,#7c3aed,#a855f7);border:1px solid #a855f7;color:#fff;font-size:0.68rem;padding:6px 14px;border-radius:8px;cursor:pointer;font-weight:700;letter-spacing:0.5px;transition:all .2s}
+.eval-btn-eval:hover{transform:translateY(-1px);box-shadow:0 0 20px #a855f740}
+@media(max-width:600px){
+  .eval-modal{max-width:95vw}
+  .eval-score-flag{font-size:1.6rem}
+  .eval-score-name{font-size:0.78rem}
+  .eval-score-num{font-size:1.8rem}
+  .eval-dim-main{grid-template-columns:22px 50px 28px 1fr 28px;gap:3px}
+  .eval-dim-emoji{font-size:0.68rem}
+  .eval-dim-label{font-size:0.6rem}
+  .eval-dim-hs,.eval-dim-as{font-size:0.68rem}
+  .eval-dim-cmt{display:none}
+  .eval-modal-hd{padding:8px 10px}
+  .eval-modal-hd h3{font-size:0.85rem}
+  .eval-dim-hd,.eval-comment-hd,.eval-ai-hd{font-size:0.7rem!important}
+  .eval-score-hero,.eval-rating-section,.eval-dim-section,.eval-commentator,.eval-ai-review{padding-left:10px;padding-right:10px}
+  .eval-rating-big{font-size:1.8rem}
+  .eval-ai-prob-grid{gap:6px}
+  .eval-ai-cell .eaval{font-size:1rem}
+  .eval-ai-card{padding:10px}
+  .eval-score-row{gap:8px}
+  .eval-score-team{min-width:55px}
+  .eval-score-flag img{width:36px!important;height:24px!important}
+}
+
 </style>
 </head>
 <body>
@@ -3093,7 +3185,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   // Fast path: if engine data was already built in this session, skip animation entirely
   var _hasEngineData = false;
   try {
-    if (sessionStorage.getItem('engineDataBuilt') === 'V1.72') {
+    if (sessionStorage.getItem('engineDataBuilt') === 'V1.73') {
       _hasEngineData = true;
       sessionStorage.removeItem('engineDataBuilt');
     }
@@ -3312,7 +3404,7 @@ function toggleProbUpdate() {
 	}
 </script>
 <div class="sticky-top-group">
-<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.72 | Author: Antas Lee</div></div>
+<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.73 | Author: Antas Lee</div></div>
 
 <!-- WC Edition Selector -->
 <div class="wc-edition-bar" id="wcEditionBar">
@@ -3437,7 +3529,7 @@ function toggleProbUpdate() {
 <h3>👤 球员详情 <span style="font-size:0.65rem;color:var(--text-secondary);" id="playerDetailSubtitle"></span> <span class="modal-close" onclick="closePlayerDetail()">✕</span></h3>
 <div id="playerDetailContent" style="max-height:68vh;overflow-y:auto;"></div>
 </div></div>
-<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.72</div>
+<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.73</div>
 </div>
 
 <div class="modal-overlay" id="summaryModal"><div class="modal-box" style="max-width:600px"><h3>📋 我的预测汇总 <span class="modal-close" onclick="closeSummaryModal()">✕</span></h3><div id="summaryContent"></div></div></div>
@@ -3446,7 +3538,7 @@ function toggleProbUpdate() {
 </div>
 <!-- 赛场分析弹窗 -->
 <div class="modal-overlay" id="venueAnalysisModal"><div class="modal-box venue-analysis-modal"><h3>🏟️ 赛场分析 <span style="display:flex;align-items:center;gap:12px"><button class="btn btn-update" id="btnRefreshWeather" onclick="window._vaWeatherLoaded=null;var v=window._vaVenue;if(v&&v.coordinates)fetchWeatherForVenue(document.getElementById('venueAnalysisContent'),v);">🔄 更新天气</button><span class="modal-close" onclick="closeVenueAnalysis()">✕</span></span></h3><div id="venueAnalysisContent"></div></div></div>
-<!-- 阵容名单弹窗 V1.72 -->
+<!-- 阵容名单弹窗 V1.73 -->
 <div class="modal-overlay" id="squadModal"><div class="modal-box squad-modal">
 <h3 id="squadModalTitle">📋 阵容名单 <span class="modal-close" onclick="closeSquadModal()">✕</span></h3>
 <div id="squadContent"></div>
@@ -3465,6 +3557,12 @@ function toggleProbUpdate() {
 <div class="modal-overlay" id="matchDetailModal"><div class="modal-box match-detail-modal">
 <h3>📋 比赛详情 <span style="font-size:0.7rem;color:var(--text-secondary);" id="matchDetailSubtitle"></span> <span class="modal-close" onclick="closeMatchDetail()">✕</span></h3>
 <div id="matchDetailContent" style="max-height:70vh;overflow-y:auto;"></div>
+</div></div>
+
+<!-- V1.73 本场表现评价弹窗 -->
+<div class="modal-overlay" id="evalModal"><div class="modal-box eval-modal" id="evalModalBox">
+<h3 class="eval-modal-hd"><span>🎮 本场表现评价</span><span class="modal-close" onclick="closeMatchEval()">✕</span></h3>
+<div id="evalContent" style="max-height:68vh;overflow-y:auto;"></div>
 </div></div>
 
 <!-- 数据总览弹窗 -->
@@ -3948,6 +4046,7 @@ console.log('🏆 Bracket V8 embedded — ready');
 <script src="groupsdata.js" defer></script>
 <script src="matchdata_2026.js" defer></script>
 <script src="prob_engine.js" defer></script>
+<script src="match_eval_engine.js" defer></script>
 
 
 <script>
@@ -4039,7 +4138,7 @@ console.log('🏆 Bracket V8 embedded — ready');
             window.__playerDataReady = true;
             // Set sessionStorage for fast reload on next visit
             try {
-                sessionStorage.setItem('engineDataBuilt', 'V1.72');
+                sessionStorage.setItem('engineDataBuilt', 'V1.73');
             } catch(e) {}
             return;
         }
@@ -4127,7 +4226,7 @@ function switchMainTab(tabName) {
 
 <div class="footer-note" style="padding:12px 20px;text-align:center;font-size:0.7rem;color:var(--text-secondary);border-top:1px solid var(--border);">Copyright: © 2026 ZHENTAO LI. All rights reserved.</div>
 
-<!-- Mobile Preview Mode Script (V1.72) -->
+<!-- Mobile Preview Mode Script (V1.73) -->
 <script>
 (function() {
   var params = new URLSearchParams(window.location.search);
@@ -4246,7 +4345,7 @@ function switchMainTab(tabName) {
 })();
 </script>
 
-<!-- V1.72: Mobile probability dropdown — collapse on load -->
+<!-- V1.73: Mobile probability dropdown — collapse on load -->
 <script>
 (function() {
   if (window.innerWidth <= 480) {
@@ -4273,5 +4372,158 @@ function switchMainTab(tabName) {
 })();
 </script>
 
+<script>
+// V1.73 本场表现评价 — 渲染与交互
+(function(){
+'use strict';
+
+var zoneColorMap={
+  '大热':{c:'#ff8f00',bg:'#ff8f0018',bd:'#ff8f0040'},
+  '预期':{c:'#4caf50',bg:'#4caf5018',bd:'#4caf5040'},
+  '超常':{c:'#fbc02d',bg:'#fbc02d18',bd:'#fbc02d40'},
+  '爆冷':{c:'#ef5350',bg:'#ef535018',bd:'#ef535040'}
+};
+
+function renderMatchEval(e) {
+  if(!e) return '<div style="padding:40px;text-align:center;color:#6898a8;">暂无评价数据</div>';
+  var zc=zoneColorMap[e.resultType]||{c:'#4dd0e1',bg:'#4dd0e118'};
+  var h='';
+  // Score hero
+  h+='<div class="eval-score-hero">';
+  h+='<div class="eval-score-row">';
+  h+='<div class="eval-score-team"><div class="eval-score-flag"><img src="'+e.homeFlag+'" onerror="this.style.display=\'none\'" style="width:48px;height:32px;object-fit:cover;border-radius:3px;"></div><div class="eval-score-name">'+e.homeName+'</div></div>';
+  h+='<div class="eval-score-nums"><span class="eval-score-num">'+e.score.sh+'</span><span class="eval-score-div">—</span><span class="eval-score-num">'+e.score.sa+'</span></div>';
+  h+='<div class="eval-score-team"><div class="eval-score-flag"><img src="'+e.awayFlag+'" onerror="this.style.display=\'none\'" style="width:48px;height:32px;object-fit:cover;border-radius:3px;"></div><div class="eval-score-name">'+e.awayName+'</div></div>';
+  h+='</div>';
+  h+='<div class="eval-meta">'+(e.stage==='group'?'小组赛 '+e.stage.toUpperCase()+' 组 · 第 '+e.round+' 轮':e.stage)+'</div>';
+  if(e.motm) h+='<div style="text-align:center"><span class="eval-motm">⭐ FIFA全场最佳 · '+e.motm+'</span></div>';
+  h+='</div>';
+
+  // Ratings
+  h+='<div class="eval-rating-section"><div class="eval-rating-dual">';
+  h+=renderRatingCell(e.totalH, e.gradeH, e.achH, 'home');
+  h+='<div class="eval-rating-vs"><div class="eval-rating-vs-inner">VS</div><div class="eval-zone-label" style="color:'+zc.c+';background:'+zc.bg+';border-color:'+zc.bd+'">'+e.zoneLabel+'</div></div>';
+  h+=renderRatingCell(e.totalA, e.gradeA, e.achA, 'away');
+  h+='</div></div>';
+
+  // Dimensions — value-based brightness
+  function barColor(val, isHome){
+    var v=Math.min(100,Math.max(0,val))/100 * 0.8 + 0.2; // floor at 20% brightness
+    if(isHome){
+      var r=Math.round(80+v*175), g=Math.round(20+v*120), b=Math.round(v*40);
+      // 暗端→亮端(右=交锋处)
+      return 'background:linear-gradient(90deg,rgb('+Math.round(r*0.35)+','+Math.round(g*0.25)+','+Math.round(b*0.15)+'),rgb('+r+','+g+','+b+'))';
+    } else {
+      var r2=Math.round(v*10), g2=Math.round(60+v*128), b2=Math.round(40+v*172);
+      // 亮端(左=交锋处)→暗端（反转，亮色先）
+      return 'background:linear-gradient(90deg,rgb('+r2+','+g2+','+b2+'),rgb('+Math.round(r2*0.35)+','+Math.round(g2*0.25)+','+Math.round(b2*0.2)+'))';
+    }
+  }
+  function numColor(val, isHome){
+    var v=Math.min(100,Math.max(0,val))/100 * 0.7 + 0.3; // floor at 30%
+    if(isHome){ var r=Math.round(180+v*75), g=Math.round(100+v*120), b=Math.round(20+v*40); }
+    else { var r=Math.round(80+v*80), g=Math.round(140+v*80), b=Math.round(160+v*80); }
+    return 'color:rgb('+r+','+g+','+b+')';
+  }
+
+  h+='<div class="eval-dim-section"><div class="eval-dim-hd">📊 能力维度</div>';
+  e.dimensions.forEach(function(d){
+    var hPct=d.h, aPct=d.a, total=hPct+aPct||1;
+    var hW=Math.round(hPct/total*100), aW=100-hW;
+    h+='<div class="eval-dim-block"><div class="eval-dim-main">';
+    h+='<span class="eval-dim-emoji">'+d.emoji+'</span><span class="eval-dim-label">'+d.label+'</span>';
+    h+='<span class="eval-dim-hs" style="'+numColor(d.h,true)+'">'+d.h+'</span>';
+    h+='<div class="eval-dim-bar"><div class="ef" style="width:'+hW+'%;'+barColor(d.h,true)+'"></div><div class="eg"></div><div class="er" style="width:'+aW+'%;'+barColor(d.a,false)+'"></div></div>';
+    h+='<span class="eval-dim-as" style="'+numColor(d.a,false)+'">'+d.a+'</span>';
+    h+='</div><div class="eval-dim-cmt">'+d.hSummary+'</div></div>';
+  });
+  h+='</div>';
+
+  // Commentator
+  var mr=e.mediaRating;
+  h+='<div class="eval-commentator"><div class="eval-comment-hd">📰 评论员视角</div>';
+  if(mr&&mr.sources){
+    h+='<div class="eval-comment-box">';
+    if(mr.home&&mr.home.quotes) h+='<p>🗣️ '+e.homeName+'：'+mr.home.quotes+'</p>';
+    if(mr.away&&mr.away.quotes) h+='<p style="margin-top:6px;">🗣️ '+e.awayName+'：'+mr.away.quotes+'</p>';
+    h+='<div class="esrc">📰 综合引用自 '+mr.sources.join(' / ')+'</div>';
+    h+='<div class="edisclaimer">⚠️ 以上观点引自专业体育媒体评论，不代表本系统算法结论</div>';
+    h+='</div>';
+  } else {
+    h+='<div class="eval-comment-box"><p>🗣️ 外部评论数据将在后续版本接入，届时将从专业体育媒体获取赛后分析并呈现在此区域。</p>';
+    h+='<div class="edisclaimer">⚠️ 以上观点将引自专业体育媒体评论，不代表本系统算法结论</div></div>';
+  }
+  h+='</div>';
+
+  // 概率推算回顾 — 绿/橙/红三色，命中点亮
+  if(e.aiPreMatch){
+    var aip=e.aiPreMatch, ph=parseFloat(aip.ph), pd=parseFloat(aip.pd), pa=parseFloat(aip.pa);
+    var sh=e.score.sh, sa=e.score.sa;
+    var hitHome=sh>sa, hitDraw=sh===sa, hitAway=sa>sh;
+    function pc(label,prob,hit,color){
+      var o=hit?'1':'0.22', bo=hit?'1':'0.15';
+      return '<div class="eval-ai-cell" style="border-color:'+color+(hit?'40':'12')+'">'
+        +'<div class="ealabel">'+label+'</div>'
+        +'<div class="eaval" style="color:'+color+';opacity:'+o+'">'+prob.toFixed(1)+'%</div>'
+        +'<div class="eabar"><div style="width:'+prob+'%;background:'+color+';opacity:'+bo+'"></div></div>'
+        +'</div>';
+    }
+    h+='<div class="eval-ai-review"><div class="eval-ai-hd">📈 概率推算回顾</div><div class="eval-ai-card">';
+    h+='<div class="eval-ai-prob-grid">';
+    h+=pc('主胜',ph,hitHome,'#4caf50');
+    h+=pc('平局',pd,hitDraw,'#ff9800');
+    h+=pc('客胜',pa,hitAway,'#ef5350');
+    h+='</div>';
+    h+='<div class="eval-ai-result"><span>实际赛果</span><span class="ea-arrow">→</span><span style="font-size:1rem;font-weight:800;">'+sh+' - '+sa+'</span>';
+    h+='<span class="ea-arrow">→</span><span class="eval-zone-label" style="color:'+zc.c+';background:'+zc.bg+';border-color:'+zc.bd+'">'+e.zoneLabel+'</span></div>';
+    h+='</div></div>';
+  }
+
+  return h;
+}
+
+function renderRatingCell(score, grade, achs, which){
+  var isHome=which==='home';
+  var h='<div class="eval-rating-cell">';
+  h+='<div class="eval-rating-big" style="color:'+(isHome?'#ff8f00':'#00bcd4')+'">'+score+'</div>';
+  h+='<div class="eval-rating-sub">综合评分 /100</div>';
+  h+='<div class="eval-rating-grade'+(isHome?'':' low')+'">'+grade.grade+' · '+grade.label+'</div>';
+  h+='<div class="eval-rating-bar"><div class="'+(isHome?'ebar-home':'ebar-away')+'" style="width:'+score+'%"></div></div>';
+  h+='<div class="eval-ach-wrap"><div class="eval-ach-row">';
+  achs.forEach(function(a){ h+='<span class="eval-ach '+a.cls+'">'+a.text+'</span>'; });
+  // pad if only one
+  if(achs.length===1) h+='<span class="eval-ach eval-ach-placeholder '+achs[0].cls+'">'+achs[0].text+'</span>';
+  h+='</div></div>';
+  h+='</div>';
+  return h;
+}
+
+window.showMatchEval = function(matchKey) {
+  try {
+    var e = window.MatchEval && window.MatchEval.compute ? window.MatchEval.compute(matchKey) : null;
+    var content = document.getElementById('evalContent');
+    if(content) content.innerHTML = renderMatchEval(e);
+    var modal = document.getElementById('evalModal');
+    if(modal) modal.classList.add('visible');
+  } catch(err) { console.error('showMatchEval error:', err); }
+};
+
+window.closeMatchEval = function() {
+  var modal = document.getElementById('evalModal');
+  if(modal) modal.classList.remove('visible');
+};
+
+// Click overlay to close
+document.getElementById('evalModal') && document.getElementById('evalModal').addEventListener('click', function(e){
+  if(e.target===this) closeMatchEval();
+});
+// ESC key to close
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape' && document.getElementById('evalModal').classList.contains('visible')) closeMatchEval();
+});
+
+console.log('✅ 表现评价渲染组件已安装 V1.73');
+})();
+</script>
 </body>
 </html>

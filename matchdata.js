@@ -1297,6 +1297,38 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
+
+  "2026|K|POR|COD": {
+    score: { sh: 1, sa: 1 },
+    goals: [
+      { min: 6,      side: "home", scorer: "内维斯 (João Neves)",   type: "header" },
+      { min: "45+5", side: "away", scorer: "维萨 (Yoane Wissa)",    type: "header" }
+    ],
+    cards: {
+      home: { yellow: 3, red: 0 },
+      away: { yellow: 1, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
+  },
+
+  "2026|L|ENG|CRO": {
+    score: { sh: 4, sa: 2 },
+    goals: [
+      { min: 12,     side: "home", scorer: "凯恩 (Harry Kane)",         type: "penalty" },
+      { min: 36,     side: "away", scorer: "巴图里纳 (Martin Baturina)", type: "shot" },
+      { min: 42,     side: "home", scorer: "凯恩 (Harry Kane)",         type: "header" },
+      { min: "45+6", side: "away", scorer: "穆萨 (Petar Musa)",         type: "shot" },
+      { min: 47,     side: "home", scorer: "贝林厄姆 (Jude Bellingham)", type: "shot" },
+      { min: 85,     side: "home", scorer: "拉什福德 (Marcus Rashford)", type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 0, red: 0 },
+      away: { yellow: 0, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1321,3 +1353,5 @@ matchStats["2026|I|FRA|SEN"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:5,
 matchStats["2026|I|IRQ|NOR"] = {p1:"39%",p2:"61%",ps1:null,ps2:null,sh1:9,sh2:10,so1:1,so2:5,sb1:8,sb2:5,co1:2,co2:5,fo1:12,fo2:13,os1:1,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:79,at2:89,da1:27,da2:39,pk1:0,pk2:0};
 matchStats["2026|J|ARG|ALG"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:10,sh2:4,so1:6,so2:0,sb1:4,sb2:4,co1:2,co2:2,fo1:13,fo2:8,os1:3,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:85,at2:119,da1:24,da2:45,pk1:0,pk2:0};
 matchStats["2026|J|AUT|JOR"] = {p1:"63%",p2:"37%",ps1:null,ps2:null,sh1:10,sh2:9,so1:4,so2:4,sb1:6,sb2:5,co1:4,co2:3,fo1:12,fo2:7,os1:3,os2:1,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:132,at2:86,da1:55,da2:45,pk1:1,pk2:0};
+matchStats["2026|K|POR|COD"] = {p1:"75%",p2:"25%",ps1:null,ps2:null,sh1:5,sh2:5,so1:1,so2:2,sb1:4,sb2:3,co1:5,co2:4,fo1:9,fo2:10,os1:3,os2:2,yc1:3,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:135,at2:56,da1:75,da2:28,pk1:0,pk2:0};
+matchStats["2026|L|ENG|CRO"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:17,sh2:8,so1:11,so2:5,sb1:6,sb2:3,co1:8,co2:2,fo1:10,fo2:12,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:87,at2:81,da1:33,da2:38,pk1:1,pk2:0};
