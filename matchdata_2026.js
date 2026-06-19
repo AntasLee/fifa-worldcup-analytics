@@ -570,6 +570,45 @@ const wc2026AllMatches = {
     aiPreMatch: null,
     aiPostReview: null
   },
+
+  "2026|B|CAN|QAT": {
+    score: { sh: 6, sa: 0 },
+    date: "2026-06-19",
+    time: "06:00",
+    venue: "BC体育馆",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 16,    side: "home", scorer: "拉林",   type: "shot" },
+      { min: 29,    side: "home", scorer: "戴维",   type: "shot" },
+      { min: "45+3",side: "home", scorer: "戴维",   type: "shot" },
+      { min: 64,    side: "home", scorer: "萨利巴", type: "free_kick" },
+      { min: 75,    side: "home", scorer: "马纳伊", type: "own_goal" },
+      { min: "90+2",side: "home", scorer: "戴维",   type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 67, a: 33 },
+      shots:           { h: 18, a: 1 },
+      shotsOnTarget:   { h: 10, a: 0 },
+      corners:         { h: 19, a: 1 },
+      fouls:           { h: 9,  a: 10 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 2 },
+      attacks:         { h: 165,a: 35 },
+      dangerousAttacks:{ h: 154,a: 3 }
+    },
+    attendance: 52497,
+    referee: "Cristián Garay (CHI)",
+    xg: null,
+    mediaRating: {
+      motm: "乔纳森·戴维",
+      sources: ["FIFA", "Wikipedia", "Sportsnet"],
+      home: {score: 10, quotes: "加拿大以一场6-0的史诗级大胜创造了中北美及加勒比地区世界杯最大分差纪录，这也是加拿大男足世界杯历史首胜。戴维帽子戏法、拉林和萨利巴锦上添花，东道主全面碾压。"},
+      away: {score: 1, quotes: "卡塔尔遭遇世界杯史上最惨痛失利之一，全场零射正、两张红牌的灾难表现令人震惊。防线在加拿大持续高压下彻底崩溃，阿费夫完全隐身。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
   "2026|B|QAT|SUI": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-13", time: "07:00", venue: "李维斯体育场", stage: "group", round: 1,

@@ -451,13 +451,26 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .overview-stat-card{background:var(--surface2);border-radius:8px;padding:14px 12px;text-align:center;border:1px solid var(--border)}
 .overview-stat-card .stat-num{font-size:1.4rem;font-weight:800;color:var(--gold-light)}
 .overview-stat-card .stat-lbl{font-size:0.65rem;color:var(--text-secondary);margin-top:2px}
+.overview-stat-card .card-sub{font-size:0.5rem;color:var(--text-secondary);opacity:0.6;margin-top:2px}
 .overview-bar-chart{display:flex;flex-direction:column;gap:2px;padding:4px 0;margin:8px 0;width:100%}
 .overview-bar-row{display:flex;align-items:center;gap:4px;width:100%}
-.overview-bar-label{font-size:0.55rem;color:var(--text-secondary);min-width:42px;text-align:right;flex-shrink:0}
+.overview-bar-label{font-size:0.55rem;color:var(--text-secondary);min-width:50px;text-align:right;flex-shrink:0}
 .overview-bar-track{flex:1;height:14px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden;min-width:40px}
 .overview-bar-fill{height:100%;border-radius:2px;min-width:2px;transition:width 0.3s}
 .overview-bar-val{font-size:0.5rem;color:var(--gold-light);min-width:22px;text-align:left;flex-shrink:0}
 .overview-goal-bar{background:linear-gradient(90deg,#87ceeb,#5b9bd5)}
+/* 分段分割线 */
+.overview-bar-divider{display:flex;align-items:center;width:100%;padding:6px 0;margin:2px 0}
+.overview-bar-divider::before,.overview-bar-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.overview-bar-divider span{font-size:0.55rem;color:var(--gold-light);padding:0 12px;font-weight:600;letter-spacing:1px;white-space:nowrap}
+/* 补时区间 - 柱状图特殊样式 */
+.overview-bar-stoppage .overview-bar-label{color:#ff9800;font-weight:600}
+.overview-bar-stoppage .overview-goal-bar{background:linear-gradient(90deg,#ff9800,#e65100)}
+.overview-bar-stoppage .overview-bar-val{color:#ff9800}
+/* 分区标题 */
+.overview-section-title{font-size:0.62rem;color:var(--gold-light);font-weight:600;padding:4px 0 0;margin-top:2px;letter-spacing:0.5px}
+/* 补时说明注释行 */
+.overview-bar-note{font-size:0.5rem;color:var(--text-secondary);padding:2px 0 2px 52px;font-style:italic;opacity:0.7}
 .overview-yellow-bar{background:linear-gradient(90deg,#f0d070,#d4a843)}
 .overview-red-bar{background:linear-gradient(90deg,#e74c3c,#c0392b)}
 .scorer-table{width:100%;border-collapse:collapse;font-size:0.73rem;margin:8px 0}
@@ -2361,7 +2374,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
   .overview-bar-label {
     font-size: 0.45rem !important;
-    min-width: 32px !important;
+    min-width: 38px !important;
   }
   .overview-bar-track {
     height: 10px !important;
@@ -2370,6 +2383,17 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .overview-bar-val {
     font-size: 0.42rem !important;
     min-width: 16px !important;
+  }
+  .overview-bar-divider span {
+    font-size: 0.45rem !important;
+    padding: 0 6px !important;
+  }
+  .overview-section-title {
+    font-size: 0.5rem !important;
+  }
+  .overview-bar-note {
+    font-size: 0.42rem !important;
+    padding-left: 36px !important;
   }
   .scorer-table {
     font-size: 0.55rem !important;

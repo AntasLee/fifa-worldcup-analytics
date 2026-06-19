@@ -1352,9 +1352,11 @@ window.showDataOverview = function() {
         if (g.min <= 130) {
           allGoalsFromDetails.push({min: g.min, type: g.type, scorer: g.scorer, side: g.side});
           goalTypeCount[g.type] = (goalTypeCount[g.type] || 0) + 1;
-          if (!scorerMap[g.scorer]) scorerMap[g.scorer] = {goals: 0, types: {}};
-          scorerMap[g.scorer].goals++;
-          scorerMap[g.scorer].types[g.type] = (scorerMap[g.scorer].types[g.type] || 0) + 1;
+          if (g.type !== 'own_goal') {
+            if (!scorerMap[g.scorer]) scorerMap[g.scorer] = {goals: 0, types: {}};
+            scorerMap[g.scorer].goals++;
+            scorerMap[g.scorer].types[g.type] = (scorerMap[g.scorer].types[g.type] || 0) + 1;
+          }
         }
       });
     }
@@ -1382,6 +1384,15 @@ window.showDataOverview = function() {
 
   var maxGoal = Math.max.apply(null, intervals) || 1;
 
+  // 半场/加时进球统计（含各自补时）
+  var firstHalfGoals = 0, secondHalfGoals = 0, extraTimeGoals = 0;
+  allGoalsFromDetails.forEach(function(g) {
+    if (g.min >= 1 && g.min <= 50) firstHalfGoals++;
+    else if (g.min >= 51 && g.min <= 95) secondHalfGoals++;
+    else if (g.min >= 96) extraTimeGoals++;
+  });
+  var regularTimeGoals = firstHalfGoals + secondHalfGoals;
+
   // Build scorer leaderboard (top 30)
   var scorerList = Object.keys(scorerMap).map(function(name) {
     return {name: name, goals: scorerMap[name].goals, types: scorerMap[name].types};
@@ -1393,13 +1404,16 @@ window.showDataOverview = function() {
   // ===== RENDER =====
   var html = '';
 
-  // Summary cards - using complete data
+  // Summary cards — 8卡片布局
   html += '<div class="overview-summary-grid">';
-  html += '<div class="overview-stat-card"><div class="stat-num">' + totalGoals + '</div><div class="stat-lbl">⚽ 总进球（含点球大战）</div></div>';
-  html += '<div class="overview-stat-card"><div class="stat-num">' + totalRegularGoals + '</div><div class="stat-lbl">⚽ 常规时间进球</div></div>';
+  html += '<div class="overview-stat-card"><div class="stat-num">' + totalMatches + '</div><div class="stat-lbl">📋 比赛总场次</div></div>';
+  html += '<div class="overview-stat-card"><div class="stat-num">' + totalGoals + '</div><div class="stat-lbl">⚽ 全时段总进球<div class="card-sub">含常规+加时+点球大战</div></div></div>';
+  html += '<div class="overview-stat-card"><div class="stat-num">' + regularTimeGoals + '</div><div class="stat-lbl">⚽ 常规时段总进球<div class="card-sub">不含加时 · 不含点球</div></div></div>';
+  html += '<div class="overview-stat-card"><div class="stat-num">' + (totalMatches > 0 ? (regularTimeGoals / totalMatches).toFixed(2) : '—') + '</div><div class="stat-lbl">📊 常规时段场均进球</div></div>';
+  html += '<div class="overview-stat-card"><div class="stat-num">' + firstHalfGoals + '</div><div class="stat-lbl">⚽ 上半场进球<div class="card-sub">含45+补时</div></div></div>';
+  html += '<div class="overview-stat-card"><div class="stat-num">' + secondHalfGoals + '</div><div class="stat-lbl">⚽ 下半场进球<div class="card-sub">含90+补时</div></div></div>';
+  html += '<div class="overview-stat-card"><div class="stat-num">' + extraTimeGoals + '</div><div class="stat-lbl">⚽ 加时赛进球<div class="card-sub">含105+/120+补时</div></div></div>';
   html += '<div class="overview-stat-card"><div class="stat-num">' + totalPKGoals + '</div><div class="stat-lbl">🎯 点球大战进球</div></div>';
-  html += '<div class="overview-stat-card"><div class="stat-num">' + totalMatches + '</div><div class="stat-lbl">📋 总比赛场次</div></div>';
-  html += '<div class="overview-stat-card"><div class="stat-num">' + (totalMatches > 0 ? (totalRegularGoals / totalMatches).toFixed(2) : '—') + '</div><div class="stat-lbl">📊 场均进球（常规）</div></div>';
   html += '</div>';
 
   // Tab row
@@ -1410,20 +1424,51 @@ window.showDataOverview = function() {
   html += '<div class="overview-tab-btn" data-ovtab="scorers" onclick="switchOverviewTab(\'scorers\')">👑 射手榜</div>';
   html += '</div>';
 
-  // Goal interval chart (from detailed data only)
+  // Goal interval chart (from detailed data only) — V1.75: 分段+补时独立标注
   html += '<div class="overview-tab-content" id="ovTabGoals" style="display:block;">';
-  html += '<div class="backtest-section-title">⚽ 进球分钟区间分布（每5分钟）<span style="font-size:0.65rem;color:var(--text-secondary);"> — 详细数据覆盖 ' + matchesWithDetailData + '/' + totalMatches + ' 场</span></div>';
+  html += '<div class="backtest-section-title">⚽ 进球分钟区间分布<span style="font-size:0.65rem;color:var(--text-secondary);"> — 详细数据覆盖 ' + matchesWithDetailData + '/' + totalMatches + ' 场</span></div>';
   html += '<div class="overview-bar-chart">';
-  intervals.forEach(function(v, i) {
-    var w = maxGoal > 0 ? Math.max(2, Math.round(v / maxGoal * 100)) : 0;
-    html += '<div class="overview-bar-row">';
-    html += '<span class="overview-bar-label">' + intervalLabels[i] + '</span>';
-    html += '<div class="overview-bar-track"><div class="overview-bar-fill overview-goal-bar" style="width:' + w + '%;"></div></div>';
-    html += '<span class="overview-bar-val">' + (v || '0') + '</span>';
-    html += '</div>';
+
+  var barSections = [
+    // === 上半场 ===
+    {t:'title',l:'上半场 1-45+\''},
+    {t:'bar',i:0},{t:'bar',i:1},{t:'bar',i:2},{t:'bar',i:3},{t:'bar',i:4},
+    {t:'bar',i:5},{t:'bar',i:6},{t:'bar',i:7},{t:'bar',i:8},
+    {t:'sp',i:9,l:'45+补时'},
+    {t:'div',l:'半场休息'},
+    {t:'title',l:'下半场 46-90+\''},
+    {t:'bar',i:10},{t:'bar',i:11},{t:'bar',i:12},{t:'bar',i:13},{t:'bar',i:14},
+    {t:'bar',i:15},{t:'bar',i:16},{t:'bar',i:17},
+    {t:'sp',i:18,l:'90+补时'},
+    {t:'div',l:'常规时间结束 — 加时赛'},
+    {t:'title',l:'加时上半场 91-105+\''},
+    {t:'bar',i:18},{t:'bar',i:19},{t:'bar',i:20},
+    {t:'sp',i:21,l:'105+补时'},
+    {t:'div',l:'加时半场'},
+    {t:'title',l:'加时下半场 106-120+\''},
+    {t:'bar',i:21},{t:'bar',i:22},{t:'bar',i:23},
+    {t:'sp',i:24,l:'120+补时'}
+  ];
+
+  barSections.forEach(function(s) {
+    if (s.t === 'title') {
+      html += '<div class="overview-section-title">▸ ' + s.l + '</div>';
+    } else if (s.t === 'div') {
+      html += '<div class="overview-bar-divider"><span>' + s.l + '</span></div>';
+    } else {
+      var v = intervals[s.i], w = maxGoal > 0 ? Math.max(2, Math.round(v / maxGoal * 100)) : 0;
+      var lbl = s.l || intervalLabels[s.i];
+      var c = s.t === 'sp' ? 'overview-bar-row overview-bar-stoppage' : 'overview-bar-row';
+      html += '<div class="' + c + '">';
+      html += '<span class="overview-bar-label">' + lbl + '</span>';
+      html += '<div class="overview-bar-track"><div class="overview-bar-fill overview-goal-bar" style="width:' + w + '%;"></div></div>';
+      html += '<span class="overview-bar-val">' + (v || '0') + '</span>';
+      html += '</div>';
+    }
   });
+
   html += '</div>';
-  html += '<div class="backtest-insight">📌 详细分钟分布基于 <strong>' + matchesWithDetailData + '</strong> 场有进球时间轴记录的比赛（共 ' + allGoalsFromDetails.length + ' 球）。加时赛进球计入120+区间。完整总进球数（含点球大战）为 <strong>' + totalGoals + '</strong> 球。</div>';
+  html += '<div class="backtest-insight">📌 详细分钟分布基于 <strong>' + matchesWithDetailData + '</strong> 场有进球时间轴记录的比赛（共 ' + allGoalsFromDetails.length + ' 球）。<strong style="color:#ff9800;">橙色</strong> = 各时段补时进球（45+ / 90+ / 105+ / 120+），独立于常规时段统计。完整总进球数（含点球大战）为 <strong>' + totalGoals + '</strong> 球。</div>';
   html += '</div>';
 
   // Card stats
@@ -1866,9 +1911,9 @@ window.runDataOverviewComparison = function() {
   // ========== V23: 进球分钟区间分布各届对比表 ==========
   // Compute interval distribution per edition from wcMatchDetails
   var intervalDefs = [];
-  for (var ii = 0; ii < 18; ii++) intervalDefs.push({label: (ii*5+1)+'-'+(ii*5+5)+"'", lo: ii*5+1, hi: ii*5+5, reg: true});
+  for (var ii = 0; ii < 19; ii++) intervalDefs.push({label: (ii*5+1)+'-'+(ii*5+5)+"'", lo: ii*5+1, hi: ii*5+5, reg: true});
   [
-    {l:'91-95\'',lo:91,hi:95},{l:'96-100\'',lo:96,hi:100},{l:'101-105\'',lo:101,hi:105},
+    {l:'96-100\'',lo:96,hi:100},{l:'101-105\'',lo:101,hi:105},
     {l:'106-110\'',lo:106,hi:110},{l:'111-115\'',lo:111,hi:115},{l:'116-120\'',lo:116,hi:120},{l:'120+\'',lo:121,hi:999}
   ].forEach(function(x){intervalDefs.push({label:x.l, lo:x.lo, hi:x.hi, reg:false});});
 
@@ -1885,7 +1930,7 @@ window.runDataOverviewComparison = function() {
       for (var j = 0; j < intervalDefs.length; j++) {
         if (g.min >= intervalDefs[j].lo && g.min <= intervalDefs[j].hi) {
           edInterval[yearKey].goals[j]++;
-          if (g.min <= 90) edInterval[yearKey].regTotal++;
+          if (g.min <= 95) edInterval[yearKey].regTotal++;
           else edInterval[yearKey].extTotal++;
           break;
         }
@@ -1901,16 +1946,39 @@ window.runDataOverviewComparison = function() {
     grandExt += edInterval[y].extTotal;
   });
 
-  // Render interval distribution table
+  // Render interval distribution table — V1.75: 分段分割线
   html += '<div class="backtest-section-title">⏱️ 进球分钟区间分布 — 六届对比（每5分钟）</div>';
+  var colSpan = 3 + editions.length * 2;
   html += '<div style="overflow-x:auto;"><table class="backtest-table"><thead><tr><th>分钟区间</th>';
   editions.forEach(function(y){html += '<th>' + (editionLabels[y] || y) + '</th><th>占比</th>';});
   html += '<th>合计</th><th>总占比</th></tr></thead><tbody>';
 
   intervalDefs.forEach(function(iv, idx){
-    var rowCls = '';
-    if (idx === 18) rowCls = ' style="border-top:2px solid var(--gold);"';
-    html += '<tr' + rowCls + '><td style="font-weight:600;' + (iv.reg ? '' : 'color:var(--gold-light);') + '">' + iv.label + '</td>';
+    // 分区标题行
+    if (idx === 0) {
+      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 上半场 1-45+\' ──</td></tr>';
+    }
+    if (idx === 10) {
+      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 下半场 46-90+\' ──</td></tr>';
+    }
+    if (idx === 19) {
+      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 加时上半场 96-105+\' ──</td></tr>';
+    }
+    if (idx === 22) {
+      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 加时下半场 106-120+\' ──</td></tr>';
+    }
+
+    // 补时区间特殊标签
+    var displayLabel = iv.label;
+    if (idx === 9) displayLabel = '45+补时';
+    else if (idx === 18) displayLabel = '90+补时';
+    else if (idx === 21) displayLabel = '105+补时';
+    else if (idx === 24) displayLabel = '120+补时';
+    var isStoppage = (idx === 9 || idx === 18 || idx === 21 || idx === 24);
+    var rowStyle = '';
+    if (isStoppage) rowStyle = ' style="border-left:3px solid #ff9800;"';
+
+    html += '<tr' + rowStyle + '><td style="font-weight:600;' + (iv.reg ? '' : 'color:var(--gold-light);') + (isStoppage ? 'color:#ff9800;' : '') + '">' + displayLabel + '</td>';
     editions.forEach(function(y){
       var ed = edInterval[y], g = ed.goals[idx];
       var base = iv.reg ? ed.regTotal : ed.extTotal;
@@ -1920,16 +1988,27 @@ window.runDataOverviewComparison = function() {
     var gbaseTotal = iv.reg ? grandReg : grandExt;
     var gpct = gbaseTotal > 0 ? (grandGoals[idx] / gbaseTotal * 100).toFixed(1) + '%' : '—';
     html += '<td style="font-weight:700;">' + (grandGoals[idx] || '—') + '</td><td style="font-size:0.65rem;color:var(--gold-light);font-weight:600;">' + gpct + '</td></tr>';
+
+    // 分段分割线（补时行之后）
+    if (idx === 9) {
+      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.6rem;color:var(--gold-light);font-weight:600;padding:6px 4px;letter-spacing:1px;">── 半场休息 ──</td></tr>';
+    }
+    if (idx === 18) {
+      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.6rem;color:var(--gold-light);font-weight:600;padding:6px 4px;letter-spacing:1px;">── 常规时间结束 — 加时赛 ──</td></tr>';
+    }
+    if (idx === 21) {
+      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.6rem;color:var(--gold-light);font-weight:600;padding:6px 4px;letter-spacing:1px;">── 加时半场 ──</td></tr>';
+    }
   });
 
   // Totals rows
-  html += '<tr style="border-top:2px solid var(--gold);font-weight:700;background:var(--surface2);"><td>⚽ 常规时段合计 (1-90\')</td>';
+  html += '<tr style="border-top:2px solid var(--gold);font-weight:700;background:var(--surface2);"><td>⚽ 常规时段合计 (含补时 1-95\')</td>';
   editions.forEach(function(y){
     html += '<td style="color:var(--gold-light);">' + edInterval[y].regTotal + '</td><td style=\"font-size:0.65rem;color:var(--text-secondary);\">' + (edInterval[y].regTotal + edInterval[y].extTotal > 0 ? (edInterval[y].regTotal / (edInterval[y].regTotal + edInterval[y].extTotal) * 100).toFixed(1) + '%' : '—') + '</td>';
   });
   html += '<td style="color:var(--gold-light);">' + grandReg + '</td><td style=\"font-size:0.65rem;color:var(--text-secondary);font-weight:600;\">' + (grandReg + grandExt > 0 ? (grandReg / (grandReg + grandExt) * 100).toFixed(1) + '%' : '—') + '</td></tr>';
 
-  html += '<tr style="font-weight:700;background:var(--surface2);"><td>⚽ 加时赛合计 (91-120+\')</td>';
+  html += '<tr style="font-weight:700;background:var(--surface2);"><td>⚽ 加时赛合计 (96-120+\')</td>';
   editions.forEach(function(y){
     html += '<td style="color:var(--gold-light);">' + edInterval[y].extTotal + '</td><td style=\"font-size:0.65rem;color:var(--text-secondary);\">' + (edInterval[y].regTotal + edInterval[y].extTotal > 0 ? (edInterval[y].extTotal / (edInterval[y].regTotal + edInterval[y].extTotal) * 100).toFixed(1) + '%' : '—') + '</td>';
   });

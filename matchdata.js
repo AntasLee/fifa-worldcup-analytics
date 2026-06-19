@@ -142,12 +142,12 @@ const wcMatchDetails={"2022|A|QAT|ECU":{"goals":[{"min":16,"side":"away","scorer
 "2018|C|AUS|PER":{"goals":[{"min":18,"side":"away","scorer":"安德烈·卡里略 (André Carrillo)","type":"shot"},{"min":50,"side":"away","scorer":"保罗·格雷罗 (Paolo Guerrero)","type":"shot"}],"cards":{"home":{"yellow":3,"red":0},"away":{"yellow":1,"red":0}},"attendance":44073,"referee":"Sergei Karasev (RUS)"},
 "2018|C|DEN|AUS":{"goals":[{"min":7,"side":"home","scorer":"克里斯蒂安·埃里克森 (Christian Eriksen)","type":"shot"},{"min":38,"side":"away","scorer":"米莱·耶迪纳克 (Mile Jedinak)","type":"penalty"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":1,"red":0}},"attendance":40727,"referee":"Antonio Mateu Lahoz (ESP)"},
 "2018|C|DEN|FRA":{"goals":[],"cards":{"home":{"yellow":1,"red":0},"away":{"yellow":0,"red":0}},"attendance":78011,"referee":"Sandro Ricci (BRA)"},
-"2018|C|FRA|AUS":{"goals":[{"min":58,"side":"home","scorer":"安托万·格里兹曼 (Antoine Griezmann)","type":"penalty"},{"min":62,"side":"away","scorer":"米莱·耶迪纳克 (Mile Jedinak)","type":"penalty"},{"min":81,"side":"home","scorer":"保罗·博格巴 (Paul Pogba)","type":"shot"}],"cards":{"home":{"yellow":1,"red":0},"away":{"yellow":3,"red":0}},"attendance":41279,"referee":"Andrés Cunha (URU)"},
+"2018|C|FRA|AUS":{"goals":[{"min":58,"side":"home","scorer":"安托万·格里兹曼 (Antoine Griezmann)","type":"penalty"},{"min":62,"side":"away","scorer":"米莱·耶迪纳克 (Mile Jedinak)","type":"penalty"},{"min":81,"side":"home","scorer":"阿齐兹·贝希奇 (Aziz Behich)","type":"own_goal"}],"cards":{"home":{"yellow":1,"red":0},"away":{"yellow":3,"red":0}},"attendance":41279,"referee":"Andrés Cunha (URU)"},
 "2018|C|FRA|PER":{"goals":[{"min":34,"side":"home","scorer":"基利安·姆巴佩 (Kylian Mbappé)","type":"shot"}],"cards":{"home":{"yellow":1,"red":0},"away":{"yellow":2,"red":0}},"attendance":32789,"referee":"Mohammed Abdulla (UAE)"},
 "2018|C|PER|DEN":{"goals":[{"min":59,"side":"away","scorer":"尤素夫·波尔森 (Yussuf Poulsen)","type":"shot"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":1,"red":0}},"attendance":40502,"referee":"Bakary Gassama (GAM)"},
 "2018|D|ARG|CRO":{"goals":[{"min":53,"side":"away","scorer":"安特·雷比奇 (Ante Rebić)","type":"shot"},{"min":80,"side":"away","scorer":"卢卡·莫德里奇 (Luka Modrić)","type":"shot"},{"min":91,"side":"away","scorer":"伊万·拉基蒂奇 (Ivan Rakitić)","type":"shot"}],"cards":{"home":{"yellow":3,"red":0},"away":{"yellow":4,"red":0}},"attendance":43472,"referee":"Ravshan Irmatov (UZB)"},
 "2018|D|ARG|ISL":{"goals":[{"min":19,"side":"home","scorer":"塞尔希奥·阿圭罗 (Sergio Agüero)","type":"shot"},{"min":23,"side":"away","scorer":"阿尔弗雷兹·芬博加松 (Alfreð Finnbogason)","type":"shot"}],"cards":{"home":{"yellow":0,"red":0},"away":{"yellow":3,"red":0}},"attendance":44190,"referee":"Szymon Marciniak (POL)"},
-"2018|D|CRO|NGA":{"goals":[{"min":32,"side":"home","scorer":"奥格涅恩·弗拉西奇 (Ognjen Vlasic)","type":"shot"},{"min":71,"side":"home","scorer":"卢卡·莫德里奇 (Luka Modrić)","type":"penalty"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":1,"red":0}},"attendance":31136,"referee":"Sandro Ricci (BRA)"},
+"2018|D|CRO|NGA":{"goals":[{"min":32,"side":"home","scorer":"奥格内卡罗·埃特博 (Oghenekaro Etebo)","type":"own_goal"},{"min":71,"side":"home","scorer":"卢卡·莫德里奇 (Luka Modrić)","type":"penalty"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":1,"red":0}},"attendance":31136,"referee":"Sandro Ricci (BRA)"},
 "2018|D|ISL|CRO":{"goals":[{"min":53,"side":"away","scorer":"米兰·巴代利 (Milan Badelj)","type":"shot"},{"min":76,"side":"home","scorer":"吉尔芬·西于尔兹松 (Gylfi Sigurðsson)","type":"penalty"},{"min":90,"side":"away","scorer":"伊万·佩里西奇 (Ivan Perišić)","type":"shot"}],"cards":{"home":{"yellow":3,"red":0},"away":{"yellow":2,"red":0}},"attendance":43472,"referee":"Antonio Mateu Lahoz (ESP)"},
 "2018|D|NGA|ARG":{"goals":[{"min":14,"side":"home","scorer":"莱昂内尔·梅西 (Lionel Messi)","type":"shot"},{"min":51,"side":"away","scorer":"维克托·摩西 (Victor Moses)","type":"penalty"},{"min":86,"side":"home","scorer":"马科斯·罗霍 (Marcos Rojo)","type":"shot"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":3,"red":0}},"attendance":64468,"referee":"Cüneyt Çakır (TUR)"},
 "2018|D|NGA|ISL":{"goals":[{"min":49,"side":"home","scorer":"艾哈迈德·穆萨 (Ahmed Musa)","type":"shot"},{"min":75,"side":"home","scorer":"艾哈迈德·穆萨 (Ahmed Musa)","type":"shot"}],"cards":{"home":{"yellow":1,"red":0},"away":{"yellow":1,"red":0}},"attendance":40904,"referee":"Matthew Conger (NZL)"},
@@ -174,7 +174,7 @@ const wcMatchDetails={"2022|A|QAT|ECU":{"goals":[{"min":16,"side":"away","scorer
 "2018|H|JPN|POL":{"goals":[{"min":59,"side":"away","scorer":"扬·贝德纳雷克 (Jan Bednarek)","type":"shot"}],"cards":{"home":{"yellow":1,"red":0},"away":{"yellow":2,"red":0}},"attendance":42189,"referee":"Janny Sikazwe (ZAM)"},
 "2018|H|JPN|SEN":{"goals":[{"min":11,"side":"away","scorer":"萨迪奥·马内 (Sadio Mané)","type":"shot"},{"min":34,"side":"home","scorer":"乾贵士 (Takashi Inui)","type":"shot"},{"min":71,"side":"away","scorer":"穆萨·瓦格 (Moussa Wagué)","type":"shot"},{"min":78,"side":"home","scorer":"本田圭佑 (Keisuke Honda)","type":"shot"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":2,"red":0}},"attendance":32572,"referee":"Gianluca Rocchi (ITA)"},
 "2018|H|POL|COL":{"goals":[{"min":40,"side":"away","scorer":"亚伊罗·米纳 (Yerry Mina)","type":"header"},{"min":70,"side":"away","scorer":"拉达梅尔·法尔考 (Radamel Falcao)","type":"shot"},{"min":75,"side":"away","scorer":"胡安·夸德拉多 (Juan Cuadrado)","type":"shot"}],"cards":{"home":{"yellow":1,"red":0},"away":{"yellow":1,"red":0}},"attendance":42873,"referee":"César Arturo Ramos (MEX)"},
-"2018|H|POL|SEN":{"goals":[{"min":37,"side":"away","scorer":"伊德里萨·盖耶 (Idrissa Gueye)","type":"own_goal"},{"min":60,"side":"away","scorer":"姆巴耶·尼昂 (M'Baye Niang)","type":"shot"},{"min":86,"side":"home","scorer":"格热戈日·克雷霍维亚克 (Grzegorz Krychowiak)","type":"header"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":2,"red":0}},"attendance":44190,"referee":"Nawaf Shukralla (BHR)"},
+"2018|H|POL|SEN":{"goals":[{"min":37,"side":"away","scorer":"蒂亚戈·乔内克 (Thiago Cionek)","type":"own_goal"},{"min":60,"side":"away","scorer":"姆巴耶·尼昂 (M'Baye Niang)","type":"shot"},{"min":86,"side":"home","scorer":"格热戈日·克雷霍维亚克 (Grzegorz Krychowiak)","type":"header"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":2,"red":0}},"attendance":44190,"referee":"Nawaf Shukralla (BHR)"},
 "2018|H|SEN|COL":{"goals":[{"min":74,"side":"away","scorer":"亚伊罗·米纳 (Yerry Mina)","type":"header"}],"cards":{"home":{"yellow":3,"red":0},"away":{"yellow":1,"red":0}},"attendance":41970,"referee":"Milorad Mažić (SRB)"},
 "2018|QF|BRA|BEL":{"goals":[{"min":13,"side":"away","scorer":"费尔南迪尼奥 (Fernandinho)","type":"own_goal"},{"min":31,"side":"away","scorer":"凯文·德布劳内 (Kevin De Bruyne)","type":"shot"},{"min":76,"side":"home","scorer":"雷纳托·奥古斯托 (Renato Augusto)","type":"header"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":1,"red":0}},"attendance":42873,"referee":"Milorad Mažić (SRB)"},
 "2018|QF|RUS|CRO":{"goals":[{"min":31,"side":"home","scorer":"丹尼斯·切里舍夫 (Denis Cheryshev)","type":"shot"},{"min":39,"side":"away","scorer":"安德烈·克拉马里奇 (Andrej Kramarić)","type":"header"},{"min":101,"side":"home","scorer":"马里奥·费尔南德斯 (Mário Fernandes)","type":"header"},{"min":115,"side":"away","scorer":"多马戈伊·维达 (Domagoj Vida)","type":"header"}],"cards":{"home":{"yellow":3,"red":0},"away":{"yellow":2,"red":0}},"attendance":44287,"referee":"Sandro Ricci (BRA)"},
@@ -280,7 +280,7 @@ const wcMatchDetails={"2022|A|QAT|ECU":{"goals":[{"min":16,"side":"away","scorer
 "2010|D|GHA|GER":{"goals":[{"min":60,"side":"away","scorer":"梅苏特·厄齐尔 (Mesut Özil)","type":"shot"}],"cards":{"home":{"yellow":1,"red":0},"away":{"yellow":1,"red":0}},"attendance":83391,"referee":"Carlos Simon (BRA)"},
 "2010|D|SRB|GHA":{"goals":[{"min":85,"side":"away","scorer":"阿萨莫阿·吉安 (Asamoah Gyan)","type":"penalty"}],"cards":{"home":{"yellow":2,"red":1},"away":{"yellow":2,"red":0}},"attendance":54283,"referee":"Héctor Baldassi (ARG)"},
 "2010|E|CMR|DEN":{"goals":[{"min":10,"side":"home","scorer":"萨穆埃尔·埃托奥 (Samuel Eto'o)","type":"shot"},{"min":33,"side":"away","scorer":"尼克拉斯·本特纳 (Nicklas Bendtner)","type":"shot"},{"min":61,"side":"away","scorer":"丹尼斯·罗梅达尔 (Dennis Rommedahl)","type":"shot"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":1,"red":0}},"attendance":38107,"referee":"Jorge Larrionda (URU)"},
-"2010|E|CMR|NED":{"goals":[{"min":36,"side":"away","scorer":"罗宾·范佩西 (Robin van Persie)","type":"shot"},{"min":83,"side":"away","scorer":"克拉斯-扬·亨特拉尔 (Klaas-Jan Huntelaar)","type":"shot"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":1,"red":0}},"attendance":63093,"referee":"Pablo Pozo (CHI)"},
+"2010|E|CMR|NED":{"goals":[{"min":36,"side":"away","scorer":"罗宾·范佩西 (Robin van Persie)","type":"shot"},{"min":65,"side":"home","scorer":"萨穆埃尔·埃托奥 (Samuel Eto'o)","type":"penalty"},{"min":83,"side":"away","scorer":"克拉斯-扬·亨特拉尔 (Klaas-Jan Huntelaar)","type":"shot"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":1,"red":0}},"attendance":63093,"referee":"Pablo Pozo (CHI)"},
 "2010|E|DEN|JPN":{"goals":[{"min":17,"side":"away","scorer":"本田圭佑 (Keisuke Honda)","type":"free_kick"},{"min":30,"side":"away","scorer":"远藤保仁 (Endō Yasuhito)","type":"free_kick"},{"min":81,"side":"home","scorer":"容·达尔·托马森 (Jon Dahl Tomasson)","type":"penalty"},{"min":87,"side":"away","scorer":"冈崎慎司 (Shinji Okazaki)","type":"shot"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":2,"red":0}},"attendance":27967,"referee":"Jerome Damon (RSA)"},
 "2010|E|JPN|CMR":{"goals":[{"min":39,"side":"home","scorer":"本田圭佑 (Keisuke Honda)","type":"shot"}],"cards":{"home":{"yellow":1,"red":0},"away":{"yellow":1,"red":0}},"attendance":30620,"referee":"Olegário Benquerença (POR)"},
 "2010|E|NED|DEN":{"goals":[{"min":46,"side":"home","scorer":"丹尼尔·阿格 (Daniel Agger)","type":"own_goal"},{"min":85,"side":"home","scorer":"迪尔克·库伊特 (Dirk Kuyt)","type":"shot"}],"cards":{"home":{"yellow":2,"red":0},"away":{"yellow":2,"red":0}},"attendance":83465,"referee":"Stéphane Lannoy (FRA)"},
@@ -1083,6 +1083,24 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
+
+  "2026|B|CAN|QAT": {
+    score: { sh: 6, sa: 0 },
+    goals: [
+      { min: 16,    side: "home", scorer: "拉林 (Cyle Larin)",           type: "shot" },
+      { min: 29,    side: "home", scorer: "戴维 (Jonathan David)",       type: "shot" },
+      { min: "45+3",side: "home", scorer: "戴维 (Jonathan David)",       type: "shot" },
+      { min: 64,    side: "home", scorer: "萨利巴 (Saliba)",             type: "free_kick" },
+      { min: 75,    side: "home", scorer: "马纳伊 (Mohamed Manai)",      type: "own_goal" },
+      { min: "90+2",side: "home", scorer: "戴维 (Jonathan David)",       type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 1, red: 0 },
+      away: { yellow: 1, red: 2 }
+    },
+    attendance: null,
+    referee: "Cristián Garay (CHI)"
+  },
   "2026|D|USA|PAR": {
     score: { sh: 4, sa: 1 },
     goals: [
@@ -1399,6 +1417,7 @@ matchStats["2026|B|CAN|BIH"] = {p1:"61%",p2:"39%",ps1:null,ps2:null,sh1:9,sh2:7,
 matchStats["2026|D|USA|PAR"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:12,sh2:4,so1:6,so2:1,sb1:6,sb2:3,co1:3,co2:1,fo1:13,fo2:17,os1:2,os2:1,yc1:1,yc2:5,rc1:0,rc2:0,tk1:null,tk2:null,at1:158,at2:58,da1:92,da2:22,pk1:0,pk2:0};
 matchStats["2026|B|QAT|SUI"] = {p1:"32%",p2:"68%",ps1:null,ps2:null,sh1:6,sh2:17,so1:3,so2:7,sb1:3,sb2:10,co1:3,co2:10,fo1:12,fo2:11,os1:0,os2:1,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:48,at2:132,da1:16,da2:88,pk1:0,pk2:1};
 matchStats["2026|B|SUI|BIH"] = {p1:"62%",p2:"38%",ps1:null,ps2:null,sh1:10,sh2:4,so1:7,so2:3,sb1:3,sb2:1,co1:7,co2:3,fo1:7,fo2:18,os1:3,os2:1,yc1:1,yc2:2,rc1:0,rc2:1,tk1:null,tk2:null,at1:115,at2:65,da1:60,da2:21,pk1:1,pk2:0};
+matchStats["2026|B|CAN|QAT"] = {p1:"67%",p2:"33%",ps1:null,ps2:null,sh1:18,sh2:1,so1:10,so2:0,sb1:8,sb2:1,co1:19,co2:1,fo1:9,fo2:10,os1:1,os2:1,yc1:1,yc2:1,rc1:0,rc2:2,tk1:null,tk2:null,at1:165,at2:35,da1:154,da2:3,pk1:0,pk2:0};
 matchStats["2026|C|BRA|MAR"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:9,sh2:8,so1:5,so2:3,sb1:4,sb2:5,co1:6,co2:2,fo1:16,fo2:14,os1:0,os2:1,yc1:2,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:101,at2:103,da1:33,da2:47,pk1:0,pk2:0};
 matchStats["2026|C|HAI|SCO"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:11,sh2:7,so1:2,so2:2,sb1:9,sb2:5,co1:4,co2:3,fo1:23,fo2:21,os1:3,os2:1,yc1:1,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:111,at2:76,da1:47,da2:39,pk1:0,pk2:0};
 matchStats["2026|D|AUS|TUR"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:8,sh2:18,so1:4,so2:8,sb1:4,sb2:10,co1:5,co2:8,fo1:12,fo2:4,os1:1,os2:3,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:51,at2:150,da1:35,da2:104,pk1:0,pk2:0};
