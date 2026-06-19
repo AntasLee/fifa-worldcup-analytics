@@ -1338,6 +1338,29 @@ window.showDataOverview = function() {
     });
   }
 
+  // ================================================================
+  // normalizeGoalMin() — 进球分钟数归一化
+  // ⚠️ VIBE CODING 关键约定：
+  //   "+" 是足球补时语义符号，NOT 数学运算符。
+  //   例： "90+3" = 下半场补时第3分钟，不是 90+3=93。
+  //   数据录入必须用字符串 "90+3"，禁止写成数字 93。
+  //   补时进球归入 4 个独立阶段：45+/90+/105+/120+
+  //   常规进球（无+号）归入每5分钟区间统计。
+  // 安全网：小组赛无加时，min≥91 的纯数字进球自动归为90+补时。
+  // ================================================================
+  function normalizeGoalMin(min){
+    if(typeof min==='string' && min.indexOf('+')!==-1){
+      var parts=min.split('+');
+      var base=parseInt(parts[0])||0;
+      var extra=parseInt(parts[1])||0;
+      return {num:base+extra, isStoppage:true, base:base};
+    }
+    var num=typeof min==='string'?parseInt(min):(min||0);
+    // 安全网：min≥121 必为120+补时（足球不存在第121分钟的常规比赛时间）
+    if(num>=121) return {num:num, isStoppage:true, base:120};
+    return {num:num, isStoppage:false, base:0};
+  }
+
   // Collect detailed data from wcMatchDetails for minute distribution & goal types
   Object.keys(wcMatchDetails).forEach(function(key) {
     var parts = key.split('|');
@@ -1348,9 +1371,13 @@ window.showDataOverview = function() {
 
     if (detail.goals) {
       detail.goals.forEach(function(g) {
-        // Only count regular-time goals from details (not PK shootout)
-        if (g.min <= 130) {
-          allGoalsFromDetails.push({min: g.min, type: g.type, scorer: g.scorer, side: g.side});
+        var norm = normalizeGoalMin(g.min);
+        // ⚠️ 安全网：无加时赛 → min≥91 必为90+补时
+        var isGroup = (parts[1] && parts[1].length === 1);
+        var hasET = !!detail.ps || detail.goals.some(function(x) { return normalizeGoalMin(x.min).num >= 105; });
+        if (!norm.isStoppage && (isGroup || !hasET) && norm.num >= 91) { norm.isStoppage = true; norm.base = 90; }
+        if (norm.num <= 130 || norm.isStoppage) {
+          allGoalsFromDetails.push({min: norm.num, isStoppage: norm.isStoppage, stoppageBase: norm.base, type: g.type, scorer: g.scorer, side: g.side, key: key});
           goalTypeCount[g.type] = (goalTypeCount[g.type] || 0) + 1;
           if (g.type !== 'own_goal') {
             if (!scorerMap[g.scorer]) scorerMap[g.scorer] = {goals: 0, types: {}};
@@ -1367,29 +1394,61 @@ window.showDataOverview = function() {
     }
   });
 
+  // ===== 检测加时赛匹配：淘汰赛 + (有点球大战 或 存在min>=100进球) =====
+  var etMatchKeys = {};
+  if (data.knockout) {
+    data.knockout.forEach(function(ks) {
+      ks.matches.forEach(function(m) {
+        var matchId = ks.stage + '|' + m.h + '|' + m.a;
+        var detailKey = pastWCYear + '|' + matchId;
+        var detail = wcMatchDetails[detailKey];
+        var hasPS = !!m.ps;
+        var hasLongGoal = detail && detail.goals && detail.goals.some(function(g) { return normalizeGoalMin(g.min).num >= 100; });
+        if (hasPS || hasLongGoal) etMatchKeys[detailKey] = true;
+      });
+    });
+  }
+
   // Goal minute intervals (5-min buckets: 1-5, 6-10, ..., 116-120, 120+)
+  // intervals = 常规进球（不含+号）; stoppageCounts = 补时进球独立计数
   var intervals = [];
+  var etIntervals = [];
   var intervalLabels = [];
+  var stoppageCounts = {'45':0,'90':0,'105':0,'120':0};
   for (var i = 0; i < 25; i++) {
     var lo = i * 5 + 1;
     var hi = (i + 1) * 5;
     if (i === 24) { lo = 121; hi = 999; }
     intervals.push(0);
+    etIntervals.push(0);
     intervalLabels.push(i === 24 ? '120+' : (lo + '-' + hi));
   }
   allGoalsFromDetails.forEach(function(g) {
-    var idx = Math.min(24, Math.floor((g.min - 1) / 5));
-    intervals[idx]++;
+    if (g.isStoppage) {
+      stoppageCounts[String(g.stoppageBase)] = (stoppageCounts[String(g.stoppageBase)] || 0) + 1;
+    } else {
+      var idx = Math.min(24, Math.floor((g.min - 1) / 5));
+      intervals[idx]++;
+      if (etMatchKeys[g.key] && g.min >= 91) {
+        etIntervals[idx]++;
+      }
+    }
   });
 
-  var maxGoal = Math.max.apply(null, intervals) || 1;
+  var maxGoal = Math.max.apply(null, intervals.concat([stoppageCounts['45'],stoppageCounts['90'],stoppageCounts['105'],stoppageCounts['120']])) || 1;
 
   // 半场/加时进球统计（含各自补时）
   var firstHalfGoals = 0, secondHalfGoals = 0, extraTimeGoals = 0;
   allGoalsFromDetails.forEach(function(g) {
-    if (g.min >= 1 && g.min <= 50) firstHalfGoals++;
-    else if (g.min >= 51 && g.min <= 95) secondHalfGoals++;
-    else if (g.min >= 96) extraTimeGoals++;
+    if (g.isStoppage) {
+      if (g.stoppageBase === 45) firstHalfGoals++;
+      else if (g.stoppageBase === 90) secondHalfGoals++;
+      else extraTimeGoals++;
+    } else {
+      if (g.min >= 1 && g.min <= 45) firstHalfGoals++;
+      else if (g.min >= 46 && g.min <= 90) secondHalfGoals++;
+      else if (g.min >= 91) extraTimeGoals++;
+    }
   });
   var regularTimeGoals = firstHalfGoals + secondHalfGoals;
 
@@ -1424,42 +1483,59 @@ window.showDataOverview = function() {
   html += '<div class="overview-tab-btn" data-ovtab="scorers" onclick="switchOverviewTab(\'scorers\')">👑 射手榜</div>';
   html += '</div>';
 
-  // Goal interval chart (from detailed data only) — V1.75: 分段+补时独立标注
+  // Goal interval chart (from detailed data only) — 补时独立计数，常规进球按5分钟区间
   html += '<div class="overview-tab-content" id="ovTabGoals" style="display:block;">';
   html += '<div class="backtest-section-title">⚽ 进球分钟区间分布<span style="font-size:0.65rem;color:var(--text-secondary);"> — 详细数据覆盖 ' + matchesWithDetailData + '/' + totalMatches + ' 场</span></div>';
   html += '<div class="overview-bar-chart">';
 
   var barSections = [
     // === 上半场 ===
-    {t:'title',l:'上半场 1-45+\''},
+    {t:'title',l:'上半场 1-45\''},
     {t:'bar',i:0},{t:'bar',i:1},{t:'bar',i:2},{t:'bar',i:3},{t:'bar',i:4},
     {t:'bar',i:5},{t:'bar',i:6},{t:'bar',i:7},{t:'bar',i:8},
-    {t:'sp',i:9,l:'45+补时'},
+    {t:'sp',base:45},
     {t:'div',l:'半场休息'},
-    {t:'title',l:'下半场 46-90+\''},
+    {t:'title',l:'下半场 46-90\''},
     {t:'bar',i:10},{t:'bar',i:11},{t:'bar',i:12},{t:'bar',i:13},{t:'bar',i:14},
     {t:'bar',i:15},{t:'bar',i:16},{t:'bar',i:17},
-    {t:'sp',i:18,l:'90+补时'},
-    {t:'div',l:'常规时间结束 — 加时赛'},
-    {t:'title',l:'加时上半场 91-105+\''},
-    {t:'bar',i:18},{t:'bar',i:19},{t:'bar',i:20},
-    {t:'sp',i:21,l:'105+补时'},
-    {t:'div',l:'加时半场'},
-    {t:'title',l:'加时下半场 106-120+\''},
-    {t:'bar',i:21},{t:'bar',i:22},{t:'bar',i:23},
-    {t:'sp',i:24,l:'120+补时'}
+    {t:'sp',base:90}
   ];
+
+  var hasET = Object.keys(etMatchKeys).length > 0;
+  if (hasET) {
+    barSections.push(
+      {t:'div',l:'常规时间结束 — 加时赛'},
+      {t:'title',l:'加时上半场 91-105\''},
+      {t:'bar',i:19,e:1},{t:'bar',i:20,e:1},
+      {t:'sp',base:105,e:1},
+      {t:'div',l:'加时半场'},
+      {t:'title',l:'加时下半场 106-120\''},
+      {t:'bar',i:22,e:1},{t:'bar',i:23,e:1},
+      {t:'sp',base:120,e:1}
+    );
+  }
+
+  var etMax = hasET ? (Math.max.apply(null, etIntervals) || 0) : 0;
 
   barSections.forEach(function(s) {
     if (s.t === 'title') {
       html += '<div class="overview-section-title">▸ ' + s.l + '</div>';
     } else if (s.t === 'div') {
       html += '<div class="overview-bar-divider"><span>' + s.l + '</span></div>';
+    } else if (s.t === 'sp') {
+      var spCount = stoppageCounts[String(s.base)] || 0;
+      var spW = maxGoal > 0 ? Math.max(2, Math.round(spCount / maxGoal * 100)) : 0;
+      html += '<div class="overview-bar-row overview-bar-stoppage">';
+      html += '<span class="overview-bar-label">' + s.base + '+补时</span>';
+      html += '<div class="overview-bar-track"><div class="overview-bar-fill overview-goal-bar" style="width:' + spW + '%;"></div></div>';
+      html += '<span class="overview-bar-val">' + spCount + '</span>';
+      html += '</div>';
     } else {
-      var v = intervals[s.i], w = maxGoal > 0 ? Math.max(2, Math.round(v / maxGoal * 100)) : 0;
+      var srcArr = s.e ? etIntervals : intervals;
+      var srcMax = s.e ? etMax : maxGoal;
+      var v = srcArr[s.i], w = srcMax > 0 ? Math.max(2, Math.round(v / srcMax * 100)) : 0;
       var lbl = s.l || intervalLabels[s.i];
-      var c = s.t === 'sp' ? 'overview-bar-row overview-bar-stoppage' : 'overview-bar-row';
-      html += '<div class="' + c + '">';
+      html += '<div class="overview-bar-row">';
       html += '<span class="overview-bar-label">' + lbl + '</span>';
       html += '<div class="overview-bar-track"><div class="overview-bar-fill overview-goal-bar" style="width:' + w + '%;"></div></div>';
       html += '<span class="overview-bar-val">' + (v || '0') + '</span>';
@@ -1468,7 +1544,7 @@ window.showDataOverview = function() {
   });
 
   html += '</div>';
-  html += '<div class="backtest-insight">📌 详细分钟分布基于 <strong>' + matchesWithDetailData + '</strong> 场有进球时间轴记录的比赛（共 ' + allGoalsFromDetails.length + ' 球）。<strong style="color:#ff9800;">橙色</strong> = 各时段补时进球（45+ / 90+ / 105+ / 120+），独立于常规时段统计。完整总进球数（含点球大战）为 <strong>' + totalGoals + '</strong> 球。</div>';
+  html += '<div class="backtest-insight">📌 详细分钟分布基于 <strong>' + matchesWithDetailData + '</strong> 场有进球时间轴记录的比赛（共 ' + allGoalsFromDetails.length + ' 球）。<strong style="color:#ff9800;">橙色</strong> = 各时段补时进球（45+ / 90+ / 105+ / 120+），补时判断依据 min 字段中的 + 符号，独立于常规时段统计。完整总进球数（含点球大战）为 <strong>' + totalGoals + '</strong> 球。</div>';
   html += '</div>';
 
   // Card stats
@@ -1908,111 +1984,169 @@ window.runDataOverviewComparison = function() {
   html += '</tbody></table></div>';
 
   
-  // ========== V23: 进球分钟区间分布各届对比表 ==========
-  // Compute interval distribution per edition from wcMatchDetails
+  // ========== V23: 进球分钟区间分布各届对比表（补时独立展示） ==========
+  // intervalDefs = 常规5分钟区间（仅非补时进球），stoppage 单独计数
   var intervalDefs = [];
-  for (var ii = 0; ii < 19; ii++) intervalDefs.push({label: (ii*5+1)+'-'+(ii*5+5)+"'", lo: ii*5+1, hi: ii*5+5, reg: true});
-  [
-    {l:'96-100\'',lo:96,hi:100},{l:'101-105\'',lo:101,hi:105},
-    {l:'106-110\'',lo:106,hi:110},{l:'111-115\'',lo:111,hi:115},{l:'116-120\'',lo:116,hi:120},{l:'120+\'',lo:121,hi:999}
-  ].forEach(function(x){intervalDefs.push({label:x.l, lo:x.lo, hi:x.hi, reg:false});});
+  for (var ii = 0; ii < 24; ii++) {
+    var lo = ii * 5 + 1;
+    var hi = (ii + 1) * 5;
+    if (ii === 23) { lo = 121; hi = 999; }
+    var isReg = ii <= 17; // 0-17: 1-90', 18-23: 91-120'
+    intervalDefs.push({label: lo+'-'+hi+"'", lo: lo, hi: hi, reg: isReg});
+  }
+  var stoppageBases = [45, 90, 105, 120];
 
   var edInterval = {};
-  editions.forEach(function(y){edInterval[y]={goals:new Array(25).fill(0),regTotal:0,extTotal:0};});
+  editions.forEach(function(y){
+    edInterval[y] = {goals: new Array(24).fill(0), stoppage: {'45':0,'90':0,'105':0,'120':0}, regTotal: 0, extTotal: 0};
+  });
+
+  // 检测各届加时赛匹配：淘汰赛 + (有点球大战 或 存在min>=100进球)
+  var editionETKeys = {};
+  editions.forEach(function(y){
+    editionETKeys[y] = {};
+    var edData = y==='2022'?wc2022Data:y==='2018'?wc2018Data:y==='2014'?wc2014Data:y==='2010'?wc2010Data:y==='2006'?wc2006Data:wc2002Data;
+    if (edData.knockout) {
+      edData.knockout.forEach(function(ks){
+        ks.matches.forEach(function(m){
+          var matchId = ks.stage + '|' + m.h + '|' + m.a;
+          var detailKey = y + '|' + matchId;
+          var detail = wcMatchDetails[detailKey];
+          var hasPS = !!m.ps;
+          var hasLongGoal = detail && detail.goals && detail.goals.some(function(g){ return normalizeGoalMin(g.min).num >= 100; });
+          if (hasPS || hasLongGoal) editionETKeys[y][detailKey] = true;
+        });
+      });
+    }
+  });
+
+  var hasAnyET = false;
+  editions.forEach(function(y){ if (Object.keys(editionETKeys[y]).length > 0) hasAnyET = true; });
 
   Object.keys(wcMatchDetails).forEach(function(key){
     var parts = key.split('|'), yearKey = parts[0];
     if (!edInterval[yearKey]) return;
     var detail = wcMatchDetails[key];
     if (!detail || !detail.goals) return;
+    var isETMatch = !!editionETKeys[yearKey][key];
     detail.goals.forEach(function(g){
-      if (g.min > 130) return;
-      for (var j = 0; j < intervalDefs.length; j++) {
-        if (g.min >= intervalDefs[j].lo && g.min <= intervalDefs[j].hi) {
-          edInterval[yearKey].goals[j]++;
-          if (g.min <= 95) edInterval[yearKey].regTotal++;
-          else edInterval[yearKey].extTotal++;
-          break;
+      var norm = normalizeGoalMin(g.min);
+      // ⚠️ 安全网：无加时赛 → min≥91 必为90+补时
+      var isGroupStage = (parts[1] && parts[1].length === 1);
+      if (!norm.isStoppage && (isGroupStage || !isETMatch) && norm.num >= 91) { norm.isStoppage = true; norm.base = 90; }
+      if (norm.num > 130 && !norm.isStoppage) return;
+      var ed = edInterval[yearKey];
+      if (norm.isStoppage) {
+        ed.stoppage[String(norm.base)] = (ed.stoppage[String(norm.base)] || 0) + 1;
+        if (norm.base === 45 || norm.base === 90) ed.regTotal++;
+        else ed.extTotal++;
+      } else {
+        for (var j = 0; j < intervalDefs.length; j++) {
+          if (norm.num >= intervalDefs[j].lo && norm.num <= intervalDefs[j].hi) {
+            ed.goals[j]++;
+            if (intervalDefs[j].reg) ed.regTotal++;
+            else ed.extTotal++;
+            break;
+          }
         }
       }
     });
   });
 
   // Grand totals
-  var grandGoals = new Array(25).fill(0), grandReg = 0, grandExt = 0;
+  var grandGoals = new Array(24).fill(0), grandStoppage = {'45':0,'90':0,'105':0,'120':0}, grandReg = 0, grandExt = 0;
   editions.forEach(function(y){
-    for (var k = 0; k < 25; k++) grandGoals[k] += edInterval[y].goals[k];
-    grandReg += edInterval[y].regTotal;
-    grandExt += edInterval[y].extTotal;
+    var ed = edInterval[y];
+    for (var k = 0; k < 24; k++) grandGoals[k] += ed.goals[k];
+    stoppageBases.forEach(function(b){ grandStoppage[String(b)] += ed.stoppage[String(b)]; });
+    grandReg += ed.regTotal;
+    grandExt += ed.extTotal;
   });
 
-  // Render interval distribution table — V1.75: 分段分割线
-  html += '<div class="backtest-section-title">⏱️ 进球分钟区间分布 — 六届对比（每5分钟）</div>';
+  // Render interval distribution table — 补时独立行
+  html += '<div class="backtest-section-title">⏱️ 进球分钟区间分布 — 六届对比（每5分钟 · 补时独立）</div>';
   var colSpan = 3 + editions.length * 2;
   html += '<div style="overflow-x:auto;"><table class="backtest-table"><thead><tr><th>分钟区间</th>';
   editions.forEach(function(y){html += '<th>' + (editionLabels[y] || y) + '</th><th>占比</th>';});
   html += '<th>合计</th><th>总占比</th></tr></thead><tbody>';
 
-  intervalDefs.forEach(function(iv, idx){
-    // 分区标题行
-    if (idx === 0) {
-      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 上半场 1-45+\' ──</td></tr>';
-    }
-    if (idx === 10) {
-      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 下半场 46-90+\' ──</td></tr>';
-    }
-    if (idx === 19) {
-      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 加时上半场 96-105+\' ──</td></tr>';
-    }
-    if (idx === 22) {
-      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 加时下半场 106-120+\' ──</td></tr>';
-    }
-
-    // 补时区间特殊标签
-    var displayLabel = iv.label;
-    if (idx === 9) displayLabel = '45+补时';
-    else if (idx === 18) displayLabel = '90+补时';
-    else if (idx === 21) displayLabel = '105+补时';
-    else if (idx === 24) displayLabel = '120+补时';
-    var isStoppage = (idx === 9 || idx === 18 || idx === 21 || idx === 24);
-    var rowStyle = '';
-    if (isStoppage) rowStyle = ' style="border-left:3px solid #ff9800;"';
-
-    html += '<tr' + rowStyle + '><td style="font-weight:600;' + (iv.reg ? '' : 'color:var(--gold-light);') + (isStoppage ? 'color:#ff9800;' : '') + '">' + displayLabel + '</td>';
+  function renderRow(label, getVal, getBase, isStoppage){
+    var rs = isStoppage ? ' style="border-left:3px solid #ff9800;"' : '';
+    var cs = isStoppage ? 'color:#ff9800;font-weight:700;' : '';
+    html += '<tr'+rs+'><td style="font-weight:600;'+cs+'">'+label+'</td>';
     editions.forEach(function(y){
-      var ed = edInterval[y], g = ed.goals[idx];
-      var base = iv.reg ? ed.regTotal : ed.extTotal;
-      var pct = base > 0 ? (g / base * 100).toFixed(1) + '%' : '—';
-      html += '<td>' + (g || '—') + '</td><td style="font-size:0.65rem;color:var(--text-secondary);">' + pct + '</td>';
+      var ed = edInterval[y], v = getVal(ed), base = getBase(ed);
+      var pct = base > 0 ? (v / base * 100).toFixed(1) + '%' : '—';
+      html += '<td'+(isStoppage?' style="color:#ff9800;"':'')+'>'+(v||'—')+'</td><td style="font-size:0.65rem;color:var(--text-secondary);">'+pct+'</td>';
     });
-    var gbaseTotal = iv.reg ? grandReg : grandExt;
-    var gpct = gbaseTotal > 0 ? (grandGoals[idx] / gbaseTotal * 100).toFixed(1) + '%' : '—';
-    html += '<td style="font-weight:700;">' + (grandGoals[idx] || '—') + '</td><td style="font-size:0.65rem;color:var(--gold-light);font-weight:600;">' + gpct + '</td></tr>';
+    var gv = getVal({goals:grandGoals, stoppage:grandStoppage, regTotal:grandReg, extTotal:grandExt});
+    var gbase = getBase({regTotal:grandReg, extTotal:grandExt});
+    var gpct = gbase > 0 ? (gv / gbase * 100).toFixed(1) + '%' : '—';
+    html += '<td style="font-weight:700;">'+(gv||'—')+'</td><td style="font-size:0.65rem;color:var(--gold-light);font-weight:600;">'+gpct+'</td></tr>';
+  }
 
-    // 分段分割线（补时行之后）
-    if (idx === 9) {
-      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.6rem;color:var(--gold-light);font-weight:600;padding:6px 4px;letter-spacing:1px;">── 半场休息 ──</td></tr>';
+  // ── 上半场 1-45' ──
+  html += '<tr style="background:var(--surface2);"><td colspan="'+colSpan+'" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 上半场 1-45\' ──</td></tr>';
+  for (var k = 0; k <= 8; k++) {
+    (function(idx){
+      var iv = intervalDefs[idx];
+      renderRow(iv.label, function(ed){ return ed.goals[idx]; }, function(ed){ return ed.regTotal; }, false);
+    })(k);
+  }
+  // 45+ 补时
+  renderRow('45+补时', function(ed){ return ed.stoppage['45']; }, function(ed){ return ed.regTotal; }, true);
+  html += '<tr style="background:var(--surface2);"><td colspan="'+colSpan+'" style="text-align:center;font-size:0.6rem;color:var(--gold-light);font-weight:600;padding:6px 4px;letter-spacing:1px;">── 半场休息 ──</td></tr>';
+
+  // ── 下半场 46-90' ──
+  html += '<tr style="background:var(--surface2);"><td colspan="'+colSpan+'" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 下半场 46-90\' ──</td></tr>';
+  for (var k = 9; k <= 17; k++) {
+    (function(idx){
+      var iv = intervalDefs[idx];
+      renderRow(iv.label, function(ed){ return ed.goals[idx]; }, function(ed){ return ed.regTotal; }, false);
+    })(k);
+  }
+  // 90+ 补时
+  renderRow('90+补时', function(ed){ return ed.stoppage['90']; }, function(ed){ return ed.regTotal; }, true);
+
+  // ── 加时赛（仅当有ET比赛时显示）──
+  if (hasAnyET) {
+    html += '<tr style="background:var(--surface2);"><td colspan="'+colSpan+'" style="text-align:center;font-size:0.6rem;color:var(--gold-light);font-weight:600;padding:6px 4px;letter-spacing:1px;">── 常规时间结束 — 加时赛 ──</td></tr>';
+    html += '<tr style="background:var(--surface2);"><td colspan="'+colSpan+'" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 加时上半场 91-105\' ──</td></tr>';
+    for (var k = 18; k <= 20; k++) {
+      (function(idx){
+        var iv = intervalDefs[idx];
+        renderRow(iv.label, function(ed){ return ed.goals[idx]; }, function(ed){ return ed.extTotal; }, false);
+      })(k);
     }
-    if (idx === 18) {
-      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.6rem;color:var(--gold-light);font-weight:600;padding:6px 4px;letter-spacing:1px;">── 常规时间结束 — 加时赛 ──</td></tr>';
+    // 105+ 补时
+    renderRow('105+补时', function(ed){ return ed.stoppage['105']; }, function(ed){ return ed.extTotal; }, true);
+    html += '<tr style="background:var(--surface2);"><td colspan="'+colSpan+'" style="text-align:center;font-size:0.6rem;color:var(--gold-light);font-weight:600;padding:6px 4px;letter-spacing:1px;">── 加时半场 ──</td></tr>';
+    html += '<tr style="background:var(--surface2);"><td colspan="'+colSpan+'" style="text-align:center;font-size:0.62rem;color:var(--gold-light);font-weight:700;padding:8px 4px 3px;">── 加时下半场 106-120\' ──</td></tr>';
+    for (var k = 21; k <= 23; k++) {
+      (function(idx){
+        var iv = intervalDefs[idx];
+        renderRow(iv.label, function(ed){ return ed.goals[idx]; }, function(ed){ return ed.extTotal; }, false);
+      })(k);
     }
-    if (idx === 21) {
-      html += '<tr style="background:var(--surface2);"><td colspan="' + colSpan + '" style="text-align:center;font-size:0.6rem;color:var(--gold-light);font-weight:600;padding:6px 4px;letter-spacing:1px;">── 加时半场 ──</td></tr>';
-    }
-  });
+    // 120+ 补时
+    renderRow('120+补时', function(ed){ return ed.stoppage['120']; }, function(ed){ return ed.extTotal; }, true);
+  }
 
   // Totals rows
   html += '<tr style="border-top:2px solid var(--gold);font-weight:700;background:var(--surface2);"><td>⚽ 常规时段合计 (含补时 1-95\')</td>';
   editions.forEach(function(y){
-    html += '<td style="color:var(--gold-light);">' + edInterval[y].regTotal + '</td><td style=\"font-size:0.65rem;color:var(--text-secondary);\">' + (edInterval[y].regTotal + edInterval[y].extTotal > 0 ? (edInterval[y].regTotal / (edInterval[y].regTotal + edInterval[y].extTotal) * 100).toFixed(1) + '%' : '—') + '</td>';
+    var ed = edInterval[y], total = ed.regTotal + ed.extTotal;
+    html += '<td style="color:var(--gold-light);">'+ed.regTotal+'</td><td style="font-size:0.65rem;color:var(--text-secondary);">'+(total > 0 ? (ed.regTotal / total * 100).toFixed(1) + '%' : '—')+'</td>';
   });
-  html += '<td style="color:var(--gold-light);">' + grandReg + '</td><td style=\"font-size:0.65rem;color:var(--text-secondary);font-weight:600;\">' + (grandReg + grandExt > 0 ? (grandReg / (grandReg + grandExt) * 100).toFixed(1) + '%' : '—') + '</td></tr>';
+  var grandTotal = grandReg + grandExt;
+  html += '<td style="color:var(--gold-light);">'+grandReg+'</td><td style="font-size:0.65rem;color:var(--text-secondary);font-weight:600;">'+(grandTotal > 0 ? (grandReg / grandTotal * 100).toFixed(1) + '%' : '—')+'</td></tr>';
 
   html += '<tr style="font-weight:700;background:var(--surface2);"><td>⚽ 加时赛合计 (96-120+\')</td>';
   editions.forEach(function(y){
-    html += '<td style="color:var(--gold-light);">' + edInterval[y].extTotal + '</td><td style=\"font-size:0.65rem;color:var(--text-secondary);\">' + (edInterval[y].regTotal + edInterval[y].extTotal > 0 ? (edInterval[y].extTotal / (edInterval[y].regTotal + edInterval[y].extTotal) * 100).toFixed(1) + '%' : '—') + '</td>';
+    var ed = edInterval[y], total = ed.regTotal + ed.extTotal;
+    html += '<td style="color:var(--gold-light);">'+ed.extTotal+'</td><td style="font-size:0.65rem;color:var(--text-secondary);">'+(total > 0 ? (ed.extTotal / total * 100).toFixed(1) + '%' : '—')+'</td>';
   });
-  html += '<td style="color:var(--gold-light);">' + grandExt + '</td><td style=\"font-size:0.65rem;color:var(--text-secondary);font-weight:600;\">' + (grandReg + grandExt > 0 ? (grandExt / (grandReg + grandExt) * 100).toFixed(1) + '%' : '—') + '</td></tr>';
+  html += '<td style="color:var(--gold-light);">'+grandExt+'</td><td style="font-size:0.65rem;color:var(--text-secondary);font-weight:600;">'+(grandTotal > 0 ? (grandExt / grandTotal * 100).toFixed(1) + '%' : '—')+'</td></tr>';
 
   html += '</tbody></table></div>';
   // ========== END V23 ==========

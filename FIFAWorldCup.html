@@ -380,7 +380,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 /* ========== WC Edition Selector (V16) ========== */
 .wc-edition-bar{display:flex;align-items:center;gap:4px;padding:8px 16px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:10px;flex-wrap:wrap;overflow-x:auto}
 .wc-edition-bar .edition-label{font-size:0.72rem;color:var(--text-secondary);white-space:nowrap;margin-right:6px;font-weight:700;letter-spacing:1px}
-.wc-edition-tab{padding:6px 14px;border-radius:20px;cursor:pointer;font-size:0.75rem;font-weight:600;white-space:nowrap;transition:all 0.2s;background:var(--surface2);color:var(--text-secondary);border:2px solid transparent;letter-spacing:0.5px;user-select:none}
+.wc-edition-tab{padding:5px 12px;border-radius:20px;cursor:pointer;font-size:0.7rem;font-weight:600;white-space:nowrap;transition:all 0.2s;background:var(--surface2);color:var(--text-secondary);border:2px solid transparent;letter-spacing:0.5px;user-select:none}
 .wc-edition-tab:hover{border-color:var(--gold);color:var(--gold-light);transform:translateY(-1px)}
 @keyframes neonPulseWcTab{0%,100%{box-shadow:0 0 5px rgba(240,208,112,0.3),0 0 12px rgba(240,208,112,0.15),0 0 25px rgba(200,162,72,0.08)}50%{box-shadow:0 0 10px rgba(240,208,112,0.55),0 0 22px rgba(240,208,112,0.3),0 0 40px rgba(200,162,72,0.18),0 0 55px rgba(180,140,60,0.06)}}
 .wc-edition-tab.active{animation:neonPulseWcTab 2.4s ease-in-out infinite;background:linear-gradient(135deg,#b8862d,#d4a843);color:#111;border-color:#d4a843;font-weight:800;box-shadow:0 4px 16px rgba(212,168,67,0.3)}
@@ -764,7 +764,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 		  display: flex; gap: 48px; flex-wrap: wrap; justify-content: center;
 		}
 		.welcome-btn {
-		  width: 300px; padding: 40px 28px; border-radius: 28px;
+			  width: 300px; padding: 34px 28px; border-radius: 28px;
 		  border: 2px solid rgba(255,255,255,0.08);
 		  background: rgba(255,255,255,0.02);
 		  color: #d0d8e0; cursor: pointer; text-align: center;
@@ -786,9 +786,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 		.welcome-btn:hover::after {
 		  bottom: -14px; filter: blur(20px);
 		}
-		.welcome-btn-icon { font-size: 2.8rem; display: block; margin-bottom: 14px; }
-		.welcome-btn-label { font-size: 1.4rem; font-weight: 700; display: block; letter-spacing: 2px; }
-		.welcome-btn-sub { font-size: 0.85rem; color: #7a8a9a; display: block; margin-top: 8px; font-weight: bold; }
+		.welcome-btn-icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+		.welcome-btn-label { font-size: 1.25rem; font-weight: 700; display: block; letter-spacing: 2px; }
+		.welcome-btn-sub { font-size: 0.8rem; color: #7a8a9a; display: block; margin-top: 6px; font-weight: bold; }
 
 
 /* ===== 阵容名单弹窗 V1.74 ===== */
@@ -1566,16 +1566,16 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
   .welcome-btn {
     width: 100% !important;
-    padding: 24px 20px !important;
+    padding: 16px 18px !important;
     border-radius: 18px !important;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 3px;
   }
   .welcome-btn-icon { font-size: 2rem; }
   .welcome-btn-label { font-size: 1rem; }
-  .welcome-btn-sub { font-size: 0.7rem; }
+  .welcome-btn-sub { font-size: 0.65rem; }
 
   /* ── 2. HEADER & GLOBAL ── */
   .header {
@@ -1597,7 +1597,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
   /* ── 3. WC EDITION BAR ── */
   .wc-edition-bar {
-    padding: 8px 8px;
+    padding: 6px 8px;
     gap: 4px;
     margin-bottom: 10px;
     overflow-x: auto;
@@ -1613,8 +1613,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     flex-shrink: 0;
   }
   .wc-edition-tab {
-    padding: 5px 10px;
-    font-size: 0.62rem;
+    padding: 4px 4px;
+    font-size: 0.7rem;
     border-radius: 14px;
     flex-shrink: 0;
     line-height: 1;
@@ -2736,9 +2736,12 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
 
   /* ── 15. MISC TOUCH IMPROVEMENTS ── */
-  button, .btn, .wc-edition-tab {
-    min-height: 40px; /* touch-friendly tap targets */
-  }
+	  button, .btn {
+	    min-height: 40px; /* touch-friendly tap targets */
+	  }
+	  .wc-edition-tab {
+	    min-height: 36px;
+	  }
   .match-item {
     min-height: auto; /* match-item uses its own compact min-height */
   }
@@ -2767,6 +2770,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   /* Prob update dropdown */
   .prob-update-dropdown {
     width: 100%;
+    min-width: 0;
     left: 0;
     right: 0;
   }
@@ -3239,15 +3243,15 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .handle.open .handle-text{color:#ffd060!important}
 /* 数据总览下拉面板 — 移动端独立样式，右锚定，参照版本更新下拉 */
 .expand-panel{position:fixed;right:8px;width:min(340px,calc(100vw - 16px));max-height:0;overflow:hidden;opacity:0;transition:max-height 0.35s ease,opacity 0.3s ease;display:block;background:linear-gradient(180deg,#1a1000,#0e0800);border:1.5px solid rgba(255,180,40,0.25);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.6);z-index:680;pointer-events:none}
-.expand-panel.open{opacity:1;pointer-events:auto;width:min(340px,calc(100vw - 16px))!important}
-.panel-inner{width:100%!important;max-width:100%!important;border-radius:0!important;border:none!important;margin:0!important;height:100%!important;overflow-y:auto!important;background:transparent!important;display:flex!important;flex-direction:column!important}
-.panel-inner .phd{display:flex!important;align-items:center!important;gap:6px!important;padding:8px 12px!important;border-bottom:1px solid rgba(255,180,40,0.12)!important;flex-shrink:0!important;position:relative!important}
+	.expand-panel.open{opacity:1;pointer-events:auto}
+	.panel-inner{width:100%!important;max-width:100%!important;border-radius:0!important;border:none!important;margin:0!important;height:100%!important;overflow-y:auto!important;background:transparent!important;display:flex!important;flex-direction:column!important}
+	.panel-inner .phd{display:none!important}
 .panel-inner .phd .icon{font-size:0.85rem!important}
 .panel-inner .phd .title{font-size:0.75rem!important;font-weight:700!important;letter-spacing:0.5px!important;color:#ffc040!important;flex:1!important;background:none!important;-webkit-text-fill-color:#ffc040!important;-webkit-background-clip:unset!important;filter:none!important}
 .panel-inner .phd::before{display:none!important}
 .ptabs{flex:1!important;overflow-y:auto!important;padding:4px 8px!important;display:flex!important;flex-direction:column!important;gap:1px!important}
-.group-divider{display:flex!important;align-items:center!important;gap:6px!important;padding:8px 2px 3px!important}
-.group-divider:first-child{padding-top:2px!important}
+	.group-divider{display:flex!important;align-items:center!important;gap:6px!important;padding:11px 2px 11px!important}
+	.group-divider:first-child{padding-top:11px!important}
 .group-divider .gline{flex:1!important;height:1px!important;background:rgba(255,180,40,0.12)!important}
 .group-divider .glabel{font-size:0.58rem!important;white-space:nowrap!important;letter-spacing:0.5px!important;font-weight:700!important}
 .g1 .gline{background:linear-gradient(90deg,transparent,rgba(255,171,64,0.4),transparent)!important}.g1 .glabel{color:#ffab40!important}
@@ -3262,7 +3266,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .g4 .gline{background:linear-gradient(90deg,transparent,rgba(255,224,160,0.4),transparent)!important}.g4 .glabel{color:#ffe0a0!important}
 .ptab.g4{border:1px solid rgba(255,224,160,0.12)!important;color:#b8a880!important}
 .ptab.g4.active{background:#d4a020!important;border-color:#ffe0a0!important;color:#111!important;box-shadow:0 0 14px rgba(212,160,32,0.35),0 0 28px rgba(255,224,160,0.1)!important}
-.ptab{padding:5px 8px!important;cursor:pointer!important;font-size:0.62rem!important;font-weight:600!important;display:flex!important;align-items:center!important;gap:6px!important;transition:all 0.2s!important;justify-content:flex-start!important;max-width:100%!important;margin:0!important;width:100%!important;border-radius:8px!important;background:rgba(200,162,72,0.02)!important;user-select:none!important}
+	.ptab{padding:5px 8px!important;cursor:pointer!important;font-size:0.62rem!important;font-weight:600!important;display:flex!important;align-items:center!important;gap:6px!important;transition:all 0.2s!important;justify-content:center!important;max-width:100%!important;margin:0!important;width:100%!important;border-radius:8px!important;background:rgba(200,162,72,0.02)!important;user-select:none!important}
 .ptab .ico{font-size:0.8rem!important;flex-shrink:0!important;transition:transform 0.2s!important}
 .ptab.active{transform:scale(1.02)!important;font-weight:700!important}
 .ptab.active .ico{transform:scale(1.08)!important}
@@ -3617,20 +3621,27 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 })();
 
 function toggleProbUpdate() {
-    const dropdown = document.getElementById('probUpdateDropdown');
-    const capsule = document.querySelector('.prob-update-capsule');
-    if (!dropdown || !capsule) return;
-    const isExpanded = dropdown.classList.contains('expanded');
-    if (isExpanded) {
-        dropdown.classList.remove('expanded');
-        capsule.classList.remove('expanded');
-        capsule.innerHTML = '📊 版本更新 ▾';
-    } else {
-        dropdown.classList.add('expanded');
-        capsule.classList.add('expanded');
-        capsule.innerHTML = '📊 版本更新 ▴';
-    }
-}
+	    const dropdown = document.getElementById('probUpdateDropdown');
+	    const capsule = document.querySelector('.prob-update-capsule');
+	    if (!dropdown || !capsule) return;
+	    const isExpanded = dropdown.classList.contains('expanded');
+	    if (isExpanded) {
+	        dropdown.classList.remove('expanded');
+	        capsule.classList.remove('expanded');
+	        capsule.innerHTML = '📊 版本更新 ▾';
+	    } else {
+	        dropdown.classList.add('expanded');
+	        capsule.classList.add('expanded');
+	        capsule.innerHTML = '📊 版本更新 ▴';
+	        // 折叠数据总览下拉
+	        var panel = document.getElementById("expandPanel");
+	        var handle = document.getElementById("panelHandle");
+	        var arrow = document.getElementById("handleArrow");
+	        if(panel){ panel.classList.remove("open"); panel.style.height = ""; panel.style.maxHeight = ""; panel.style.width = ""; panel.style.right = ""; }
+	        if(handle) handle.classList.remove("open");
+	        if(arrow) arrow.textContent = "\u25be";
+	    }
+	}
 
 // ===== 强制刷新：清除缓存并重新加载到 Loading 页 =====
 	function hardRefresh() {
@@ -4900,21 +4911,29 @@ console.log('✅ 表现评价渲染组件已安装 V1.75');
   var isMobile = window.innerWidth <= 768;
   if(!isMobile){ arrow.textContent = "\u25c0\u25c0\u25c0"; }
 
-  function open(){
-    panel.classList.add("open"); handle.classList.add("open");
-    arrow.textContent = isMobile ? "\u25b4" : "\u25b6\u25b6\u25b6"; expanded = true;
-    if(isMobile){
-      var capsuleRow = sideHost.parentNode; // sideHost 已在胶囊行内
-      if(capsuleRow){
-        var rect = capsuleRow.getBoundingClientRect();
-        panel.style.top = (rect.bottom + 6) + "px";
-        panel.style.maxHeight = (window.innerHeight - rect.bottom - 14) + "px";
-        panel.style.height = panel.style.maxHeight;
-      }
-    }
-  }
-  function collapse(){ panel.classList.remove("open"); handle.classList.remove("open"); arrow.textContent = isMobile ? "\u25be" : "\u25c0\u25c0\u25c0"; expanded = false; if(isMobile){ panel.style.height = ""; panel.style.maxHeight = ""; } }
-  function toggle(){ if(expanded) collapse(); else open(); }
+	  function open(){
+	    panel.classList.add("open"); handle.classList.add("open");
+	    arrow.textContent = isMobile ? "\u25b4" : "\u25b6\u25b6\u25b6"; expanded = true;
+	    if(isMobile){
+	      var capsuleRow = sideHost.parentNode; // sideHost 已在胶囊行内
+	      if(capsuleRow){
+	        var rect = capsuleRow.getBoundingClientRect();
+	        panel.style.top = (rect.bottom + 6) + "px";
+	        panel.style.maxHeight = (window.innerHeight - rect.bottom - 14) + "px";
+	        panel.style.height = panel.style.maxHeight;
+	        var hRect = handle.getBoundingClientRect();
+	        panel.style.width = hRect.width + "px";
+	        panel.style.right = (window.innerWidth - hRect.right) + "px";
+	      }
+	      // 折叠版本更新下拉
+	      var probeCapsule = document.querySelector(".prob-update-capsule");
+	      var probeDropdown = document.getElementById("probUpdateDropdown");
+	      if(probeCapsule){ probeCapsule.classList.remove("expanded"); probeCapsule.innerHTML = '📊 版本更新 ▾'; }
+	      if(probeDropdown) probeDropdown.classList.remove("expanded");
+	    }
+	  }
+	  function collapse(){ panel.classList.remove("open"); handle.classList.remove("open"); arrow.textContent = isMobile ? "\u25be" : "\u25c0\u25c0\u25c0"; expanded = false; if(isMobile){ panel.style.height = ""; panel.style.maxHeight = ""; panel.style.width = ""; panel.style.right = ""; } }
+	  function toggle(){ if(panel.classList.contains("open")) collapse(); else open(); }
 
   if(!isMobile){
   handle.addEventListener("mouseenter", function(){ hovering = true; if(leaveTimer){ clearTimeout(leaveTimer); leaveTimer = null; } if(!expanded && !locked) open(); });
@@ -4926,7 +4945,7 @@ console.log('✅ 表现评价渲染组件已安装 V1.75');
   // 移动端：sideHost 已在胶囊行 HTML 中，与版本更新并排
   handle.addEventListener("click", function(e){ e.stopPropagation(); toggle(); });
   // 点击外部关闭下拉
-  document.addEventListener("click", function(e){ if(expanded && !sideHost.contains(e.target)) collapse(); });
+	  document.addEventListener("click", function(e){ if(panel.classList.contains("open") && !sideHost.contains(e.target)) collapse(); });
   var capsule = document.querySelector(".prob-update-capsule");
   var dropdown = document.getElementById("probUpdateDropdown");
   if(capsule){ capsule.classList.remove("expanded"); capsule.innerHTML = '📊 版本更新 ▾'; }
@@ -4966,6 +4985,29 @@ function getActiveYear(){
   return (typeof currentEdition!=='undefined' && currentEdition==='2026') ? '2026' : (pastWCYear||'2022');
 }
 
+// ================================================================
+// normalizeGoalMin() — 进球分钟数归一化
+// ⚠️ VIBE CODING 关键约定：
+//   "+" 是足球补时语义符号，NOT 数学运算符。
+//   例： "90+3" = 下半场补时第3分钟，不是 90+3=93。
+//   数据录入必须用字符串 "90+3"，禁止写成数字 93。
+//   补时进球归入 4 个独立阶段：45+/90+/105+/120+
+//   常规进球（无+号）归入每5分钟区间统计。
+// 安全网：小组赛无加时，min≥91 的纯数字进球自动归为90+补时。
+// ================================================================
+function normalizeGoalMin(min){
+  if(typeof min==='string' && min.indexOf('+')!==-1){
+    var parts=min.split('+');
+    var base=parseInt(parts[0])||0;
+    var extra=parseInt(parts[1])||0;
+    return {num:base+extra, isStoppage:true, base:base};
+  }
+  var num=typeof min==='string'?parseInt(min):(min||0);
+  // 安全网：min≥121 必为120+补时（足球不存在第121分钟的常规比赛时间）
+  if(num>=121) return {num:num, isStoppage:true, base:120};
+  return {num:num, isStoppage:false, base:0};
+}
+
 function getMatchDetail(key){
   if(wcMatchDetails&&wcMatchDetails[key]) return wcMatchDetails[key];
   if(typeof wc2026MatchDetails!=='undefined'&&wc2026MatchDetails[key]) return wc2026MatchDetails[key];
@@ -4996,7 +5038,12 @@ function collectDetailData(){
     var isGroup = (parts[1]&&parts[1].length===1);
     if(isGroup){groupMatches++;}else{koMatches++;}
     if(detail.goals) detail.goals.forEach(function(g){
-      if(g.min<=130){allGoals.push({min:g.min,type:g.type,scorer:g.scorer,side:g.side});goalTypeCount[g.type]=(goalTypeCount[g.type]||0)+1;}
+      var norm=normalizeGoalMin(g.min);
+      // ⚠️ 安全网：无加时赛 → min≥91 必为90+补时（数据录入容错）
+      // 判断"无加时"：小组赛 OR (淘汰赛无点球大战且无≥105进球)
+      var hasET=!!detail.ps||detail.goals.some(function(x){return normalizeGoalMin(x.min).num>=105;});
+      if(!norm.isStoppage && (isGroup||!hasET) && norm.num>=91){norm.isStoppage=true;norm.base=90;}
+      if(norm.num<=130||norm.isStoppage){allGoals.push({min:norm.num,isStoppage:norm.isStoppage,stoppageBase:norm.base,type:g.type,scorer:g.scorer,side:g.side});goalTypeCount[g.type]=(goalTypeCount[g.type]||0)+1;}
     });
     if(detail.cards){
       var hy=detail.cards.home?detail.cards.home.yellow:0, ay=detail.cards.away?detail.cards.away.yellow:0;
@@ -5050,18 +5097,39 @@ window.closeOvModal=function(id){document.getElementById(id).classList.remove('v
 // ===== 1. 进球时间弹窗 =====
 window.showOvGoalTime=function(){
   var td=countTotalData(), dd=collectDetailData(), allGoals=dd.allGoals;
-  var firstHalf=0,secondHalf=0,extraTime=0;
-  allGoals.forEach(function(g){if(g.min>=1&&g.min<=50)firstHalf++;else if(g.min>=51&&g.min<=95)secondHalf++;else if(g.min>=96)extraTime++;});
+
+  // 补时进球独立计数：45+ / 90+ / 105+ / 120+
+  var stoppageCounts={'45':0,'90':0,'105':0,'120':0};
+  // 常规进球按5分钟区间统计（仅非补时进球）
   var intervals=[],labels=[];
   for(var i=0;i<25;i++){intervals.push(0);labels.push((i===24)?'120+':((i*5+1)+'-'+(i+1)*5));}
-  allGoals.forEach(function(g){var idx=Math.min(24,Math.floor((g.min-1)/5));intervals[idx]++;});
-  var maxV=Math.max.apply(null,intervals)||1;
 
-  var secs={first:[0,1,2,3,4,5,6,7,8],sp1:[9],second:[10,11,12,13,14,15,16,17],sp2:[18],extra1:[18,19,20],sp3:[21],extra2:[21,22,23],sp4:[24]};
-  function renderBars(idxs,spIdxs){
+  var firstHalf=0,secondHalf=0,extraTime=0;
+
+  allGoals.forEach(function(g){
+    if(g.isStoppage){
+      stoppageCounts[String(g.stoppageBase)]=(stoppageCounts[String(g.stoppageBase)]||0)+1;
+      if(g.stoppageBase===45) firstHalf++;
+      else if(g.stoppageBase===90) secondHalf++;
+      else extraTime++;
+    } else {
+      var idx=Math.min(24,Math.floor((g.min-1)/5));
+      intervals[idx]++;
+      if(g.min>=1&&g.min<=45) firstHalf++;
+      else if(g.min>=46&&g.min<=90) secondHalf++;
+      else if(g.min>=91) extraTime++;
+    }
+  });
+
+  var maxV=Math.max.apply(null,intervals.concat([stoppageCounts['45'],stoppageCounts['90'],stoppageCounts['105'],stoppageCounts['120']]))||1;
+
+  var secs={first:[0,1,2,3,4,5,6,7,8],second:[9,10,11,12,13,14,15,16,17],extra1:[18,19,20],extra2:[21,22,23]};
+
+  function renderBars(idxs,spBase){
     var h='';
     idxs.forEach(function(i){var v=intervals[i],w=Math.max(2,Math.round(v/maxV*100));h+='<div class="ov-row"><span class="lbl">'+labels[i]+'</span><div class="track"><div class="fill reg" style="width:'+w+'%"></div></div><span class="val">'+(v||0)+'</span></div>';});
-    (spIdxs||[]).forEach(function(i){var v=intervals[i],w=Math.max(2,Math.round(v/maxV*100));h+='<div class="ov-row stoppage"><span class="lbl">'+(i===9?'45+补时':i===18?'90+补时':i===21?'105+补时':'120+补时')+'</span><div class="track"><div class="fill" style="width:'+w+'%"></div></div><span class="val">'+(v||0)+'</span></div>';});
+    var spCount=stoppageCounts[String(spBase)]||0, spW=Math.max(2,Math.round(spCount/maxV*100));
+    h+='<div class="ov-row stoppage"><span class="lbl">'+spBase+'+补时</span><div class="track"><div class="fill" style="width:'+spW+'%"></div></div><span class="val">'+spCount+'</span></div>';
     return h;
   }
 
@@ -5076,14 +5144,14 @@ window.showOvGoalTime=function(){
   html+='<div class="ov-hero-card"><div class="num">'+extraTime+'</div><div class="lbl">加时赛进球</div><div class="sub">含 105+/120+</div></div>';
   html+='<div class="ov-hero-card"><div class="num">'+td.pkGoals+'</div><div class="lbl">点球大战进球</div><div class="sub">仅淘汰赛 PK</div></div>';
   html+='</div>';
-  html+='<div class="ov-section">▸ 上半场 1-45+\'</div><div class="ov-bars">'+renderBars(secs.first,secs.sp1)+'</div>';
+  html+='<div class="ov-section">▸ 上半场 1-45\'</div><div class="ov-bars">'+renderBars(secs.first,45)+'</div>';
   html+='<div class="ov-div"><span>半场休息</span></div>';
-  html+='<div class="ov-section">▸ 下半场 46-90+\'</div><div class="ov-bars">'+renderBars(secs.second,secs.sp2)+'</div>';
+  html+='<div class="ov-section">▸ 下半场 46-90\'</div><div class="ov-bars">'+renderBars(secs.second,90)+'</div>';
   html+='<div class="ov-div"><span>常规时间结束 — 加时赛</span></div>';
-  html+='<div class="ov-section">▸ 加时上半场 91-105+\'</div><div class="ov-bars">'+renderBars(secs.extra1,secs.sp3)+'</div>';
+  html+='<div class="ov-section">▸ 加时上半场 91-105\'</div><div class="ov-bars">'+renderBars(secs.extra1,105)+'</div>';
   html+='<div class="ov-div"><span>加时半场</span></div>';
-  html+='<div class="ov-section">▸ 加时下半场 106-120+\'</div><div class="ov-bars">'+renderBars(secs.extra2,secs.sp4)+'</div>';
-  html+='<div class="ov-note">📌 详细分钟分布基于 <strong>'+dd.matchesWithDetail+'</strong> 场有进球时间轴记录的比赛（共 '+allGoals.length+' 球）。<strong>鲜艳橙色</strong> = 补时进球（45+/90+/105+/120+），独立于常规时段统计。</div>';
+  html+='<div class="ov-section">▸ 加时下半场 106-120\'</div><div class="ov-bars">'+renderBars(secs.extra2,120)+'</div>';
+  html+='<div class="ov-note">📌 详细分钟分布基于 <strong>'+dd.matchesWithDetail+'</strong> 场有进球时间轴记录的比赛（共 '+allGoals.length+' 球）。<strong>鲜艳橙色</strong> = 补时进球（45+/90+/105+/120+），独立于常规时段统计。补时判断依据 min 字段中的 + 符号，非数学运算。</div>';
 
   document.getElementById('ovGTYear').textContent = yearLabels[getActiveYear()]||getActiveYear()||'';
   document.getElementById('ovGoalTimeContent').innerHTML=html;
