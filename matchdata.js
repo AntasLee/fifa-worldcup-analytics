@@ -1186,6 +1186,20 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
+
+  "2026|D|USA|AUS": {
+    score: { sh: 2, sa: 0 },
+    goals: [
+      { min: 11, side: "home", scorer: "伯吉斯 (Cameron Burgess)", type: "own_goal" },
+      { min: 43, side: "home", scorer: "弗里曼 (Freeman)",          type: "header" }
+    ],
+    cards: {
+      home: { yellow: 3, red: 0 },
+      away: { yellow: 4, red: 0 }
+    },
+    attendance: null,
+    referee: "TBD"
+  },
   "2026|E|GER|CUW": {
     score: { sh: 7, sa: 1 },
     goals: [
@@ -1431,7 +1445,7 @@ const wc2026MatchDetails = {
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
 matchStats["2026|A|KOR|CZE"] = {p1:"62%",p2:"38%",ps1:480,ps2:390,sh1:11,sh2:7,so1:6,so2:4,sb1:5,sb2:3,co1:4,co2:5,fo1:12,fo2:14,os1:2,os2:2,yc1:1,yc2:0,rc1:0,rc2:0,tk1:14,tk2:16,at1:98,at2:90,da1:38,da2:42,pk1:0,pk2:0};
 matchStats["2026|A|CZE|RSA"] = {p1:"38%",p2:"62%",ps1:null,ps2:null,sh1:11,sh2:9,so1:3,so2:4,sb1:8,sb2:5,co1:5,co2:5,fo1:12,fo2:10,os1:2,os2:3,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:69,at2:119,da1:31,da2:40,pk1:0,pk2:1};
-matchStats["2026|A|MEX|KOR"] = {p1:"43%",p2:"57%",ps1:null,ps2:null,sh1:7,sh2:6,so1:4,so2:2,sb1:3,sb2:4,co1:0,co2:2,fo1:9,fo2:7,os1:0,os2:0,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:101,da1:17,da2:40,pk1:0,pk2:0};
+matchStats["2026|A|MEX|KOR"] = {p1:"43%",p2:"57%",ps1:null,ps2:null,sh1:7,sh2:6,so1:4,so2:2,sb1:3,sb2:4,co1:0,co2:2,fo1:9,fo2:7,os1:3,os2:6,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:101,da1:17,da2:40,pk1:0,pk2:0};
 matchStats["2026|B|CAN|BIH"] = {p1:"61%",p2:"39%",ps1:null,ps2:null,sh1:9,sh2:7,so1:4,so2:3,sb1:5,sb2:4,co1:9,co2:4,fo1:10,fo2:20,os1:1,os2:0,yc1:2,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:134,at2:110,da1:80,da2:19,pk1:0,pk2:0};
 matchStats["2026|D|USA|PAR"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:12,sh2:4,so1:6,so2:1,sb1:6,sb2:3,co1:3,co2:1,fo1:13,fo2:17,os1:2,os2:1,yc1:1,yc2:5,rc1:0,rc2:0,tk1:null,tk2:null,at1:158,at2:58,da1:92,da2:22,pk1:0,pk2:0};
 matchStats["2026|B|QAT|SUI"] = {p1:"32%",p2:"68%",ps1:null,ps2:null,sh1:6,sh2:17,so1:3,so2:7,sb1:3,sb2:10,co1:3,co2:10,fo1:12,fo2:11,os1:0,os2:1,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:48,at2:132,da1:16,da2:88,pk1:0,pk2:1};
@@ -1440,6 +1454,7 @@ matchStats["2026|B|CAN|QAT"] = {p1:"67%",p2:"33%",ps1:null,ps2:null,sh1:18,sh2:1
 matchStats["2026|C|BRA|MAR"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:9,sh2:8,so1:5,so2:3,sb1:4,sb2:5,co1:6,co2:2,fo1:16,fo2:14,os1:0,os2:1,yc1:2,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:101,at2:103,da1:33,da2:47,pk1:0,pk2:0};
 matchStats["2026|C|HAI|SCO"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:11,sh2:7,so1:2,so2:2,sb1:9,sb2:5,co1:4,co2:3,fo1:23,fo2:21,os1:3,os2:1,yc1:1,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:111,at2:76,da1:47,da2:39,pk1:0,pk2:0};
 matchStats["2026|D|AUS|TUR"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:8,sh2:18,so1:4,so2:8,sb1:4,sb2:10,co1:5,co2:8,fo1:12,fo2:4,os1:1,os2:3,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:51,at2:150,da1:35,da2:104,pk1:0,pk2:0};
+matchStats["2026|D|USA|AUS"] = {p1:"62%",p2:"38%",ps1:null,ps2:null,sh1:4,sh2:5,so1:2,so2:2,sb1:2,sb2:3,co1:7,co2:4,fo1:12,fo2:16,os1:1,os2:0,yc1:3,yc2:4,rc1:0,rc2:0,tk1:null,tk2:null,at1:124,at2:78,da1:60,da2:40,pk1:0,pk2:0};
 matchStats["2026|F|NED|JPN"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:9,sh2:9,so1:6,so2:3,sb1:3,sb2:6,co1:5,co2:4,fo1:7,fo2:7,os1:1,os2:0,yc1:3,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:106,at2:76,da1:60,da2:43,pk1:0,pk2:0};
 
 matchStats["2026|E|GER|CUW"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:18,sh2:8,so1:12,so2:2,sb1:6,sb2:6,co1:8,co2:1,fo1:18,fo2:11,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:137,at2:76,da1:81,da2:21,pk1:1,pk2:0};

@@ -703,6 +703,41 @@ const wc2026AllMatches = {
     mediaRating: { motm: "哈弗茨", sources: ["FIFA", "ESPN"], home: {score: 10, quotes: "德国以一场摧枯拉朽的7-1大胜宣告王者归来。哈弗茨梅开二度，穆西亚拉、萨内、维尔茨、菲尔克鲁格和穆勒各入一球，全方位碾压式的表现让世界为之侧目。"}, away: {score: 2, quotes: "库拉索的世界杯首秀遭遇噩梦般的洗礼。巴库纳的进球挽回些许颜面，但全场仅3次射门的数据如实反映了巨大的实力鸿沟。"} },
     aiPreMatch: null, aiPostReview: null
   },
+
+  "2026|D|USA|AUS": {
+    score: { sh: 2, sa: 0 },
+    date: "2026-06-20",
+    time: "03:00",
+    venue: "流明球场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 11, side: "home", scorer: "伯吉斯", type: "own_goal" },
+      { min: 43, side: "home", scorer: "弗里曼", type: "header" }
+    ],
+    stats: {
+      possession:      { h: 62, a: 38 },
+      shots:           { h: 4,  a: 5 },
+      shotsOnTarget:   { h: 2,  a: 2 },
+      corners:         { h: 7,  a: 4 },
+      fouls:           { h: 12, a: 16 },
+      yellowCards:     { h: 3,  a: 4 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 124,a: 78 },
+      dangerousAttacks:{ h: 60, a: 40 }
+    },
+    attendance: 66925,
+    referee: "Felix Zwayer (GER)",
+    xg: null,
+    mediaRating: {
+      motm: "福拉林·巴洛贡",
+      sources: ["FIFA", "BBC Sport", "NYT Athletic"],
+      home: {score: 8, quotes: "美国在普利西奇缺阵下依然全面碾压对手。伯吉斯的乌龙球早早打破僵局，弗里曼头球锁定胜局。巴洛贡全场串联进攻荣获全场最佳，美国成为第三支提前晋级淘汰赛的球队。"},
+      away: {score: 4, quotes: "澳大利亚全场难以应对东道主的高压逼抢，上半场仅一次射门。波波维奇半场连换三人试图扭转局势但收效甚微，球队末轮需击败巴拉圭才能确保出线。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
   "2026|E|CIV|ECU": {
     score: { sh: 1, sa: 0 },
     date: "2026-06-14", time: "09:00", venue: "AT&T体育场", stage: "group", round: 1,
