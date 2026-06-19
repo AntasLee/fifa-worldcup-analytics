@@ -122,6 +122,40 @@ const wc2026AllMatches = {
     aiPreMatch: null,
     aiPostReview: null
   },
+
+  "2026|A|MEX|KOR": {
+    score: { sh: 1, sa: 0 },
+    date: "2026-06-19",
+    time: "09:00",
+    venue: "阿克伦球场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 50, side: "home", scorer: "罗莫", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 43, a: 57 },
+      shots:           { h: 7,  a: 6 },
+      shotsOnTarget:   { h: 4,  a: 2 },
+      corners:         { h: 0,  a: 2 },
+      fouls:           { h: 9,  a: 7 },
+      yellowCards:     { h: 0,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 96, a: 101 },
+      dangerousAttacks:{ h: 17, a: 40 }
+    },
+    attendance: 45522,
+    referee: "Gustavo Tejera (URU)",
+    xg: null,
+    mediaRating: {
+      motm: "路易斯·罗莫",
+      sources: ["FIFA", "CBS Sports", "ESPN"],
+      home: {score: 7, quotes: "墨西哥以一场务实丑陋的胜利成为首支晋级淘汰赛的球队。罗莫抓住金承奎的失误攻入制胜球，门将兰格尔下半场多次神扑力保零封。两连胜零失球锁定A组头名。"},
+      away: {score: 5, quotes: "韩国控球率占优但缺乏致命一击。孙兴慜57分钟即被换下，全场2次射正未能转化为进球。末轮对阵南非将成为出线生死战，xG 0.91:0.53 的数据说明韩国值得更好的结果。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
   "2026|H|KSA|URU": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-16",
