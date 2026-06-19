@@ -98,16 +98,23 @@
 
   // ========== 🆕 新增：球队阵容分析辅助函数 ==========
 
-  /** 计算球队平均年龄 (从 squadDB 动态计算) */
+  /** 计算球队平均年龄 (从 squadDB 动态计算, 优先 a 字段, 回退 dob 推算) */
   function computeAvgAge(code) {
     try {
       if (typeof window.squadDB === 'undefined' || !window.squadDB[code]) return null;
       const team = window.squadDB[code];
       let totalAge = 0, count = 0;
+      const now = new Date();
       ['gk', 'df', 'mf', 'fw'].forEach(pos => {
         if (team[pos]) {
           team[pos].forEach(p => {
-            const age = parseFloat(p.a);
+            let age = parseFloat(p.a);
+            if ((isNaN(age) || age <= 0) && p.dob) {
+              const dob = new Date(p.dob);
+              age = now.getFullYear() - dob.getFullYear();
+              const m = now.getMonth() - dob.getMonth();
+              if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) age--;
+            }
             if (!isNaN(age) && age > 0) { totalAge += age; count++; }
           });
         }
