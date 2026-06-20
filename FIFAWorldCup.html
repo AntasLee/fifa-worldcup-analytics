@@ -3643,51 +3643,54 @@ function toggleProbUpdate() {
 	    }
 	}
 
-// ===== 强制刷新：清除缓存并重新加载到 Loading 页 =====
-	function hardRefresh() {
-	    var url = window.location.href.split('#')[0].split('?')[0];
-	    var target = url + '?_v=' + Date.now();
-	    var tasks = [];
+// ===== 强制刷新：完全等效 CTRL+SHIFT+R =====
+		// 策略：清除 Cache API → 注销 Service Worker → location.reload()
+		// reload() 会令浏览器对主文档及所有子资源(JS/CSS/图片)发送 max-age=0 重验证请求
+		// 配合已清除的 Cache API 与 SW，达成与 CTRL+SHIFT+R 全等效的硬刷新
+		function hardRefresh() {
+		    var tasks = [];
 
-	    // 1. 清除所有 Cache API 缓存（异步，收集到 tasks）
-	    if ('caches' in window) {
-	        tasks.push(
-	            caches.keys().then(function(names) {
-	                return Promise.all(names.map(function(n) { return caches.delete(n); }));
-	            })
-	        );
-	    }
-	    // 2. 注销所有 Service Worker（异步，收集到 tasks）
-	    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-	        tasks.push(
-	            navigator.serviceWorker.getRegistrations().then(function(regs) {
-	                return Promise.all(regs.map(function(r) { return r.unregister(); }));
-	            })
-	        );
-	    }
+		    // 1. 清除所有 Cache API 缓存
+		    if ('caches' in window) {
+		        tasks.push(
+		            caches.keys().then(function(names) {
+		                return Promise.all(names.map(function(n) { return caches.delete(n); }));
+		            })
+		        );
+		    }
+		    // 2. 注销所有 Service Worker
+		    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+		        tasks.push(
+		            navigator.serviceWorker.getRegistrations().then(function(regs) {
+		                return Promise.all(regs.map(function(r) { return r.unregister(); }));
+		            })
+		        );
+		    }
 
-	    // 等待所有清理完成后跳转，最多等 3 秒兜底
-	    var done = false;
-	    var redirect = function() {
-	        if (done) return;
-	        done = true;
-	        // 3. 清除 sessionStorage（保留跨标签页标记）
-	        try {
-	            var xtab = sessionStorage.getItem('_xtab_open');
-	            sessionStorage.clear();
-	            if (xtab) sessionStorage.setItem('_xtab_open', xtab);
-	        } catch(e) {}
-	        // 4. 用 location.replace 避免时间戳 URL 污染历史
-	        location.replace(target);
-	    };
+		    // 等待所有清理完成后执行硬刷新，最多等 3 秒兜底
+		    var done = false;
+		    var doReload = function() {
+		        if (done) return;
+		        done = true;
+		        // 3. 清除 sessionStorage（保留跨标签页标记）
+		        try {
+		            var xtab = sessionStorage.getItem('_xtab_open');
+		            sessionStorage.clear();
+		            if (xtab) sessionStorage.setItem('_xtab_open', xtab);
+		        } catch(e) {}
+		        // 4. location.reload() 相当于浏览器 F5/CTRL+R 的刷新机制，
+		        //    对主文档及所有子资源发送 Cache-Control: max-age=0，
+		        //    浏览器不走 disk cache，逐一向服务器重验证（304 或 200）
+		        window.location.reload();
+		    };
 
-	    if (tasks.length > 0) {
-	        Promise.all(tasks).then(redirect).catch(redirect);
-	        setTimeout(redirect, 3000);
-	    } else {
-	        redirect();
-	    }
-	}
+		    if (tasks.length > 0) {
+		        Promise.all(tasks).then(doReload).catch(doReload);
+		        setTimeout(doReload, 3000);
+		    } else {
+		        doReload();
+		    }
+		}
 </script>
 <div class="sticky-top-group">
 <div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.75 | Author: Antas Lee</div></div>
@@ -3716,8 +3719,8 @@ function toggleProbUpdate() {
 	      <div class="prob-update-item">🎯 赛果命中概率结算</div>
       <div class="prob-update-divider"></div>
       <div class="prob-update-hint">
-      <button class="btn-hard-refresh" onclick="hardRefresh()" title="清除浏览器缓存并加载新版本，回到加载页">🔄 点击加载新版</button>
-      <div style="font-size:0.6rem;color:#7a6aa0;margin-top:3px;">或按 CTRL+SHIFT+R</div>
+<button class="btn-hard-refresh" onclick="hardRefresh()" title="完全等效 CTRL+SHIFT+R：清除所有缓存并强制刷新全部资源">🔄 点击加载新版</button>
+	      <div style="font-size:0.6rem;color:#7a6aa0;margin-top:3px;">等效于 CTRL+SHIFT+R</div>
     </div>
     </div>
   </div>
