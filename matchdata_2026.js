@@ -707,6 +707,42 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|C|BRA|HAI": {
+    score: { sh: 3, sa: 0 },
+    date: "2026-06-20",
+    time: "08:30",
+    venue: "林肯金融球场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 23,    side: "home", scorer: "库尼亚",     type: "shot" },
+      { min: 36,    side: "home", scorer: "库尼亚",     type: "shot" },
+      { min: "45+3",side: "home", scorer: "维尼修斯",   type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 56, a: 44 },
+      shots:           { h: 7,  a: 6 },
+      shotsOnTarget:   { h: 5,  a: 3 },
+      corners:         { h: 4,  a: 4 },
+      fouls:           { h: 13, a: 14 },
+      yellowCards:     { h: 1,  a: 3 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 102,a: 94 },
+      dangerousAttacks:{ h: 40, a: 32 }
+    },
+    attendance: 68324,
+    referee: "Alejandro Hernández Hernández (ESP)",
+    xg: null,
+    mediaRating: {
+      motm: "维尼修斯·儒尼奥尔",
+      sources: ["FIFA", "ESPN", "AP News"],
+      home: {score: 8, quotes: "巴西三球完胜海地，库尼亚回归首发即梅开二度，维尼修斯一射一传锁定胜局。五星巴西以一场稳健表现升至C组头名，海地提前一轮出局。"},
+      away: {score: 3, quotes: "海地面对巴西的强大火力毫无还手之力。全场仅3次射正，两连败提前出局，但球队在世界杯舞台上展现的斗志仍值得尊敬。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // D组
   "2026|D|USA|PAR": {
     score: { sh: 4, sa: 1 },
@@ -768,6 +804,40 @@ const wc2026AllMatches = {
       sources: ["FIFA", "BBC Sport", "NYT Athletic"],
       home: {score: 8, quotes: "美国在普利西奇缺阵下依然全面碾压对手。伯吉斯的乌龙球早早打破僵局，弗里曼头球锁定胜局。巴洛贡全场串联进攻荣获全场最佳，美国成为第三支提前晋级淘汰赛的球队。"},
       away: {score: 4, quotes: "澳大利亚全场难以应对东道主的高压逼抢，上半场仅一次射门。波波维奇半场连换三人试图扭转局势但收效甚微，球队末轮需击败巴拉圭才能确保出线。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|D|TUR|PAR": {
+    score: { sh: 0, sa: 1 },
+    date: "2026-06-20",
+    time: "11:00",
+    venue: "李维斯体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 2, side: "away", scorer: "加拉尔塞", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 72, a: 28 },
+      shots:           { h: 20, a: 5 },
+      shotsOnTarget:   { h: 5,  a: 2 },
+      corners:         { h: 12, a: 0 },
+      fouls:           { h: 14, a: 15 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 1 },
+      attacks:         { h: 161,a: 80 },
+      dangerousAttacks:{ h: 125,a: 20 }
+    },
+    attendance: 68827,
+    referee: "Iván Barton (SLV)",
+    xg: null,
+    mediaRating: {
+      motm: "马蒂亚斯·加拉尔塞",
+      sources: ["FIFA", "AP News", "RTE"],
+      home: {score: 3, quotes: "土耳其控球72%、狂轰20脚射门却颗粒无收。加拉尔塞65秒闪电破门后十人应战的巴拉圭反而守住胜果，土耳其两连败提前出局，暴殄天物的进攻效率令人震惊。"},
+      away: {score: 8, quotes: "十人巴拉圭用钢铁意志守住了加拉尔塞65秒闪电进球创造的领先。全场仅28%控球却完成世界杯史上最顽强的胜利之一，重燃出线希望。"}
     },
     aiPreMatch: null,
     aiPostReview: null
