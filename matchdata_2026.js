@@ -852,6 +852,42 @@ const wc2026AllMatches = {
     aiPreMatch: null, aiPostReview: null
   },
 
+  "2026|E|GER|CIV": {
+    score: { sh: 2, sa: 1 },
+    date: "2026-06-21",
+    time: "04:00",
+    venue: "BMO球场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 30,    side: "away", scorer: "凯西",    type: "shot" },
+      { min: 68,    side: "home", scorer: "翁达夫",  type: "shot" },
+      { min: "90+4",side: "home", scorer: "翁达夫",  type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 59, a: 41 },
+      shots:           { h: 12, a: 4 },
+      shotsOnTarget:   { h: 7,  a: 2 },
+      corners:         { h: 8,  a: 3 },
+      fouls:           { h: 5,  a: 7 },
+      yellowCards:     { h: 0,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 134,a: 98 },
+      dangerousAttacks:{ h: 73, a: 51 }
+    },
+    attendance: 43036,
+    referee: "Juan Gabriel Benítez (PAR)",
+    xg: null,
+    mediaRating: {
+      motm: "德尼兹·翁达夫",
+      sources: ["FIFA", "NYT Athletic", "ESPN"],
+      home: {score: 7, quotes: "德国在先失一球的情况下展现冠军底蕴。替补登场的翁达夫梅开二度完成逆转绝杀，两连胜提前锁定淘汰赛席位。凯西的世界波曾让科特迪瓦看到希望。"},
+      away: {score: 6, quotes: "科特迪瓦凭借凯西的个人能力率先破门，防守端顽强抵抗了68分钟。但面对德国的持续施压最终未能守住领先，末轮对阵库拉索将是出线关键战。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // F组
   "2026|F|NED|JPN": {
     score: { sh: 2, sa: 2 },
@@ -870,6 +906,45 @@ const wc2026AllMatches = {
     attendance: null, referee: "TBD", xg: null,
     mediaRating: { motm: "阿亚里", sources: ["ESPN", "BBC"], home: {score: 9, quotes: "瑞典以一场摧枯拉朽的5-1大胜开启世界杯。阿亚里梅开二度，伊萨克、哲凯赖什和库卢塞夫斯基各入一球，进攻端全面开花展现了北欧劲旅的强大实力。"}, away: {score: 3, quotes: "突尼斯面对瑞典的凌厉攻势毫无还手之力。姆萨克尼的进球是唯一的亮点，但防线漏洞百出让球队遭遇了惨痛失利。"} },
     aiPreMatch: null, aiPostReview: null
+  },
+
+  "2026|F|NED|SWE": {
+    score: { sh: 5, sa: 1 },
+    date: "2026-06-21",
+    time: "01:00",
+    venue: "NRG体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 5,  side: "home", scorer: "布比罗", type: "shot" },
+      { min: 17, side: "home", scorer: "布比罗", type: "shot" },
+      { min: 47, side: "home", scorer: "加克波", type: "shot" },
+      { min: 54, side: "home", scorer: "加克波", type: "shot" },
+      { min: 59, side: "away", scorer: "安东尼", type: "shot" },
+      { min: 89, side: "home", scorer: "孟菲斯", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 51, a: 49 },
+      shots:           { h: 9,  a: 13 },
+      shotsOnTarget:   { h: 7,  a: 8 },
+      corners:         { h: 2,  a: 5 },
+      fouls:           { h: 9,  a: 12 },
+      yellowCards:     { h: 0,  a: 3 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 109,a: 65 },
+      dangerousAttacks:{ h: 50, a: 49 }
+    },
+    attendance: 68777,
+    referee: "Michael Oliver (ENG)",
+    xg: null,
+    mediaRating: {
+      motm: "科迪·加克波",
+      sources: ["FIFA", "BBC Sport", "ESPN"],
+      home: {score: 9, quotes: "荷兰以一场5-1大胜扫除首轮阴霾。布比罗和加克波双双梅开二度，孟菲斯锦上添花。瑞典遭遇自1950年以来世界杯最大失利，荷兰几乎锁定出线。"},
+      away: {score: 3, quotes: "瑞典遭遇队史第二大世界杯惨败。埃兰加的进球是唯一亮点，防线面对荷兰的速度冲击完全崩盘，末轮需击败日本确保晋级。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
   },
 
   // H组

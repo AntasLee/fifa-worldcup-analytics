@@ -1290,6 +1290,20 @@ const wc2026MatchDetails = {
     referee: "TBD"
   },
 
+  "2026|E|GER|CIV": {
+    score: { sh: 2, sa: 1 },
+    goals: [
+      { min: 30,    side: "away", scorer: "凯西 (Franck Kessié)",       type: "shot" },
+      { min: 68,    side: "home", scorer: "翁达夫 (Deniz Undav)",       type: "shot" },
+      { min: "90+4",side: "home", scorer: "翁达夫 (Deniz Undav)",       type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 0, red: 0 },
+      away: { yellow: 0, red: 0 }
+    },
+    attendance: 43036,
+    referee: "Juan Gabriel Benítez (PAR)"
+  },
   "2026|F|SWE|TUN": {
     score: { sh: 5, sa: 1 },
     goals: [
@@ -1308,6 +1322,23 @@ const wc2026MatchDetails = {
     referee: "TBD"
   },
 
+  "2026|F|NED|SWE": {
+    score: { sh: 5, sa: 1 },
+    goals: [
+      { min: 5,  side: "home", scorer: "布比罗 (Brian Brobbey)",       type: "shot" },
+      { min: 17, side: "home", scorer: "布比罗 (Brian Brobbey)",       type: "shot" },
+      { min: 47, side: "home", scorer: "加克波 (Cody Gakpo)",          type: "shot" },
+      { min: 54, side: "home", scorer: "加克波 (Cody Gakpo)",          type: "shot" },
+      { min: 59, side: "away", scorer: "安东尼 (Anthony Elanga)",      type: "shot" },
+      { min: 89, side: "home", scorer: "孟菲斯 (Memphis Depay)",       type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 0, red: 0 },
+      away: { yellow: 3, red: 0 }
+    },
+    attendance: 68777,
+    referee: "Michael Oliver (ENG)"
+  },
   "2026|H|ESP|CPV": {
     score: { sh: 0, sa: 0 },
     goals: [],
@@ -1503,7 +1534,9 @@ matchStats["2026|F|NED|JPN"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:9,sh2:9,
 
 matchStats["2026|E|GER|CUW"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:18,sh2:8,so1:12,so2:2,sb1:6,sb2:6,co1:8,co2:1,fo1:18,fo2:11,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:137,at2:76,da1:81,da2:21,pk1:1,pk2:0};
 matchStats["2026|E|CIV|ECU"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:9,so1:4,so2:1,sb1:8,sb2:8,co1:3,co2:5,fo1:10,fo2:13,os1:0,os2:0,yc1:3,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:101,da1:61,da2:47,pk1:0,pk2:0};
+matchStats["2026|E|GER|CIV"] = {p1:"59%",p2:"41%",ps1:null,ps2:null,sh1:12,sh2:4,so1:7,so2:2,sb1:5,sb2:2,co1:8,co2:3,fo1:5,fo2:7,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:134,at2:98,da1:73,da2:51,pk1:0,pk2:0};
 matchStats["2026|F|SWE|TUN"] = {p1:"49%",p2:"51%",ps1:null,ps2:null,sh1:10,sh2:5,so1:7,so2:2,sb1:3,sb2:3,co1:4,co2:2,fo1:10,fo2:8,os1:3,os2:6,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:91,da1:44,da2:41,pk1:0,pk2:0};
+matchStats["2026|F|NED|SWE"] = {p1:"51%",p2:"49%",ps1:null,ps2:null,sh1:9,sh2:13,so1:7,so2:8,sb1:2,sb2:5,co1:2,co2:5,fo1:9,fo2:12,os1:3,os2:3,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:109,at2:65,da1:50,da2:49,pk1:0,pk2:0};
 matchStats["2026|H|ESP|CPV"] = {p1:"74%",p2:"26%",ps1:null,ps2:null,sh1:19,sh2:4,so1:7,so2:1,sb1:12,sb2:3,co1:11,co2:1,fo1:10,fo2:1,os1:2,os2:3,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:187,at2:32,da1:139,da2:7,pk1:0,pk2:0};
 matchStats["2026|H|KSA|URU"] = {p1:"33%",p2:"67%",ps1:null,ps2:null,sh1:6,sh2:20,so1:3,so2:10,sb1:3,sb2:10,co1:4,co2:14,fo1:11,fo2:6,os1:0,os2:6,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:75,at2:145,da1:27,da2:79,pk1:0,pk2:0};
 matchStats["2026|G|BEL|EGY"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:9,sh2:6,so1:3,so2:3,sb1:6,sb2:3,co1:2,co2:7,fo1:15,fo2:15,os1:0,os2:1,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:119,at2:76,da1:64,da2:32,pk1:0,pk2:0};
