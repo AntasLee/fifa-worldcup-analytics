@@ -7,7 +7,7 @@
 
 // FIFA World Cup Data Analysis - Player & Match Database
 // Auto-generated from HTML data section. Update this file to modify data.
-// Version: V1.75 | Generated: 2026-07-19
+// Version: V1.76 | Generated: 2026-07-19
 // These variables are at global scope and accessible from the main application.
 
 // ===== Global shared state (used by both data & UI) =====
@@ -850,7 +850,7 @@ window.showMatchDetail=function(year, stage, h, a, isKnockout) {
     html += '<div class="detail-no-data">📭 暂无该场比赛的详细数据（进球时间轴、纪律记录等）。<br><small style="color:var(--text-secondary);">数据持续补充中，目前覆盖：2022卡塔尔世界杯全部64场 + 2018/2014/2010/2006/2002 关键场次。</small></div>';
   }
   
-  // V1.75: 2026 已完赛比赛增加表现评价入口
+  // V1.76: 2026 已完赛比赛增加表现评价入口
   if (year === '2026' && matchFound && matchFound.sh !== '?' && matchFound.sa !== '?') {
     var evalKey = year + '|' + stage + '|' + h + '|' + a;
     html += '<div class="eval-btn-wrap"><button class="eval-btn-eval" onclick="event.stopPropagation();showMatchEval(\''+evalKey+'\')">🎮 本场表现评价</button></div>';
