@@ -1173,6 +1173,19 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
+
+  "2026|C|SCO|MAR": {
+    score: { sh: 0, sa: 1 },
+    goals: [
+      { min: 2, side: "away", scorer: "赛巴里 (Ismael Saibari)", type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 1, red: 0 },
+      away: { yellow: 1, red: 0 }
+    },
+    attendance: null,
+    referee: "Ilgiz Tantashev (UZB)"
+  },
   "2026|D|AUS|TUR": {
     score: { sh: 2, sa: 0 },
     goals: [
@@ -1453,6 +1466,7 @@ matchStats["2026|B|SUI|BIH"] = {p1:"62%",p2:"38%",ps1:null,ps2:null,sh1:10,sh2:4
 matchStats["2026|B|CAN|QAT"] = {p1:"67%",p2:"33%",ps1:null,ps2:null,sh1:18,sh2:1,so1:10,so2:0,sb1:8,sb2:1,co1:19,co2:1,fo1:9,fo2:10,os1:1,os2:1,yc1:1,yc2:1,rc1:0,rc2:2,tk1:null,tk2:null,at1:165,at2:35,da1:154,da2:3,pk1:0,pk2:0};
 matchStats["2026|C|BRA|MAR"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:9,sh2:8,so1:5,so2:3,sb1:4,sb2:5,co1:6,co2:2,fo1:16,fo2:14,os1:0,os2:1,yc1:2,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:101,at2:103,da1:33,da2:47,pk1:0,pk2:0};
 matchStats["2026|C|HAI|SCO"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:11,sh2:7,so1:2,so2:2,sb1:9,sb2:5,co1:4,co2:3,fo1:23,fo2:21,os1:3,os2:1,yc1:1,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:111,at2:76,da1:47,da2:39,pk1:0,pk2:0};
+matchStats["2026|C|SCO|MAR"] = {p1:"41%",p2:"59%",ps1:null,ps2:null,sh1:3,sh2:8,so1:0,so2:2,sb1:3,sb2:6,co1:2,co2:5,fo1:11,fo2:8,os1:1,os2:0,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:78,at2:97,da1:41,da2:42,pk1:0,pk2:0};
 matchStats["2026|D|AUS|TUR"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:8,sh2:18,so1:4,so2:8,sb1:4,sb2:10,co1:5,co2:8,fo1:12,fo2:4,os1:1,os2:3,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:51,at2:150,da1:35,da2:104,pk1:0,pk2:0};
 matchStats["2026|D|USA|AUS"] = {p1:"62%",p2:"38%",ps1:null,ps2:null,sh1:4,sh2:5,so1:2,so2:2,sb1:2,sb2:3,co1:7,co2:4,fo1:12,fo2:16,os1:1,os2:0,yc1:3,yc2:4,rc1:0,rc2:0,tk1:null,tk2:null,at1:124,at2:78,da1:60,da2:40,pk1:0,pk2:0};
 matchStats["2026|F|NED|JPN"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:9,sh2:9,so1:6,so2:3,sb1:3,sb2:6,co1:5,co2:4,fo1:7,fo2:7,os1:1,os2:0,yc1:3,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:106,at2:76,da1:60,da2:43,pk1:0,pk2:0};

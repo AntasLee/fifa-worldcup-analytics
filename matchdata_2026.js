@@ -673,6 +673,40 @@ const wc2026AllMatches = {
     aiPreMatch: null, aiPostReview: null
   },
 
+  "2026|C|SCO|MAR": {
+    score: { sh: 0, sa: 1 },
+    date: "2026-06-20",
+    time: "06:00",
+    venue: "吉列体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 2, side: "away", scorer: "赛巴里", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 41, a: 59 },
+      shots:           { h: 3,  a: 8 },
+      shotsOnTarget:   { h: 0,  a: 2 },
+      corners:         { h: 2,  a: 5 },
+      fouls:           { h: 11, a: 8 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 78, a: 97 },
+      dangerousAttacks:{ h: 41, a: 42 }
+    },
+    attendance: null,
+    referee: "Ilgiz Tantashev (UZB)",
+    xg: null,
+    mediaRating: {
+      motm: "伊斯梅尔·赛巴里",
+      sources: ["FIFA", "NYT Athletic", "BBC Sport"],
+      home: {score: 4, quotes: "苏格兰开场70秒即丢球惨遭噩梦开局。全场零射正、控球率仅41%，麦金和麦克托米奈未能复制首轮表现，球队末轮需死磕巴西才能保住出线希望。"},
+      away: {score: 7, quotes: "赛巴里以本届世界杯最快进球（70秒）一击制胜，延续了首轮对巴西时的火热状态。摩洛哥全场59%控球掌控节奏，阿什拉夫领衔的防线零封对手，两轮不败领跑C组。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // D组
   "2026|D|USA|PAR": {
     score: { sh: 4, sa: 1 },
