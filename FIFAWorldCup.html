@@ -3092,7 +3092,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 }
 
 /* ===== V1.74 本场表现评价弹窗 — 紫金主题 ===== */
-.eval-modal{max-width:720px;background:linear-gradient(180deg,#0d0b1a 0%,#0a0814 100%);border-radius:12px;border:1px solid #7c3aed30;padding:0;overflow:hidden}
+.eval-modal{max-width:720px;background:linear-gradient(180deg,#0d0b1a 0%,#0a0814 100%);border-radius:12px;border:1px solid #7c3aed30;padding:0;overflow-y:auto}
 .eval-modal-hd{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #7c3aed15}
 .eval-modal-hd h3{color:#c084fc!important;font-size:0.88rem;font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:7px}
 .eval-score-hero{text-align:center;padding:18px 18px 4px}
@@ -3881,7 +3881,7 @@ function toggleProbUpdate() {
 <!-- V1.74 本场表现评价弹窗 -->
 <div class="modal-overlay" id="evalModal"><div class="modal-box eval-modal" id="evalModalBox">
 <h3 class="eval-modal-hd"><span>🎮 本场表现评价</span><span class="modal-close" onclick="closeMatchEval()">✕</span></h3>
-<div id="evalContent" style="max-height:68vh;overflow-y:auto;"></div>
+<div id="evalContent"></div>
 </div></div>
 
 <!-- 数据总览弹窗 -->
