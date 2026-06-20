@@ -254,6 +254,7 @@ function computePerformanceBoard(){
       nameZh:getZh(code),
       nameEn:getEn(code),
       w:composite.w, d:composite.d, l:composite.l,
+      total:composite.w+composite.d+composite.l,
       compositeScore:composite.score,
       pathScore:pathScore,
       expectedScore:expectedScore,
@@ -300,8 +301,30 @@ function computePerformanceBoard(){
     if(cs>=60&&hasWin&&es<60&&inContention){
       dark.push(r);
     }
-    // ── 高估: 差值≤-12, 预期≥55 ──
+    // ── 失望: 差值≤-12, 预期≥55 ──
     if(gap<=-12&&es>=55){
+      var myRank=r.rank||(typeof getFifaRank==='function'?getFifaRank(r.code):50);
+      var teamMatches=collectTeamMatches(r.code);
+      var matchDisapp=0;
+      teamMatches.forEach(function(m){
+        var or2=typeof getFifaRank==='function'?getFifaRank(m.opponent):50;
+        var pg=or2-myRank;
+        if(m.gf<m.ga){
+          if(pg>=15) matchDisapp+=0.45;
+          else if(pg>=8) matchDisapp+=0.30;
+          else if(pg>=3) matchDisapp+=0.15;
+          else if(pg>=-5) matchDisapp+=0.05;
+        }else if(m.gf===m.ga){
+          if(pg>=20) matchDisapp+=0.35;
+          else if(pg>=10) matchDisapp+=0.20;
+          else if(pg>=3) matchDisapp+=0.10;
+          else if(pg>=-5) matchDisapp+=0.03;
+        }
+        if(m.gf>m.ga&&pg<-10) matchDisapp-=0.10;
+      });
+      var eliminated=!inContention&&r.total>=2;
+      var certainty=Math.min(1, 0.5+r.total*0.15);
+      r.overratedIndex=+((matchDisapp+(eliminated?0.40:0)+Math.abs(gap)*0.002)*certainty).toFixed(4);
       over.push(r);
     }
   });
@@ -310,12 +333,8 @@ function computePerformanceBoard(){
   champ.sort(function(a,b){ return b.championIndex-a.championIndex; });
   // 黑马按综合分降序 (绝对表现才是黑马成色的核心)
   dark.sort(function(a,b){ return b.compositeScore-a.compositeScore; });
-  // 高估: 差值越负 + 路线越好(path低) = 越严重
-  over.sort(function(a,b){
-    var ia=Math.abs(a.perfGap)*0.6+Math.max(0,60-a.pathScore)*0.4;
-    var ib=Math.abs(b.perfGap)*0.6+Math.max(0,60-b.pathScore)*0.4;
-    return ib-ia;
-  });
+  // 失望: 综合赛果质量 + 淘汰状态 + 确定性缩放
+  over.sort(function(a,b){ return b.overratedIndex-a.overratedIndex; });
 
   return { champion:champ, darkhorse:dark, overrated:over, all:results };
 }
@@ -352,7 +371,7 @@ function buildBoardHTML(data){
   h+='<div class="pb-tabs">';
   h+='<button class="pb-tab pb-tab-champion active" onclick="PerfBoard.switchTab(\'champion\')">👑 冠军相</button>';
   h+='<button class="pb-tab pb-tab-darkhorse" onclick="PerfBoard.switchTab(\'darkhorse\')">🐎 黑马</button>';
-  h+='<button class="pb-tab pb-tab-overrated" onclick="PerfBoard.switchTab(\'overrated\')">📉 高估</button>';
+  h+='<button class="pb-tab pb-tab-overrated" onclick="PerfBoard.switchTab(\'overrated\')">📉 失望</button>';
   h+='</div>';
 
   // 表头
@@ -368,7 +387,7 @@ function buildBoardHTML(data){
   h+='<div class="pb-panels">';
   h+='<div class="pb-panel active" id="pbPanelChampion">'+buildPanel(data.champion,'champion','暂无符合条件的冠军相球队')+'</div>';
   h+='<div class="pb-panel" id="pbPanelDarkhorse">'+buildPanel(data.darkhorse,'darkhorse','暂无符合条件的黑马球队')+'</div>';
-  h+='<div class="pb-panel" id="pbPanelOverrated">'+buildPanel(data.overrated,'overrated','暂无符合条件的高估球队')+'</div>';
+  h+='<div class="pb-panel" id="pbPanelOverrated">'+buildPanel(data.overrated,'overrated','暂无符合条件的失望球队')+'</div>';
   h+='</div>';
 
   // 底部说明
@@ -405,6 +424,6 @@ window.PerfBoard = {
   }
 };
 
-console.log('✅ perfboard_engine.js 加载完成 — 表现榜引擎 V1.76');
+console.log('✅ perfboard_engine.js 加载完成 — 表现榜引擎 V1.76 (逐场落差算法)');
 
 })();
