@@ -3895,53 +3895,66 @@ function toggleProbUpdate() {
 	}
 
 // ===== 强制刷新：完全等效 CTRL+SHIFT+R =====
-		// 策略：清除 Cache API → 注销 Service Worker → location.reload()
-		// reload() 会令浏览器对主文档及所有子资源(JS/CSS/图片)发送 max-age=0 重验证请求
-		// 配合已清除的 Cache API 与 SW，达成与 CTRL+SHIFT+R 全等效的硬刷新
-		function hardRefresh() {
-		    var tasks = [];
+			// 策略：清除 Cache API → 注销 Service Worker → 带 cache-busting 参数导航
+			// location.reload() 仅等效 F5（max-age=0），子资源仍可能走 disk cache。
+			// 改用带唯一时间戳的新 URL 导航，浏览器将其视为全新请求，
+			// 对主文档及所有子资源(JS/CSS/图片)强制发送 no-cache 等效请求，不走任何缓存层。
+			// 页面加载后立即通过 history.replaceState 清理时间戳，URL 不留痕迹。
+			function hardRefresh() {
+			    var tasks = [];
 
-		    // 1. 清除所有 Cache API 缓存
-		    if ('caches' in window) {
-		        tasks.push(
-		            caches.keys().then(function(names) {
-		                return Promise.all(names.map(function(n) { return caches.delete(n); }));
-		            })
-		        );
-		    }
-		    // 2. 注销所有 Service Worker
-		    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-		        tasks.push(
-		            navigator.serviceWorker.getRegistrations().then(function(regs) {
-		                return Promise.all(regs.map(function(r) { return r.unregister(); }));
-		            })
-		        );
-		    }
+			    // 1. 清除所有 Cache API 缓存
+			    if ('caches' in window) {
+			        tasks.push(
+			            caches.keys().then(function(names) {
+			                return Promise.all(names.map(function(n) { return caches.delete(n); }));
+			            })
+			        );
+			    }
+			    // 2. 注销所有 Service Worker（含未激活的）
+			    if ('serviceWorker' in navigator) {
+			        tasks.push(
+			            navigator.serviceWorker.getRegistrations().then(function(regs) {
+			                return Promise.all(regs.map(function(r) { return r.unregister(); }));
+			            })
+			        );
+			    }
 
-		    // 等待所有清理完成后执行硬刷新，最多等 3 秒兜底
-		    var done = false;
-		    var doReload = function() {
-		        if (done) return;
-		        done = true;
-		        // 3. 清除 sessionStorage（保留跨标签页标记）
-		        try {
-		            var xtab = sessionStorage.getItem('_xtab_open');
-		            sessionStorage.clear();
-		            if (xtab) sessionStorage.setItem('_xtab_open', xtab);
-		        } catch(e) {}
-		        // 4. location.reload() 相当于浏览器 F5/CTRL+R 的刷新机制，
-		        //    对主文档及所有子资源发送 Cache-Control: max-age=0，
-		        //    浏览器不走 disk cache，逐一向服务器重验证（304 或 200）
-		        window.location.reload();
-		    };
+			    // 等待所有清理完成后执行硬刷新，最多等 3 秒兜底
+			    var done = false;
+			    var doReload = function() {
+			        if (done) return;
+			        done = true;
+			        // 3. 清除 sessionStorage（保留跨标签页标记）
+			        try {
+			            var xtab = sessionStorage.getItem('_xtab_open');
+			            sessionStorage.clear();
+			            if (xtab) sessionStorage.setItem('_xtab_open', xtab);
+			        } catch(e) {}
+			        // 4. 带 cache-busting 时间戳导航，等效于 CTRL+SHIFT+R 的 no-cache 行为。
+			        //    浏览器对带新查询参数的 URL 视为全新资源，强制全量重新下载。
+			        //    页面初始化时会通过 history.replaceState 清除 _hr 参数，URL 不留痕迹。
+			        var url = new URL(window.location.href);
+			        url.searchParams.set('_hr', Date.now());
+			        window.location.href = url.toString();
+			    };
 
-		    if (tasks.length > 0) {
-		        Promise.all(tasks).then(doReload).catch(doReload);
-		        setTimeout(doReload, 3000);
-		    } else {
-		        doReload();
-		    }
-		}
+			    if (tasks.length > 0) {
+			        Promise.all(tasks).then(doReload).catch(doReload);
+			        setTimeout(doReload, 3000);
+			    } else {
+			        doReload();
+			    }
+			}
+
+			// 页面加载时清理 hardRefresh 遗留的 _hr cache-busting 参数，URL 不留痕迹
+			(function(){
+			    if (window.location.search.indexOf('_hr=') !== -1) {
+			        var u = new URL(window.location.href);
+			        u.searchParams.delete('_hr');
+			        window.history.replaceState({}, '', u.toString());
+			    }
+			})();
 </script>
 <div class="sticky-top-group">
 <div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.77 | Author: Antas Lee</div></div>
