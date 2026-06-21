@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <meta name="theme-color" content="#0a0e14">
-<title>FIFA WORLD CUP - DATA ANALYSIS | V1.76</title>
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.77</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -3300,7 +3300,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .ptab.g4:hover{border-color:rgba(255,224,160,0.5);color:#ffe8c0;background:rgba(255,224,160,0.15)}
 .ptab.g4.active{background:#d4a020;border-color:#ffe0a0;color:#111;box-shadow:0 0 18px rgba(212,160,32,0.5),0 0 36px rgba(255,224,160,0.2)}
 
-/* ===== 数据总览四弹窗样式 (V1.76) ===== */
+/* ===== 数据总览四弹窗样式 (V1.77) ===== */
 /* G1: 进攻数据 — 琥珀橙 #ff8f00 */
 .ov-modal{max-width:640px;width:94%;max-height:88vh;border-radius:14px;padding:0;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .ov-modal.ov-g1{background:linear-gradient(180deg,#120c04 0%,#0a0602 100%);border:1.5px solid rgba(255,143,0,0.18);box-shadow:0 0 40px rgba(255,143,0,0.12),0 0 80px rgba(255,143,0,0.05)}
@@ -3499,6 +3499,170 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .ov-tbl tr:hover td{background:rgba(176,128,48,0.04)}
 .ov-tbl .hl{font-weight:700;color:#c4a050}
 
+/* ================================================================
+   V1.77 球员排名四榜弹窗 — 共享结构
+================================================================ */
+/* —— 流光动画 —— */
+@keyframes ovRankStreakSweep{0%{left:-120%}100%{left:120%}}
+
+/* —— 摘要栏 —— */
+.ovrk-summary{
+  display:flex;align-items:center;justify-content:center;gap:0;
+  margin-bottom:14px;padding:10px 6px;border-radius:10px;
+}
+.ovrk-sum-item{flex:1;text-align:center}
+.ovrk-sum-item .sn{font-size:1.15rem;font-weight:900;line-height:1.2}
+.ovrk-sum-item .sl{font-size:0.56rem;margin-top:2px}
+.ovrk-sum-div{width:1px;height:30px;flex-shrink:0}
+
+/* —— Hero 前三 —— */
+.ovrk-hero{display:flex;gap:7px;margin-bottom:12px}
+.ovrk-hero-item{
+  flex:1;text-align:center;padding:14px 4px 10px;
+  border-radius:12px;position:relative;overflow:hidden;
+  border:1.5px solid;
+}
+.ovrk-hero-item::after{
+  content:'';position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);
+  transform:skewX(-25deg);animation:ovRankStreakSweep 3.5s ease-in-out infinite;
+  pointer-events:none;z-index:2;
+}
+.ovrk-hero-tag{
+  display:inline-block;font-size:0.57rem;font-weight:800;
+  padding:2px 9px;border-radius:7px;margin-bottom:7px;
+  position:relative;z-index:3;border:1px solid;
+}
+.ovrk-hero-av{
+  width:50px;height:50px;border-radius:50%;margin:0 auto 7px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background:rgba(255,255,255,0.05);border:2px solid;position:relative;z-index:3;
+}
+.ovrk-hero-av img{width:100%;height:100%;object-fit:cover;display:block}
+.ovrk-hero-av-fb{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:1.2rem;
+}
+.ovrk-hero-zh{font-size:0.82rem;font-weight:700;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px;position:relative;z-index:3}
+.ovrk-hero-en{font-size:0.55rem;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px;position:relative;z-index:3}
+.ovrk-hero-team{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:4px;font-size:0.6rem;position:relative;z-index:3}
+.ovrk-hero-team img{width:16px;height:11px;border-radius:2px;object-fit:cover;box-shadow:0 1px 3px rgba(0,0,0,0.4);flex-shrink:0}
+.ovrk-hero-stat{margin-top:7px;font-size:1.1rem;font-weight:900;position:relative;z-index:3}
+.ovrk-hero-sub{font-size:0.53rem;margin-top:1px;position:relative;z-index:3}
+
+/* —— 金银铜 Hero 通用底色 —— */
+.ovrk-h1st{background:linear-gradient(180deg,rgba(35,25,5,0.97),rgba(22,15,3,0.97))}
+.ovrk-h1st .ovrk-hero-tag{background:rgba(255,215,0,0.13);color:#ffd700;border-color:rgba(255,215,0,0.2)}
+.ovrk-h1st .ovrk-hero-av{border-color:rgba(255,215,0,0.35);box-shadow:0 0 12px rgba(255,215,0,0.12)}
+.ovrk-h1st .ovrk-hero-zh{color:#ffe8a0;text-shadow:0 0 8px rgba(255,215,0,0.15)}
+.ovrk-h1st .ovrk-hero-stat{color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,0.2)}
+.ovrk-h1st{box-shadow:0 0 14px rgba(255,215,0,0.3),0 0 28px rgba(255,200,0,0.1),inset 0 0 10px rgba(255,215,0,0.05)}
+.ovrk-h2nd{background:linear-gradient(180deg,rgba(24,24,26,0.97),rgba(17,17,19,0.97))}
+.ovrk-h2nd .ovrk-hero-tag{background:rgba(200,200,210,0.1);color:#d8d8d8;border-color:rgba(200,200,210,0.16)}
+.ovrk-h2nd .ovrk-hero-zh{color:#e8e8e8}
+.ovrk-h2nd{box-shadow:0 0 10px rgba(192,192,192,0.2),0 0 22px rgba(180,180,190,0.06),inset 0 0 8px rgba(192,192,192,0.03)}
+.ovrk-h3rd{background:linear-gradient(180deg,rgba(28,16,7,0.97),rgba(17,9,3,0.97))}
+.ovrk-h3rd .ovrk-hero-tag{background:rgba(210,140,80,0.1);color:#e0a860;border-color:rgba(210,140,80,0.16)}
+.ovrk-h3rd .ovrk-hero-zh{color:#f0c890}
+.ovrk-h3rd{box-shadow:0 0 8px rgba(205,127,50,0.18),0 0 18px rgba(180,100,40,0.05),inset 0 0 6px rgba(205,127,50,0.03)}
+
+/* —— 列表 —— */
+.ovrk-list{display:flex;flex-direction:column;gap:4px}
+.ovrk-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid;transition:all 0.2s}
+.ovrk-pos{font-size:0.9rem;font-weight:900;min-width:28px;text-align:center;flex-shrink:0}
+.ovrk-pos.p1{color:#ffd700}.ovrk-pos.p2{color:#c0c0c0}.ovrk-pos.p3{color:#cd7f32}
+.ovrk-av{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,0.05);border:1.5px solid}
+.ovrk-av img{width:100%;height:100%;object-fit:cover;display:block}
+.ovrk-av-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem}
+.ovrk-info{flex:1;min-width:0}
+.ovrk-info .zh{font-size:0.8rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ovrk-info .en{font-size:0.58rem;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ovrk-info .tm{display:flex;align-items:center;gap:4px;margin-top:3px;font-size:0.62rem}
+.ovrk-info .tm img{width:18px;height:12px;border-radius:2px;object-fit:cover;box-shadow:0 1px 3px rgba(0,0,0,0.4);flex-shrink:0}
+.ovrk-stat{text-align:right;flex-shrink:0}
+.ovrk-stat .vn{font-size:0.95rem;font-weight:900}
+.ovrk-stat .vs{font-size:0.52rem;margin-top:1px}
+.ovrk-note{font-size:0.56rem;text-align:center;padding:12px 0 2px;font-style:italic;opacity:0.7;border-top:1px solid;margin-top:12px}
+
+/* —— g4a 身价榜 — 24K金 —— */
+.ovrk-g4a .ov-modal{border-color:rgba(212,168,67,0.2);box-shadow:0 0 45px rgba(212,168,67,0.08)}
+.ovrk-g4a .ov-modal-hd{border-bottom-color:rgba(212,168,67,0.1)}
+.ovrk-g4a .hd-title{color:#f0d070}.ovrk-g4a .hd-year{color:#d4a843}
+.ovrk-g4a .modal-close{color:rgba(212,168,67,0.4)}.ovrk-g4a .modal-close:hover{color:#f0d070}
+.ovrk-g4a .ovrk-summary{background:rgba(212,168,67,0.035);border:1px solid rgba(212,168,67,0.06)}
+.ovrk-g4a .sn{color:#f0d070}.ovrk-g4a .sl{color:#a09070}
+.ovrk-g4a .ovrk-sum-div{background:rgba(212,168,67,0.12)}
+.ovrk-g4a .ovrk-h1st{border-color:rgba(255,215,0,0.26)}
+.ovrk-g4a .ovrk-h2nd{border-color:rgba(192,192,192,0.18)}
+.ovrk-g4a .ovrk-h3rd{border-color:rgba(205,127,50,0.18)}
+.ovrk-g4a .ovrk-item{background:rgba(212,168,67,0.02);border-color:rgba(212,168,67,0.05)}
+.ovrk-g4a .ovrk-item:hover{background:rgba(212,168,67,0.05);border-color:rgba(212,168,67,0.13)}
+.ovrk-g4a .ovrk-av{border-color:rgba(255,255,255,0.07)}
+.ovrk-g4a .zh{color:#e0d0b0}.ovrk-g4a .en{color:#8899aa}.ovrk-g4a .tm{color:#a09070}
+.ovrk-g4a .vn{color:#f0d070}.ovrk-g4a .vs{color:#a09070}
+.ovrk-g4a .ovrk-note{color:#a09070;border-top-color:rgba(212,168,67,0.05)}
+
+/* —— g4b 射手榜 — 琥珀金 —— */
+.ovrk-g4b .ov-modal{border-color:rgba(212,153,48,0.2);box-shadow:0 0 45px rgba(212,153,48,0.08)}
+.ovrk-g4b .ov-modal-hd{border-bottom-color:rgba(212,153,48,0.1)}
+.ovrk-g4b .hd-title{color:#f0c870}.ovrk-g4b .hd-year{color:#d49930}
+.ovrk-g4b .modal-close{color:rgba(212,153,48,0.4)}.ovrk-g4b .modal-close:hover{color:#f0c870}
+.ovrk-g4b .ovrk-summary{background:rgba(212,153,48,0.035);border:1px solid rgba(212,153,48,0.06)}
+.ovrk-g4b .sn{color:#f0c870}.ovrk-g4b .sl{color:#a89068}
+.ovrk-g4b .ovrk-sum-div{background:rgba(212,153,48,0.12)}
+.ovrk-g4b .ovrk-h1st{border-color:rgba(255,215,0,0.26)}
+.ovrk-g4b .ovrk-h2nd{border-color:rgba(192,192,192,0.18)}
+.ovrk-g4b .ovrk-h3rd{border-color:rgba(205,127,50,0.18)}
+.ovrk-g4b .ovrk-item{background:rgba(212,153,48,0.02);border-color:rgba(212,153,48,0.05)}
+.ovrk-g4b .ovrk-item:hover{background:rgba(212,153,48,0.05);border-color:rgba(212,153,48,0.13)}
+.ovrk-g4b .ovrk-av{border-color:rgba(255,255,255,0.07)}
+.ovrk-g4b .zh{color:#e0c8a8}.ovrk-g4b .en{color:#8899aa}.ovrk-g4b .tm{color:#a09070}
+.ovrk-g4b .vn{color:#f0c870}.ovrk-g4b .vs{color:#a89068}
+.ovrk-g4b .ovrk-note{color:#a09070;border-top-color:rgba(212,153,48,0.05)}
+
+/* —— g4c 助攻榜 — 玫瑰金 —— */
+.ovrk-g4c .ov-modal{border-color:rgba(200,152,80,0.2);box-shadow:0 0 45px rgba(200,152,80,0.08)}
+.ovrk-g4c .ov-modal-hd{border-bottom-color:rgba(200,152,80,0.1)}
+.ovrk-g4c .hd-title{color:#f0d0a0}.ovrk-g4c .hd-year{color:#c89850}
+.ovrk-g4c .modal-close{color:rgba(200,152,80,0.4)}.ovrk-g4c .modal-close:hover{color:#f0d0a0}
+.ovrk-g4c .ovrk-summary{background:rgba(200,152,80,0.035);border:1px solid rgba(200,152,80,0.06)}
+.ovrk-g4c .sn{color:#f0d0a0}.ovrk-g4c .sl{color:#a89878}
+.ovrk-g4c .ovrk-sum-div{background:rgba(200,152,80,0.12)}
+.ovrk-g4c .ovrk-h1st{border-color:rgba(255,215,0,0.26)}
+.ovrk-g4c .ovrk-h2nd{border-color:rgba(192,192,192,0.18)}
+.ovrk-g4c .ovrk-h3rd{border-color:rgba(205,127,50,0.18)}
+.ovrk-g4c .ovrk-item{background:rgba(200,152,80,0.02);border-color:rgba(200,152,80,0.05)}
+.ovrk-g4c .ovrk-item:hover{background:rgba(200,152,80,0.05);border-color:rgba(200,152,80,0.13)}
+.ovrk-g4c .ovrk-av{border-color:rgba(255,255,255,0.07)}
+.ovrk-g4c .zh{color:#e0d0b8}.ovrk-g4c .en{color:#8899aa}.ovrk-g4c .tm{color:#a89878}
+.ovrk-g4c .vn{color:#f0d0a0}.ovrk-g4c .vs{color:#a89878}
+.ovrk-g4c .ovrk-note{color:#a09070;border-top-color:rgba(200,152,80,0.05)}
+
+/* —— g4d 扑救榜 — 赤铜金 —— */
+.ovrk-g4d .ov-modal{border-color:rgba(224,144,48,0.2);box-shadow:0 0 45px rgba(224,144,48,0.08)}
+.ovrk-g4d .ov-modal-hd{border-bottom-color:rgba(224,144,48,0.1)}
+.ovrk-g4d .hd-title{color:#f0b060}.ovrk-g4d .hd-year{color:#e09030}
+.ovrk-g4d .modal-close{color:rgba(224,144,48,0.4)}.ovrk-g4d .modal-close:hover{color:#f0b060}
+.ovrk-g4d .ovrk-summary{background:rgba(224,144,48,0.035);border:1px solid rgba(224,144,48,0.06)}
+.ovrk-g4d .sn{color:#f0b060}.ovrk-g4d .sl{color:#a88860}
+.ovrk-g4d .ovrk-sum-div{background:rgba(224,144,48,0.12)}
+.ovrk-g4d .ovrk-h1st{border-color:rgba(255,215,0,0.26)}
+.ovrk-g4d .ovrk-h2nd{border-color:rgba(192,192,192,0.18)}
+.ovrk-g4d .ovrk-h3rd{border-color:rgba(205,127,50,0.18)}
+.ovrk-g4d .ovrk-item{background:rgba(224,144,48,0.02);border-color:rgba(224,144,48,0.05)}
+.ovrk-g4d .ovrk-item:hover{background:rgba(224,144,48,0.05);border-color:rgba(224,144,48,0.13)}
+.ovrk-g4d .ovrk-av{border-color:rgba(255,255,255,0.07)}
+.ovrk-g4d .zh{color:#e8d0b0}.ovrk-g4d .en{color:#8899aa}.ovrk-g4d .tm{color:#a09070}
+.ovrk-g4d .vn{color:#f0b060}.ovrk-g4d .vs{color:#a88860}
+.ovrk-g4d .ovrk-note{color:#a09070;border-top-color:rgba(224,144,48,0.05)}
+
+/* 移动端缩小 Hero 头像 */
+@media(max-width:480px){
+  .ovrk-hero-av{width:42px;height:42px}
+  .ovrk-hero-zh{font-size:0.7rem}
+  .ovrk-hero-stat{font-size:0.95rem}
+}
+
 </style>
 </head>
 <body>
@@ -3639,9 +3803,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
       easedPercent = 80 + (1 - Math.pow(1 - t, 2)) * 20;
     }
 
-    progressBar.style.width = easedPercent.toFixed(1) + '%';
+    progressBar.style.width = easedPercent.toFixed(1) + gk._pct+'%';
     var displayPercent = Math.floor(easedPercent);
-    loadingPercent.textContent = displayPercent + '%';
+    loadingPercent.textContent = displayPercent + gk._pct+'%';
 
     if (displayPercent < 15) {
       loadingText.textContent = 'Initializing';
@@ -3775,7 +3939,7 @@ function toggleProbUpdate() {
 		}
 </script>
 <div class="sticky-top-group">
-<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.76 | Author: Antas Lee</div></div>
+<div class="header"><h1>🏆 FIFA WORLD CUP — DATA ANALYSIS</h1><div class="subtitle">FIFA World Cup · All Editions · Data Analysis V1.77 | Author: Antas Lee</div></div>
 
 <!-- WC Edition Selector -->
 <div class="wc-edition-bar" id="wcEditionBar">
@@ -3930,7 +4094,7 @@ function toggleProbUpdate() {
 <h3>👤 球员详情 <span style="font-size:0.65rem;color:var(--text-secondary);" id="playerDetailSubtitle"></span> <span class="modal-close" onclick="closePlayerDetail()">✕</span></h3>
 <div id="playerDetailContent" style="max-height:68vh;overflow-y:auto;"></div>
 </div></div>
-<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.76</div>
+<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.77</div>
 </div>
 
 <div class="modal-overlay" id="summaryModal"><div class="modal-box" style="max-width:600px"><h3>📋 我的预测汇总 <span class="modal-close" onclick="closeSummaryModal()">✕</span></h3><div id="summaryContent"></div></div></div>
@@ -3972,7 +4136,7 @@ function toggleProbUpdate() {
 <div id="dataOverviewContent" style="max-height:65vh;overflow-y:auto;"></div>
 </div></div>
 
-<!-- V1.76 四弹窗：数据总览拆分 -->
+<!-- V1.77 四弹窗：数据总览拆分 -->
 <!-- 弹窗1: 进球时间 -->
 <div class="modal-overlay" id="ovGoalTimeModal"><div class="modal-box ov-modal ov-g1">
 <div class="ov-modal-hd"><span class="hd-title">⏱️ 进球时间分布<span class="hd-year" id="ovGTYear"></span></span><span class="modal-close" onclick="closeOvModal('ovGoalTimeModal')">✕</span></div>
@@ -4000,11 +4164,35 @@ function toggleProbUpdate() {
 <div class="ov-modal-body" id="ovPerfBoardContent"></div>
 </div></div>
 
+<!-- V1.77 球员排名四弹窗 -->
+<!-- g4a: 身价榜 -->
+<div class="modal-overlay" id="ovValueRankModal"><div class="modal-box ov-modal ovrk-g4a">
+<div class="ov-modal-hd"><span class="hd-title">💎 身价榜</span><span class="hd-year" id="ovVRYear"></span><span class="modal-close" onclick="closeOvModal('ovValueRankModal')">✕</span></div>
+<div class="ov-modal-body" id="ovValueRankContent"></div>
+</div></div>
+<!-- g4b: 射手榜 -->
+<div class="modal-overlay" id="ovScorerRankModal"><div class="modal-box ov-modal ovrk-g4b">
+<div class="ov-modal-hd"><span class="hd-title">👑 射手榜</span><span class="hd-year" id="ovSRYear"></span><span class="modal-close" onclick="closeOvModal('ovScorerRankModal')">✕</span></div>
+<div class="ov-modal-body" id="ovScorerRankContent"></div>
+</div></div>
+<!-- g4c: 助攻榜 -->
+<div class="modal-overlay" id="ovAssistRankModal"><div class="modal-box ov-modal ovrk-g4c">
+<div class="ov-modal-hd"><span class="hd-title">🤝 助攻榜</span><span class="hd-year" id="ovARYear"></span><span class="modal-close" onclick="closeOvModal('ovAssistRankModal')">✕</span></div>
+<div class="ov-modal-body" id="ovAssistRankContent"></div>
+</div></div>
+<!-- g4d: 扑救榜 -->
+<div class="modal-overlay" id="ovSaveRankModal"><div class="modal-box ov-modal ovrk-g4d">
+<div class="ov-modal-hd"><span class="hd-title">🧤 扑救榜</span><span class="hd-year" id="ovSvRYear"></span><span class="modal-close" onclick="closeOvModal('ovSaveRankModal')">✕</span></div>
+<div class="ov-modal-body" id="ovSaveRankContent"></div>
+</div></div>
+
 <script src="teamdata.js" defer></script>
     <script src="matchdata.js" defer></script>
     <script src="clubdata.js" defer></script></script></script></script></script>
     <script src="coachdata.js" defer></script>
-    <script src="squaddata.js" defer></script>
+<script src="squaddata.js" defer></script>
+<script src="player_stats_2026.js" defer></script>
+<script src="player_stats_past.js" defer></script>
 <script src="engine.js" defer></script>
 <script src="app.js" defer></script>
 <!-- World Cup Bracket V9 Scripts -->
@@ -5010,7 +5198,7 @@ document.addEventListener('keydown', function(e){
   if(e.key==='Escape' && document.getElementById('evalModal').classList.contains('visible')) closeMatchEval();
 });
 
-console.log('✅ 表现评价渲染组件已安装 V1.76');
+console.log('✅ 表现评价渲染组件已安装 V1.77');
 })();
 </script>
 <script>
@@ -5097,6 +5285,12 @@ console.log('✅ 表现评价渲染组件已安装 V1.76');
       if(tab.textContent.includes('表现榜')){ if(typeof PerfBoard!=='undefined') PerfBoard.show(); else showToast('表现榜引擎未加载'); }
       else if(tab.textContent.includes('赔率榜')) showToast('赔率榜功能尚未登陆 数据校准中...');
       else showToast('功能尚未登陆 数据校准中...');
+    }else if(gc==='g4'){
+      if(tab.textContent.includes('身价榜')) showOvValueRank();
+      else if(tab.textContent.includes('射手榜')) showOvScorerRank();
+      else if(tab.textContent.includes('助攻榜')) showOvAssistRank();
+      else if(tab.textContent.includes('扑救榜')) showOvSaveRank();
+      else showToast('功能尚未登陆 数据校准中...');
     }else{
       showToast('功能尚未登陆 数据校准中...');
     }
@@ -5104,7 +5298,7 @@ console.log('✅ 表现评价渲染组件已安装 V1.76');
 })();
 </script>
 
-<!-- V1.76 数据总览四弹窗 数据函数 -->
+<!-- V1.77 数据总览四弹窗 数据函数 -->
 <script>
 (function(){
 var yearLabels = {'2026':'2026 美加墨','2022':'2022 卡塔尔','2018':'2018 俄罗斯','2014':'2014 巴西','2010':'2010 南非','2006':'2006 德国','2002':'2002 韩日'};
@@ -5410,13 +5604,13 @@ window.showOvDiscipline=function(){
   document.getElementById('ovDisciplineModal').classList.add('visible');
 };
 
-document.querySelectorAll('#ovGoalTimeModal,#ovGoalTypeModal,#ovCornerModal,#ovDisciplineModal,#ovPerfBoardModal').forEach(function(o){
+document.querySelectorAll('#ovGoalTimeModal,#ovGoalTypeModal,#ovCornerModal,#ovDisciplineModal,#ovPerfBoardModal,#ovValueRankModal,#ovScorerRankModal,#ovAssistRankModal,#ovSaveRankModal').forEach(function(o){
   o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('visible');});
 });
 // ESC 关闭
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){
-    ['ovGoalTimeModal','ovGoalTypeModal','ovCornerModal','ovDisciplineModal','ovPerfBoardModal'].forEach(function(id){
+    ['ovGoalTimeModal','ovGoalTypeModal','ovCornerModal','ovDisciplineModal','ovPerfBoardModal','ovValueRankModal','ovScorerRankModal','ovAssistRankModal','ovSaveRankModal'].forEach(function(id){
       var m=document.getElementById(id); if(m&&m.classList.contains('visible')) m.classList.remove('visible');
     });
   }
@@ -5430,7 +5624,332 @@ function getTeamNameZh(code){
   return staticMap[code]||code;
 }
 
-console.log('✅ V1.76 数据总览四弹窗已安装');
+// ================================================================
+// V1.77 球员排名四榜 — 渲染引擎
+// ================================================================
+
+function getFlag(code){ return typeof window.pastFlag==='function'?window.pastFlag(code):'https://flagcdn.com/w80/'+(code.toLowerCase())+'.png'; }
+function getTeamZh(code){
+  if(!code) return '?';
+  if(teamMap&&teamMap[code]) return teamMap[code].zh||code;
+  return code;
+}
+
+// 获取球员头像 — 多源回退
+function getPlayerPhoto(name){
+  if(!name) return '';
+  // 1) playerDB 直接存有 photo 字段
+  if(typeof playerDB!=='undefined'&&playerDB[name]&&playerDB[name].photo) return playerDB[name].photo;
+  // 2) photoMap (playerdata_media.js)
+  if(typeof photoMap!=='undefined'&&photoMap[name]&&photoMap[name].photo) return photoMap[name].photo;
+  // 3) playerDB 的 _ext 标记 → 尝试 nk 索引
+  if(typeof playerDB!=='undefined'&&playerDB[name]&&playerDB[name]._ext&&playerDB[name].nk){
+    var nk=playerDB[name].nk;
+    if(typeof photoMap!=='undefined'&&photoMap[nk]&&photoMap[nk].photo) return photoMap[nk].photo;
+  }
+  return '';
+}
+
+// 进阶查找: 按姓名+国籍从 playerDB 匹配头像 (带缓存索引)
+var _photoIndex=null;
+function _buildPhotoIndex(){
+  if(_photoIndex) return _photoIndex;
+  _photoIndex={};
+  function _nf(s){ var r=(s||'').toLowerCase(); try{r=r.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}catch(e){} return r.replace(/[^a-z0-9]/g,''); }
+  if(typeof playerDB!=='undefined'){
+    for(var key in playerDB){
+      var p=playerDB[key]; if(!p||!p.nat) continue;
+      var tc=p.nat; if(!_photoIndex[tc]) _photoIndex[tc]={};
+      var photo=p.photo||'';
+      if(!photo && typeof photoMap!=='undefined'){
+        if(photoMap[key]&&photoMap[key].photo) photo=photoMap[key].photo;
+        else if(p.nk&&photoMap[p.nk]&&photoMap[p.nk].photo) photo=photoMap[p.nk].photo;
+      }
+      _photoIndex[tc][_nf(key)]=photo;
+      if(p.n) _photoIndex[tc][_nf(p.n)]=photo;
+      if(p.nn) _photoIndex[tc][_nf(p.nn)]=photo;
+    }
+  }
+  return _photoIndex;
+}
+function findPhotoByLookup(nameEn, teamCode){
+  if(!nameEn||!teamCode) return '';
+  var n=(nameEn||'').toLowerCase(); try{n=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}catch(e){} n=n.replace(/[^a-z0-9]/g,'');
+  var idx=_buildPhotoIndex();
+  var map=idx[teamCode]; if(!map) return '';
+  if(map[n]) return map[n];
+  for(var k in map){ if(k.indexOf(n)>=0||n.indexOf(k)>=0) return map[k]; }
+  return '';
+}
+
+// 渲染 Hero 卡片
+function buildHeroItem(r,rankType){
+  var cls='ovrk-h'+rankType;
+  var tagText={'1st':'🥇 第1名','2nd':'🥈 第2名','3rd':'🥉 第3名'}[rankType]||'';
+  var photo=getPlayerPhoto(r.nameEn)||findPhotoByLookup(r.nameEn,r.teamCode);
+  var initial=(r.nameEn||r.nameZh||'?').charAt(0).toUpperCase();
+  var h='<div class="ovrk-hero-item '+cls+'">';
+  h+='<div class="ovrk-hero-tag">'+tagText+'</div>';
+  h+='<div class="ovrk-hero-av">';
+  if(photo) h+='<img src="'+photo+'" onerror="var p=this.parentElement;this.remove();p.insertAdjacentHTML(\'afterbegin\',\'<div class=ovrk-hero-av-fb>'+initial+'</div>\')" loading="lazy">';
+  else h+='<div class="ovrk-hero-av-fb">'+initial+'</div>';
+  h+='</div>';
+  h+='<div class="ovrk-hero-zh">'+(r.nameZh||r.nameEn)+'</div>';
+  h+='<div class="ovrk-hero-en">'+(r.nameEn||'')+'</div>';
+  h+='<div class="ovrk-hero-team"><img src="'+getFlag(r.teamCode)+'" onerror="this.style.display=\'none\'"> '+getTeamZh(r.teamCode)+'</div>';
+  h+='<div class="ovrk-hero-stat">'+r.stat+'</div>';
+  if(r.statSub) h+='<div class="ovrk-hero-sub">'+r.statSub+'</div>';
+  h+='</div>';
+  return h;
+}
+
+// 渲染列表行
+function buildRankItem(r,i,extra){
+  var rc=''; if(i===0) rc=' p1'; else if(i===1) rc=' p2'; else if(i===2) rc=' p3';
+  var pos=(extra&&extra.sameAsPrev)?(extra.samePos):(i+1);
+  var photo=getPlayerPhoto(r.nameEn)||findPhotoByLookup(r.nameEn,r.teamCode);
+  var initial=(r.nameEn||r.nameZh||'?').charAt(0).toUpperCase();
+  var h='<div class="ovrk-item">';
+  h+='<span class="ovrk-pos'+rc+'">'+pos+'</span>';
+  h+='<div class="ovrk-av">';
+  if(photo) h+='<img src="'+photo+'" onerror="var p=this.parentElement;this.remove();p.insertAdjacentHTML(\'afterbegin\',\'<div class=ovrk-av-fb>'+initial+'</div>\')" loading="lazy">';
+  else h+='<div class="ovrk-av-fb">'+initial+'</div>';
+  h+='</div>';
+  h+='<div class="ovrk-info"><div class="zh">'+(r.nameZh||r.nameEn)+'</div><div class="en">'+(r.nameEn||'')+'</div><div class="tm"><img src="'+getFlag(r.teamCode)+'" onerror="this.style.display=\'none\'"> '+getTeamZh(r.teamCode)+'</div></div>';
+  h+='<div class="ovrk-stat"><div class="vn">'+r.stat+'</div>';
+  if(r.statSub) h+='<div class="vs">'+r.statSub+'</div>';
+  h+='</div></div>';
+  return h;
+}
+
+// 渲染完整榜单
+function buildRankHTML(summaryItems,heroes,list,note,showSummary){
+  var h='';
+  if(showSummary!==false){
+    h+='<div class="ovrk-summary">';
+    for(var i=0;i<summaryItems.length;i++){
+      if(i>0) h+='<div class="ovrk-sum-div"></div>';
+      h+='<div class="ovrk-sum-item"><div class="sn">'+summaryItems[i].num+'</div><div class="sl">'+summaryItems[i].lbl+'</div></div>';
+    }
+    h+='</div>';
+  }
+  h+='<div class="ovrk-hero">';
+  h+=buildHeroItem(heroes[1],'2nd');
+  h+=buildHeroItem(heroes[0],'1st');
+  h+=buildHeroItem(heroes[2],'3rd');
+  h+='</div>';
+  h+='<div class="ovrk-list">';
+  for(var j=0;j<list.length;j++){
+    var sameAsPrev=(j>0 && list[j].sortVal===list[j-1].sortVal);
+    h+=buildRankItem(list[j],j,{sameAsPrev:sameAsPrev,samePos:sameAsPrev?(j):(j+1)});
+  }
+  h+='</div>';
+  h+='<div class="ovrk-note">'+note+'</div>';
+  return h;
+}
+
+// 获取比赛数据 (兼容 const/var/ window 三种声明方式)
+function getMatchData(){
+  if(typeof wc2026AllMatches!=='undefined') return wc2026AllMatches;
+  if(typeof window.wc2026AllMatches!=='undefined') return window.wc2026AllMatches;
+  return {};
+}
+
+// 根据队代码查找所有对手 (用于扑救评分)
+function findOpponentsForTeam(teamCode, matchData){
+  var opponents=[];
+  for(var k in matchData){
+    var parts=k.split('|');
+    if(parts.length<4) continue;
+    var m=matchData[k];
+    if(!m||!m.score) continue;
+    var isHome=(parts[2]===teamCode), isAway=(parts[3]===teamCode);
+    if(!isHome&&!isAway) continue;
+    var opp=isHome?parts[3]:parts[2];
+    var conceded=isHome?m.score.sa:m.score.sh;
+    opponents.push({opp:opp,conceded:conceded||0});
+  }
+  return opponents;
+}
+
+// FIFA排名近似值 (兼容)
+function getFifaRankApprox(code){
+  if(typeof window.getFifaRank==='function'){ var r=window.getFifaRank(code); if(typeof r==='number') return r; }
+  return 50;
+}
+function opponentCoef(teamCode){ return 1.0+Math.max(0,85-getFifaRankApprox(teamCode))/85; }
+
+// 建立 squadDB 中文→{playerDB key, 全中文名, 英文名, 国籍} 索引 (懒初始化, 身价/射手榜共用)
+var _cnToInfo=null;
+function _buildCnToInfo(){
+  if(_cnToInfo) return _cnToInfo;
+  _cnToInfo={};
+  if(typeof squadDB==='undefined'||typeof playerDB==='undefined') return _cnToInfo;
+  var pdbIdx={};
+  function _n(s){var r=(s||'').toLowerCase(); try{r=r.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}catch(e){} return r.replace(/[^a-z0-9]/g,''); }
+  for(var pk in playerDB){var pp=playerDB[pk];pdbIdx[_n(pk)]=pk;if(pp.n)pdbIdx[_n(pp.n)]=pk;if(pp.nn)pdbIdx[_n(pp.nn)]=pk;}
+  for(var tc in squadDB){var sq=squadDB[tc];
+    ['gk','df','mf','fw'].forEach(function(grp){var arr=sq[grp];if(!arr)return;arr.forEach(function(p){
+      if(!p.cn||!p.n) return;
+      var enKey=_n(p.n); var matched=pdbIdx[enKey];
+      if(!matched){var parts=p.n.toLowerCase().split(/\s+/);if(parts.length>=2)matched=pdbIdx[parts.slice(1).join('')+parts[0]];}
+      var enDisplay=matched||(function(){var ps=p.n.toLowerCase().split(/\s+/);if(ps.length>=2){var fn=ps[1],ln=ps[0];return fn.charAt(0).toUpperCase()+fn.slice(1)+' '+ln.charAt(0).toUpperCase()+ln.slice(1);}return p.n.charAt(0)+p.n.slice(1).toLowerCase();})();
+      var info={pdbKey:matched||'',fullCn:p.cn,enName:enDisplay,nat:tc};
+      _cnToInfo[p.cn]=info;
+      var dotParts=p.cn.split('·'); if(dotParts.length>1){_cnToInfo[dotParts[dotParts.length-1]]=info;_cnToInfo[dotParts[0]]=info;}
+    });});
+  }
+  return _cnToInfo;
+}
+
+// ========== 身价榜 ==========
+window.showOvValueRank = function(){
+  var year=getActiveYear(); var yl=yearLabels[year]||year;
+  document.getElementById('ovVRYear').textContent=yl;
+  var players=[];
+  // 2026: 实时 squadDB | 往届: 预置历史数据
+  if(year==='2026'){
+    var sqToPdb={};
+    if(typeof squadDB!=='undefined'&&typeof _buildCnToInfo==='function'){
+      var ci=_buildCnToInfo(); for(var ck in ci){ var inf=ci[ck]; if(inf.pdbKey){sqToPdb[inf.enName]=inf.pdbKey;sqToPdb[inf.enName.toUpperCase().replace(/\s+/g,' ')]=inf.pdbKey;} }
+    }
+    if(typeof squadDB!=='undefined'){
+      for(var tc in squadDB){
+        var sq=squadDB[tc]; var groups=['gk','df','mf','fw'];
+        for(var gi=0;gi<groups.length;gi++){
+          var arr=sq[groups[gi]]; if(!arr) continue;
+          for(var pi=0;pi<arr.length;pi++){
+            var p=arr[pi]; var v=parseFloat(p.v); if(isNaN(v)) continue;
+            var rn=p.n||''; var rnUp=rn.toUpperCase().replace(/\s+/g,' ');
+            var rnParts=rn.toLowerCase().split(/\s+/);
+            var rnRev=rnParts.length>=2?rnParts[1].charAt(0).toUpperCase()+rnParts[1].slice(1)+' '+rnParts[0].charAt(0).toUpperCase()+rnParts[0].slice(1):'';
+            var pdbKey=sqToPdb[rn]||sqToPdb[rnUp]||sqToPdb[rnRev]||sqToPdb[rnRev.toUpperCase().replace(/\s+/g,' ')]||'';
+            var enDisplay=function(sn){var ps=(sn||'').toLowerCase().split(/\s+/);if(ps.length>=2)return ps[1].charAt(0).toUpperCase()+ps[1].slice(1)+' '+ps[0].charAt(0).toUpperCase()+ps[0].slice(1);return(sn||'').charAt(0)+(sn||'').slice(1).toLowerCase();}(p.n);
+            players.push({nameEn:pdbKey||enDisplay,nameZh:p.cn||p.n,teamCode:tc,value:v,sortVal:v});
+          }
+        }
+      }
+    }
+  } else if(typeof pastPlayerStats!=='undefined'&&pastPlayerStats[year]){
+    var mv=pastPlayerStats[year].marketValue; if(Array.isArray(mv)){mv.forEach(function(p){players.push({nameEn:p.nameEn,nameZh:p.nameZh,teamCode:p.teamCode,value:p.value*100,sortVal:p.value*100});});}
+  }
+  if(players.length===0){document.getElementById('ovValueRankContent').innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)">暂无该届身价数据</div>';document.getElementById('ovValueRankModal').classList.add('visible');return;}
+  players.sort(function(a,b){return b.value-a.value;});
+  function fmt(v){return v>=10000?'€'+(v/10000).toFixed(2)+'亿':'€'+v+'万';}
+  var top3=players.slice(0,3).map(function(p){return{nameEn:p.nameEn,nameZh:p.nameZh,teamCode:p.teamCode,stat:fmt(p.value),sortVal:p.value};});
+  var rest=players.slice(3,15).map(function(p){return{nameEn:p.nameEn,nameZh:p.nameZh,teamCode:p.teamCode,stat:fmt(p.value),sortVal:p.value};});
+  var totalValue=players.reduce(function(s,p){return s+p.value;},0);
+  var sumItems=[{num:year==='2026'?'48':'32',lbl:'参赛队伍'},{num:players.length.toLocaleString(),lbl:'参赛球员'},{num:'€'+(totalValue/10000).toFixed(0)+'亿',lbl:'总身价估值'}];
+  document.getElementById('ovValueRankContent').innerHTML=buildRankHTML(sumItems,top3,rest,'身价为当前市场估值（欧元）· 并列排名按字母顺序',year==='2026');
+  document.getElementById('ovValueRankModal').classList.add('visible');
+};
+
+// ========== 射手榜 ==========
+window.showOvScorerRank = function(){
+  var year=getActiveYear(); var yl=yearLabels[year]||year;
+  document.getElementById('ovSRYear').textContent=yl;
+  // 建立 squadDB 中文→{playerDB key, 全中文名, 英文名, 国籍} 索引 (懒初始化)
+  var scorerMap={};
+  var matchData={};
+  if(year==='2026'){ matchData=getMatchData(); }
+  else if(typeof wcMatchDetails!=='undefined'){
+    Object.keys(wcMatchDetails).forEach(function(key){if(key.indexOf(year+'|')===0){var m=wcMatchDetails[key];if(m&&m.goals)matchData[key]=m;}});
+  }
+  Object.keys(matchData).forEach(function(key){
+    var m=matchData[key]; if(!m||!m.goals) return;
+    m.goals.forEach(function(g){
+      if(g.type==='own_goal') return;
+      var raw=g.scorer;
+      // 解析 "中文名 (English Name)" 格式 (wcMatchDetails 往届数据)
+      var parenIdx=raw.indexOf(' (');
+      var nm=parenIdx>0?raw.substring(0,parenIdx):raw;
+      var enInParen=parenIdx>0?raw.substring(parenIdx+2,raw.length-1):'';
+      var info=_buildCnToInfo()[nm];
+      // squadDB 找不到则尝试括号内英文名匹配
+      if(!info&&enInParen){info=_buildCnToInfo()[enInParen];}
+      // 中文名模糊回退: 比赛数据简称 vs squadDB 全名
+      if(!info&&nm.length>=2){
+        var ci=_buildCnToInfo();
+        // 策略1: 子串匹配 ("翁达夫" in "德尼兹·温达夫"? "温达夫" 包含 "达夫")
+        for(var ck in ci){ if(ck.indexOf(nm)>=0){info=ci[ck];break;} }
+        // 策略2: 反向子串 (nm 更完整)
+        if(!info) for(var ck2 in ci){ if(nm.indexOf(ck2)>=0){info=ci[ck2];break;} }
+        // 策略3: 尾字匹配
+        if(!info&&nm.length>=2){var tail=nm.slice(-2);for(var ck3 in ci){if(ck3.slice(-2)===tail){info=ci[ck3];break;}}}
+        // 策略4: 字符交集≥2
+        if(!info&&nm.length>=2){var nc=nm.split('');var best=0;for(var ck4 in ci){var cnt=0;for(var i4=0;i4<nc.length;i4++){if(ck4.indexOf(nc[i4])>=0)cnt++;}if(cnt>=1&&cnt>best){best=cnt;info=ci[ck4];}}}
+      }
+      var zhFull=info?info.fullCn:nm;
+      var enName=info?(info.pdbKey||info.enName):(enInParen||nm);
+      var tc=info?info.nat:(g.side==='home'?key.split('|')[2]:key.split('|')[3])||'';
+      if(!scorerMap[nm]) scorerMap[nm]={goals:0,pens:0,zhFull:zhFull,enName:enName,tc:tc};
+      scorerMap[nm].goals++; if(g.type==='penalty') scorerMap[nm].pens++;
+    });
+  });
+  var list=Object.keys(scorerMap).map(function(k){var s=scorerMap[k];return{nameZh:s.zhFull,nameEn:s.enName,teamCode:s.tc,goals:s.goals,pens:s.pens};});
+  list.sort(function(a,b){return b.goals-a.goals;});
+  var totalGoals=list.reduce(function(s,p){return s+p.goals;},0);
+  var top3=list.slice(0,3).map(function(p){return{nameZh:p.nameZh,nameEn:p.nameEn,teamCode:p.teamCode,stat:p.goals+' 球',statSub:p.pens>0?('含 '+p.pens+' 点球'):'',sortVal:p.goals};});
+  var rest=list.slice(3,15).map(function(p){return{nameZh:p.nameZh,nameEn:p.nameEn,teamCode:p.teamCode,stat:p.goals+' 球',sortVal:p.goals};});
+  var matchCount=Object.keys(matchData).length;
+  var sumItems=[{num:totalGoals,lbl:'总进球'},{num:(matchCount>0?(totalGoals/matchCount).toFixed(1):'—'),lbl:'场均进球'},{num:matchCount,lbl:'比赛场次'}];
+  document.getElementById('ovScorerRankContent').innerHTML=buildRankHTML(sumItems,top3,rest,'进球数相同按出场时间升序 · 含加时赛进球不含点球大战',year==='2026');
+  document.getElementById('ovScorerRankModal').classList.add('visible');
+};
+
+// ========== 助攻榜 ==========
+window.showOvAssistRank = function(){
+  var year=getActiveYear(); var yl=yearLabels[year]||year;
+  document.getElementById('ovARYear').textContent=yl;
+  var stats=year==='2026'&&typeof assistStats2026!=='undefined'?assistStats2026:(typeof pastPlayerStats!=='undefined'&&pastPlayerStats[year]?pastPlayerStats[year].assists:null);
+  var list=[];
+  if(stats){
+    if(Array.isArray(stats)) list=stats.slice();
+    else{
+      for(var k in stats){if(k.indexOf('_')===0) continue; list.push(stats[k]);}
+      if(stats._extraFromWikipedia){for(var ek in stats._extraFromWikipedia) list.push(stats._extraFromWikipedia[ek]);}
+    }
+  }
+  list.sort(function(a,b){return (b.assists||0)-(a.assists||0);});
+  var totalA=list.reduce(function(s,p){return s+(p.assists||0);},0);
+  var top=list.slice(0,3).map(function(p){return{nameEn:p.nameEn,nameZh:p.nameZh,teamCode:p.teamCode,stat:(p.assists||0)+' 助',sortVal:p.assists||0};});
+  var rest=list.slice(3,15).map(function(p){return{nameEn:p.nameEn,nameZh:p.nameZh,teamCode:p.teamCode,stat:(p.assists||0)+' 助',sortVal:p.assists||0};});
+  var pc=list.filter(function(p){return p.assists>0;}).length;
+  var sumItems=[{num:totalA,lbl:'总助攻'},{num:list.length>0?(totalA/list.length).toFixed(1):'—',lbl:'人均助攻'},{num:pc,lbl:'助攻球员'}];
+  document.getElementById('ovAssistRankContent').innerHTML=buildRankHTML(sumItems,top,rest,'助攻数相同按出场时间升序 · 仅统计直接导致进球的最后一传',year==='2026');
+  document.getElementById('ovAssistRankModal').classList.add('visible');
+};
+
+// ========== 扑救榜 — 对手加权综合评分 ==========
+window.showOvSaveRank = function(){
+  var year=getActiveYear(); var yl=yearLabels[year]||year;
+  document.getElementById('ovSvRYear').textContent=yl;
+  var stats=year==='2026'&&typeof saveStats2026!=='undefined'?saveStats2026:(typeof pastPlayerStats!=='undefined'&&pastPlayerStats[year]?pastPlayerStats[year].saves:null);
+  
+  var list=[];
+  if(stats){
+    // 兼容数组(往届)和对象(2026)两种格式
+    var entries=Array.isArray(stats)?stats:Object.keys(stats).map(function(k){return stats[k];});
+    for(var i=0;i<entries.length;i++){
+      var gk=entries[i];
+      // 往届数据可能缺 savePct，从 saves/goalsConceded 估算
+      gk._pct=gk.savePct||(gk.saves>=0?Math.round(gk.saves/Math.max(1,gk.saves+(gk.goalsConceded||0))*100):0);
+      var score=gk.saves*(gk._pct/100)*0.7 + (gk.cleanSheets||0)*3;
+      gk._score=+score.toFixed(1); gk._sortKey=score;
+      list.push(gk);
+    }
+  }
+  list.sort(function(a,b){return b._sortKey-a._sortKey;});
+  var totalSaves=list.reduce(function(s,p){return s+(p.saves||0);},0);
+  var totalCS=list.reduce(function(s,p){return s+(p.cleanSheets||0);},0);
+  var top3=list.slice(0,3).map(function(gk){return{nameEn:gk.nameEn,nameZh:gk.nameZh,teamCode:gk.teamCode,stat:gk._score.toFixed(1)+' 分',statSub:gk.saves+'扑救·'+gk._pct+'%'+(gk.cleanSheets>0?' · '+gk.cleanSheets+'零封':''),sortVal:gk._sortKey};});
+  var rest=list.slice(3,15).map(function(gk){return{nameEn:gk.nameEn,nameZh:gk.nameZh,teamCode:gk.teamCode,stat:gk._score.toFixed(1)+' 分',statSub:gk.saves+'扑救·'+gk._pct+'%'+(gk.cleanSheets>0?' · '+gk.cleanSheets+'零封':''),sortVal:gk._sortKey};});
+  var sumItems=[{num:totalSaves,lbl:'总扑救'},{num:list.length>0?(totalSaves/list.length).toFixed(1):'—',lbl:'人均扑救'},{num:totalCS,lbl:'零封场次'}];
+  document.getElementById('ovSaveRankContent').innerHTML=buildRankHTML(sumItems,top3,rest,'综合分 = 扑救×(成功率%/100)×0.7 + 零封×3',year==='2026');
+  document.getElementById('ovSaveRankModal').classList.add('visible');
+};
+
+console.log('✅ V1.77 数据总览四弹窗已安装');
 })();
 </script>
 

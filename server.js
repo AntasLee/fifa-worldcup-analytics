@@ -94,7 +94,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log('====================================================');
-  console.log('  FIFA World Cup Data Analysis V1.76');
+  console.log('  FIFA World Cup Data Analysis V1.77');
   console.log('  Local server with gzip compression');
   console.log('  http://localhost:' + PORT);
   console.log('====================================================');
