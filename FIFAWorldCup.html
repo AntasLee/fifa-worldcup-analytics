@@ -448,7 +448,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .detail-stat-item{background:var(--surface2);border-radius:8px;padding:12px;text-align:center}
 .detail-stat-item .stat-val{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:2px}
 .detail-stat-item .stat-lbl{font-size:0.62rem;color:var(--text-secondary)}
-/* ========== 数据总览弹窗样式 ========== */
+/* ========== 数据统计弹窗样式 ========== */
 .data-overview-modal{max-width:1100px!important;width:95%;max-height:88vh}
 .overview-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
 .overview-stat-card{background:var(--surface2);border-radius:8px;padding:14px 12px;text-align:center;border:1px solid var(--border)}
@@ -2340,7 +2340,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.5rem !important;
   }
 
-  /* ── V1.74 数据总览弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
+  /* ── V1.74 数据统计弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
   .data-overview-modal {
     padding: 12px !important;
   }
@@ -3208,7 +3208,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 }
 
 
-/* ===== 数据总览右侧悬浮面板 ===== */
+/* ===== 数据统计右侧悬浮面板 ===== */
 /* ── 桌面端基础样式（全局，不被包裹）── */
 .side-host{position:fixed;top:110px;right:0;height:calc(100vh - 120px);z-index:600;display:flex;align-items:stretch;pointer-events:none}
 .side-host *{pointer-events:auto}
@@ -3219,6 +3219,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 @keyframes handleInner{0%,100%{box-shadow:inset 0 0 8px rgba(240,208,112,0.06)}50%{box-shadow:inset 0 0 16px rgba(240,208,112,0.14)}}
 @keyframes handlePulse{0%,100%{box-shadow:0 0 10px rgba(200,162,72,0.2),0 0 20px rgba(200,162,72,0.08)}50%{box-shadow:0 0 18px rgba(240,208,112,0.35),0 0 36px rgba(200,162,72,0.15),0 0 54px rgba(200,162,72,0.06)}}
 .handle-arrow{font-size:0.55rem;color:rgba(240,208,112,0.5);letter-spacing:-2px;margin-top:10px;z-index:1;transition:all 0.35s;animation:arrowStreak 2.5s ease-in-out infinite;user-select:none;transform:scaleX(0.6);text-align:center;width:100%}
+#handleLock{font-size:0.75rem;color:#ffd060;margin-top:10px;z-index:1;user-select:none;text-align:center;width:100%;display:none}
 @keyframes arrowStreak{0%,100%{opacity:0.35;filter:drop-shadow(0 0 2px rgba(240,208,112,0.2))}50%{opacity:1;filter:drop-shadow(0 0 10px rgba(240,208,112,0.8)) drop-shadow(0 0 20px rgba(240,208,112,0.35))}}
 .expand-panel{width:0;overflow:hidden;transition:width 0.35s cubic-bezier(0.4,0,0.2,1);display:flex;align-items:center}
 .expand-panel.open{width:220px}
@@ -3236,15 +3237,16 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 @media(max-width:768px){
 .prob-update-wrapper{width:calc(50% - 6px);flex-shrink:0}
 .prob-update-capsule{width:100%;justify-content:center;font-size:0.7rem;padding:6px 10px}
-/* 数据总览 — 同版本更新胶囊样式，仅颜色不同 */
+/* 数据统计 — 同版本更新胶囊样式，仅颜色不同 */
 .side-host{position:static!important;top:auto!important;left:auto!important;right:auto!important;width:calc(50% - 6px)!important;height:auto!important;z-index:auto!important;display:inline-flex!important;align-items:center;pointer-events:auto;flex-shrink:0;margin:0}
 .handle{display:inline-flex!important;align-items:center!important;gap:5px!important;padding:6px 10px!important;border-radius:22px!important;font-size:0.7rem!important;font-weight:700!important;white-space:nowrap!important;width:100%!important;height:auto!important;justify-content:center!important;flex-direction:row!important;background:linear-gradient(135deg,#1a0e00,#2d1600)!important;color:#ffc040!important;border:1.5px solid rgba(255,180,40,0.7)!important;cursor:pointer!important;user-select:none!important;transition:all 0.3s ease!important;animation:dataOverviewGlow 2.0s ease-in-out infinite!important}
 .handle::before{display:none!important}
 .handle-text{font-size:0.7rem!important;font-weight:700!important;letter-spacing:0!important;color:#ffc040!important;writing-mode:horizontal-tb!important;text-orientation:mixed!important;position:static!important}
 .handle-arrow{font-size:0.5rem!important;color:rgba(255,200,60,0.55)!important;margin:0!important;letter-spacing:0!important;transform:none!important;animation:none!important;width:auto!important;text-align:left!important}
+#handleLock{font-size:0.75rem!important;color:#ffd060!important;margin:0!important;display:none!important}
 .handle.open{border-radius:22px 22px 0 0!important;border-bottom-color:transparent!important;border-color:rgba(255,210,80,0.85)!important;box-shadow:0 0 24px rgba(255,200,60,0.5),0 0 48px rgba(255,160,20,0.3),0 0 72px rgba(255,140,0,0.1)!important;background:linear-gradient(135deg,#2d1600,#3d2000)!important;color:#ffd060!important}
 .handle.open .handle-text{color:#ffd060!important}
-/* 数据总览下拉面板 — 移动端独立样式，右锚定，参照版本更新下拉 */
+/* 数据统计下拉面板 — 移动端独立样式，右锚定，参照版本更新下拉 */
 .expand-panel{position:fixed;right:8px;width:min(340px,calc(100vw - 16px));max-height:0;overflow:hidden;opacity:0;transition:max-height 0.35s ease,opacity 0.3s ease;display:block;background:linear-gradient(180deg,#1a1000,#0e0800);border:1.5px solid rgba(255,180,40,0.25);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.6);z-index:680;pointer-events:none}
 	.expand-panel.open{opacity:1;pointer-events:auto}
 	.panel-inner{width:100%!important;max-width:100%!important;border-radius:0!important;border:none!important;margin:0!important;height:100%!important;overflow-y:auto!important;background:transparent!important;display:flex!important;flex-direction:column!important}
@@ -3303,7 +3305,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .ptab.g4:hover{border-color:rgba(255,224,160,0.5);color:#ffe8c0;background:rgba(255,224,160,0.15)}
 .ptab.g4.active{background:#d4a020;border-color:#ffe0a0;color:#111;box-shadow:0 0 18px rgba(212,160,32,0.5),0 0 36px rgba(255,224,160,0.2)}
 
-/* ===== 数据总览四弹窗样式 (V1.77) ===== */
+/* ===== 数据统计四弹窗样式 (V1.77) ===== */
 /* G1: 进攻数据 — 琥珀橙 #ff8f00 */
 .ov-modal{max-width:640px;width:94%;max-height:88vh;border-radius:14px;padding:0;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .ov-modal.ov-g1{background:linear-gradient(180deg,#120c04 0%,#0a0602 100%);border:1.5px solid rgba(255,143,0,0.18);box-shadow:0 0 40px rgba(255,143,0,0.12),0 0 80px rgba(255,143,0,0.05)}
@@ -3882,7 +3884,7 @@ function toggleProbUpdate() {
 	        dropdown.classList.add('expanded');
 	        capsule.classList.add('expanded');
 	        capsule.innerHTML = '📊 版本更新 ▴';
-	        // 折叠数据总览下拉
+	        // 折叠数据统计下拉
 	        var panel = document.getElementById("expandPanel");
 	        var handle = document.getElementById("panelHandle");
 	        var arrow = document.getElementById("handleArrow");
@@ -3963,7 +3965,7 @@ function toggleProbUpdate() {
   <div class="prob-update-wrapper">
     <span class="prob-update-capsule expanded" onclick="toggleProbUpdate()">📊 版本更新 ▴</span>
     <div class="prob-update-dropdown expanded" id="probUpdateDropdown">
-	      <div class="prob-update-item">📈 数据总览浮窗重置</div>
+	      <div class="prob-update-item">📈 数据统计浮窗重置</div>
 	      <div class="prob-update-item">✨ 新增表现评价引擎</div>
 	      <div class="prob-update-item">🎯 赛果命中概率结算</div>
       <div class="prob-update-divider"></div>
@@ -3977,7 +3979,7 @@ function toggleProbUpdate() {
     <div class="expand-panel" id="expandPanel">
       <div class="panel-inner">
         <div class="phd">
-          <span class="icon">📈</span><span class="title">数据总览</span>
+          <span class="icon">📈</span><span class="title">数据统计</span>
         </div>
         <div class="ptabs" id="tabsMain">
           <div class="group-divider g1"><span class="gline"></span><span class="glabel">进攻数据</span><span class="gline"></span></div>
@@ -3998,8 +4000,9 @@ function toggleProbUpdate() {
       </div>
     </div>
     <div class="handle" id="panelHandle">
-      <span class="handle-text">📈 数据总览</span>
+      <span class="handle-text">📈 数据统计</span>
       <span class="handle-arrow" id="handleArrow">▾</span>
+      <span id="handleLock">🔒</span>
     </div>
   </div>
   <button class="league-club-float-btn" style="display:none;" onclick="switchToTab('league.html','league_tab')" title="联赛 & 俱乐部数据">
@@ -4085,7 +4088,7 @@ function toggleProbUpdate() {
   <div class="past-wc-main-toolbar">
     <div class="past-wc-subtabs" id="pastWCStageTabsMain"></div>
     <button class="btn" onclick="runFlatBacktestMain()" style="margin-right:4px;background:transparent;border-color:#4caf84;color:#6ecc98;">📊 均注策略</button><button class="btn" onclick="runBacktest()" style="background:transparent;border-color:#ff8c42;color:#ffb366;">🎯 优选策略</button>
-    <button class="btn" onclick="showDataOverview()" style="background:transparent;border-color:#ab47bc;color:#ce93d8;">📈 数据总览</button>
+    <button class="btn" onclick="showDataOverview()" style="background:transparent;border-color:#ab47bc;color:#ce93d8;">📈 数据统计</button>
   </div>
   <div class="past-wc-main-info" id="pastWCInfoMain"></div>
   <div id="pastWCContentMain" style="max-height:60vh;overflow-y:auto;"></div>
@@ -4133,13 +4136,13 @@ function toggleProbUpdate() {
 <div id="evalContent"></div>
 </div></div>
 
-<!-- 数据总览弹窗 -->
+<!-- 数据统计弹窗 -->
 <div class="modal-overlay" id="dataOverviewModal"><div class="modal-box data-overview-modal">
-<h3>📈 数据总览 <span style="font-size:0.7rem;color:var(--text-secondary);" id="dataOverviewYearLabel"></span> <span style="display:flex;align-items:center;gap:8px;"><button class="btn btn-compare" onclick="event.stopPropagation();runDataOverviewComparison();">📊 数据对比</button><span class="modal-close" onclick="closeDataOverview()">✕</span></span></h3>
+<h3>📈 数据统计 <span style="font-size:0.7rem;color:var(--text-secondary);" id="dataOverviewYearLabel"></span> <span style="display:flex;align-items:center;gap:8px;"><button class="btn btn-compare" onclick="event.stopPropagation();runDataOverviewComparison();">📊 数据对比</button><span class="modal-close" onclick="closeDataOverview()">✕</span></span></h3>
 <div id="dataOverviewContent" style="max-height:65vh;overflow-y:auto;"></div>
 </div></div>
 
-<!-- V1.77 四弹窗：数据总览拆分 -->
+<!-- V1.77 四弹窗：数据统计拆分 -->
 <!-- 弹窗1: 进球时间 -->
 <div class="modal-overlay" id="ovGoalTimeModal"><div class="modal-box ov-modal ov-g1">
 <div class="ov-modal-hd"><span class="hd-title">⏱️ 进球时间分布<span class="hd-year" id="ovGTYear"></span></span><span class="modal-close" onclick="closeOvModal('ovGoalTimeModal')">✕</span></div>
@@ -4191,7 +4194,7 @@ function toggleProbUpdate() {
 
 <script src="teamdata.js" defer></script>
     <script src="matchdata.js" defer></script>
-    <script src="clubdata.js" defer></script></script></script></script></script>
+    <script src="clubdata.js" defer></script>
     <script src="coachdata.js" defer></script>
 <script src="squaddata.js" defer></script>
 <script src="player_stats_2026.js" defer></script>
@@ -5229,9 +5232,9 @@ console.log('✅ 表现评价渲染组件已安装 V1.77');
   var isMobile = window.innerWidth <= 768;
   if(!isMobile){ arrow.textContent = "\u25c0\u25c0\u25c0"; }
 
-	  function open(){
-	    panel.classList.add("open"); handle.classList.add("open");
-	    arrow.textContent = isMobile ? "\u25b4" : "\u25b6\u25b6\u25b6"; expanded = true;
+  function open(){
+    panel.classList.add("open"); handle.classList.add("open");
+    expanded = true; updateHandleIcon();
 	    if(isMobile){
 	      var capsuleRow = sideHost.parentNode; // sideHost 已在胶囊行内
 	      if(capsuleRow){
@@ -5250,15 +5253,31 @@ console.log('✅ 表现评价渲染组件已安装 V1.77');
 	      if(probeDropdown) probeDropdown.classList.remove("expanded");
 	    }
 	  }
-	  function collapse(){ panel.classList.remove("open"); handle.classList.remove("open"); arrow.textContent = isMobile ? "\u25be" : "\u25c0\u25c0\u25c0"; expanded = false; if(isMobile){ panel.style.height = ""; panel.style.maxHeight = ""; panel.style.width = ""; panel.style.right = ""; } }
+	  function collapse(){ panel.classList.remove("open"); handle.classList.remove("open"); expanded = false; updateHandleIcon(); if(isMobile){ panel.style.height = ""; panel.style.maxHeight = ""; panel.style.width = ""; panel.style.right = ""; } }
 	  function toggle(){ if(panel.classList.contains("open")) collapse(); else open(); }
+
+  // 更新箭头/锁图标
+  var lockEl = document.getElementById("handleLock");
+  function updateHandleIcon(){
+    if(locked){
+      arrow.style.display = "none"; lockEl.style.display = "block";
+    } else {
+      lockEl.style.display = "none"; arrow.style.display = "";
+      arrow.style.fontSize = ""; arrow.style.animation = "";
+      arrow.textContent = isMobile ? (expanded ? "\u25b4" : "\u25be") : (expanded ? "\u25b6\u25b6\u25b6" : "\u25c0\u25c0\u25c0");
+    }
+  }
 
   if(!isMobile){
   handle.addEventListener("mouseenter", function(){ hovering = true; if(leaveTimer){ clearTimeout(leaveTimer); leaveTimer = null; } if(!expanded && !locked) open(); });
   panel.addEventListener("mouseenter", function(){ hovering = true; if(leaveTimer){ clearTimeout(leaveTimer); leaveTimer = null; } });
   handle.addEventListener("mouseleave", function(){ hovering = false; if(!locked && expanded) leaveTimer = setTimeout(function(){ if(!hovering && !locked && expanded) collapse(); }, DELAY); });
   panel.addEventListener("mouseleave", function(){ hovering = false; if(!locked && expanded) leaveTimer = setTimeout(function(){ if(!hovering && !locked && expanded) collapse(); }, DELAY); });
-  handle.addEventListener("click", function(e){ e.stopPropagation(); toggle(); });
+  handle.addEventListener("click", function(e){
+    e.stopPropagation();
+    if(locked){ locked = false; updateHandleIcon(); collapse(); }
+    else { if(!expanded) open(); locked = true; updateHandleIcon(); }
+  });
   } else {
   // 移动端：sideHost 已在胶囊行 HTML 中，与版本更新并排
   handle.addEventListener("click", function(e){ e.stopPropagation(); toggle(); });
@@ -5301,7 +5320,7 @@ console.log('✅ 表现评价渲染组件已安装 V1.77');
 })();
 </script>
 
-<!-- V1.77 数据总览四弹窗 数据函数 -->
+<!-- V1.77 数据统计四弹窗 数据函数 -->
 <script>
 (function(){
 var yearLabels = {'2026':'2026 美加墨','2022':'2022 卡塔尔','2018':'2018 俄罗斯','2014':'2014 巴西','2010':'2010 南非','2006':'2006 德国','2002':'2002 韩日'};
@@ -5687,6 +5706,7 @@ function findPhotoByLookup(nameEn, teamCode){
 
 // 渲染 Hero 卡片
 function buildHeroItem(r,rankType){
+  if(!r) return '';
   var cls='ovrk-h'+rankType;
   var tagText={'1st':'🥇 第1名','2nd':'🥈 第2名','3rd':'🥉 第3名'}[rankType]||'';
   var photo=getPlayerPhoto(r.nameEn)||findPhotoByLookup(r.nameEn,r.teamCode);
@@ -5737,9 +5757,16 @@ function buildRankHTML(summaryItems,heroes,list,note,showSummary){
     h+='</div>';
   }
   h+='<div class="ovrk-hero">';
-  h+=buildHeroItem(heroes[1],'2nd');
-  h+=buildHeroItem(heroes[0],'1st');
-  h+=buildHeroItem(heroes[2],'3rd');
+  if(heroes.length===1){
+    h+=buildHeroItem(heroes[0],'1st');
+  }else if(heroes.length===2){
+    h+=buildHeroItem(heroes[1],'2nd');
+    h+=buildHeroItem(heroes[0],'1st');
+  }else if(heroes.length>=3){
+    h+=buildHeroItem(heroes[1],'2nd');
+    h+=buildHeroItem(heroes[0],'1st');
+    h+=buildHeroItem(heroes[2],'3rd');
+  }
   h+='</div>';
   h+='<div class="ovrk-list">';
   for(var j=0;j<list.length;j++){
@@ -5891,6 +5918,11 @@ window.showOvScorerRank = function(){
   });
   var list=Object.keys(scorerMap).map(function(k){var s=scorerMap[k];return{nameZh:s.zhFull,nameEn:s.enName,teamCode:s.tc,goals:s.goals,pens:s.pens};});
   list.sort(function(a,b){return b.goals-a.goals;});
+  if(list.length===0){
+    document.getElementById('ovScorerRankContent').innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)">数据加载中，请稍后再试</div>';
+    document.getElementById('ovScorerRankModal').classList.add('visible');
+    return;
+  }
   var totalGoals=list.reduce(function(s,p){return s+p.goals;},0);
   var top3=list.slice(0,3).map(function(p){return{nameZh:p.nameZh,nameEn:p.nameEn,teamCode:p.teamCode,stat:p.goals+' 球',statSub:p.pens>0?('含 '+p.pens+' 点球'):'',sortVal:p.goals};});
   var rest=list.slice(3,15).map(function(p){return{nameZh:p.nameZh,nameEn:p.nameEn,teamCode:p.teamCode,stat:p.goals+' 球',sortVal:p.goals};});
@@ -5914,6 +5946,11 @@ window.showOvAssistRank = function(){
     }
   }
   list.sort(function(a,b){return (b.assists||0)-(a.assists||0);});
+  if(list.length===0){
+    document.getElementById('ovAssistRankContent').innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)">数据加载中，请稍后再试</div>';
+    document.getElementById('ovAssistRankModal').classList.add('visible');
+    return;
+  }
   var totalA=list.reduce(function(s,p){return s+(p.assists||0);},0);
   var top=list.slice(0,3).map(function(p){return{nameEn:p.nameEn,nameZh:p.nameZh,teamCode:p.teamCode,stat:(p.assists||0)+' 助',sortVal:p.assists||0};});
   var rest=list.slice(3,15).map(function(p){return{nameEn:p.nameEn,nameZh:p.nameZh,teamCode:p.teamCode,stat:(p.assists||0)+' 助',sortVal:p.assists||0};});
@@ -5943,6 +5980,11 @@ window.showOvSaveRank = function(){
     }
   }
   list.sort(function(a,b){return b._sortKey-a._sortKey;});
+  if(list.length===0){
+    document.getElementById('ovSaveRankContent').innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)">数据加载中，请稍后再试</div>';
+    document.getElementById('ovSaveRankModal').classList.add('visible');
+    return;
+  }
   var totalSaves=list.reduce(function(s,p){return s+(p.saves||0);},0);
   var totalCS=list.reduce(function(s,p){return s+(p.cleanSheets||0);},0);
   var top3=list.slice(0,3).map(function(gk){return{nameEn:gk.nameEn,nameZh:gk.nameZh,teamCode:gk.teamCode,stat:gk._score.toFixed(1)+' 分',statSub:gk.saves+'扑救·'+gk._pct+'%'+(gk.cleanSheets>0?' · '+gk.cleanSheets+'零封':''),sortVal:gk._sortKey};});
@@ -5952,7 +5994,7 @@ window.showOvSaveRank = function(){
   document.getElementById('ovSaveRankModal').classList.add('visible');
 };
 
-console.log('✅ V1.77 数据总览四弹窗已安装');
+console.log('✅ V1.77 数据统计四弹窗已安装');
 })();
 </script>
 

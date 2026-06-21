@@ -1290,7 +1290,11 @@ class Player {
 }
 
 window.closeDataOverview = function() {
-  document.getElementById('dataOverviewModal').classList.remove('visible');
+  var el = document.getElementById('dataOverviewModal');
+  if (!el) return;
+  el.classList.add('removing');
+  el.classList.remove('visible');
+  setTimeout(function() { el.classList.remove('removing'); }, 120);
 };
 
 window.showDataOverview = function() {
@@ -1596,10 +1600,15 @@ window.switchOverviewTab = function(tab) {
   if (content) content.style.display = 'block';
 };
 
-// Add click-to-close for data overview modal
+// Add click-to-close and ESC for data overview modal
 setTimeout(function() {
   var dm = document.getElementById('dataOverviewModal');
-  if (dm) dm.addEventListener('click', function(e) { if (e.target === this) closeDataOverview(); });
+  if (dm) {
+    dm.addEventListener('click', function(e) { if (e.target === this) closeDataOverview(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && dm.classList.contains('visible')) closeDataOverview();
+    });
+  }
 }, 100);
 
 
