@@ -15,8 +15,9 @@
 //   saveData:    { gkKey:      { nameEn, nameZh, team, teamCode, saves, savePct, cleanSheets, goalsConceded } }
 //
 // 后续注入方案:
-//   理想状态 → 在 matchdata_2026.js 每场 goals[] 中补充 assist 字段，
-//             在 stats 中补充 saves 字段，排行榜实时计算。
+//   ✅ V1.78 助攻榜引擎已升级 → 优先从 matchdata_2026.js goals[].assist 动态聚合；
+//      本文件的 assistStats2026 降级为回退数据源（比赛数据缺 assist 字段时启用）。
+//   ⏳ 扑救榜引擎待升级 → 在 stats 中补充 saves 字段后同样改为实时计算。
 //   过渡方案 → 使用本文件的预聚合数据直接渲染榜单。
 // ================================================================
 

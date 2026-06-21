@@ -1020,8 +1020,8 @@ const wc2026MatchDetails = {
   "2026|A|MEX|RSA": {
     score: { sh: 2, sa: 0 },
     goals: [
-      { min: 9, side: "home", scorer: "基尼奥内斯 (Julián Quiñones)", type: "shot" },
-      { min: 67, side: "home", scorer: "R.希门尼斯 (Raúl Jiménez)", type: "header" }
+      { min: 9, side: "home", scorer: "基尼奥内斯 (Julián Quiñones)", type: "shot", assist: "埃里克·利拉 (Érik Lira)" },
+      { min: 67, side: "home", scorer: "R.希门尼斯 (Raúl Jiménez)", type: "header", assist: "罗伯托·阿尔瓦拉多 (Roberto Alvarado)" }
     ],
     cards: {
       home: { yellow: 1, red: 1 },
@@ -1035,7 +1035,7 @@ const wc2026MatchDetails = {
     goals: [
       { min: 59, side: "away", scorer: "拉吉斯拉夫·克雷伊奇 (Ladislav Krejčí)", type: "header" },
       { min: 67, side: "home", scorer: "黄仁范 (Hwang In-beom)", type: "shot" },
-      { min: 80, side: "home", scorer: "吴贤揆 (Oh Hyeon-gyu)", type: "shot" }
+      { min: 80, side: "home", scorer: "吴贤揆 (Oh Hyeon-gyu)", type: "shot", assist: "黄仁范 (Hwang In-beom)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1088,7 +1088,7 @@ const wc2026MatchDetails = {
   "2026|B|SUI|BIH": {
     score: { sh: 4, sa: 1 },
     goals: [
-      { min: 74,    side: "home", scorer: "曼赞比 (Meschack Manzambi)",      type: "shot" },
+      { min: 74,    side: "home", scorer: "曼赞比 (Meschack Manzambi)",      type: "shot", assist: "鲁本·巴尔加斯 (Rubén Vargas)" },
       { min: 84,    side: "home", scorer: "巴尔加斯 (Rubén Vargas)",         type: "shot" },
       { min: 90,    side: "home", scorer: "曼赞比 (Meschack Manzambi)",      type: "shot" },
       { min: "90+3",side: "away", scorer: "马赫米奇 (Amar Mahmić)",          type: "shot" },
@@ -1123,10 +1123,10 @@ const wc2026MatchDetails = {
     score: { sh: 4, sa: 1 },
     goals: [
       { min: 8, side: "home", scorer: "达米安·博瓦迪利亚 (Damián Bobadilla)", type: "own_goal" },
-      { min: 31, side: "home", scorer: "巴洛贡 (Folarin Balogun)", type: "shot" },
+      { min: 31, side: "home", scorer: "巴洛贡 (Folarin Balogun)", type: "shot", assist: "普利西奇 (Christian Pulisic)" },
       { min: 50, side: "home", scorer: "巴洛贡 (Folarin Balogun)", type: "shot" },
-      { min: 74, side: "away", scorer: "毛里西奥·普拉多 (Mauricio Prado)", type: "shot" },
-      { min: "90+8", side: "home", scorer: "雷纳 (Giovanni Reyna)", type: "shot" }
+      { min: 74, side: "away", scorer: "毛里西奥·普拉多 (Mauricio Prado)", type: "shot", assist: "恩西索 (Julio Enciso)" },
+      { min: "90+8", side: "home", scorer: "雷纳 (Giovanni Reyna)", type: "shot", assist: "马利克·蒂尔曼 (Malik Tillman)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1152,7 +1152,7 @@ const wc2026MatchDetails = {
     score: { sh: 1, sa: 1 },
     goals: [
       { min: 21, side: "away", scorer: "萨伊瓦里 (Ismael Saibari)", type: "shot" },
-      { min: 32, side: "home", scorer: "维尼修斯 (Vinícius Júnior)", type: "shot" }
+      { min: 32, side: "home", scorer: "维尼修斯 (Vinícius Júnior)", type: "shot", assist: "布鲁诺·吉马良斯 (Bruno Guimarães)" }
     ],
     cards: {
       home: { yellow: 2, red: 0 },
@@ -1218,7 +1218,7 @@ const wc2026MatchDetails = {
   "2026|D|USA|AUS": {
     score: { sh: 2, sa: 0 },
     goals: [
-      { min: 11, side: "home", scorer: "伯吉斯 (Cameron Burgess)", type: "own_goal" },
+      { min: 11, side: "home", scorer: "伯吉斯 (Cameron Burgess)", type: "own_goal", assist: "塞尔吉诺·德斯特 (Sergiño Dest)" },
       { min: 43, side: "home", scorer: "弗里曼 (Freeman)",          type: "header" }
     ],
     cards: {
@@ -1280,7 +1280,7 @@ const wc2026MatchDetails = {
   "2026|E|CIV|ECU": {
     score: { sh: 1, sa: 0 },
     goals: [
-      { min: 90, side: "home", scorer: "迪亚洛 (Amad Diallo)", type: "shot" }
+      { min: 90, side: "home", scorer: "迪亚洛 (Amad Diallo)", type: "shot", assist: "威尔弗里德·辛戈 (Wilfried Singo)" }
     ],
     cards: {
       home: { yellow: 3, red: 0 },
@@ -1294,8 +1294,8 @@ const wc2026MatchDetails = {
     score: { sh: 2, sa: 1 },
     goals: [
       { min: 30,    side: "away", scorer: "凯西 (Franck Kessié)",       type: "shot" },
-      { min: 68,    side: "home", scorer: "翁达夫 (Deniz Undav)",       type: "shot" },
-      { min: "90+4",side: "home", scorer: "翁达夫 (Deniz Undav)",       type: "shot" }
+      { min: 68,    side: "home", scorer: "翁达夫 (Deniz Undav)",       type: "shot", assist: "纳迪姆·阿米里 (Nadiem Amiri)" },
+      { min: "90+4",side: "home", scorer: "翁达夫 (Deniz Undav)",       type: "shot", assist: "费利克斯·恩梅查 (Felix Nmecha)" }
     ],
     cards: {
       home: { yellow: 0, red: 0 },
@@ -1304,13 +1304,24 @@ const wc2026MatchDetails = {
     attendance: 43036,
     referee: "Juan Gabriel Benítez (PAR)"
   },
+
+  "2026|E|ECU|CUW": {
+    score: { sh: 0, sa: 0 },
+    goals: [],
+    cards: {
+      home: { yellow: 1, red: 0 },
+      away: { yellow: 5, red: 0 }
+    },
+    attendance: 68598,
+    referee: "Ma Ning (CHN)"
+  },
   "2026|F|SWE|TUN": {
     score: { sh: 5, sa: 1 },
     goals: [
       { min: 7, side: "home", scorer: "阿亚里 (Yasin Ayari)", type: "shot" },
-      { min: 30, side: "home", scorer: "伊萨克 (Alexander Isak)", type: "shot" },
+      { min: 30, side: "home", scorer: "伊萨克 (Alexander Isak)", type: "shot", assist: "哲凯赖什 (Viktor Gyökeres)" },
       { min: 43, side: "away", scorer: "雷基克 (Omar Rekik)", type: "header" },
-      { min: 60, side: "home", scorer: "哲凯赖什 (Viktor Gyökeres)", type: "shot" },
+      { min: 60, side: "home", scorer: "哲凯赖什 (Viktor Gyökeres)", type: "shot", assist: "伊萨克 (Alexander Isak)" },
       { min: 86, side: "home", scorer: "斯万贝里 (Mattias Svanberg)", type: "shot" },
       { min: "90+6", side: "home", scorer: "阿亚里 (Yasin Ayari)", type: "shot" }
     ],
@@ -1339,6 +1350,22 @@ const wc2026MatchDetails = {
     attendance: 68777,
     referee: "Michael Oliver (ENG)"
   },
+
+  "2026|F|TUN|JPN": {
+    score: { sh: 0, sa: 4 },
+    goals: [
+      { min: 4,  side: "away", scorer: "镰田大地 (Daichi Kamada)", type: "shot",   assist: "中村敬斗 (Keito Nakamura)" },
+      { min: 31, side: "away", scorer: "上田绮世 (Ayase Ueda)",   type: "shot",   assist: "板仓晃 (Ko Itakura)" },
+      { min: 69, side: "away", scorer: "伊东纯也 (Junya Ito)",    type: "shot",   assist: "上田绮世 (Ayase Ueda)" },
+      { min: 83, side: "away", scorer: "上田绮世 (Ayase Ueda)",   type: "header", assist: "佐野海舟 (Kaishu Sano)" }
+    ],
+    cards: {
+      home: { yellow: 0, red: 0 },
+      away: { yellow: 0, red: 0 }
+    },
+    attendance: 51243,
+    referee: "István Kovács (ROU)"
+  },
   "2026|H|ESP|CPV": {
     score: { sh: 0, sa: 0 },
     goals: [],
@@ -1352,8 +1379,8 @@ const wc2026MatchDetails = {
   "2026|H|KSA|URU": {
     score: { sh: 1, sa: 1 },
     goals: [
-      { min: 41, side: "home", scorer: "阿姆里 (Amri)", type: "shot" },
-      { min: 80, side: "away", scorer: "阿劳霍 (Ronald Araújo)", type: "shot" }
+      { min: 41, side: "home", scorer: "阿姆里 (Abdulelah Al-Amri)", type: "shot", assist: "穆罕默德·卡努 (Mohamed Kanno)" },
+      { min: 79, side: "away", scorer: "马克西·阿劳霍 (Maxi Araújo)", type: "shot" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1366,7 +1393,7 @@ const wc2026MatchDetails = {
     score: { sh: 1, sa: 1 },
     goals: [
       { min: 19, side: "away", scorer: "伊玛姆·阿舒尔 (Imam Ashour)", type: "shot" },
-      { min: 66, side: "home", scorer: "穆罕穆德·哈尼 (Mohamed Hany)", type: "own_goal" }
+      { min: 66, side: "home", scorer: "穆罕穆德·哈尼 (Mohamed Hany)", type: "own_goal", assist: "托马斯·默尼耶 (Thomas Meunier)" }
     ],
     cards: {
       home: { yellow: 2, red: 0 },
@@ -1378,9 +1405,9 @@ const wc2026MatchDetails = {
   "2026|G|IRN|NZL": {
     score: { sh: 2, sa: 2 },
     goals: [
-      { min: 7, side: "away", scorer: "贾斯特 (Juste)", type: "shot" },
+      { min: 7, side: "away", scorer: "贾斯特 (Juste)", type: "shot", assist: "克里斯·伍德 (Chris Wood)" },
       { min: 32, side: "home", scorer: "雷扎伊安 (Rezaeian)", type: "shot" },
-      { min: 54, side: "away", scorer: "贾斯特 (Juste)", type: "shot" },
+      { min: 54, side: "away", scorer: "贾斯特 (Juste)", type: "shot", assist: "克里斯·伍德 (Chris Wood)" },
       { min: 64, side: "home", scorer: "莫赫比 (Mohebi)", type: "header" }
     ],
     cards: {
@@ -1393,10 +1420,10 @@ const wc2026MatchDetails = {
   "2026|I|FRA|SEN": {
     score: { sh: 3, sa: 1 },
     goals: [
-      { min: 66,    side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot" },
+      { min: 66,    side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot", assist: "迈克尔·奥利塞 (Michael Olise)" },
       { min: 82,    side: "home", scorer: "巴尔科拉 (Bradley Barcola)", type: "shot" },
       { min: "90+5",side: "away", scorer: "姆巴耶 (Mbaye)",   type: "shot" },
-      { min: "90+6",side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot" }
+      { min: "90+6",side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot", assist: "迈克尔·奥利塞 (Michael Olise)" }
     ],
     cards: {
       home: { yellow: 0, red: 0 },
@@ -1408,7 +1435,7 @@ const wc2026MatchDetails = {
   "2026|I|IRQ|NOR": {
     score: { sh: 1, sa: 4 },
     goals: [
-      { min: 29,    side: "away", scorer: "哈兰德 (Erling Haaland)",   type: "shot" },
+      { min: 29,    side: "away", scorer: "哈兰德 (Erling Haaland)",   type: "shot", assist: "达维德·默勒·沃尔费 (David Møller Wolfe)" },
       { min: 39,    side: "home", scorer: "侯赛因 (Hussein)",   type: "header" },
       { min: 43,    side: "away", scorer: "哈兰德 (Erling Haaland)",   type: "shot" },
       { min: 76,    side: "away", scorer: "厄斯蒂高 (Østigård)", type: "header" },
@@ -1454,8 +1481,8 @@ const wc2026MatchDetails = {
   "2026|K|POR|COD": {
     score: { sh: 1, sa: 1 },
     goals: [
-      { min: 6,      side: "home", scorer: "内维斯 (João Neves)",   type: "header" },
-      { min: "45+5", side: "away", scorer: "维萨 (Yoane Wissa)",    type: "header" }
+      { min: 6,      side: "home", scorer: "内维斯 (João Neves)",   type: "header", assist: "佩德罗·内托 (Pedro Neto)" },
+      { min: "45+5", side: "away", scorer: "维萨 (Yoane Wissa)",    type: "header", assist: "阿蒂尔·马苏阿库 (Arthur Masuaku)" }
     ],
     cards: {
       home: { yellow: 3, red: 0 },
@@ -1468,10 +1495,10 @@ const wc2026MatchDetails = {
   "2026|K|UZB|COL": {
     score: { sh: 1, sa: 3 },
     goals: [
-      { min: 41,      side: "away", scorer: "穆尼奥斯 (Daniel Muñoz)",              type: "shot" },
+      { min: 41,      side: "away", scorer: "穆尼奥斯 (Daniel Muñoz)",              type: "shot", assist: "路易斯·迪亚斯 (Luis Díaz)" },
       { min: 61,      side: "home", scorer: "法伊祖拉耶夫 (Abbosbek Fayzullaev)",  type: "header" },
       { min: 66,      side: "away", scorer: "迪亚斯 (Luis Díaz)",                   type: "shot" },
-      { min: "90+11", side: "away", scorer: "坎帕斯 (Jhon Campaz)",                 type: "header" }
+      { min: "90+11", side: "away", scorer: "坎帕斯 (Jhon Campaz)",                 type: "header", assist: "库乔·埃尔南德斯 (Cucho Hernández)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1486,10 +1513,10 @@ const wc2026MatchDetails = {
     goals: [
       { min: 12,     side: "home", scorer: "凯恩 (Harry Kane)",         type: "penalty" },
       { min: 36,     side: "away", scorer: "巴图里纳 (Martin Baturina)", type: "shot" },
-      { min: 42,     side: "home", scorer: "凯恩 (Harry Kane)",         type: "header" },
+      { min: 42,     side: "home", scorer: "凯恩 (Harry Kane)",         type: "header", assist: "德克兰·赖斯 (Declan Rice)" },
       { min: "45+6", side: "away", scorer: "穆萨 (Petar Musa)",         type: "shot" },
-      { min: 47,     side: "home", scorer: "贝林厄姆 (Jude Bellingham)", type: "shot" },
-      { min: 85,     side: "home", scorer: "拉什福德 (Marcus Rashford)", type: "shot" }
+      { min: 47,     side: "home", scorer: "贝林厄姆 (Jude Bellingham)", type: "shot", assist: "埃利奥特·安德森 (Elliot Anderson)" },
+      { min: 85,     side: "home", scorer: "拉什福德 (Marcus Rashford)", type: "shot", assist: "布卡约·萨卡 (Bukayo Saka)" }
     ],
     cards: {
       home: { yellow: 0, red: 0 },
@@ -1502,7 +1529,7 @@ const wc2026MatchDetails = {
   "2026|L|GHA|PAN": {
     score: { sh: 1, sa: 0 },
     goals: [
-      { min: "90+5", side: "home", scorer: "伊伦基 (Caleb Yirenkyi)", type: "shot" }
+      { min: "90+5", side: "home", scorer: "伊伦基 (Caleb Yirenkyi)", type: "shot", assist: "布兰登·托马斯-阿桑特 (Brandon Thomas-Asante)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1535,7 +1562,9 @@ matchStats["2026|F|NED|JPN"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:9,sh2:9,
 matchStats["2026|E|GER|CUW"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:18,sh2:8,so1:12,so2:2,sb1:6,sb2:6,co1:8,co2:1,fo1:18,fo2:11,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:137,at2:76,da1:81,da2:21,pk1:1,pk2:0};
 matchStats["2026|E|CIV|ECU"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:9,so1:4,so2:1,sb1:8,sb2:8,co1:3,co2:5,fo1:10,fo2:13,os1:0,os2:0,yc1:3,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:101,da1:61,da2:47,pk1:0,pk2:0};
 matchStats["2026|E|GER|CIV"] = {p1:"59%",p2:"41%",ps1:null,ps2:null,sh1:12,sh2:4,so1:7,so2:2,sb1:5,sb2:2,co1:8,co2:3,fo1:5,fo2:7,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:134,at2:98,da1:73,da2:51,pk1:0,pk2:0};
+matchStats["2026|E|ECU|CUW"] = {p1:"75%",p2:"25%",ps1:null,ps2:null,sh1:26,sh2:8,so1:15,so2:3,sb1:11,sb2:5,co1:9,co2:0,fo1:7,fo2:10,os1:1,os2:2,yc1:1,yc2:5,rc1:0,rc2:0,tk1:null,tk2:null,at1:156,at2:68,da1:95,da2:20,pk1:0,pk2:0};
 matchStats["2026|F|SWE|TUN"] = {p1:"49%",p2:"51%",ps1:null,ps2:null,sh1:10,sh2:5,so1:7,so2:2,sb1:3,sb2:3,co1:4,co2:2,fo1:10,fo2:8,os1:3,os2:6,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:91,da1:44,da2:41,pk1:0,pk2:0};
+matchStats["2026|F|TUN|JPN"] = {p1:"38%",p2:"62%",ps1:null,ps2:null,sh1:2,sh2:8,so1:0,so2:5,sb1:2,sb2:3,co1:3,co2:5,fo1:8,fo2:15,os1:1,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:78,at2:112,da1:21,da2:36,pk1:0,pk2:0};
 matchStats["2026|F|NED|SWE"] = {p1:"51%",p2:"49%",ps1:null,ps2:null,sh1:9,sh2:13,so1:7,so2:8,sb1:2,sb2:5,co1:2,co2:5,fo1:9,fo2:12,os1:3,os2:3,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:109,at2:65,da1:50,da2:49,pk1:0,pk2:0};
 matchStats["2026|H|ESP|CPV"] = {p1:"74%",p2:"26%",ps1:null,ps2:null,sh1:19,sh2:4,so1:7,so2:1,sb1:12,sb2:3,co1:11,co2:1,fo1:10,fo2:1,os1:2,os2:3,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:187,at2:32,da1:139,da2:7,pk1:0,pk2:0};
 matchStats["2026|H|KSA|URU"] = {p1:"33%",p2:"67%",ps1:null,ps2:null,sh1:6,sh2:20,so1:3,so2:10,sb1:3,sb2:10,co1:4,co2:14,fo1:11,fo2:6,os1:0,os2:6,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:75,at2:145,da1:27,da2:79,pk1:0,pk2:0};

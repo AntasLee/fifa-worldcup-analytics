@@ -60,9 +60,9 @@ const wc2026AllMatches = {
     stage: "group",
     round: 1,
     goals: [
-      { min: 23, side: "home", scorer: "孙兴慜", type: "shot" },
-      { min: 45, side: "away", scorer: "希克", type: "header" },
-      { min: 78, side: "home", scorer: "黄喜灿", type: "shot" }
+      { min: 59, side: "away", scorer: "拉吉斯拉夫·克雷伊奇", type: "header" },
+      { min: 67, side: "home", scorer: "黄仁范", type: "shot" },
+      { min: 80, side: "home", scorer: "吴贤揆", type: "shot" }
     ],
     stats: {
       possession:      { h: 62, a: 38 },
@@ -165,7 +165,7 @@ const wc2026AllMatches = {
     round: 1,
     goals: [
       { min: 41, side: "home", scorer: "阿姆里", type: "shot" },
-      { min: 80, side: "away", scorer: "阿劳霍", type: "shot" }
+      { min: 79, side: "away", scorer: "马克西·阿劳霍", type: "shot" }
     ],
     stats: {
       possession:      { h: 33, a: 67 },
@@ -560,10 +560,10 @@ const wc2026AllMatches = {
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-12", time: "07:00", venue: "BMO球场", stage: "group", round: 1,
-    goals: [{ min: 54, side: "away", scorer: "德米罗维奇", type: "shot" },{ min: 78, side: "home", scorer: "拉林", type: "shot" }],
+    goals: [{ min: 21, side: "away", scorer: "约沃·卢基奇", type: "header" },{ min: 78, side: "home", scorer: "赛尔·拉林", type: "shot" }],
     stats: { possession:{h:55,a:45}, shots:{h:8,a:7}, shotsOnTarget:{h:4,a:3}, corners:{h:5,a:2}, fouls:{h:11,a:13}, yellowCards:{h:1,a:2}, redCards:{h:0,a:0}, attacks:{h:92,a:76}, dangerousAttacks:{h:42,a:28} },
     attendance: null, referee: "TBD", xg: null,
-    mediaRating: { motm: "拉林", sources: ["ESPN", "AP News"], home: {score: 7, quotes: "加拿大在主场球迷面前展现了顽强斗志，拉林的替补扳平球为球队赢得历史性的首个世界杯积分。戴维斯全场活跃但未能破门。"}, away: {score: 6, quotes: "波黑凭借德米罗维奇的进球一度看到胜利希望，但未能守住领先。球队整体防守组织尚可，进攻端创造力不足是最大问题。"} },
+    mediaRating: { motm: "拉林", sources: ["ESPN", "AP News"], home: {score: 7, quotes: "加拿大在主场球迷面前展现了顽强斗志，拉林的替补扳平球为球队赢得历史性的首个世界杯积分。戴维斯全场活跃但未能破门。"}, away: {score: 6, quotes: "波黑凭借卢基奇的头球破门一度看到胜利希望，但未能守住领先。球队整体防守组织尚可，进攻端创造力不足是最大问题。"} },
     aiPreMatch: null, aiPostReview: null
   },
 
@@ -646,10 +646,10 @@ const wc2026AllMatches = {
   "2026|B|QAT|SUI": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-13", time: "07:00", venue: "李维斯体育场", stage: "group", round: 1,
-    goals: [{ min: 62, side: "away", scorer: "恩博洛", type: "header" },{ min: "90+4", side: "home", scorer: "胡赫", type: "header" }],
+    goals: [{ min: 17, side: "away", scorer: "恩博洛", type: "penalty" },{ min: "90+5", side: "home", scorer: "胡希", type: "header" }],
     stats: { possession:{h:35,a:65}, shots:{h:5,a:16}, shotsOnTarget:{h:2,a:8}, corners:{h:2,a:7}, fouls:{h:13,a:6}, yellowCards:{h:3,a:0}, redCards:{h:0,a:0}, attacks:{h:58,a:128}, dangerousAttacks:{h:18,a:63} },
     attendance: null, referee: "TBD", xg: null,
-    mediaRating: { motm: "胡赫", sources: ["FIFA", "ESPN"], home: {score: 8, quotes: "卡塔尔在伤停补时阶段戏剧性扳平，收获了队史首个世界杯积分。胡赫的头球让整个海湾国家为之沸腾，这是属于卡塔尔足球的历史性时刻。"}, away: {score: 4, quotes: "瑞士控制了整场比赛却未能锁定胜局，恩博洛的进球本应足够。最后时刻的防守松懈让到手的三分变成一分，这可能是小组出线的致命失误。"} },
+    mediaRating: { motm: "胡希", sources: ["FIFA", "ESPN"], home: {score: 8, quotes: "卡塔尔在伤停补时阶段戏剧性扳平，收获了队史首个世界杯积分。胡希的头球让整个海湾国家为之沸腾，这是属于卡塔尔足球的历史性时刻。"}, away: {score: 4, quotes: "瑞士控制了整场比赛却未能锁定胜局，恩博洛的点球本应足够。最后时刻的防守松懈让到手的三分变成一分，这可能是小组出线的致命失误。"} },
     aiPreMatch: null, aiPostReview: null
   },
 
@@ -657,7 +657,7 @@ const wc2026AllMatches = {
   "2026|C|BRA|MAR": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-13", time: "10:00", venue: "大都会人寿球场", stage: "group", round: 1,
-    goals: [{ min: 19, side: "away", scorer: "赛巴里", type: "shot" },{ min: 32, side: "home", scorer: "维尼修斯", type: "shot" }],
+    goals: [{ min: 21, side: "away", scorer: "赛巴里", type: "shot" },{ min: 32, side: "home", scorer: "维尼修斯", type: "shot" }],
     stats: { possession:{h:58,a:42}, shots:{h:14,a:6}, shotsOnTarget:{h:6,a:3}, corners:{h:8,a:1}, fouls:{h:8,a:15}, yellowCards:{h:1,a:3}, redCards:{h:0,a:0}, attacks:{h:118,a:62}, dangerousAttacks:{h:56,a:24} },
     attendance: null, referee: "TBD", xg: null,
     mediaRating: { motm: "维尼修斯", sources: ["NYT", "ESPN"], home: {score: 6, quotes: "巴西占据场面优势但未能转化为胜利。维尼修斯的扳平球展现了个人能力，但整体创造力和终结效率远低于人们对夺冠热门的期待。"}, away: {score: 8, quotes: "摩洛哥再次证明了他们在世界杯舞台上的竞争力。赛巴里的闪电进球让世界震惊，全队纪律严明的防守成功遏制了巴西的豪华攻击群。"} },
@@ -747,16 +747,16 @@ const wc2026AllMatches = {
   "2026|D|USA|PAR": {
     score: { sh: 4, sa: 1 },
     date: "2026-06-12", time: "10:00", venue: "SoFi体育场", stage: "group", round: 1,
-    goals: [{ min: 15, side: "home", scorer: "普利西奇", type: "penalty" },{ min: 38, side: "home", scorer: "巴洛贡", type: "shot" },{ min: 58, side: "home", scorer: "麦肯尼", type: "header" },{ min: 72, side: "away", scorer: "阿尔米隆", type: "shot" },{ min: 84, side: "home", scorer: "雷纳", type: "shot" }],
+    goals: [{ min: 8, side: "home", scorer: "达米安·博瓦迪利亚", type: "own_goal" },{ min: 31, side: "home", scorer: "巴洛贡", type: "shot" },{ min: 50, side: "home", scorer: "巴洛贡", type: "shot" },{ min: 74, side: "away", scorer: "毛里西奥·普拉多", type: "shot" },{ min: "90+8", side: "home", scorer: "雷纳", type: "shot" }],
     stats: { possession:{h:57,a:43}, shots:{h:16,a:6}, shotsOnTarget:{h:9,a:2}, corners:{h:7,a:3}, fouls:{h:8,a:12}, yellowCards:{h:0,a:2}, redCards:{h:0,a:0}, attacks:{h:104,a:72}, dangerousAttacks:{h:52,a:25} },
     attendance: null, referee: "TBD", xg: null,
-    mediaRating: { motm: "普利西奇", sources: ["ESPN", "Olympics.com"], home: {score: 9, quotes: "美国队以一场酣畅淋漓的4-1大胜开启主场世界杯征程。普利西奇点球首开纪录，巴洛贡、麦肯尼和雷纳各入一球，进攻端多点开花展现了东道主的雄心。"}, away: {score: 4, quotes: "巴拉圭面对东道主的凌厉攻势难以招架。阿尔米隆的进球是唯一的亮点，球队整体防守漏洞百出，需要在后续比赛中迅速调整。"} },
+    mediaRating: { motm: "巴洛贡", sources: ["ESPN", "Olympics.com", "BBC Sport"], home: {score: 9, quotes: "美国队以一场酣畅淋漓的4-1大胜开启主场世界杯征程。博瓦迪利亚的乌龙球早早打破僵局，巴洛贡梅开二度主导进攻，雷纳补时锦上添花，东道主展现了强大火力。"}, away: {score: 4, quotes: "巴拉圭面对东道主的凌厉攻势难以招架。毛里西奥的进球是唯一的亮点，恩西索的助攻展现了个人能力，但球队防线漏洞百出，需要在后续比赛中迅速调整。"} },
     aiPreMatch: null, aiPostReview: null
   },
   "2026|D|AUS|TUR": {
     score: { sh: 2, sa: 0 },
     date: "2026-06-14", time: "03:00", venue: "BC体育馆", stage: "group", round: 1,
-    goals: [{ min: 41, side: "home", scorer: "伊兰昆达", type: "shot" },{ min: 68, side: "home", scorer: "梅特卡夫", type: "shot" }],
+    goals: [{ min: 27, side: "home", scorer: "伊兰昆达", type: "shot" },{ min: 75, side: "home", scorer: "梅特卡夫", type: "shot" }],
     stats: { possession:{h:42,a:58}, shots:{h:9,a:12}, shotsOnTarget:{h:5,a:3}, corners:{h:4,a:8}, fouls:{h:12,a:10}, yellowCards:{h:2,a:3}, redCards:{h:0,a:1}, attacks:{h:71,a:98}, dangerousAttacks:{h:30,a:45} },
     attendance: null, referee: "TBD", xg: null,
     mediaRating: { motm: "伊兰昆达", sources: ["ESPN", "NYT"], home: {score: 8, quotes: "澳大利亚以一场令人印象深刻的胜利爆冷击败土耳其。伊兰昆达和梅特卡夫的进球展现了澳洲足球的新生力量，防守端零封对手同样值得称赞。"}, away: {score: 3, quotes: "土耳其时隔24年重返世界杯却遭遇当头棒喝。控球率占优却无法转化为进球，一张红牌更是雪上加霜。球队需要重新审视战术布置。"} },
@@ -767,10 +767,10 @@ const wc2026AllMatches = {
   "2026|E|GER|CUW": {
     score: { sh: 7, sa: 1 },
     date: "2026-06-14", time: "06:00", venue: "NRG体育场", stage: "group", round: 1,
-    goals: [{ min: 8, side: "home", scorer: "哈弗茨", type: "shot" },{ min: 22, side: "home", scorer: "穆西亚拉", type: "shot" },{ min: 35, side: "home", scorer: "萨内", type: "shot" },{ min: 42, side: "home", scorer: "哈弗茨", type: "header" },{ min: 56, side: "away", scorer: "巴库纳", type: "shot" },{ min: 67, side: "home", scorer: "维尔茨", type: "shot" },{ min: 81, side: "home", scorer: "菲尔克鲁格", type: "header" },{ min: 88, side: "home", scorer: "穆勒", type: "shot" }],
+    goals: [{ min: 6, side: "home", scorer: "费利克斯·恩梅查", type: "shot" },{ min: 21, side: "away", scorer: "利瓦诺·科梅内西亚", type: "shot" },{ min: 38, side: "home", scorer: "尼科·施洛特贝克", type: "header" },{ min: 50, side: "home", scorer: "凯·哈弗茨", type: "penalty" },{ min: 47, side: "home", scorer: "贾马尔·穆西亚拉", type: "shot" },{ min: 68, side: "home", scorer: "纳撒尼尔·布朗", type: "shot" },{ min: 78, side: "home", scorer: "德尼茨·翁达夫", type: "shot" },{ min: 88, side: "home", scorer: "凯·哈弗茨", type: "shot" }],
     stats: { possession:{h:72,a:28}, shots:{h:24,a:3}, shotsOnTarget:{h:14,a:1}, corners:{h:11,a:0}, fouls:{h:4,a:8}, yellowCards:{h:0,a:1}, redCards:{h:0,a:0}, attacks:{h:145,a:35}, dangerousAttacks:{h:78,a:8} },
     attendance: null, referee: "TBD", xg: null,
-    mediaRating: { motm: "哈弗茨", sources: ["FIFA", "ESPN"], home: {score: 10, quotes: "德国以一场摧枯拉朽的7-1大胜宣告王者归来。哈弗茨梅开二度，穆西亚拉、萨内、维尔茨、菲尔克鲁格和穆勒各入一球，全方位碾压式的表现让世界为之侧目。"}, away: {score: 2, quotes: "库拉索的世界杯首秀遭遇噩梦般的洗礼。巴库纳的进球挽回些许颜面，但全场仅3次射门的数据如实反映了巨大的实力鸿沟。"} },
+    mediaRating: { motm: "哈弗茨", sources: ["FIFA", "ESPN", "BBC Sport"], home: {score: 10, quotes: "德国以一场摧枯拉朽的7-1大胜宣告王者归来。恩梅查闪击破门，施洛特贝克头球建功，哈弗茨梅开二度，穆西亚拉、布朗和翁达夫各入一球。全方位碾压式的表现让世界为之侧目，德国成为世界杯历史总进球最多球队。"}, away: {score: 2, quotes: "库拉索的世界杯首秀遭遇噩梦般的洗礼。科梅内西亚打入队史世界杯首球挽回些许颜面，但全场仅3次射门的数据如实反映了巨大的实力鸿沟。"} },
     aiPreMatch: null, aiPostReview: null
   },
 
@@ -845,10 +845,10 @@ const wc2026AllMatches = {
   "2026|E|CIV|ECU": {
     score: { sh: 1, sa: 0 },
     date: "2026-06-14", time: "09:00", venue: "AT&T体育场", stage: "group", round: 1,
-    goals: [{ min: 87, side: "home", scorer: "阿马德·迪亚洛", type: "shot" }],
+    goals: [{ min: 90, side: "home", scorer: "阿马德·迪亚洛", type: "shot" }],
     stats: { possession:{h:46,a:54}, shots:{h:10,a:8}, shotsOnTarget:{h:4,a:2}, corners:{h:5,a:6}, fouls:{h:11,a:12}, yellowCards:{h:2,a:2}, redCards:{h:0,a:0}, attacks:{h:83,a:91}, dangerousAttacks:{h:35,a:32} },
     attendance: null, referee: "TBD", xg: null,
-    mediaRating: { motm: "阿马德·迪亚洛", sources: ["ESPN", "Fox Sports"], home: {score: 8, quotes: "科特迪瓦凭借迪亚洛第87分钟的绝杀取得开门红。比赛大部分时间势均力敌，但科特迪瓦在关键时刻展现了更强的把握能力。"}, away: {score: 5, quotes: "厄瓜多尔掌控了场面却未能转化为进球。球队在比赛末段的防守松懈付出了惨痛代价，首战失利让小组出线形势变得严峻。"} },
+    mediaRating: { motm: "阿马德·迪亚洛", sources: ["ESPN", "Fox Sports"], home: {score: 8, quotes: "科特迪瓦凭借迪亚洛第90分钟的绝杀取得开门红。比赛大部分时间势均力敌，但科特迪瓦在关键时刻展现了更强的把握能力。"}, away: {score: 5, quotes: "厄瓜多尔掌控了场面却未能转化为进球。球队在比赛末段的防守松懈付出了惨痛代价，首战失利让小组出线形势变得严峻。"} },
     aiPreMatch: null, aiPostReview: null
   },
 
@@ -888,23 +888,55 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|E|ECU|CUW": {
+    score: { sh: 0, sa: 0 },
+    date: "2026-06-21",
+    time: "08:00",
+    venue: "箭头体育场",
+    stage: "group",
+    round: 2,
+    goals: [],
+    stats: {
+      possession:      { h: 75, a: 25 },
+      shots:           { h: 26, a: 8 },
+      shotsOnTarget:   { h: 15, a: 3 },
+      corners:         { h: 9,  a: 0 },
+      fouls:           { h: 7,  a: 10 },
+      yellowCards:     { h: 1,  a: 5 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 156,a: 68 },
+      dangerousAttacks:{ h: 95, a: 20 }
+    },
+    attendance: 68598,
+    referee: "Ma Ning (CHN)",
+    xg: null,
+    mediaRating: {
+      motm: "埃洛伊·鲁姆",
+      sources: ["FIFA", "Sky Sports", "BBC Sport"],
+      home: {score: 2, quotes: "厄瓜多尔75%控球率、26次射门15次射正却颗粒无收，堪称世界杯史上最令人沮丧的进攻表现之一。面对库拉索门将鲁姆的15次神扑，南美劲旅完全束手无策。"},
+      away: {score: 9, quotes: "库拉索收获了队史首个世界杯积分！门将鲁姆以15次扑救刷新世界杯单场纪录，全队用血肉之躯筑起钢铁防线，这场0-0堪比一场史诗级胜利。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // F组
   "2026|F|NED|JPN": {
     score: { sh: 2, sa: 2 },
     date: "2026-06-14", time: "12:00", venue: "SoFi体育场", stage: "group", round: 1,
-    goals: [{ min: 18, side: "home", scorer: "加克波", type: "shot" },{ min: 35, side: "away", scorer: "三笘薰", type: "shot" },{ min: 55, side: "home", scorer: "德佩", type: "penalty" },{ min: 78, side: "away", scorer: "久保建英", type: "shot" }],
+    goals: [{ min: 51, side: "home", scorer: "维吉尔·范戴克", type: "header" },{ min: 57, side: "away", scorer: "中村敬斗", type: "shot" },{ min: 64, side: "home", scorer: "克莱森西奥·萨默维尔", type: "shot" },{ min: 88, side: "away", scorer: "镰田大地", type: "header" }],
     stats: { possession:{h:55,a:45}, shots:{h:13,a:9}, shotsOnTarget:{h:7,a:5}, corners:{h:6,a:3}, fouls:{h:9,a:10}, yellowCards:{h:1,a:1}, redCards:{h:0,a:0}, attacks:{h:102,a:88}, dangerousAttacks:{h:48,a:39} },
     attendance: null, referee: "TBD", xg: null,
-    mediaRating: { motm: "久保建英", sources: ["ESPN", "NYT"], home: {score: 6, quotes: "荷兰两度领先却两度被追平，防守端的松懈让到手的三分溜走。加克波和德佩的进球展现了攻击力，但整体缺乏杀死比赛的决心。"}, away: {score: 8, quotes: "日本展现了惊人的韧性，两度落后两度扳平。三笘薰和久保建英的进球让亚洲足球再次闪耀世界舞台，这场平局堪比一场胜利。"} },
+    mediaRating: { motm: "镰田大地", sources: ["ESPN", "NYT", "The Guardian"], home: {score: 6, quotes: "荷兰两度领先却两度被追平，防守端的松懈让到手的三分溜走。范戴克和萨默维尔的进球展现了攻击力，但整体缺乏杀死比赛的决心。"}, away: {score: 8, quotes: "日本展现了惊人的韧性，两度落后两度扳平。中村敬斗和镰田大地的进球让亚洲足球再次闪耀世界舞台，小川航基的助攻同样关键，这场平局堪比一场胜利。"} },
     aiPreMatch: null, aiPostReview: null
   },
   "2026|F|SWE|TUN": {
     score: { sh: 5, sa: 1 },
     date: "2026-06-14", time: "15:00", venue: "BMO球场", stage: "group", round: 1,
-    goals: [{ min: 12, side: "home", scorer: "伊萨克", type: "shot" },{ min: 31, side: "home", scorer: "阿亚里", type: "shot" },{ min: 44, side: "home", scorer: "哲凯赖什", type: "header" },{ min: 53, side: "away", scorer: "姆萨克尼", type: "shot" },{ min: 72, side: "home", scorer: "阿亚里", type: "shot" },{ min: 85, side: "home", scorer: "库卢塞夫斯基", type: "shot" }],
+    goals: [{ min: 7, side: "home", scorer: "阿亚里", type: "shot" },{ min: 30, side: "home", scorer: "伊萨克", type: "shot" },{ min: 43, side: "away", scorer: "雷基克", type: "header" },{ min: 60, side: "home", scorer: "哲凯赖什", type: "shot" },{ min: 86, side: "home", scorer: "斯万贝里", type: "shot" },{ min: "90+6", side: "home", scorer: "阿亚里", type: "shot" }],
     stats: { possession:{h:60,a:40}, shots:{h:18,a:5}, shotsOnTarget:{h:10,a:2}, corners:{h:7,a:2}, fouls:{h:7,a:14}, yellowCards:{h:0,a:2}, redCards:{h:0,a:0}, attacks:{h:122,a:58}, dangerousAttacks:{h:64,a:18} },
     attendance: null, referee: "TBD", xg: null,
-    mediaRating: { motm: "阿亚里", sources: ["ESPN", "BBC"], home: {score: 9, quotes: "瑞典以一场摧枯拉朽的5-1大胜开启世界杯。阿亚里梅开二度，伊萨克、哲凯赖什和库卢塞夫斯基各入一球，进攻端全面开花展现了北欧劲旅的强大实力。"}, away: {score: 3, quotes: "突尼斯面对瑞典的凌厉攻势毫无还手之力。姆萨克尼的进球是唯一的亮点，但防线漏洞百出让球队遭遇了惨痛失利。"} },
+    mediaRating: { motm: "阿亚里", sources: ["ESPN", "BBC"], home: {score: 9, quotes: "瑞典以一场摧枯拉朽的5-1大胜开启世界杯。阿亚里梅开二度，伊萨克、哲凯赖什和斯万贝里各入一球，进攻端全面开花展现了北欧劲旅的强大实力。"}, away: {score: 3, quotes: "突尼斯面对瑞典的凌厉攻势毫无还手之力。雷基克的头球是唯一的亮点，但防线漏洞百出让球队遭遇了惨痛失利。"} },
     aiPreMatch: null, aiPostReview: null
   },
 
@@ -942,6 +974,43 @@ const wc2026AllMatches = {
       sources: ["FIFA", "BBC Sport", "ESPN"],
       home: {score: 9, quotes: "荷兰以一场5-1大胜扫除首轮阴霾。布比罗和加克波双双梅开二度，孟菲斯锦上添花。瑞典遭遇自1950年以来世界杯最大失利，荷兰几乎锁定出线。"},
       away: {score: 3, quotes: "瑞典遭遇队史第二大世界杯惨败。埃兰加的进球是唯一亮点，防线面对荷兰的速度冲击完全崩盘，末轮需击败日本确保晋级。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|F|TUN|JPN": {
+    score: { sh: 0, sa: 4 },
+    date: "2026-06-21",
+    time: "12:00",
+    venue: "BBVA体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 4,  side: "away", scorer: "镰田大地", type: "shot",   assist: "中村敬斗" },
+      { min: 31, side: "away", scorer: "上田绮世", type: "shot",   assist: "板仓晃" },
+      { min: 69, side: "away", scorer: "伊东纯也", type: "shot",   assist: "上田绮世" },
+      { min: 83, side: "away", scorer: "上田绮世", type: "header", assist: "佐野海舟" }
+    ],
+    stats: {
+      possession:      { h: 38, a: 62 },
+      shots:           { h: 2,  a: 8 },
+      shotsOnTarget:   { h: 0,  a: 5 },
+      corners:         { h: 3,  a: 5 },
+      fouls:           { h: 8,  a: 15 },
+      yellowCards:     { h: 0,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 78, a: 112 },
+      dangerousAttacks:{ h: 21, a: 36 }
+    },
+    attendance: 51243,
+    referee: "István Kovács (ROU)",
+    xg: null,
+    mediaRating: {
+      motm: "上田绮世",
+      sources: ["FIFA", "The Guardian", "ESPN"],
+      home: {score: 2, quotes: "突尼斯以一场惨败告别世界杯。两连败、失9球仅入1球，新任主帅勒纳尔无力回天。全场零射正是球队攻击力匮乏的真实写照。"},
+      away: {score: 9, quotes: "日本以一场4-0大胜在世界杯第1000场里程碑之战中创造历史。上田绮世两射一传闪耀全场，镰田大地和伊东纯也锦上添花，蓝武士两轮不败紧追荷兰。"}
     },
     aiPreMatch: null,
     aiPostReview: null
