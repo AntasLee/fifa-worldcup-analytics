@@ -191,6 +191,43 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|H|ESP|KSA": {
+    score: { sh: 4, sa: 0 },
+    date: "2026-06-22",
+    time: "00:00",
+    venue: "梅赛德斯-奔驰体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 10, side: "home", scorer: "亚马尔",     type: "shot",     assist: "奥亚萨尔瓦" },
+      { min: 21, side: "home", scorer: "奥亚萨尔瓦", type: "shot",     assist: "拉波尔特" },
+      { min: 24, side: "home", scorer: "奥亚萨尔瓦", type: "shot",     assist: "奥尔默" },
+      { min: 49, side: "home", scorer: "坦巴蒂",     type: "own_goal" }
+    ],
+    stats: {
+      possession:      { h: 67, a: 33 },
+      shots:           { h: 20, a: 2 },
+      shotsOnTarget:   { h: 8,  a: 1 },
+      corners:         { h: 6,  a: 1 },
+      fouls:           { h: 10, a: 2 },
+      yellowCards:     { h: 0,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 158,a: 77 },
+      dangerousAttacks:{ h: 85, a: 24 }
+    },
+    attendance: 68239,
+    referee: "Raphael Claus (BRA)",
+    xg: null,
+    mediaRating: {
+      motm: "米克尔·奥亚萨尔瓦",
+      sources: ["FIFA", "Sky Sports", "BBC Sport"],
+      home: {score: 9, quotes: "西班牙在首轮被佛得角逼平后强势反弹。亚马尔首次世界杯首发10分钟即破门，奥亚萨尔瓦21分钟梅开二度创造世界杯最快双响纪录之一，坦巴蒂乌龙锦上添花。斗牛士宣告回归。"},
+      away: {score: 2, quotes: "沙特阿拉伯遭遇队史第三大世界杯失利。防线在西班牙的传控体系面前土崩瓦解，全场仅1次射正。两轮仅积1分，出线形势岌岌可危。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   "2026|G|BEL|EGY": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-16",
@@ -258,6 +295,38 @@ const wc2026AllMatches = {
       sources: ["The Guardian", "ESPN", "NYT"],
       home: {score: 7, quotes: "伊朗两度落后两度扳平，展现了亚洲足球的顽强韧性。雷扎伊安和莫赫比的进球帮助球队在这场对攻战中拿到宝贵一分。"},
       away: {score: 7, quotes: "新西兰前锋贾斯特梅开二度令人惊艳，但球队两度领先均未能守住。整体表现已远超赛前预期，展现了大洋洲足球的进步。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|G|BEL|IRN": {
+    score: { sh: 0, sa: 0 },
+    date: "2026-06-22",
+    time: "03:00",
+    venue: "SoFi体育场",
+    stage: "group",
+    round: 2,
+    goals: [],
+    stats: {
+      possession:      { h: 70, a: 30 },
+      shots:           { h: 17, a: 6 },
+      shotsOnTarget:   { h: 7,  a: 3 },
+      corners:         { h: 4,  a: 2 },
+      fouls:           { h: 7,  a: 9 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 1,  a: 0 },
+      attacks:         { h: 154,a: 63 },
+      dangerousAttacks:{ h: 96, a: 25 }
+    },
+    attendance: null,
+    referee: "Darío Herrera (ARG)",
+    xg: null,
+    mediaRating: {
+      motm: "阿里雷扎·贝兰万德",
+      sources: ["FIFA", "The Guardian", "NYT Athletic"],
+      home: {score: 3, quotes: "比利时黄金一代彻底崩塌。70%控球率17次射门却颗粒无收，纳坦·恩戈伊的红牌更是雪上加霜。继首轮被埃及逼平后，红魔两轮零胜垫底G组，面临小组出局危机。"},
+      away: {score: 8, quotes: "伊朗用钢铁意志从比利时手中抢走一分。门将贝兰万德多次神扑力保球门不失，塔雷米的进球虽被吹越位但球队整体防守堪称完美。波斯铁骑两轮不败保留出线希望。"}
     },
     aiPreMatch: null,
     aiPostReview: null

@@ -1389,6 +1389,22 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
+
+  "2026|H|ESP|KSA": {
+    score: { sh: 4, sa: 0 },
+    goals: [
+      { min: 10, side: "home", scorer: "亚马尔 (Lamine Yamal)",         type: "shot",     assist: "奥亚萨尔瓦 (Mikel Oyarzabal)" },
+      { min: 21, side: "home", scorer: "奥亚萨尔瓦 (Mikel Oyarzabal)",  type: "shot",     assist: "拉波尔特 (Aymeric Laporte)" },
+      { min: 24, side: "home", scorer: "奥亚萨尔瓦 (Mikel Oyarzabal)",  type: "shot",     assist: "奥尔默 (Dani Olmo)" },
+      { min: 49, side: "home", scorer: "坦巴蒂 (Hassan Al-Tambakti)",   type: "own_goal" }
+    ],
+    cards: {
+      home: { yellow: 0, red: 0 },
+      away: { yellow: 2, red: 0 }
+    },
+    attendance: 68239,
+    referee: "Raphael Claus (BRA)"
+  },
   "2026|G|BEL|EGY": {
     score: { sh: 1, sa: 1 },
     goals: [
@@ -1417,6 +1433,16 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
 	  },
+  "2026|G|BEL|IRN": {
+    score: { sh: 0, sa: 0 },
+    goals: [],
+    cards: {
+      home: { yellow: 1, red: 1 },
+      away: { yellow: 1, red: 0 }
+    },
+    attendance: null,
+    referee: "Darío Herrera (ARG)"
+  },
   "2026|I|FRA|SEN": {
     score: { sh: 3, sa: 1 },
     goals: [
@@ -1568,7 +1594,10 @@ matchStats["2026|F|TUN|JPN"] = {p1:"38%",p2:"62%",ps1:null,ps2:null,sh1:2,sh2:8,
 matchStats["2026|F|NED|SWE"] = {p1:"51%",p2:"49%",ps1:null,ps2:null,sh1:9,sh2:13,so1:7,so2:8,sb1:2,sb2:5,co1:2,co2:5,fo1:9,fo2:12,os1:3,os2:3,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:109,at2:65,da1:50,da2:49,pk1:0,pk2:0};
 matchStats["2026|H|ESP|CPV"] = {p1:"74%",p2:"26%",ps1:null,ps2:null,sh1:19,sh2:4,so1:7,so2:1,sb1:12,sb2:3,co1:11,co2:1,fo1:10,fo2:1,os1:2,os2:3,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:187,at2:32,da1:139,da2:7,pk1:0,pk2:0};
 matchStats["2026|H|KSA|URU"] = {p1:"33%",p2:"67%",ps1:null,ps2:null,sh1:6,sh2:20,so1:3,so2:10,sb1:3,sb2:10,co1:4,co2:14,fo1:11,fo2:6,os1:0,os2:6,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:75,at2:145,da1:27,da2:79,pk1:0,pk2:0};
+matchStats["2026|H|ESP|KSA"] = {p1:"67%",p2:"33%",ps1:null,ps2:null,sh1:20,sh2:2,so1:8,so2:1,sb1:12,sb2:1,co1:6,co2:1,fo1:10,fo2:2,os1:2,os2:3,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:158,at2:77,da1:85,da2:24,pk1:0,pk2:0};
 matchStats["2026|G|BEL|EGY"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:9,sh2:6,so1:3,so2:3,sb1:6,sb2:3,co1:2,co2:7,fo1:15,fo2:15,os1:0,os2:1,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:119,at2:76,da1:64,da2:32,pk1:0,pk2:0};
+matchStats["2026|G|IRN|NZL"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:12,so1:4,so2:8,sb1:8,sb2:4,co1:4,co2:1,fo1:10,fo2:8,os1:2,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:101,da1:56,da2:44,pk1:0,pk2:0};
+matchStats["2026|G|BEL|IRN"] = {p1:"70%",p2:"30%",ps1:null,ps2:null,sh1:17,sh2:6,so1:7,so2:3,sb1:10,sb2:3,co1:4,co2:2,fo1:7,fo2:9,os1:3,os2:4,yc1:1,yc2:1,rc1:1,rc2:0,tk1:null,tk2:null,at1:154,at2:63,da1:96,da2:25,pk1:0,pk2:0};
 matchStats["2026|G|IRN|NZL"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:12,so1:4,so2:8,sb1:8,sb2:4,co1:4,co2:1,fo1:10,fo2:8,os1:2,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:101,da1:56,da2:44,pk1:0,pk2:0};
 matchStats["2026|I|FRA|SEN"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:5,so1:8,so2:2,sb1:1,sb2:3,co1:6,co2:4,fo1:5,fo2:9,os1:1,os2:3,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:113,at2:99,da1:32,da2:27,pk1:0,pk2:0};
 matchStats["2026|I|IRQ|NOR"] = {p1:"39%",p2:"61%",ps1:null,ps2:null,sh1:9,sh2:10,so1:1,so2:5,sb1:8,sb2:5,co1:2,co2:5,fo1:12,fo2:13,os1:1,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:79,at2:89,da1:27,da2:39,pk1:0,pk2:0};
