@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <!-- Favicon: fifaseek.com 专属图标 -->
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
@@ -3710,7 +3713,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   // Fast path: if engine data was already built in this session, skip animation entirely
   var _hasEngineData = false;
   try {
-    if (sessionStorage.getItem('engineDataBuilt') === 'V1.74') {
+    if (sessionStorage.getItem('engineDataBuilt') === 'V1.77') {
       _hasEngineData = true;
       sessionStorage.removeItem('engineDataBuilt');
     }
@@ -3803,9 +3806,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
       easedPercent = 80 + (1 - Math.pow(1 - t, 2)) * 20;
     }
 
-    progressBar.style.width = easedPercent.toFixed(1) + gk._pct+'%';
+    progressBar.style.width = easedPercent.toFixed(1) + '%';
     var displayPercent = Math.floor(easedPercent);
-    loadingPercent.textContent = displayPercent + gk._pct+'%';
+    loadingPercent.textContent = displayPercent + '%';
 
     if (displayPercent < 15) {
       loadingText.textContent = 'Initializing';
@@ -4787,7 +4790,7 @@ console.log('🏆 Bracket V8 embedded — ready');
             window.__playerDataReady = true;
             // Set sessionStorage for fast reload on next visit
             try {
-                sessionStorage.setItem('engineDataBuilt', 'V1.74');
+                sessionStorage.setItem('engineDataBuilt', 'V1.77');
             } catch(e) {}
             return;
         }
