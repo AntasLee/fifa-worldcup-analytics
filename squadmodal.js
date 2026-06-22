@@ -1,8 +1,8 @@
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
-// ===== 阵容名单弹窗 V1.77 (V3a 杂志排版 + 中文名修复) =====
+// ===== 阵容名单弹窗 V1.78 (V3a 杂志排版 + 中文名修复) =====
 // 依赖: squaddata.js (squadDB), playerdata_*.js (playerDB), teamdata.js (teamMap/pastFlag/pastTeamNames), engine.js (translate/formatStandardName/showUnifiedPlayerDetail/formatValueWan)
-// 更新时间: 2026-07-19 (V1.77 - V3a杂志排版Hero+浮动卡片+下划线Tab+页脚)
+// 更新时间: 2026-07-19 (V1.78 - V3a杂志排版Hero+浮动卡片+下划线Tab+页脚)
 
 (function() {
   'use strict';

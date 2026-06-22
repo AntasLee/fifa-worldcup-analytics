@@ -1016,7 +1016,7 @@ matchStats["2022|H|GHA|URU"] = {p1:"48%",p2:"52%",ps1:336,ps2:364,sh1:11,sh2:6,s
 //   补时进球 → 字符串类型：{ min: "90+3", ... }  ← "+" 是语义符号，不是数学加号
 //   补时阶段仅四类：45+ / 90+ / 105+ / 120+
 //   禁止将补时写成数字（如 93 替代 "90+3"），否则小组赛无加时的场景会统计错误。
-const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精确数据12场已录入
+const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精确数据12场已录入
   "2026|A|MEX|RSA": {
     score: { sh: 2, sa: 0 },
     goals: [
@@ -1135,7 +1135,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     attendance: null,
     referee: "TBD"
   },
-  "2026|B|QAT|SUI": { // V1.79: gkSaves已确认 (Sofascore)
+  "2026|B|QAT|SUI": { // V1.78: gkSaves已确认 (Sofascore)
     score: { sh: 1, sa: 1 },
     gkSaves: { home: { name: "Mahmoud Abunada", nameZh: "马哈茂德·阿布纳达", saves: 5 }, away: { name: "Gregor Kobel", nameZh: "格雷戈·科贝尔", saves: 3 } },
     goals: [
@@ -1149,7 +1149,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     attendance: null,
     referee: "TBD"
   },
-  "2026|C|BRA|MAR": { // V1.79: gkSaves已确认 (footballan: GK Saves 1-3)
+  "2026|C|BRA|MAR": { // V1.78: gkSaves已确认 (footballan: GK Saves 1-3)
     score: { sh: 1, sa: 1 },
     gkSaves: { home: { name: "Alisson Becker", nameZh: "阿利松·贝克尔", saves: 1 }, away: { name: "Yassine Bounou", nameZh: "亚辛·布努", saves: 3 } },
     goals: [
@@ -1243,7 +1243,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     attendance: 68827,
     referee: "Iván Barton (SLV)"
   },
-  "2026|E|GER|CUW": { // V1.79: assist已补全, gkSaves已确认
+  "2026|E|GER|CUW": { // V1.78: assist已补全, gkSaves已确认
     score: { sh: 7, sa: 1 },
     gkSaves: { home: { name: "Manuel Neuer", nameZh: "曼努埃尔·诺伊尔", saves: 1 }, away: { name: "Eloy Room", nameZh: "埃洛伊·罗姆", saves: 5 } },
     goals: [
@@ -1264,7 +1264,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     referee: "TBD"
   },
 
-  "2026|F|NED|JPN": { // V1.79: gkSaves已确认 (Sofascore/Sky)
+  "2026|F|NED|JPN": { // V1.78: gkSaves已确认 (Sofascore/Sky)
     score: { sh: 2, sa: 2 },
     gkSaves: { home: { name: "Bart Verbruggen", nameZh: "巴特·费布吕亨", saves: 1 }, away: { name: "Zion Suzuki", nameZh: "铃木彩艳", saves: 4 } },
     goals: [
@@ -1309,7 +1309,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     referee: "Juan Gabriel Benítez (PAR)"
   },
 
-  "2026|E|ECU|CUW": { // V1.79: gkSaves部分确认 (Sofascore: Room 15 saves, 10 rating)
+  "2026|E|ECU|CUW": { // V1.78: gkSaves部分确认 (Sofascore: Room 15 saves, 10 rating)
     score: { sh: 0, sa: 0 },
     gkSaves: { away: { name: "Eloy Room", nameZh: "埃洛伊·罗姆", saves: 15 } },
     goals: [],
@@ -1320,7 +1320,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     attendance: 68598,
     referee: "Ma Ning (CHN)"
   },
-  "2026|F|SWE|TUN": { // V1.79: gkSaves已确认 (SportingNews)
+  "2026|F|SWE|TUN": { // V1.78: gkSaves已确认 (SportingNews)
     score: { sh: 5, sa: 1 },
     gkSaves: { home: { name: "Kristoffer Nordfeldt", nameZh: "克里斯托弗·诺德费尔特", saves: 1 }, away: { name: "Mouhib Chamakh", nameZh: "穆希卜·沙马赫", saves: 1 } },
     goals: [
@@ -1339,7 +1339,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     referee: "TBD"
   },
 
-  "2026|F|NED|SWE": { // V1.79: gkSaves已确认 (Sofascore/FOX)
+  "2026|F|NED|SWE": { // V1.78: gkSaves已确认 (Sofascore/FOX)
     score: { sh: 5, sa: 1 },
     gkSaves: { home: { name: "Bart Verbruggen", nameZh: "巴特·费布吕亨", saves: 7 }, away: { name: "Kristoffer Nordfeldt", nameZh: "克里斯托弗·诺德费尔特", saves: 2 } },
     goals: [
@@ -1373,7 +1373,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     attendance: 51243,
     referee: "István Kovács (ROU)"
   },
-  "2026|H|ESP|CPV": { // V1.79: gkSaves已确认 (Sofascore: Vozinha 9.7 rating)
+  "2026|H|ESP|CPV": { // V1.78: gkSaves已确认 (Sofascore: Vozinha 9.7 rating)
     score: { sh: 0, sa: 0 },
     gkSaves: { home: { name: "Unai Simón", nameZh: "乌奈·西蒙", saves: 1 }, away: { name: "Vozinha", nameZh: "沃济尼亚", saves: 7 } },
     goals: [],
@@ -1456,7 +1456,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     attendance: null,
     referee: "TBD"
 	  },
-  "2026|G|BEL|IRN": { // V1.79: gkSaves部分确认 (Sofascore: Beiranvand 7 saves, 10 rating)
+  "2026|G|BEL|IRN": { // V1.78: gkSaves部分确认 (Sofascore: Beiranvand 7 saves, 10 rating)
     score: { sh: 0, sa: 0 },
     gkSaves: { away: { name: "Alireza Beiranvand", nameZh: "阿里雷扎·贝兰万德", saves: 7 } },
     goals: [],
@@ -1482,7 +1482,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     attendance: 52497,
     referee: "Omar Al Ali (UAE)"
   },
-  "2026|I|FRA|SEN": { // V1.79: gkSaves已确认 (Sofascore/Sky)
+  "2026|I|FRA|SEN": { // V1.78: gkSaves已确认 (Sofascore/Sky)
     score: { sh: 3, sa: 1 },
     gkSaves: { home: { name: "Mike Maignan", nameZh: "迈克·迈尼昂", saves: 2 }, away: { name: "Édouard Mendy", nameZh: "爱德华·门迪", saves: 5 } },
     goals: [
@@ -1514,7 +1514,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     attendance: null,
     referee: "TBD"
   },
-  "2026|J|ARG|ALG": { // V1.79: gkSaves已确认 (Opta: Algeria 0 SOT)
+  "2026|J|ARG|ALG": { // V1.78: gkSaves已确认 (Opta: Algeria 0 SOT)
     score: { sh: 3, sa: 0 },
     gkSaves: { home: { name: "Emiliano Martínez", nameZh: "埃米利亚诺·马丁内斯", saves: 0 }, away: { name: "Luca Zidane", nameZh: "卢卡·齐达内", saves: 3 } },
     goals: [
@@ -1575,7 +1575,7 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     referee: "TBD"
   },
 
-  "2026|L|ENG|CRO": { // V1.79: gkSaves已确认 (Sofascore)
+  "2026|L|ENG|CRO": { // V1.78: gkSaves已确认 (Sofascore)
     score: { sh: 4, sa: 2 },
     gkSaves: { home: { name: "Jordan Pickford", nameZh: "乔丹·皮克福德", saves: 3 }, away: { name: "Dominik Livaković", nameZh: "多米尼克·利瓦科维奇", saves: 7 } },
     goals: [

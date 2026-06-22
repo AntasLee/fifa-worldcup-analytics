@@ -1,4 +1,4 @@
-// perfboard_engine.js — 表现榜引擎 | V1.77
+// perfboard_engine.js — 表现榜引擎 | V1.78
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 //
@@ -298,11 +298,11 @@ function computePerformanceBoard(){
     //   1) 表现出色: 综合分≥60, 至少1胜
     //   2) 赛前不被看好: 预期<60
     //   3) 仍在竞争: pos≤2 或 已进淘汰赛
-    if(cs>=60&&hasWin&&es<60&&inContention){
+    if(cs>=58&&hasWin&&es<65&&inContention){
       dark.push(r);
     }
     // ── 失望: 差值≤-12, 预期≥55 ──
-    if(gap<=-12&&es>=55){
+    if(gap<=-8&&es>=50){
       var myRank=r.rank||(typeof getFifaRank==='function'?getFifaRank(r.code):50);
       var teamMatches=collectTeamMatches(r.code);
       var matchDisapp=0;
@@ -356,11 +356,11 @@ function buildRow(r, colType, rank){
 // 渲染单个榜单面板
 function buildPanel(list, colType, emptyText){
   var h='';
-  var top8=list.slice(0,8);
-  if(top8.length===0){
+  var topRows=list.slice(0,13);
+  if(topRows.length===0){
     h+='<div class="pb-empty">'+emptyText+'</div>';
   } else {
-    top8.forEach(function(r,i){ h+=buildRow(r,colType,i+1); });
+    topRows.forEach(function(r,i){ h+=buildRow(r,colType,i+1); });
   }
   return h;
 }
@@ -424,6 +424,6 @@ window.PerfBoard = {
   }
 };
 
-console.log('✅ perfboard_engine.js 加载完成 — 表现榜引擎 V1.77 (逐场落差算法)');
+console.log('✅ perfboard_engine.js 加载完成 — 表现榜引擎 V1.78 (逐场落差算法)');
 
 })();

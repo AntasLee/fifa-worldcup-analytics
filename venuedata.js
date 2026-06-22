@@ -1,5 +1,5 @@
 // ===== 2026世界杯 赛场分析数据 — 球场 / 大本营 / 天气配置 =====
-// 版本: V1.77 | 生成: 2026-06-19
+// 版本: V1.78 | 生成: 2026-06-19
 // 依赖: teamdata.js (pastTeamNames, pastFlag, pastFlagMap)
 // 配合: app.js → showVenueAnalysis() 渲染函数
 
