@@ -1405,6 +1405,21 @@ const wc2026MatchDetails = {
     attendance: 68239,
     referee: "Raphael Claus (BRA)"
   },
+  "2026|H|URU|CPV": {
+    score: { sh: 2, sa: 2 },
+    goals: [
+      { min: 21,    side: "away", scorer: "皮纳 (Kevin Pina)",               type: "free_kick" },
+      { min: 44,    side: "home", scorer: "阿劳霍 (Maximiliano Araújo)",     type: "header" },
+      { min: "45+6",side: "home", scorer: "卡诺比奥 (Agustín Canobbio)",     type: "shot",   assist: "阿劳霍 (Maximiliano Araújo)" },
+      { min: 61,    side: "away", scorer: "瓦雷拉 (Hélio Varela)",           type: "shot" }
+    ],
+    cards: {
+      home: { yellow: 2, red: 0 },
+      away: { yellow: 2, red: 0 }
+    },
+    attendance: 64003,
+    referee: "Espen Eskås (NOR)"
+  },
   "2026|G|BEL|EGY": {
     score: { sh: 1, sa: 1 },
     goals: [
@@ -1595,6 +1610,7 @@ matchStats["2026|F|NED|SWE"] = {p1:"51%",p2:"49%",ps1:null,ps2:null,sh1:9,sh2:13
 matchStats["2026|H|ESP|CPV"] = {p1:"74%",p2:"26%",ps1:null,ps2:null,sh1:19,sh2:4,so1:7,so2:1,sb1:12,sb2:3,co1:11,co2:1,fo1:10,fo2:1,os1:2,os2:3,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:187,at2:32,da1:139,da2:7,pk1:0,pk2:0};
 matchStats["2026|H|KSA|URU"] = {p1:"33%",p2:"67%",ps1:null,ps2:null,sh1:6,sh2:20,so1:3,so2:10,sb1:3,sb2:10,co1:4,co2:14,fo1:11,fo2:6,os1:0,os2:6,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:75,at2:145,da1:27,da2:79,pk1:0,pk2:0};
 matchStats["2026|H|ESP|KSA"] = {p1:"67%",p2:"33%",ps1:null,ps2:null,sh1:20,sh2:2,so1:8,so2:1,sb1:12,sb2:1,co1:6,co2:1,fo1:10,fo2:2,os1:2,os2:3,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:158,at2:77,da1:85,da2:24,pk1:0,pk2:0};
+matchStats["2026|H|URU|CPV"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:10,sh2:8,so1:2,so2:4,sb1:8,sb2:4,co1:11,co2:4,fo1:11,fo2:4,os1:3,os2:0,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:119,at2:82,da1:81,da2:190,pk1:0,pk2:0};
 matchStats["2026|G|BEL|EGY"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:9,sh2:6,so1:3,so2:3,sb1:6,sb2:3,co1:2,co2:7,fo1:15,fo2:15,os1:0,os2:1,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:119,at2:76,da1:64,da2:32,pk1:0,pk2:0};
 matchStats["2026|G|IRN|NZL"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:12,so1:4,so2:8,sb1:8,sb2:4,co1:4,co2:1,fo1:10,fo2:8,os1:2,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:101,da1:56,da2:44,pk1:0,pk2:0};
 matchStats["2026|G|BEL|IRN"] = {p1:"70%",p2:"30%",ps1:null,ps2:null,sh1:17,sh2:6,so1:7,so2:3,sb1:10,sb2:3,co1:4,co2:2,fo1:7,fo2:9,os1:3,os2:4,yc1:1,yc2:1,rc1:1,rc2:0,tk1:null,tk2:null,at1:154,at2:63,da1:96,da2:25,pk1:0,pk2:0};

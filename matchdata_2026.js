@@ -228,6 +228,43 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|H|URU|CPV": {
+    score: { sh: 2, sa: 2 },
+    date: "2026-06-22",
+    time: "06:00",
+    venue: "硬石体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 21,    side: "away", scorer: "皮纳",      type: "free_kick" },
+      { min: 44,    side: "home", scorer: "阿劳霍",    type: "header" },
+      { min: "45+6",side: "home", scorer: "卡诺比奥",  type: "shot",   assist: "阿劳霍" },
+      { min: 61,    side: "away", scorer: "瓦雷拉",    type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 65, a: 35 },
+      shots:           { h: 10, a: 8 },
+      shotsOnTarget:   { h: 2,  a: 4 },
+      corners:         { h: 11, a: 4 },
+      fouls:           { h: 11, a: 4 },
+      yellowCards:     { h: 2,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 119,a: 82 },
+      dangerousAttacks:{ h: 81, a: 190 }
+    },
+    attendance: 64003,
+    referee: "Espen Eskås (NOR)",
+    xg: null,
+    mediaRating: {
+      motm: "凯文·皮纳",
+      sources: ["FIFA", "Reuters", "The Guardian"],
+      home: {score: 5, quotes: "乌拉圭两度领先却两度被追平。阿劳霍和卡诺比奥的进球一度逆转比分，但防线两次低级失误葬送胜局。贝尔萨的球队两连平，出线主动权已不在自己手中。"},
+      away: {score: 8, quotes: "佛得角再次震撼世界！继逼平西班牙后，皮纳的任意球和瓦雷拉的反击进球逼平南美劲旅乌拉圭。两战零胜却已斩获两分，非洲新军距离淘汰赛仅一步之遥。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   "2026|G|BEL|EGY": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-16",
