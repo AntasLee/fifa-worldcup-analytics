@@ -1016,7 +1016,7 @@ matchStats["2022|H|GHA|URU"] = {p1:"48%",p2:"52%",ps1:336,ps2:364,sh1:11,sh2:6,s
 //   补时进球 → 字符串类型：{ min: "90+3", ... }  ← "+" 是语义符号，不是数学加号
 //   补时阶段仅四类：45+ / 90+ / 105+ / 120+
 //   禁止将补时写成数字（如 93 替代 "90+3"），否则小组赛无加时的场景会统计错误。
-const wc2026MatchDetails = {
+const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精确数据12场已录入
   "2026|A|MEX|RSA": {
     score: { sh: 2, sa: 0 },
     goals: [
@@ -1033,9 +1033,9 @@ const wc2026MatchDetails = {
   "2026|A|KOR|CZE": {
     score: { sh: 2, sa: 1 },
     goals: [
-      { min: 59, side: "away", scorer: "拉吉斯拉夫·克雷伊奇 (Ladislav Krejčí)", type: "header" },
-      { min: 67, side: "home", scorer: "黄仁范 (Hwang In-beom)", type: "shot" },
-      { min: 80, side: "home", scorer: "吴贤揆 (Oh Hyeon-gyu)", type: "shot", assist: "黄仁范 (Hwang In-beom)" }
+      { min: 59, side: "away", scorer: "拉吉斯拉夫·克雷伊奇 (Ladislav Krejčí)", type: "header", assist: "弗拉迪米尔·曹法尔 (Vladimír Coufal)" },
+      { min: 67, side: "home", scorer: "黄仁范 (Hwang In-beom)", type: "shot",   assist: "李刚仁 (Lee Kang-in)" },
+      { min: 80, side: "home", scorer: "吴贤揆 (Oh Hyeon-gyu)", type: "shot",     assist: "黄仁范 (Hwang In-beom)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1048,7 +1048,7 @@ const wc2026MatchDetails = {
   "2026|A|CZE|RSA": {
     score: { sh: 1, sa: 1 },
     goals: [
-      { min: 6,  side: "home", scorer: "萨迪莱克 (Lukáš Sadílek)", type: "shot" },
+      { min: 6,  side: "home", scorer: "萨迪莱克 (Lukáš Sadílek)", type: "shot",   assist: "亚历山大·索伊卡 (Alexandr Sojka)" },
       { min: 83, side: "away", scorer: "莫科纳 (Teboho Mokoena)",  type: "penalty" }
     ],
     cards: {
@@ -1074,8 +1074,8 @@ const wc2026MatchDetails = {
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },
     goals: [
-      { min: 21, side: "away", scorer: "约沃·卢基奇 (Jovo Lukić)", type: "header" },
-      { min: 78, side: "home", scorer: "赛尔·拉林 (Cyle Larin)", type: "shot" }
+      { min: 21, side: "away", scorer: "约沃·卢基奇 (Jovo Lukić)", type: "header", assist: "塞亚德·科拉希纳茨 (Sead Kolašinac)" },
+      { min: 78, side: "home", scorer: "赛尔·拉林 (Cyle Larin)", type: "shot",   assist: "乔纳森·戴维 (Jonathan David)" }
     ],
     cards: {
       home: { yellow: 2, red: 0 },
@@ -1089,8 +1089,8 @@ const wc2026MatchDetails = {
     score: { sh: 4, sa: 1 },
     goals: [
       { min: 74,    side: "home", scorer: "曼赞比 (Meschack Manzambi)",      type: "shot", assist: "鲁本·巴尔加斯 (Rubén Vargas)" },
-      { min: 84,    side: "home", scorer: "巴尔加斯 (Rubén Vargas)",         type: "shot" },
-      { min: 90,    side: "home", scorer: "曼赞比 (Meschack Manzambi)",      type: "shot" },
+      { min: 84,    side: "home", scorer: "巴尔加斯 (Rubén Vargas)",         type: "shot", assist: "布雷尔·恩博洛 (Breel Embolo)" },
+      { min: 90,    side: "home", scorer: "曼赞比 (Meschack Manzambi)",      type: "shot", assist: "鲁本·巴尔加斯 (Rubén Vargas)" },
       { min: "90+3",side: "away", scorer: "马赫米奇 (Amar Mahmić)",          type: "shot" },
       { min: "90+7",side: "home", scorer: "扎卡 (Granit Xhaka)",             type: "penalty" }
     ],
@@ -1105,12 +1105,12 @@ const wc2026MatchDetails = {
   "2026|B|CAN|QAT": {
     score: { sh: 6, sa: 0 },
     goals: [
-      { min: 16,    side: "home", scorer: "拉林 (Cyle Larin)",           type: "shot" },
+      { min: 16,    side: "home", scorer: "拉林 (Cyle Larin)",           type: "shot",       assist: "戴维 (Jonathan David)" },
       { min: 29,    side: "home", scorer: "戴维 (Jonathan David)",       type: "shot" },
       { min: "45+3",side: "home", scorer: "戴维 (Jonathan David)",       type: "shot" },
       { min: 64,    side: "home", scorer: "萨利巴 (Saliba)",             type: "free_kick" },
       { min: 75,    side: "home", scorer: "马纳伊 (Mohamed Manai)",      type: "own_goal" },
-      { min: "90+2",side: "home", scorer: "戴维 (Jonathan David)",       type: "shot" }
+      { min: "90+2",side: "home", scorer: "戴维 (Jonathan David)",       type: "shot",       assist: "纳撒·萨利巴 (Nathan Saliba)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1124,7 +1124,7 @@ const wc2026MatchDetails = {
     goals: [
       { min: 8, side: "home", scorer: "达米安·博瓦迪利亚 (Damián Bobadilla)", type: "own_goal" },
       { min: 31, side: "home", scorer: "巴洛贡 (Folarin Balogun)", type: "shot", assist: "普利西奇 (Christian Pulisic)" },
-      { min: 50, side: "home", scorer: "巴洛贡 (Folarin Balogun)", type: "shot" },
+      { min: 50, side: "home", scorer: "巴洛贡 (Folarin Balogun)", type: "shot", assist: "克里斯蒂安·普利希奇 (Christian Pulisic)" },
       { min: 74, side: "away", scorer: "毛里西奥·普拉多 (Mauricio Prado)", type: "shot", assist: "恩西索 (Julio Enciso)" },
       { min: "90+8", side: "home", scorer: "雷纳 (Giovanni Reyna)", type: "shot", assist: "马利克·蒂尔曼 (Malik Tillman)" }
     ],
@@ -1135,11 +1135,12 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
-  "2026|B|QAT|SUI": {
+  "2026|B|QAT|SUI": { // V1.79: gkSaves已确认 (Sofascore)
     score: { sh: 1, sa: 1 },
+    gkSaves: { home: { name: "Mahmoud Abunada", nameZh: "马哈茂德·阿布纳达", saves: 5 }, away: { name: "Gregor Kobel", nameZh: "格雷戈·科贝尔", saves: 3 } },
     goals: [
       { min: 17, side: "away", scorer: "恩博洛 (Breel Embolo)", type: "penalty" },
-      { min: "90+5", side: "home", scorer: "胡希 (Boualem Khoukhi)", type: "header" }
+      { min: "90+5", side: "home", scorer: "胡希 (Boualem Khoukhi)", type: "header", assist: "胡马姆·艾哈迈德 (Homam Ahmed)" }
     ],
     cards: {
       home: { yellow: 2, red: 0 },
@@ -1148,10 +1149,11 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
-  "2026|C|BRA|MAR": {
+  "2026|C|BRA|MAR": { // V1.79: gkSaves已确认 (footballan: GK Saves 1-3)
     score: { sh: 1, sa: 1 },
+    gkSaves: { home: { name: "Alisson Becker", nameZh: "阿利松·贝克尔", saves: 1 }, away: { name: "Yassine Bounou", nameZh: "亚辛·布努", saves: 3 } },
     goals: [
-      { min: 21, side: "away", scorer: "萨伊瓦里 (Ismael Saibari)", type: "shot" },
+      { min: 21, side: "away", scorer: "萨伊瓦里 (Ismael Saibari)", type: "shot", assist: "卜拉欣·迪亚斯 (Brahim Díaz)" },
       { min: 32, side: "home", scorer: "维尼修斯 (Vinícius Júnior)", type: "shot", assist: "布鲁诺·吉马良斯 (Bruno Guimarães)" }
     ],
     cards: {
@@ -1177,7 +1179,7 @@ const wc2026MatchDetails = {
   "2026|C|SCO|MAR": {
     score: { sh: 0, sa: 1 },
     goals: [
-      { min: 2, side: "away", scorer: "赛巴里 (Ismael Saibari)", type: "shot" }
+      { min: 2, side: "away", scorer: "赛巴里 (Ismael Saibari)", type: "shot", assist: "卜拉欣·迪亚斯 (Brahim Díaz)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1190,9 +1192,9 @@ const wc2026MatchDetails = {
   "2026|C|BRA|HAI": {
     score: { sh: 3, sa: 0 },
     goals: [
-      { min: 23,    side: "home", scorer: "库尼亚 (Matheus Cunha)",       type: "shot" },
-      { min: 36,    side: "home", scorer: "库尼亚 (Matheus Cunha)",       type: "shot" },
-      { min: "45+3",side: "home", scorer: "维尼修斯 (Vinícius Júnior)",   type: "shot" }
+      { min: 23,    side: "home", scorer: "库尼亚 (Matheus Cunha)",       type: "shot",   assist: "维尼修斯 (Vinícius Júnior)" },
+      { min: 36,    side: "home", scorer: "库尼亚 (Matheus Cunha)",       type: "shot",   assist: "维尼修斯 (Vinícius Júnior)" },
+      { min: "45+3",side: "home", scorer: "维尼修斯 (Vinícius Júnior)",   type: "shot",   assist: "卢卡斯·帕奎塔 (Lucas Paqueta)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1204,7 +1206,7 @@ const wc2026MatchDetails = {
   "2026|D|AUS|TUR": {
     score: { sh: 2, sa: 0 },
     goals: [
-      { min: 27, side: "home", scorer: "伊兰昆达 (Nestory Irankunda)", type: "shot" },
+      { min: 27, side: "home", scorer: "伊兰昆达 (Nestory Irankunda)", type: "shot", assist: "保罗·奥孔-恩斯特勒 (Paul Okon-Engstler)" },
       { min: 75, side: "home", scorer: "梅特卡夫 (Connor Metcalfe)", type: "shot" }
     ],
     cards: {
@@ -1232,7 +1234,7 @@ const wc2026MatchDetails = {
   "2026|D|TUR|PAR": {
     score: { sh: 0, sa: 1 },
     goals: [
-      { min: 2, side: "away", scorer: "加拉尔塞 (Matías Galarza)", type: "shot" }
+      { min: 2, side: "away", scorer: "加拉尔塞 (Matías Galarza)", type: "shot", assist: "胡利奥·恩西索 (Julio Enciso)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1241,17 +1243,18 @@ const wc2026MatchDetails = {
     attendance: 68827,
     referee: "Iván Barton (SLV)"
   },
-  "2026|E|GER|CUW": {
+  "2026|E|GER|CUW": { // V1.79: assist已补全, gkSaves已确认
     score: { sh: 7, sa: 1 },
+    gkSaves: { home: { name: "Manuel Neuer", nameZh: "曼努埃尔·诺伊尔", saves: 1 }, away: { name: "Eloy Room", nameZh: "埃洛伊·罗姆", saves: 5 } },
     goals: [
-      { min: 6, side: "home", scorer: "费利克斯·恩梅查 (Felix Nmecha)", type: "shot" },
-      { min: 21, side: "away", scorer: "利瓦诺·科梅内西亚 (Livano Comenencia)", type: "shot" },
-      { min: 38, side: "home", scorer: "尼科·施洛特贝克 (Nico Schlotterbeck)", type: "header" },
-      { min: 50, side: "home", scorer: "凯·哈弗茨 (Kai Havertz)", type: "penalty" },
-      { min: 47, side: "home", scorer: "贾马尔·穆西亚拉 (Jamal Musiala)", type: "shot" },
-      { min: 68, side: "home", scorer: "纳撒尼尔·布朗 (Nathaniel Brown)", type: "shot" },
-      { min: 78, side: "home", scorer: "德尼茨·翁达夫 (Deniz Undav)", type: "shot" },
-      { min: 88, side: "home", scorer: "凯·哈弗茨 (Kai Havertz)", type: "shot" }
+      { min: 6,  side: "home", scorer: "费利克斯·恩梅查 (Felix Nmecha)",         type: "shot",   assist: "弗洛里安·维尔茨 (Florian Wirtz)" },
+      { min: 21, side: "away", scorer: "利瓦诺·科梅内西亚 (Livano Comenencia)",     type: "shot" },
+      { min: 38, side: "home", scorer: "尼科·施洛特贝克 (Nico Schlotterbeck)",      type: "header", assist: "纳撒尼尔·布朗 (Nathaniel Brown)" },
+      { min: "45+5",side:"home", scorer: "凯·哈弗茨 (Kai Havertz)",                 type: "penalty" },
+      { min: 47, side: "home", scorer: "贾马尔·穆西亚拉 (Jamal Musiala)",           type: "shot",   assist: "约书亚·基米希 (Joshua Kimmich)" },
+      { min: 68, side: "home", scorer: "纳撒尼尔·布朗 (Nathaniel Brown)",            type: "shot",   assist: "德尼茨·翁达夫 (Deniz Undav)" },
+      { min: 78, side: "home", scorer: "德尼茨·翁达夫 (Deniz Undav)",               type: "shot",   assist: "约书亚·基米希 (Joshua Kimmich)" },
+      { min: 88, side: "home", scorer: "凯·哈弗茨 (Kai Havertz)",                   type: "shot",   assist: "德尼茨·翁达夫 (Deniz Undav)" }
     ],
     cards: {
       home: { yellow: 0, red: 0 },
@@ -1261,13 +1264,14 @@ const wc2026MatchDetails = {
     referee: "TBD"
   },
 
-  "2026|F|NED|JPN": {
+  "2026|F|NED|JPN": { // V1.79: gkSaves已确认 (Sofascore/Sky)
     score: { sh: 2, sa: 2 },
+    gkSaves: { home: { name: "Bart Verbruggen", nameZh: "巴特·费布吕亨", saves: 1 }, away: { name: "Zion Suzuki", nameZh: "铃木彩艳", saves: 4 } },
     goals: [
-      { min: 51, side: "home", scorer: "维吉尔·范戴克 (Virgil van Dijk)", type: "header" },
-      { min: 57, side: "away", scorer: "中村敬斗 (Keito Nakamura)", type: "shot" },
-      { min: 64, side: "home", scorer: "克莱森西奥·萨默维尔 (Crysencio Summerville)", type: "shot" },
-      { min: 88, side: "away", scorer: "镰田大地 (Daichi Kamada)", type: "header" }
+      { min: 51, side: "home", scorer: "维吉尔·范戴克 (Virgil van Dijk)",        type: "header", assist: "瑞安·赫拉芬贝赫 (Ryan Gravenberch)" },
+      { min: 57, side: "away", scorer: "中村敬斗 (Keito Nakamura)",               type: "shot",   assist: "久保建英 (Takefusa Kubo)" },
+      { min: 64, side: "home", scorer: "克莱森西奥·萨默维尔 (Crysencio Summerville)", type: "shot", assist: "瑞安·赫拉芬贝赫 (Ryan Gravenberch)" },
+      { min: 88, side: "away", scorer: "镰田大地 (Daichi Kamada)",                type: "header", assist: "小川航基 (Koki Ogawa)" }
     ],
     cards: {
       home: { yellow: 3, red: 0 },
@@ -1305,8 +1309,9 @@ const wc2026MatchDetails = {
     referee: "Juan Gabriel Benítez (PAR)"
   },
 
-  "2026|E|ECU|CUW": {
+  "2026|E|ECU|CUW": { // V1.79: gkSaves部分确认 (Sofascore: Room 15 saves, 10 rating)
     score: { sh: 0, sa: 0 },
+    gkSaves: { away: { name: "Eloy Room", nameZh: "埃洛伊·罗姆", saves: 15 } },
     goals: [],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1315,12 +1320,13 @@ const wc2026MatchDetails = {
     attendance: 68598,
     referee: "Ma Ning (CHN)"
   },
-  "2026|F|SWE|TUN": {
+  "2026|F|SWE|TUN": { // V1.79: gkSaves已确认 (SportingNews)
     score: { sh: 5, sa: 1 },
+    gkSaves: { home: { name: "Kristoffer Nordfeldt", nameZh: "克里斯托弗·诺德费尔特", saves: 1 }, away: { name: "Mouhib Chamakh", nameZh: "穆希卜·沙马赫", saves: 1 } },
     goals: [
       { min: 7, side: "home", scorer: "阿亚里 (Yasin Ayari)", type: "shot" },
       { min: 30, side: "home", scorer: "伊萨克 (Alexander Isak)", type: "shot", assist: "哲凯赖什 (Viktor Gyökeres)" },
-      { min: 43, side: "away", scorer: "雷基克 (Omar Rekik)", type: "header" },
+      { min: 43, side: "away", scorer: "雷基克 (Omar Rekik)", type: "header", assist: "汉尼拔·马吉卜里 (Hannibal Mejbri)" },
       { min: 60, side: "home", scorer: "哲凯赖什 (Viktor Gyökeres)", type: "shot", assist: "伊萨克 (Alexander Isak)" },
       { min: 86, side: "home", scorer: "斯万贝里 (Mattias Svanberg)", type: "shot" },
       { min: "90+6", side: "home", scorer: "阿亚里 (Yasin Ayari)", type: "shot" }
@@ -1333,15 +1339,16 @@ const wc2026MatchDetails = {
     referee: "TBD"
   },
 
-  "2026|F|NED|SWE": {
+  "2026|F|NED|SWE": { // V1.79: gkSaves已确认 (Sofascore/FOX)
     score: { sh: 5, sa: 1 },
+    gkSaves: { home: { name: "Bart Verbruggen", nameZh: "巴特·费布吕亨", saves: 7 }, away: { name: "Kristoffer Nordfeldt", nameZh: "克里斯托弗·诺德费尔特", saves: 2 } },
     goals: [
-      { min: 5,  side: "home", scorer: "布比罗 (Brian Brobbey)",       type: "shot" },
-      { min: 17, side: "home", scorer: "布比罗 (Brian Brobbey)",       type: "shot" },
-      { min: 47, side: "home", scorer: "加克波 (Cody Gakpo)",          type: "shot" },
-      { min: 54, side: "home", scorer: "加克波 (Cody Gakpo)",          type: "shot" },
-      { min: 59, side: "away", scorer: "安东尼 (Anthony Elanga)",      type: "shot" },
-      { min: 89, side: "home", scorer: "孟菲斯 (Memphis Depay)",       type: "shot" }
+      { min: 5,  side: "home", scorer: "布比罗 (Brian Brobbey)",       type: "shot",   assist: "科迪·加克波 (Cody Gakpo)" },
+      { min: 17, side: "home", scorer: "布比罗 (Brian Brobbey)",       type: "shot",   assist: "邓泽尔·邓弗里斯 (Denzel Dumfries)" },
+      { min: 47, side: "home", scorer: "加克波 (Cody Gakpo)",          type: "shot",   assist: "邓泽尔·邓弗里斯 (Denzel Dumfries)" },
+      { min: 54, side: "home", scorer: "加克波 (Cody Gakpo)",          type: "shot",   assist: "克莱森西奥·萨默维尔 (Crysencio Summerville)" },
+      { min: 59, side: "away", scorer: "安东尼 (Anthony Elanga)",      type: "shot",   assist: "亚历山大·伊萨克 (Alexander Isak)" },
+      { min: 89, side: "home", scorer: "孟菲斯 (Memphis Depay)",       type: "shot",   assist: "克莱森西奥·萨默维尔 (Crysencio Summerville)" }
     ],
     cards: {
       home: { yellow: 0, red: 0 },
@@ -1366,8 +1373,9 @@ const wc2026MatchDetails = {
     attendance: 51243,
     referee: "István Kovács (ROU)"
   },
-  "2026|H|ESP|CPV": {
+  "2026|H|ESP|CPV": { // V1.79: gkSaves已确认 (Sofascore: Vozinha 9.7 rating)
     score: { sh: 0, sa: 0 },
+    gkSaves: { home: { name: "Unai Simón", nameZh: "乌奈·西蒙", saves: 1 }, away: { name: "Vozinha", nameZh: "沃济尼亚", saves: 7 } },
     goals: [],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1423,7 +1431,7 @@ const wc2026MatchDetails = {
   "2026|G|BEL|EGY": {
     score: { sh: 1, sa: 1 },
     goals: [
-      { min: 19, side: "away", scorer: "伊玛姆·阿舒尔 (Imam Ashour)", type: "shot" },
+      { min: 19, side: "away", scorer: "伊玛姆·阿舒尔 (Imam Ashour)", type: "shot", assist: "穆罕默德·萨拉赫 (Mohamed Salah)" },
       { min: 66, side: "home", scorer: "穆罕穆德·哈尼 (Mohamed Hany)", type: "own_goal", assist: "托马斯·默尼耶 (Thomas Meunier)" }
     ],
     cards: {
@@ -1436,10 +1444,10 @@ const wc2026MatchDetails = {
   "2026|G|IRN|NZL": {
     score: { sh: 2, sa: 2 },
     goals: [
-      { min: 7, side: "away", scorer: "贾斯特 (Juste)", type: "shot", assist: "克里斯·伍德 (Chris Wood)" },
+      { min: 7, side: "away", scorer: "贾斯特 (Juste)", type: "shot",   assist: "克里斯·伍德 (Chris Wood)" },
       { min: 32, side: "home", scorer: "雷扎伊安 (Rezaeian)", type: "shot" },
-      { min: 54, side: "away", scorer: "贾斯特 (Juste)", type: "shot", assist: "克里斯·伍德 (Chris Wood)" },
-      { min: 64, side: "home", scorer: "莫赫比 (Mohebi)", type: "header" }
+      { min: 54, side: "away", scorer: "贾斯特 (Juste)", type: "shot",   assist: "克里斯·伍德 (Chris Wood)" },
+      { min: 64, side: "home", scorer: "莫赫比 (Mohebi)", type: "header", assist: "拉明·雷扎伊安 (Ramin Rezaeian)" }
     ],
     cards: {
       home: { yellow: 1, red: 0 },
@@ -1448,8 +1456,9 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
 	  },
-  "2026|G|BEL|IRN": {
+  "2026|G|BEL|IRN": { // V1.79: gkSaves部分确认 (Sofascore: Beiranvand 7 saves, 10 rating)
     score: { sh: 0, sa: 0 },
+    gkSaves: { away: { name: "Alireza Beiranvand", nameZh: "阿里雷扎·贝兰万德", saves: 7 } },
     goals: [],
     cards: {
       home: { yellow: 1, red: 1 },
@@ -1458,13 +1467,14 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "Darío Herrera (ARG)"
   },
-  "2026|I|FRA|SEN": {
+  "2026|I|FRA|SEN": { // V1.79: gkSaves已确认 (Sofascore/Sky)
     score: { sh: 3, sa: 1 },
+    gkSaves: { home: { name: "Mike Maignan", nameZh: "迈克·迈尼昂", saves: 2 }, away: { name: "Édouard Mendy", nameZh: "爱德华·门迪", saves: 5 } },
     goals: [
-      { min: 66,    side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot", assist: "迈克尔·奥利塞 (Michael Olise)" },
-      { min: 82,    side: "home", scorer: "巴尔科拉 (Bradley Barcola)", type: "shot" },
-      { min: "90+5",side: "away", scorer: "姆巴耶 (Mbaye)",   type: "shot" },
-      { min: "90+6",side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot", assist: "迈克尔·奥利塞 (Michael Olise)" }
+      { min: 66,    side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot",   assist: "迈克尔·奥利塞 (Michael Olise)" },
+      { min: 82,    side: "home", scorer: "巴尔科拉 (Bradley Barcola)", type: "shot",  assist: "阿德里安·拉比奥 (Adrien Rabiot)" },
+      { min: "90+5",side: "away", scorer: "姆巴耶 (Mbaye)",   type: "shot",           assist: "伊利曼·恩迪亚耶 (Iliman Ndiaye)" },
+      { min: "90+6",side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot",   assist: "迈克尔·奥利塞 (Michael Olise)" }
     ],
     cards: {
       home: { yellow: 0, red: 0 },
@@ -1476,10 +1486,10 @@ const wc2026MatchDetails = {
   "2026|I|IRQ|NOR": {
     score: { sh: 1, sa: 4 },
     goals: [
-      { min: 29,    side: "away", scorer: "哈兰德 (Erling Haaland)",   type: "shot", assist: "达维德·默勒·沃尔费 (David Møller Wolfe)" },
-      { min: 39,    side: "home", scorer: "侯赛因 (Hussein)",   type: "header" },
+      { min: 29,    side: "away", scorer: "哈兰德 (Erling Haaland)",   type: "shot",   assist: "达维德·默勒·沃尔费 (David Møller Wolfe)" },
+      { min: 39,    side: "home", scorer: "侯赛因 (Hussein)",   type: "header",        assist: "阿米尔·阿马里 (Amir Al-Ammari)" },
       { min: 43,    side: "away", scorer: "哈兰德 (Erling Haaland)",   type: "shot" },
-      { min: 76,    side: "away", scorer: "厄斯蒂高 (Østigård)", type: "header" },
+      { min: 76,    side: "away", scorer: "厄斯蒂高 (Østigård)", type: "header",        assist: "马丁·厄德高 (Martin Ødegaard)" },
       { min: "90+6",side: "away", scorer: "艾曼·侯赛因 (Ayman Hussein)", type: "own_goal" }
     ],
     cards: {
@@ -1489,12 +1499,13 @@ const wc2026MatchDetails = {
     attendance: null,
     referee: "TBD"
   },
-  "2026|J|ARG|ALG": {
+  "2026|J|ARG|ALG": { // V1.79: gkSaves已确认 (Opta: Algeria 0 SOT)
     score: { sh: 3, sa: 0 },
+    gkSaves: { home: { name: "Emiliano Martínez", nameZh: "埃米利亚诺·马丁内斯", saves: 0 }, away: { name: "Luca Zidane", nameZh: "卢卡·齐达内", saves: 3 } },
     goals: [
-      { min: 17, side: "home", scorer: "梅西 (Lionel Messi)",   type: "shot" },
-      { min: 60, side: "home", scorer: "梅西 (Lionel Messi)",   type: "shot" },
-      { min: 76, side: "home", scorer: "梅西 (Lionel Messi)",   type: "shot" }
+      { min: 17, side: "home", scorer: "梅西 (Lionel Messi)",   type: "shot",   assist: "罗德里戈·德保罗 (Rodrigo De Paul)" },
+      { min: 60, side: "home", scorer: "梅西 (Lionel Messi)",   type: "shot",   assist: "亚历克西斯·麦卡利斯特 (Alexis Mac Allister)" },
+      { min: 76, side: "home", scorer: "梅西 (Lionel Messi)",   type: "shot",   assist: "尼古拉斯·冈萨雷斯 (Nicolás González)" }
     ],
     cards: {
       home: { yellow: 0, red: 0 },
@@ -1506,8 +1517,8 @@ const wc2026MatchDetails = {
   "2026|J|AUT|JOR": {
     score: { sh: 3, sa: 1 },
     goals: [
-      { min: 21,      side: "home", scorer: "施密德 (Romano Schmid)",     type: "shot" },
-      { min: 50,      side: "away", scorer: "乌勒万 (Ali Olwan)",         type: "shot" },
+      { min: 21,      side: "home", scorer: "施密德 (Romano Schmid)",     type: "shot",   assist: "克萨韦尔·施拉格尔 (Xaver Schlager)" },
+      { min: 50,      side: "away", scorer: "乌勒万 (Ali Olwan)",         type: "shot",   assist: "努尔·拉瓦比德 (Noor Al-Rawabdeh)" },
       { min: 76,      side: "home", scorer: "亚赞 (Yazan Al-Arab)",       type: "own_goal" },
       { min: "90+12", side: "home", scorer: "阿瑙托维奇 (Marko Arnautović)", type: "penalty" }
     ],
@@ -1549,15 +1560,16 @@ const wc2026MatchDetails = {
     referee: "TBD"
   },
 
-  "2026|L|ENG|CRO": {
+  "2026|L|ENG|CRO": { // V1.79: gkSaves已确认 (Sofascore)
     score: { sh: 4, sa: 2 },
+    gkSaves: { home: { name: "Jordan Pickford", nameZh: "乔丹·皮克福德", saves: 3 }, away: { name: "Dominik Livaković", nameZh: "多米尼克·利瓦科维奇", saves: 7 } },
     goals: [
       { min: 12,     side: "home", scorer: "凯恩 (Harry Kane)",         type: "penalty" },
-      { min: 36,     side: "away", scorer: "巴图里纳 (Martin Baturina)", type: "shot" },
+      { min: 36,     side: "away", scorer: "巴图里纳 (Martin Baturina)", type: "shot",   assist: "卢卡·苏契奇 (Luka Sučić)" },
       { min: 42,     side: "home", scorer: "凯恩 (Harry Kane)",         type: "header", assist: "德克兰·赖斯 (Declan Rice)" },
-      { min: "45+6", side: "away", scorer: "穆萨 (Petar Musa)",         type: "shot" },
-      { min: 47,     side: "home", scorer: "贝林厄姆 (Jude Bellingham)", type: "shot", assist: "埃利奥特·安德森 (Elliot Anderson)" },
-      { min: 85,     side: "home", scorer: "拉什福德 (Marcus Rashford)", type: "shot", assist: "布卡约·萨卡 (Bukayo Saka)" }
+      { min: "45+6", side: "away", scorer: "穆萨 (Petar Musa)",         type: "shot",   assist: "伊万·佩里西奇 (Ivan Perišić)" },
+      { min: 47,     side: "home", scorer: "贝林厄姆 (Jude Bellingham)", type: "shot",  assist: "埃利奥特·安德森 (Elliot Anderson)" },
+      { min: 85,     side: "home", scorer: "拉什福德 (Marcus Rashford)", type: "shot",  assist: "布卡约·萨卡 (Bukayo Saka)" }
     ],
     cards: {
       home: { yellow: 0, red: 0 },

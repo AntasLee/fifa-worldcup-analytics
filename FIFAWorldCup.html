@@ -14,7 +14,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <meta name="theme-color" content="#0a0e14">
-<title>FIFA WORLD CUP - DATA ANALYSIS | V1.77</title>
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.79</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -5820,12 +5820,11 @@ function buildHeroItem(r,rankType){
 
 // 渲染列表行
 function buildRankItem(r,i,extra){
-  var rc=''; if(i===0) rc=' p1'; else if(i===1) rc=' p2'; else if(i===2) rc=' p3';
-  var pos=(extra&&extra.sameAsPrev)?(extra.samePos):(i+1);
+  var pos=extra?extra.samePos:(i+1);
   var photo=resolvePlayerPhoto(r.nameEn, r.nameZh, r.teamCode);
   var initial=(r.nameEn||r.nameZh||'?').charAt(0).toUpperCase();
   var h='<div class="ovrk-item">';
-  h+='<span class="ovrk-pos'+rc+'">'+pos+'</span>';
+  h+='<span class="ovrk-pos">'+pos+'</span>';
   h+='<div class="ovrk-av">';
   if(photo) h+='<img src="'+photo+'" onerror="var p=this.parentElement;this.remove();p.insertAdjacentHTML(\'afterbegin\',\'<div class=ovrk-av-fb>'+initial+'</div>\')" loading="lazy">';
   else h+='<div class="ovrk-av-fb">'+initial+'</div>';
@@ -5861,9 +5860,12 @@ function buildRankHTML(summaryItems,heroes,list,note,showSummary){
   }
   h+='</div>';
   h+='<div class="ovrk-list">';
+  var baseRank=3; // 前三名已被 hero 区占用
+  var prevSortVal=null, currentRank=baseRank;
   for(var j=0;j<list.length;j++){
     var sameAsPrev=(j>0 && list[j].sortVal===list[j-1].sortVal);
-    h+=buildRankItem(list[j],j,{sameAsPrev:sameAsPrev,samePos:sameAsPrev?(j):(j+1)});
+    if(!sameAsPrev) currentRank=baseRank+j+1;
+    h+=buildRankItem(list[j],j,{sameAsPrev:sameAsPrev,samePos:currentRank});
   }
   h+='</div>';
   h+='<div class="ovrk-note">'+note+'</div>';
@@ -6024,7 +6026,7 @@ window.showOvScorerRank = function(){
 };
 
 // ========== 助攻榜 ==========
-// V1.78: 2026优先从 wcMatchDetails.goals[].assist 动态聚合（实时跟随赛程），无数据时回退 assistStats2026
+// V1.79: 纯动态聚合，直接从 wcMatchDetails.goals[].assist 累计，无静态兜底
 window.showOvAssistRank = function(){
   var year=getActiveYear(); var yl=yearLabels[year]||year;
   document.getElementById('ovARYear').textContent=yl;
@@ -6039,46 +6041,31 @@ window.showOvAssistRank = function(){
     if(typeof wc2026MatchDetails!=='undefined'){
       Object.keys(wc2026MatchDetails).forEach(function(key){var m=wc2026MatchDetails[key];if(m&&m.goals)matchData[key]=m;});
     }
-    var assistMap={}; var dynTotal=0;
+    var assistMap={};
     Object.keys(matchData).forEach(function(key){
       var m=matchData[key]; if(!m||!m.goals) return;
       m.goals.forEach(function(g){
-	        if(!g.assist) return; if(g.type==='own_goal') return;
-	        var nm=g.assist;
-	        // 解析 "中文名 (English Name)" 格式 (wcMatchDetails)
-	        var parenIdx=nm.indexOf(' (');
-	        var enInParen=parenIdx>0?nm.substring(parenIdx+2,nm.length-1):'';
-	        if(parenIdx>0) nm=nm.substring(0,parenIdx);
-	        var info=_buildCnToInfo()[nm];
-	        if(!info&&enInParen){info=_buildCnToInfo()[enInParen];}
-	        // 4级中文名模糊回退（同射手榜逻辑）
-	        if(!info&&nm.length>=2){
-          var ci=_buildCnToInfo();
-          for(var ck in ci){if(ck.indexOf(nm)>=0||nm.indexOf(ck)>=0){info=ci[ck];break;}}
-          if(!info){var tail=nm.slice(-2);for(var ck2 in ci){if(ck2.slice(-2)===tail){info=ci[ck2];break;}}}
-        }
-        var zhFull=info?info.fullCn:nm;
-        var enName=info?(info.pdbKey||info.enName):nm;
-        var tc=info?info.nat:(key.split('|')[2]);
-        var mk=zhFull;
-        if(!assistMap[mk]) assistMap[mk]={nameZh:zhFull,nameEn:enName,teamCode:tc,assists:0};
-        assistMap[mk].assists++; dynTotal++;
-      });
-    });
-
-	    // V1.78 合并策略：静态数据打底 + 动态数据覆盖（而非二选一）
-	    var merged={};
-	    // 第1步：加载 assistStats2026 作为基底（Mungomash 交叉验证数据）
-	    if(typeof assistStats2026!=='undefined'){
-	      for(var k in assistStats2026){if(k.indexOf('_')===0) continue; var s=assistStats2026[k]; merged[s.nameEn||s.nameZh]={nameZh:s.nameZh,nameEn:s.nameEn,teamCode:s.teamCode,assists:s.assists||0};}
-	      if(assistStats2026._extraFromWikipedia){for(var ek in assistStats2026._extraFromWikipedia){var es=assistStats2026._extraFromWikipedia[ek]; merged[es.nameEn||es.nameZh]={nameZh:es.nameZh,nameEn:es.nameEn,teamCode:es.teamCode,assists:es.assists||0};}}
-	    }
-	    // 第2步：动态数据补充（取 max，避免不完整的动态数据覆盖更完整的静态数据）
-	    for(var amk in assistMap){
-	      var da=assistMap[amk]; var dk=da.nameEn||da.nameZh;
-	      if(merged[dk]){ merged[dk].assists=Math.max(merged[dk].assists, da.assists); } else { merged[dk]=da; }
-	    }
-	    for(var mk in merged) list.push(merged[mk]);
+            if(!g.assist) return; if(g.type==='own_goal') return;
+            var nm=g.assist;
+            var parenIdx=nm.indexOf(' (');
+            var enInParen=parenIdx>0?nm.substring(parenIdx+2,nm.length-1):'';
+            if(parenIdx>0) nm=nm.substring(0,parenIdx);
+            var info=_buildCnToInfo()[nm];
+            if(!info&&enInParen){info=_buildCnToInfo()[enInParen];}
+            if(!info&&nm.length>=2){
+              var ci=_buildCnToInfo();
+              for(var ck in ci){if(ck.indexOf(nm)>=0||nm.indexOf(ck)>=0){info=ci[ck];break;}}
+              if(!info){var tail=nm.slice(-2);for(var ck2 in ci){if(ck2.slice(-2)===tail){info=ci[ck2];break;}}}
+            }
+            var zhFull=info?info.fullCn:nm;
+            var enName=info?(info.pdbKey||info.enName):nm;
+            var tc=info?info.nat:(key.split('|')[2]);
+            var mk=zhFull;
+            if(!assistMap[mk]) assistMap[mk]={nameZh:zhFull,nameEn:enName,teamCode:tc,assists:0};
+            assistMap[mk].assists++;
+          });
+        });
+        for(var mk in assistMap) list.push(assistMap[mk]);
   } else {
     // —— 往届：预置历史数据 ——
     var past=typeof pastPlayerStats!=='undefined'&&pastPlayerStats[year]?pastPlayerStats[year].assists:null;
@@ -6095,36 +6082,148 @@ window.showOvAssistRank = function(){
   document.getElementById('ovAssistRankModal').classList.add('visible');
 };
 
-// ========== 扑救榜 — 对手加权综合评分 ==========
+// ========== 扑救榜 — V1.79 动态聚合引擎 ==========
+// 优先级: match.gkSaves 精确数据 > 公式估算 (so - goals)
+// 公式估算 = 射正 - 进球(含封堵)，精确数据排除非门将封堵
 window.showOvSaveRank = function(){
   var year=getActiveYear(); var yl=yearLabels[year]||year;
   document.getElementById('ovSvRYear').textContent=yl;
-  var stats=year==='2026'&&typeof saveStats2026!=='undefined'?saveStats2026:(typeof pastPlayerStats!=='undefined'&&pastPlayerStats[year]?pastPlayerStats[year].saves:null);
-  
   var list=[];
-  if(stats){
-    // 兼容数组(往届)和对象(2026)两种格式
-    var entries=Array.isArray(stats)?stats:Object.keys(stats).map(function(k){return stats[k];});
-    for(var i=0;i<entries.length;i++){
-      var gk=entries[i];
-      // 往届数据可能缺 savePct，从 saves/goalsConceded 估算
-      gk._pct=gk.savePct||(gk.saves>=0?Math.round(gk.saves/Math.max(1,gk.saves+(gk.goalsConceded||0))*100):0);
-      var score=gk.saves*(gk._pct/100)*0.7 + (gk.cleanSheets||0)*3;
-      gk._score=+score.toFixed(1); gk._sortKey=score;
-      list.push(gk);
+
+  if(year==='2026'){
+    // —— 收集所有已完赛比赛 ——
+    var matchData={};
+    if(typeof wcMatchDetails!=='undefined'){
+      Object.keys(wcMatchDetails).forEach(function(key){if(key.indexOf('2026|')===0){var m=wcMatchDetails[key];if(m&&m.score&&m.score.sh!==null)matchData[key]=m;}});
+    }
+    if(typeof wc2026MatchDetails!=='undefined'){
+      Object.keys(wc2026MatchDetails).forEach(function(key){var m=wc2026MatchDetails[key];if(m&&m.score&&m.score.sh!==null)matchData[key]=m;});
+    }
+
+    // —— 构建 GK 姓名回退映射: saveStats2026(实际出场) > squadDB[0](推测) ——
+    var gkLookup={};
+    if(typeof saveStats2026!=='undefined'){
+      for(var sk in saveStats2026){
+        var sv=saveStats2026[sk];
+        if(sv.teamCode) gkLookup[sv.teamCode]={nameEn:sv.nameEn,nameZh:sv.nameZh};
+      }
+    }
+    if(typeof squadDB!=='undefined'){
+      for(var tc in squadDB){
+        if(!gkLookup[tc]&&squadDB[tc]&&squadDB[tc].gk&&squadDB[tc].gk.length>0){
+          var starter=squadDB[tc].gk[0];
+          gkLookup[tc]={nameEn:starter.nick||starter.n,nameZh:starter.cn};
+        }
+      }
+    }
+
+    var gkMap={}; // key=nameEn
+
+    function addGkExact(info, teamCode, saves, goalsConceded){
+      var nameEn=info.name||info.nameEn; var nameZh=info.nameZh||info.name;
+      var k=nameEn;
+      if(!gkMap[k]) gkMap[k]={nameEn:nameEn,nameZh:nameZh,teamCode:teamCode,saves:0,goalsConceded:0,cleanSheets:0,matches:0};
+      gkMap[k].saves+=saves;
+      gkMap[k].goalsConceded+=goalsConceded;
+      gkMap[k].matches++;
+      if(goalsConceded===0) gkMap[k].cleanSheets++;
+    }
+
+    function addGkEstimate(tc, saves, ga){
+      var g=gkLookup[tc]; if(!g) return;
+      var k=g.nameEn;
+      if(!gkMap[k]) gkMap[k]={nameEn:g.nameEn,nameZh:g.nameZh,teamCode:tc,saves:0,goalsConceded:0,cleanSheets:0,matches:0};
+      gkMap[k].saves+=saves;
+      gkMap[k].goalsConceded+=ga;
+      gkMap[k].matches++;
+      if(ga===0) gkMap[k].cleanSheets++;
+    }
+
+    // —— 逐场计算扑救 ——
+    Object.keys(matchData).forEach(function(key){
+      var m=matchData[key];
+      var parts=key.split('|');
+      var hTeam=parts[2], aTeam=parts[3];
+      var sh=m.score.sh, sa=m.score.sa;
+      if(sh===null||sa===null) return;
+
+      // ── 第一优先级: gkSaves 精确数据（可部分覆盖）──
+      if(m.gkSaves){
+        if(m.gkSaves.home){
+          var hs=m.gkSaves.home;
+          addGkExact(hs, hTeam, hs.saves||0, hs.goalsConceded!==undefined?hs.goalsConceded:sa);
+        } else {
+          // 该侧无精确数据，回退公式
+          var so1_fb=null, so2_fb=null;
+          if(typeof matchStats!=='undefined'&&matchStats[key]){ so1_fb=matchStats[key].so1; so2_fb=matchStats[key].so2; }
+          if((so1_fb===null||so1_fb===undefined)&&typeof wc2026AllMatches!=='undefined'&&wc2026AllMatches[key]&&wc2026AllMatches[key].stats&&wc2026AllMatches[key].stats.shotsOnTarget){ so1_fb=wc2026AllMatches[key].stats.shotsOnTarget.h; so2_fb=wc2026AllMatches[key].stats.shotsOnTarget.a; }
+          if(so2_fb!==null&&so2_fb!==undefined) addGkEstimate(hTeam, Math.max(0, so2_fb-sa), sa);
+        }
+        if(m.gkSaves.away){
+          var as=m.gkSaves.away;
+          addGkExact(as, aTeam, as.saves||0, as.goalsConceded!==undefined?as.goalsConceded:sh);
+        } else {
+          var so1_fb2=null, so2_fb2=null;
+          if(typeof matchStats!=='undefined'&&matchStats[key]){ so1_fb2=matchStats[key].so1; so2_fb2=matchStats[key].so2; }
+          if((so1_fb2===null||so1_fb2===undefined)&&typeof wc2026AllMatches!=='undefined'&&wc2026AllMatches[key]&&wc2026AllMatches[key].stats&&wc2026AllMatches[key].stats.shotsOnTarget){ so1_fb2=wc2026AllMatches[key].stats.shotsOnTarget.h; so2_fb2=wc2026AllMatches[key].stats.shotsOnTarget.a; }
+          if(so1_fb2!==null&&so1_fb2!==undefined) addGkEstimate(aTeam, Math.max(0, so1_fb2-sh), sh);
+        }
+        return;
+      }
+
+      // ── 第二优先级: 公式估算 (射正 - 进球) ──
+      var so1=null, so2=null;
+      if(typeof matchStats!=='undefined'&&matchStats[key]){
+        so1=matchStats[key].so1; so2=matchStats[key].so2;
+      }
+      if((so1===null||so1===undefined)&&typeof wc2026AllMatches!=='undefined'&&wc2026AllMatches[key]&&wc2026AllMatches[key].stats&&wc2026AllMatches[key].stats.shotsOnTarget){
+        so1=wc2026AllMatches[key].stats.shotsOnTarget.h;
+        so2=wc2026AllMatches[key].stats.shotsOnTarget.a;
+      }
+      if(so1===null||so2===null||so1===undefined||so2===undefined) return;
+
+      var homeSaves=Math.max(0, so2-sa);
+      var awaySaves=Math.max(0, so1-sh);
+      addGkEstimate(hTeam, homeSaves, sa);
+      addGkEstimate(aTeam, awaySaves, sh);
+    });
+
+    // —— 构建榜单 ——
+    for(var gk in gkMap){
+      var g=gkMap[gk];
+      if(g.matches===0) continue;
+      var faced=g.saves+g.goalsConceded;
+      var pct=faced>0?Math.round(g.saves/faced*100):(g.goalsConceded===0?100:0);
+      var score=g.saves*(pct/100)*0.7+(g.cleanSheets||0)*3;
+      g._pct=pct; g._score=+score.toFixed(1); g._sortKey=score;
+      list.push(g);
+    }
+  } else {
+    // 往届：静态数据
+    var stats=typeof pastPlayerStats!=='undefined'&&pastPlayerStats[year]?pastPlayerStats[year].saves:null;
+    if(stats){
+      var entries=Array.isArray(stats)?stats:Object.keys(stats).map(function(k){return stats[k];});
+      for(var i=0;i<entries.length;i++){
+        var gk=entries[i];
+        gk._pct=gk.savePct||(gk.saves>=0?Math.round(gk.saves/Math.max(1,gk.saves+(gk.goalsConceded||0))*100):0);
+        var score=gk.saves*(gk._pct/100)*0.7+(gk.cleanSheets||0)*3;
+        gk._score=+score.toFixed(1); gk._sortKey=score;
+        list.push(gk);
+      }
     }
   }
+
   list.sort(function(a,b){return b._sortKey-a._sortKey;});
   var totalSaves=list.reduce(function(s,p){return s+(p.saves||0);},0);
   var totalCS=list.reduce(function(s,p){return s+(p.cleanSheets||0);},0);
   var top3=list.slice(0,3).map(function(gk){return{nameEn:gk.nameEn,nameZh:gk.nameZh,teamCode:gk.teamCode,stat:gk._score.toFixed(1)+' 分',statSub:gk.saves+'扑救·'+gk._pct+'%'+(gk.cleanSheets>0?' · '+gk.cleanSheets+'零封':''),sortVal:gk._sortKey};});
   var rest=list.slice(3,15).map(function(gk){return{nameEn:gk.nameEn,nameZh:gk.nameZh,teamCode:gk.teamCode,stat:gk._score.toFixed(1)+' 分',statSub:gk.saves+'扑救·'+gk._pct+'%'+(gk.cleanSheets>0?' · '+gk.cleanSheets+'零封':''),sortVal:gk._sortKey};});
   var sumItems=[{num:totalSaves,lbl:'总扑救'},{num:list.length>0?(totalSaves/list.length).toFixed(1):'—',lbl:'人均扑救'},{num:totalCS,lbl:'零封场次'}];
-  document.getElementById('ovSaveRankContent').innerHTML=buildRankHTML(sumItems,top3,rest,'综合分 = 扑救×(成功率%/100)×0.7 + 零封×3',year==='2026');
+  document.getElementById('ovSaveRankContent').innerHTML=buildRankHTML(sumItems,top3,rest,'综合分 = 扑救×(成功率%/100)×0.7 + 零封×3 · 数据从比赛统计动态计算',year==='2026');
   document.getElementById('ovSaveRankModal').classList.add('visible');
 };
 
-console.log('✅ V1.77 数据统计四弹窗已安装');
+console.log('✅ V1.79 数据统计四弹窗已安装（助攻榜/扑救榜已升级为动态聚合引擎）');
 })();
 </script>
 
