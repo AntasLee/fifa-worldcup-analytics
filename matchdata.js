@@ -1467,6 +1467,21 @@ const wc2026MatchDetails = { // V1.79: 助攻数据已全面补全, gkSaves精�
     attendance: null,
     referee: "Darío Herrera (ARG)"
   },
+  "2026|G|NZL|EGY": {
+    score: { sh: 1, sa: 3 },
+    goals: [
+      { min: 15, side: "home", scorer: "苏尔曼 (Finn Surman)",        type: "header", assist: "佩恩 (Tim Payne)" },
+      { min: 58, side: "away", scorer: "济科 (Mostafa Ziko)",         type: "header", assist: "哈尼 (Mohamed Hany)" },
+      { min: 67, side: "away", scorer: "萨拉赫 (Mohamed Salah)",      type: "shot",   assist: "济科 (Mostafa Ziko)" },
+      { min: 82, side: "away", scorer: "特雷泽盖 (Mahmoud Trezeguet)",type: "header", assist: "萨拉赫 (Mohamed Salah)" }
+    ],
+    cards: {
+      home: { yellow: 2, red: 0 },
+      away: { yellow: 1, red: 0 }
+    },
+    attendance: 52497,
+    referee: "Omar Al Ali (UAE)"
+  },
   "2026|I|FRA|SEN": { // V1.79: gkSaves已确认 (Sofascore/Sky)
     score: { sh: 3, sa: 1 },
     gkSaves: { home: { name: "Mike Maignan", nameZh: "迈克·迈尼昂", saves: 2 }, away: { name: "Édouard Mendy", nameZh: "爱德华·门迪", saves: 5 } },
@@ -1627,6 +1642,7 @@ matchStats["2026|G|BEL|EGY"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:9,sh2:6,
 matchStats["2026|G|IRN|NZL"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:12,so1:4,so2:8,sb1:8,sb2:4,co1:4,co2:1,fo1:10,fo2:8,os1:2,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:101,da1:56,da2:44,pk1:0,pk2:0};
 matchStats["2026|G|BEL|IRN"] = {p1:"70%",p2:"30%",ps1:null,ps2:null,sh1:17,sh2:6,so1:7,so2:3,sb1:10,sb2:3,co1:4,co2:2,fo1:7,fo2:9,os1:3,os2:4,yc1:1,yc2:1,rc1:1,rc2:0,tk1:null,tk2:null,at1:154,at2:63,da1:96,da2:25,pk1:0,pk2:0};
 matchStats["2026|G|IRN|NZL"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:12,so1:4,so2:8,sb1:8,sb2:4,co1:4,co2:1,fo1:10,fo2:8,os1:2,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:101,da1:56,da2:44,pk1:0,pk2:0};
+matchStats["2026|G|NZL|EGY"] = {p1:"44%",p2:"56%",ps1:null,ps2:null,sh1:8,sh2:13,so1:5,so2:7,sb1:3,sb2:6,co1:4,co2:3,fo1:14,fo2:8,os1:3,os2:0,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:118,da1:43,da2:51,pk1:0,pk2:0};
 matchStats["2026|I|FRA|SEN"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:5,so1:8,so2:2,sb1:1,sb2:3,co1:6,co2:4,fo1:5,fo2:9,os1:1,os2:3,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:113,at2:99,da1:32,da2:27,pk1:0,pk2:0};
 matchStats["2026|I|IRQ|NOR"] = {p1:"39%",p2:"61%",ps1:null,ps2:null,sh1:9,sh2:10,so1:1,so2:5,sb1:8,sb2:5,co1:2,co2:5,fo1:12,fo2:13,os1:1,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:79,at2:89,da1:27,da2:39,pk1:0,pk2:0};
 matchStats["2026|J|ARG|ALG"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:10,sh2:4,so1:6,so2:0,sb1:4,sb2:4,co1:2,co2:2,fo1:13,fo2:8,os1:3,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:85,at2:119,da1:24,da2:45,pk1:0,pk2:0};

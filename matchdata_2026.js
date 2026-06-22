@@ -265,6 +265,43 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|G|NZL|EGY": {
+    score: { sh: 1, sa: 3 },
+    date: "2026-06-22",
+    time: "09:00",
+    venue: "BC体育馆",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 15, side: "home", scorer: "苏尔曼",     type: "header", assist: "佩恩" },
+      { min: 58, side: "away", scorer: "济科",       type: "header", assist: "哈尼" },
+      { min: 67, side: "away", scorer: "萨拉赫",     type: "shot",   assist: "济科" },
+      { min: 82, side: "away", scorer: "特雷泽盖",   type: "header", assist: "萨拉赫" }
+    ],
+    stats: {
+      possession:      { h: 44, a: 56 },
+      shots:           { h: 8,  a: 13 },
+      shotsOnTarget:   { h: 5,  a: 7 },
+      corners:         { h: 4,  a: 3 },
+      fouls:           { h: 14, a: 8 },
+      yellowCards:     { h: 2,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 91, a: 118 },
+      dangerousAttacks:{ h: 43, a: 51 }
+    },
+    attendance: 52497,
+    referee: "Omar Al Ali (UAE)",
+    xg: null,
+    mediaRating: {
+      motm: "穆罕默德·萨拉赫",
+      sources: ["FIFA", "BBC Sport", "ESPN"],
+      home: {score: 5, quotes: "新西兰凭借苏尔曼的头球取得梦幻开局，但下半场防线崩盘。面对埃及的强力反扑无力抵挡，两轮仅积1分出线形势严峻。"},
+      away: {score: 9, quotes: "埃及收获队史世界杯首胜！萨拉赫一射一传主导逆转，济科和特雷泽盖锦上添花。法老军团下半场连入三球，两轮不败登顶G组。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   "2026|G|BEL|EGY": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-16",
