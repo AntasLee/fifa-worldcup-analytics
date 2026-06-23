@@ -1619,6 +1619,20 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     referee: "TBD"
   },
 
+  "2026|K|POR|UZB": {
+    score: { sh: 5, sa: 0 },
+    gkSaves: { home: { name: "Diogo Costa", nameZh: "迪奥戈·科斯塔", saves: 2 }, away: { name: "Abduvohid Nematov", nameZh: "阿卜杜沃赫德·内马托夫", saves: 4 } },
+    goals: [
+      { min: 6,  side: "home", scorer: "克里斯蒂亚诺·罗纳尔多 (Cristiano Ronaldo)", type: "shot", assist: "若昂·坎塞洛 (João Cancelo)" },
+      { min: 17, side: "home", scorer: "努诺·门德斯 (Nuno Mendes)", type: "free_kick" },
+      { min: 39, side: "home", scorer: "克里斯蒂亚诺·罗纳尔多 (Cristiano Ronaldo)", type: "shot", assist: "布鲁诺·费尔南德斯 (Bruno Fernandes)" },
+      { min: 60, side: "away", scorer: "阿卜杜沃赫德·内马托夫 (Abduvohid Nematov)", type: "own_goal" },
+      { min: 87, side: "home", scorer: "拉斐尔·莱奥 (Rafael Leão)", type: "shot" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "Jalal Jayed (MAR)"
+  },
+
   "2026|L|ENG|CRO": { // V1.78: gkSaves已确认 (Sofascore)
     score: { sh: 4, sa: 2 },
     gkSaves: { home: { name: "Jordan Pickford", nameZh: "乔丹·皮克福德", saves: 3 }, away: { name: "Dominik Livaković", nameZh: "多米尼克·利瓦科维奇", saves: 7 } },
@@ -1649,6 +1663,13 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     },
     attendance: null,
     referee: "TBD"
+  },
+
+  "2026|L|ENG|GHA": {
+    score: { sh: 0, sa: 0 },
+    goals: [],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
   },
 };
 
@@ -1694,8 +1715,10 @@ matchStats["2026|I|NOR|SEN"] = {p1:"42%",p2:"58%",ps1:null,ps2:null,sh1:10,sh2:1
 matchStats["2026|J|ARG|ALG"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:10,sh2:4,so1:6,so2:0,sb1:4,sb2:4,co1:2,co2:2,fo1:13,fo2:8,os1:3,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:85,at2:119,da1:24,da2:45,pk1:0,pk2:0};
 matchStats["2026|J|AUT|JOR"] = {p1:"63%",p2:"37%",ps1:null,ps2:null,sh1:10,sh2:9,so1:4,so2:4,sb1:6,sb2:5,co1:4,co2:3,fo1:12,fo2:7,os1:3,os2:1,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:132,at2:86,da1:55,da2:45,pk1:1,pk2:0};
 matchStats["2026|J|ARG|AUT"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:5,so1:5,so2:1,sb1:4,sb2:4,co1:1,co2:3,fo1:13,fo2:13,os1:2,os2:0,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:82,at2:114,da1:33,da2:59,pk1:1,pk2:0};
-matchStats["2026|J|JOR|ALG"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:8,sh2:12,so1:4,so2:8,sb1:4,sb2:4,co1:1,co2:10,fo1:null,fo2:null,os1:null,os2:null,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:66,at2:152,da1:24,da2:75,pk1:0,pk2:0};
+matchStats["2026|J|JOR|ALG"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:8,sh2:12,so1:4,so2:8,sb1:4,sb2:4,co1:1,co2:10,fo1:11,fo2:6,os1:1,os2:0,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:66,at2:152,da1:24,da2:75,pk1:0,pk2:0};
 matchStats["2026|K|POR|COD"] = {p1:"75%",p2:"25%",ps1:null,ps2:null,sh1:5,sh2:5,so1:1,so2:2,sb1:4,sb2:3,co1:5,co2:4,fo1:9,fo2:10,os1:3,os2:2,yc1:3,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:135,at2:56,da1:75,da2:28,pk1:0,pk2:0};
 matchStats["2026|K|UZB|COL"] = {p1:"40%",p2:"60%",ps1:null,ps2:null,sh1:6,sh2:11,so1:2,so2:4,sb1:4,sb2:7,co1:3,co2:4,fo1:14,fo2:11,os1:0,os2:3,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:67,at2:98,da1:28,da2:41,pk1:0,pk2:0};
+matchStats["2026|K|POR|UZB"] = {p1:"66%",p2:"34%",ps1:null,ps2:null,sh1:14,sh2:4,so1:9,so2:2,sb1:5,sb2:2,co1:3,co2:2,fo1:14,fo2:15,os1:2,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:144,at2:79,da1:60,da2:25,pk1:0,pk2:0};
 matchStats["2026|L|ENG|CRO"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:17,sh2:8,so1:11,so2:5,sb1:6,sb2:3,co1:8,co2:2,fo1:10,fo2:12,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:87,at2:81,da1:33,da2:38,pk1:1,pk2:0};
 matchStats["2026|L|GHA|PAN"] = {p1:"38%",p2:"62%",ps1:null,ps2:null,sh1:6,sh2:9,so1:2,so2:4,sb1:4,sb2:5,co1:2,co2:2,fo1:9,fo2:11,os1:4,os2:1,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:93,at2:101,da1:35,da2:60,pk1:0,pk2:0};
+matchStats["2026|L|ENG|GHA"] = {p1:"79%",p2:"21%",ps1:null,ps2:null,sh1:13,sh2:1,so1:3,so2:1,sb1:10,sb2:0,co1:9,co2:2,fo1:14,fo2:15,os1:2,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:131,at2:40,da1:78,da2:10,pk1:0,pk2:0};

@@ -681,7 +681,7 @@ const wc2026AllMatches = {
       shots:           { h: 8,  a: 12 },
       shotsOnTarget:   { h: 4,  a: 8 },
       corners:         { h: 1,  a: 10 },
-      fouls:           { h: null, a: null },
+      fouls:           { h: 11, a: 6 },
       yellowCards:     { h: 1,  a: 1 },
       redCards:        { h: 0,  a: 0 },
       attacks:         { h: 66, a: 152 },
@@ -772,6 +772,44 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|K|POR|UZB": {
+    score: { sh: 5, sa: 0 },
+    date: "2026-06-23",
+    time: "17:00",
+    venue: "NRG体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 6,  side: "home", scorer: "C罗",       type: "shot", assist: "坎塞洛" },
+      { min: 17, side: "home", scorer: "努诺·门德斯", type: "free_kick" },
+      { min: 39, side: "home", scorer: "C罗",       type: "shot", assist: "B.费尔南德斯" },
+      { min: 60, side: "away", scorer: "内马托夫",    type: "own_goal" },
+      { min: 87, side: "home", scorer: "拉斐尔·莱奥", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 66, a: 34 },
+      shots:           { h: 14, a: 4 },
+      shotsOnTarget:   { h: 9,  a: 2 },
+      corners:         { h: 3,  a: 2 },
+      fouls:           { h: 14, a: 15 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 144,a: 79 },
+      dangerousAttacks:{ h: 60, a: 25 }
+    },
+    attendance: null,
+    referee: "Jalal Jayed (MAR)",
+    xg: null,
+    mediaRating: {
+      motm: "C罗",
+      sources: ["AP News", "ESPN", "France 24", "FIFA"],
+      home: {score: 9, quotes: "C罗成为史上首位在六届世界杯进球球员，6分钟闪击、39分钟梅开二度超越尤西比奥加冕葡萄牙世界杯射手王。努诺·门德斯任意球诡计惊艳、莱奥替补爆射锦上添花。首轮平局后强势反弹，5-0剑指出线。"},
+      away: {score: 2, quotes: "全场仅4次射门、34%控球，乌兹别克斯坦毫无还手之力。门将内马托夫乌龙雪上加霜，两战丢8球净胜球恶化至谷底。世界杯新军的童话正在褪色，出线仅存数学上的可能。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   "2026|L|ENG|CRO": {
     score: { sh: 4, sa: 2 },
     date: "2026-06-18",
@@ -840,6 +878,38 @@ const wc2026AllMatches = {
       sources: ["FIFA", "ESPN", "BBC Sport"],
       home: {score: 7, quotes: "加纳在缺少托马斯·帕尔特伊且门将阿蒂-齐吉半场伤退的困境下坚持到了最后。伊伦基第95分钟绝杀让黑色之星在艰难条件下拿到宝贵三分，奎罗斯创纪录连续五届世界杯执教。"},
       away: {score: 5, quotes: "巴拿马距离队史首个世界杯积分仅差几秒。沃特曼和拉莫斯上半场均错失良机，防线在最后时刻的松懈代价沉重，但球队整体展现了难得的竞争力。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|L|ENG|GHA": {
+    score: { sh: 0, sa: 0 },
+    date: "2026-06-24",
+    time: "04:00",
+    venue: "吉列体育场",
+    stage: "group",
+    round: 2,
+    goals: [],
+    stats: {
+      possession:      { h: 79, a: 21 },
+      shots:           { h: 13, a: 1 },
+      shotsOnTarget:   { h: 3,  a: 1 },
+      corners:         { h: 9,  a: 2 },
+      fouls:           { h: 14, a: 15 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 131,a: 40 },
+      dangerousAttacks:{ h: 78, a: 10 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "本杰明·阿萨雷",
+      sources: ["The Standard", "NBC Sports", "The Mirror", "FIFA"],
+      home: {score: 4, quotes: "全场79%控球却颗粒无收，与首轮4-2大胜克罗地亚判若两队。凯恩被加纳防线锁死终场错失良机，戈登和马杜埃凯边路传中质量低下，贝林厄姆过于粘球。奥赖利击中横梁、格希头球被门线解围，图赫尔变阵未能撕破低位防守，两战积4分出线悬念留至末轮。"},
+      away: {score: 8, quotes: "加纳以教科书级别的低位防守从热门英格兰手中抢下宝贵1分。全队众志成城执行奎罗斯战术部署，直到第50分钟才完成首次射门。门将阿萨雷做出关键扑救力保零封，黑星军团的防守纪律堪称本届赛事典范。"}
     },
     aiPreMatch: null,
     aiPostReview: null
