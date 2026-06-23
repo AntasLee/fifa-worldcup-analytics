@@ -664,6 +664,42 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|J|JOR|ALG": {
+    score: { sh: 1, sa: 2 },
+    date: "2026-06-23",
+    time: "03:00",
+    venue: "李维斯体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 36, side: "home", scorer: "纳扎尔·拉什丹", type: "shot", assist: "穆萨·塔迈里" },
+      { min: 69, side: "away", scorer: "纳迪尔·本布阿利", type: "header", assist: "里亚德·马赫雷斯" },
+      { min: 82, side: "away", scorer: "阿明·古伊里", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 28, a: 72 },
+      shots:           { h: 8,  a: 12 },
+      shotsOnTarget:   { h: 4,  a: 8 },
+      corners:         { h: 1,  a: 10 },
+      fouls:           { h: null, a: null },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 66, a: 152 },
+      dangerousAttacks:{ h: 24, a: 75 }
+    },
+    attendance: null,
+    referee: "Slavko Vinčić (SVN)",
+    xg: null,
+    mediaRating: {
+      motm: "阿明·古伊里",
+      sources: ["BBC Sport", "AP News", "Sky Sports", "FIFA"],
+      home: {score: 6, quotes: "世界杯新军约旦展现了令人动容的斗志。拉什丹精彩外脚背射门带来队史首次世界杯领先，塔迈里的助攻尽显技术功底。下半场体力下降后在定位球防守中两次失守，提前一轮无缘淘汰赛，但配得上掌声。"},
+      away: {score: 7, quotes: "阿尔及利亚半场调整后完成逆转，取得自2014年以来首场世界杯胜利。替补本布阿利头球扳平、古伊里乱战中制胜，两粒进球均来自角球。马赫雷斯的关键传中展现队长价值，但上半场低迷是不容忽视的隐患。末轮对阵奥地利决定出线命运。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   "2026|K|POR|COD": {
     score: { sh: 1, sa: 1 },
     date: "2026-06-18",
