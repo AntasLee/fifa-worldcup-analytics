@@ -173,7 +173,8 @@ const translate = (function() {
 
     
     // ===== 人名音译引擎：拉丁→中文 =====
-    const famousPlayers = {
+    // ★ V2.0: 统一知名球员映射表 (合并 famousPlayers + specialNameMap)
+    const _knownPlayerNames = {
         'lionel messi':'利昂内尔·梅西','cristiano ronaldo':'克里斯蒂亚诺·罗纳尔多','neymar':'内马尔','kylian mbappe':'基利安·姆巴佩',
         'ronaldo nazario':'罗纳尔多·纳扎里奥','ronaldinho':'罗纳尔迪尼奥','zinedine zidane':'齐内丁·齐达内','diego maradona':'迭戈·马拉多纳',
         'pele':'贝利','johan cruyff':'约翰·克鲁伊夫','franz beckenbauer':'弗朗茨·贝肯鲍尔','michel platini':'米歇尔·普拉蒂尼',
@@ -334,9 +335,25 @@ const translate = (function() {
         'wilson':'威尔逊','taylor':'泰勒','thomas':'托马斯','roberts':'罗伯茨','evans':'埃文斯',
         'diaz':'迪亚斯','vertonghen':'费尔通亨','al-sheeb':'阿尔·谢布','heung-min':'兴慜','alvarez':'阿尔瓦雷斯','castillo':'卡斯蒂略','ortiz':'奥尔蒂斯',
         'araujo':'阿劳若','araújo':'阿劳若','montano':'蒙塔诺','montaño':'蒙塔诺',
+        // 日本常用姓氏 → 汉字
+        'tanaka':'田中','suzuki':'铃木','sato':'佐藤','takahashi':'高桥','watanabe':'渡边',
+        'ito':'伊藤','yamamoto':'山本','nakamura':'中村','kobayashi':'小林','kato':'加藤',
+        'yoshida':'吉田','yamada':'山田','sasaki':'佐佐木','yamaguchi':'山口','matsumoto':'松本',
+        'inoue':'井上','kimura':'木村','hayashi':'林','endo':'遠藤','okada':'冈田',
+        'nakano':'中野','morita':'守田','kamada':'鎌田','kubo':'久保','doan':'堂安',
+        'asano':'浅野','itakura':'板倉','tomiyasu':'冨安','maeda':'前田',
+        'ueda':'上田','soma':'相馬','hatate':'旗手','shibasaki':'柴崎','haraguchi':'原口',
+        'osako':'大迫','sakai':'酒井','yamane':'山根','nakayama':'中山','taniguchi':'谷口',
+        'nagatomo':'長友','kawashima':'川島','gonda':'権田',
+        'minamino':'南野',
+        // 韩国常用姓氏 → 汉字
+        'kim':'金','lee':'李','park':'朴','choi':'崔','jung':'郑','kang':'姜',
+        'cho':'赵','shin':'申','ahn':'安','song':'宋','seo':'徐','kwon':'权',
+        'lim':'林','yoon':'尹','jang':'张','oh':'吴',
     };
 
     const syllableMap = {
+        // 基础元辅音
         'a':'阿','ba':'巴','be':'贝','bi':'比','bo':'博','bu':'布','ca':'卡','ce':'塞','ci':'奇','co':'科','cu':'库',
         'da':'达','de':'德','di':'迪','do':'多','du':'杜','fa':'法','fe':'费','fi':'菲','fo':'福','fu':'富',
         'ga':'加','ge':'格','gi':'吉','go':'戈','gu':'古','ha':'哈','he':'赫','hi':'希','ho':'霍','hu':'胡',
@@ -348,8 +365,28 @@ const translate = (function() {
         'va':'瓦','ve':'韦','vi':'维','vo':'沃','vu':'武','wa':'瓦','we':'韦','wi':'威','wo':'沃',
         'xa':'萨','xe':'塞','xi':'西','xo':'索','xu':'苏',
         'ya':'亚','ye':'耶','yi':'伊','yo':'约','yu':'尤','za':'扎','ze':'泽','zi':'齐','zo':'佐','zu':'祖',
-        'cha':'查','che':'切','chi':'奇','cho':'乔','chu':'楚','sha':'沙','she':'谢','shi':'希','sho':'绍','shu':'舒',
-        'tha':'塔','the':'特','thi':'蒂','tho':'托','thu':'图','pha':'法','phe':'费','phi':'菲','pho':'福','phu':'富',
+        // 双辅音组合 (CCV)
+        'bla':'布拉','ble':'布莱','bli':'布利','blo':'布洛','blu':'布卢',
+        'cla':'克拉','cle':'克莱','cli':'克利','clo':'克洛','clu':'克卢',
+        'fla':'弗拉','fle':'弗莱','fli':'弗利','flo':'弗洛','flu':'弗卢',
+        'gla':'格拉','gle':'格莱','gli':'格利','glo':'格洛','glu':'格卢',
+        'pla':'普拉','ple':'普莱','pli':'普利','plo':'普洛','plu':'普卢',
+        'sla':'斯拉','sle':'斯莱','sli':'斯利','slo':'斯洛','slu':'斯卢',
+        'sma':'斯马','sme':'斯梅','smi':'斯米','smo':'斯莫','smu':'斯穆',
+        'sna':'斯纳','sne':'斯内','sni':'斯尼','sno':'斯诺','snu':'斯努',
+        'spa':'斯帕','spe':'斯佩','spi':'斯皮','spo':'斯波','spu':'斯普',
+        'sta':'斯塔','ste':'斯特','sti':'斯蒂','sto':'斯托','stu':'斯图',
+        'sca':'斯卡','sce':'斯切','sci':'希','sco':'斯科','scu':'斯库',
+        'ska':'斯卡','ske':'斯克','ski':'斯基','sko':'斯科','sku':'斯库',
+        // ch/sh/th/ph (双字母音)
+        'cha':'查','che':'切','chi':'奇','cho':'乔','chu':'楚','cham':'查姆','chen':'琴','chin':'钦','chon':'琼',
+        'sha':'沙','she':'谢','shi':'希','sho':'绍','shu':'舒','sham':'沙姆','shen':'申','shin':'欣','shon':'雄',
+        'tha':'塔','the':'特','thi':'蒂','tho':'托','thu':'图','tham':'塔姆','then':'滕','thin':'廷','thon':'顿',
+        'pha':'法','phe':'费','phi':'菲','pho':'福','phu':'富',
+        'gha':'加','ghe':'盖','ghi':'吉','gho':'戈','ghu':'古',
+        'dha':'达','dhe':'代','dhi':'迪','dho':'多','dhu':'杜',
+        'kha':'卡','khe':'凯','khi':'基','kho':'科','khu':'库',
+        // 三辅音组合 (CCCV)
         'bra':'布拉','bre':'布雷','bri':'布里','bro':'布罗','bru':'布鲁',
         'cra':'克拉','cre':'克雷','cri':'克里','cro':'克罗','cru':'克鲁',
         'dra':'德拉','dre':'德雷','dri':'德里','dro':'德罗','dru':'德鲁',
@@ -358,25 +395,77 @@ const translate = (function() {
         'pra':'普拉','pre':'普雷','pri':'普里','pro':'普罗','pru':'普鲁',
         'tra':'特拉','tre':'特雷','tri':'特里','tro':'特罗','tru':'特鲁',
         'stra':'斯特拉','stre':'斯特雷','stri':'斯特里','stro':'斯特罗','stru':'斯特鲁',
-        'spr':'斯普', 'sch':'施', 'tsch':'奇', 'tsch':'奇',
+        'scra':'斯克拉','scre':'斯克雷','scri':'斯克里','scro':'斯克罗','scru':'斯克鲁',
+        'spla':'斯普拉','sple':'斯普莱','spli':'斯普利','splo':'斯普洛','splu':'斯普鲁',
+        // 德语/荷兰语特殊
+        'spr':'斯普','sch':'施','tsch':'奇','tzsch':'奇',
         'berg':'贝格','burg':'堡','stein':'施泰因','heim':'海姆','dorf':'多夫','bach':'巴赫',
         'mann':'曼','land':'兰','son':'松','sen':'森','ton':'顿','ley':'利','ford':'福德',
         'wood':'伍德','field':'菲尔德','worth':'沃思','bridge':'布里奇','well':'韦尔',
-        'ez':'斯','es':'斯','is':'斯','os':'斯','us':'斯',
-        'ian':'安','ien':'安','eau':'奥','eaux':'奥','oux':'乌','ault':'奥','ot':'奥',
+        // 法语特殊
+        'eau':'奥','eaux':'奥','oux':'乌','ault':'奥','ot':'奥',
+        'oux':'乌','oux':'乌','eu':'厄','oeu':'厄','ain':'安','oin':'万',
+        'ault':'奥','eault':'奥','ot':'奥','aud':'奥','aut':'奥',
+        'oux':'乌','oux':'乌','ier':'耶','iez':'耶','ais':'艾','ait':'艾',
+        // 葡萄牙语/西班牙语特殊
+        'ão':'昂','ães':'昂伊斯','ões':'昂伊斯','ção':'桑','ções':'桑伊斯',
+        'nho':'尼奥','nha':'尼亚','lho':'利奥','lha':'利亚',
+        'inho':'伊尼奥','inha':'伊尼亚',
+        // 意大利语特殊
+        'glia':'利亚','glie':'列','glio':'利奥','gliu':'柳',
+        'gna':'尼亚','gne':'涅','gni':'尼','gno':'尼奥','gnu':'纽',
+        'sco':'斯科','sca':'斯卡','sce':'谢','sci':'希','scu':'斯库',
+        'ccia':'恰','ccie':'切','ccio':'乔','cciu':'丘',
+        // 斯拉夫语特殊 (ić/vić/ski/ov/ev/in)
+        'ic':'奇','ić':'奇','vic':'维奇','vić':'维奇',
+        'ski':'斯基','sky':'斯基','ska':'斯卡',
+        'ov':'夫','ev':'夫','ova':'娃','eva':'娃','in':'因','ina':'娜',
+        'enko':'延科','chenko':'琴科','ovich':'奥维奇',
+        // 阿拉伯语前缀
+        'al':'阿尔','el':'埃尔','bin':'本','bint':'宾特','abu':'阿布',
+        'abd':'阿卜杜','abdul':'阿卜杜勒','mohammed':'穆罕默德',
+        // 单字符 (V2.0: 补齐元音和常见辅音)
+        'a':'阿','e':'厄','i':'伊','o':'奥','u':'乌','y':'伊',
+        'b':'布','c':'克','d':'德','f':'夫','g':'格','h':'赫','j':'伊','k':'克',
+        'l':'尔','m':'姆','n':'恩','p':'普','r':'尔','s':'斯','t':'特','v':'夫',
+        'w':'乌','x':'克斯','z':'兹',
+        // 词尾
+        'ez':'斯','es':'斯','is':'斯','os':'斯','us':'斯','az':'斯',
+        'ian':'安','ien':'安',
         'er':'尔','ar':'尔','or':'尔','ir':'尔','ur':'尔',
         'ck':'克','ff':'夫','ll':'尔','mm':'姆','nn':'恩','pp':'普','rr':'尔','ss':'斯','tt':'特',
+        'ght':'特','gh':'','tion':'申','sion':'申','ture':'彻',
+        // 常见稀有音节 (德语/荷兰语/北欧)
+        'oe':'厄','ue':'于','schi':'希','sche':'谢','scho':'朔',
+        'eij':'艾','ij':'艾','ee':'伊','oo':'奥','aa':'阿',
+        'sj':'什','tj':'奇','dj':'吉','nj':'尼',
+        // 法语特有
+        'ois':'瓦','oit':'瓦','eille':'埃耶','euil':'厄伊',
+        'ault':'奥','eault':'奥','ot':'奥','aud':'奥','aut':'奥',
+        // 中欧/东欧
+        'sz':'斯','cz':'奇','rz':'日','dz':'茨',
+        'szcz':'什奇','rzek':'热克','czek':'切克',
+        // 北欧
+        'qvist':'奎斯特','gren':'格伦','lund':'伦德','holm':'霍尔姆',
+        'gaard':'高','stad':'斯塔','strom':'斯特伦','strom':'斯特伦',
     };
 
-    function transliterateName(englishName) {
+    function transliterateName(englishName, nat) {
         if (!englishName || typeof englishName !== 'string') return '';
         const name = englishName.trim();
         if (!name) return '';
-        
+        // V2.0: 语种特定预处理 — 根据 nat (FIFA代码, 如 POR/BRA/DEU/FRA/HRV/SRB/RUS/ARA)
+        const lang = (nat || '').toUpperCase();
+        const isLatin = /^(POR|BRA|ESP|MEX|ARG|URU|COL|CHI|ECU|PER|VEN|BOL|PAR|CRC|HON|SLV|PAN|GUA)$/.test(lang);
+        const isSlavic = /^(HRV|SRB|BIH|SVN|MKD|MNE|RUS|UKR|BLR|POL|CZE|SVK|BGR)$/.test(lang);
+        const isGermanic = /^(DEU|AUT|CHE|NLD|BEL|DNK|SWE|NOR|ISL|ENG|SCO|WAL|NIR|IRL)$/.test(lang);
+        const isFrench = /^(FRA|BEL|CAN|SEN|CIV|CMR|MLI|BFA|GUI|COD|MAR|ALG|TUN|HAI)$/.test(lang);
+        const isArabic = /^(KSA|QAT|ARE|EGY|MAR|ALG|TUN|IRQ|JOR|KUW|OMN|BHR|SYR|LBN|LBY|SDN|YEM|PLE)$/.test(lang);
+
         // 1. Check famous players (case-insensitive, accent-stripped)
         const key = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[·\-\.]/g, ' ').replace(/\s+/g, ' ').trim();
-        if (famousPlayers[key]) return famousPlayers[key];
-        
+        if (_knownPlayerNames[key]) return _knownPlayerNames[key];
+
         // 2. Split into parts (given name + surname)
         const parts = name.split(/\s+/);
         if (parts.length === 0) return name;
@@ -455,117 +544,11 @@ const translate = (function() {
     }
     
 
-    // 特殊球员名映射表（约定俗成的翻译，音译引擎无法正确处理）
-    const specialNameMap = {
-        // 现役巨星
-        'kane': '凯恩', 'harry kane': '哈里·凯恩',
-        'salah': '萨拉赫', 'mohamed salah': '穆罕默德·萨拉赫',
-        'mbappe': '姆巴佩', 'kylian mbappe': '基利安·姆巴佩',
-        'haaland': '哈兰德', 'erling haaland': '埃尔林·哈兰德',
-        'de bruyne': '德布劳内', 'kevin de bruyne': '凯文·德布劳内',
-        'saka': '萨卡', 'bukayo saka': '布卡约·萨卡',
-        'foden': '福登', 'phil foden': '菲尔·福登',
-        'bellingham': '贝林厄姆', 'jude bellingham': '祖德·贝林厄姆',
-        'vinicius': '维尼修斯', 'vinicius junior': '维尼修斯·儒尼奥尔',
-        'rodrygo': '罗德里戈', 'rodrygo goes': '罗德里戈·戈斯',
-        'pedri': '佩德里', 'gavi': '加维',
-        'musiala': '穆西亚拉', 'jamal musiala': '贾马尔·穆西亚拉',
-        'wirtz': '维尔茨', 'florian wirtz': '弗洛里安·维尔茨',
-        'courtois': '库尔图瓦', 'thibaut courtois': '蒂博·库尔图瓦',
-        'alisson': '阿利松', 'ederson': '埃德松',
-        'oblak': '奥布拉克', 'jan oblak': '扬·奥布拉克',
-        'ter stegen': '特尔施特根', 'marc ter stegen': '马克·特尔施特根',
-        'donnarumma': '唐纳鲁马', 'gianluigi donnarumma': '詹路易吉·唐纳鲁马',
-        'van dijk': '范戴克', 'virgil van dijk': '维吉尔·范戴克',
-        'dias': '迪亚斯', 'ruben dias': '鲁本·迪亚斯',
-        'marquinhos': '马尔基尼奥斯',
-        'alaba': '阿拉巴', 'david alaba': '大卫·阿拉巴',
-        'rudiger': '吕迪格', 'antonio rudiger': '安东尼奥·吕迪格',
-        'kimmich': '基米希', 'joshua kimmich': '约书亚·基米希',
-        'rodri': '罗德里', 'casemiro': '卡塞米罗',
-        'modric': '莫德里奇', 'luka modric': '卢卡·莫德里奇',
-        'kroos': '克罗斯', 'toni kroos': '托尼·克罗斯',
-        'gundogan': '京多安', 'ilkay gundogan': '伊尔卡伊·京多安',
-        'bruno fernandes': '布鲁诺·费尔南德斯', 'bernardo silva': '贝尔纳多·席尔瓦',
-        'valverde': '巴尔韦德', 'federico valverde': '费德里科·巴尔韦德',
-        // 传奇球员
-        'ronaldo': '罗纳尔多', 'cristiano ronaldo': '克里斯蒂亚诺·罗纳尔多',
-        'ronaldinho': '罗纳尔迪尼奥',
-        'zidane': '齐达内', 'zinedine zidane': '齐内丁·齐达内',
-        'beckham': '贝克汉姆', 'david beckham': '大卫·贝克汉姆',
-        'ronaldo nazario': '罗纳尔多·纳扎里奥',
-        'cruyff': '克鲁伊夫', 'johan cruyff': '约翰·克鲁伊夫',
-        'maradona': '马拉多纳', 'diego maradona': '迭戈·马拉多纳',
-        'pele': '贝利', 'platini': '普拉蒂尼', 'michel platini': '米歇尔·普拉蒂尼',
-        'baresi': '巴雷西', 'franco baresi': '弗兰科·巴雷西',
-        'maldini': '马尔蒂尼', 'paolo maldini': '保罗·马尔蒂尼',
-        'baggio': '巴乔', 'roberto baggio': '罗伯特·巴乔',
-        'bergkamp': '博格坎普', 'dennis bergkamp': '丹尼斯·博格坎普',
-        'henry': '亨利', 'thierry henry': '蒂埃里·亨利',
-        'ronaldo luis': '罗纳尔多', 'figo': '菲戈', 'luis figo': '路易斯·菲戈',
-        'nedved': '内德维德', 'pavel nedved': '帕维尔·内德维德',
-        'shevchenko': '舍甫琴科', 'andriy shevchenko': '安德烈·舍甫琴科',
-        'ronaldinho gaucho': '罗纳尔迪尼奥',
-        'cannavaro': '卡纳瓦罗', 'fabio cannavaro': '法比奥·卡纳瓦罗',
-        'kaka': '卡卡', 'xavi': '哈维', 'iniesta': '伊涅斯塔',
-        'andres iniesta': '安德雷斯·伊涅斯塔',
-        'robben': '罗本', 'arjen robben': '阿尔扬·罗本',
-        'ribery': '里贝里', 'franck ribery': '弗兰克·里贝里',
-        'scholes': '斯科尔斯', 'paul scholes': '保罗·斯科尔斯',
-        'giggs': '吉格斯', 'ryan giggs': '瑞恩·吉格斯',
-        'lampard': '兰帕德', 'frank lampard': '弗兰克·兰帕德',
-        'gerrard': '杰拉德', 'steven gerrard': '史蒂文·杰拉德',
-        'pirlo': '皮尔洛', 'andrea pirlo': '安德烈亚·皮尔洛',
-        'buffon': '布冯', 'gianluigi buffon': '詹路易吉·布冯',
-        'casillas': '卡西利亚斯', 'iker casillas': '伊克尔·卡西利亚斯',
-        'neuer': '诺伊尔', 'manuel neuer': '曼努埃尔·诺伊尔',
-        'ibrahimovic': '伊布拉希莫维奇', 'zlatan ibrahimovic': '兹拉坦·伊布拉希莫维奇',
-        'suarez': '苏亚雷斯', 'luis suarez': '路易斯·苏亚雷斯',
-        'lewandowski': '莱万多夫斯基', 'robert lewandowski': '罗伯特·莱万多夫斯基',
-        'aguero': '阿圭罗', 'sergio aguero': '塞尔希奥·阿圭罗',
-        'drogba': '德罗巴', 'didier drogba': '迪迪埃·德罗巴',
-        'eto': '埃托奥', 'samuel eto': '萨穆埃尔·埃托奥',
-        'torres': '托雷斯', 'fernando torres': '费尔南多·托雷斯',
-        'villa': '比利亚', 'david villa': '大卫·比利亚',
-        'raul': '劳尔', 'hazard': '阿扎尔', 'eden hazard': '埃登·阿扎尔',
-        'pogba': '博格巴', 'paul pogba': '保罗·博格巴',
-        'griezmann': '格里兹曼', 'antoine griezmann': '安托万·格里兹曼',
-        'lukaku': '卢卡库', 'romelu lukaku': '罗梅卢·卢卡库',
-        'sterling': '斯特林', 'raheem sterling': '拉希姆·斯特林',
-        'son': '孙兴慜', 'heung min son': '孙兴慜', 'son heung min': '孙兴慜',
-        // 世界杯历史巨星
-        'muller': '穆勒', 'thomas muller': '托马斯·穆勒',
-        'gerd muller': '盖德·穆勒', 'klose': '克洛泽', 'miroslav klose': '米罗斯拉夫·克洛泽',
-        'beckenbauer': '贝肯鲍尔', 'franz beckenbauer': '弗朗茨·贝肯鲍尔',
-        'matthaus': '马特乌斯', 'lothar matthaus': '洛塔尔·马特乌斯',
-        'romario': '罗马里奥', 'rivaldo': '里瓦尔多',
-        'puskas': '普斯卡什', 'ferenc puskas': '费伦茨·普斯卡什',
-        'eusevio': '尤西比奥', 'charlton': '查尔顿', 'bobby charlton': '博比·查尔顿',
-        'moore': '穆尔', 'bobby moore': '博比·穆尔',
-        'fountaine': '方丹', 'just fontaine': '朱斯特·方丹',
-        'yashin': '亚辛', 'lev yashin': '列夫·亚辛',
-        'lineker': '莱因克尔', 'gary lineker': '加里·莱因克尔',
-        // 日韩球员补充（全名）
-        'wataru endo': '遠藤航', 'ko itakura': '板倉滉', 'daichi kamada': '鎌田大地', 'hiroki ito': '伊藤洋輝',
-        'maya yoshida': '吉田麻也', 'yuto nagatomo': '長友佑都', 'takehiro tomiyasu': '冨安健洋',
-        'junya ito': '伊東純也', 'takuma asano': '浅野拓磨', 'ao tanaka': '田中碧', 'ritsu doan': '堂安律',
-        'paulo junichi tanaka': '田中淳一', 'tanaka paulo junichi': '田中淳一', 'tatsuya tanaka': '田中達也',
-        'takumi minamino': '南野拓実', 'minamino': '南野',
-        // 日本常用姓氏 → 汉字映射（单字匹配用）
-        'tanaka': '田中', 'suzuki': '铃木', 'sato': '佐藤', 'takahashi': '高桥', 'watanabe': '渡边',
-        'ito': '伊藤', 'yamamoto': '山本', 'nakamura': '中村', 'kobayashi': '小林', 'kato': '加藤',
-        'yoshida': '吉田', 'yamada': '山田', 'sasaki': '佐佐木', 'yamaguchi': '山口', 'matsumoto': '松本',
-        'inoue': '井上', 'kimura': '木村', 'hayashi': '林', 'endo': '遠藤', 'okada': '冈田',
-        'nakano': '中野', 'morita': '守田', 'kamada': '鎌田', 'mitoma': '三笘', 'kubo': '久保',
-        'asano': '浅野', 'itakura': '板倉', 'tomiyasu': '冨安', 'doan': '堂安', 'maeda': '前田',
-        'ueda': '上田', 'soma': '相馬', 'hatate': '旗手', 'shibasaki': '柴崎', 'haraguchi': '原口',
-        'osako': '大迫', 'sakai': '酒井', 'yamane': '山根', 'nakayama': '中山', 'taniguchi': '谷口',
-        'nagatomo': '長友', 'kawashima': '川島', 'gonda': '権田', 'schmidt': '施密特',
-        // 韩国常用姓氏 → 汉字映射
-        'kim': '金', 'lee': '李', 'park': '朴', 'choi': '崔', 'jung': '郑', 'kang': '姜',
-        'cho': '赵', 'son': '孙', 'hwang': '黄', 'shin': '申', 'ahn': '安', 'song': '宋',
-        'seo': '徐', 'kwon': '权', 'lim': '林', 'yoon': '尹', 'jang': '张', 'oh': '吴',
-    };
+    // ★ V2.0: 已合并到 _knownPlayerNames，保留为兼容别名
+    const specialNameMap = _knownPlayerNames;  // V2.0: 已合并，仅保留别名
+
+    // ★ V2.0: 日韩姓氏映射 (保留在 _knownPlayerNames 中便于单姓匹配)
+    // 已全部合并至上方 _knownPlayerNames 对象末尾
 
     function playerToCN(player) {
         if (!player) return '';
@@ -602,11 +585,11 @@ const translate = (function() {
         // 3.5 Check special name map (using Latin name, accent-stripped)
         if (latinName) {
         const rawEnName = latinName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[·\-\.]/g, ' ').replace(/\s+/g, ' ').trim();
-        if (specialNameMap[rawEnName]) return specialNameMap[rawEnName];
+        if (_knownPlayerNames[rawEnName]) return _knownPlayerNames[rawEnName];
         // Also check individual words (for "Harry Kane" → check "kane")
         const nameWords = rawEnName.split(' ');
         for (const w of nameWords) {
-            if (w.length > 2 && specialNameMap[w]) return specialNameMap[w];
+            if (w.length > 2 && _knownPlayerNames[w]) return _knownPlayerNames[w];
         }
         
         // 3.6 Look up in playerDB — if exact match found with CJK nn, use that (O(1) via pre-built index)
@@ -623,9 +606,9 @@ const translate = (function() {
             }
         }
         
-        // 4. Try transliteration from Latin name
+        // 4. Try transliteration from Latin name (V2.0: 传入国籍获语种规则)
         if (latinName) {
-            const cn = transliterateName(latinName);
+            const cn = transliterateName(latinName, player.nat);
             if (cn && cn !== latinName) return cn;
         }
         }
@@ -644,7 +627,8 @@ const translate = (function() {
 // 预构建 playerDB 的小写→key 索引，供 playerToCN O(1) 查询，避免 O(n²) 阻塞
 var _playerDBLCIndex = null;
 
-// ==================== 3. 搜索引擎 ====================
+// ==================== 3. 搜索引擎 (DEPRECATED — V2.0 由 __playerMatcher 取代) ====================
+// 保留仅为向后兼容，新代码请使用 window.__playerMatcher.match()
 const _searchEngine = (function() {
     let _indexBuilt = false;
     let _exactIndex = {};   // 精确名 → playerId
@@ -1088,10 +1072,430 @@ window.getAggregatedData = function() {
     const result = buildClubIndex.build();
     return result;
 };
-window._playerSearchEngine = _searchEngine;
+window._playerSearchEngine = _searchEngine;  // DEPRECATED: 保留向后兼容，新代码用 __playerMatcher
 window.translate = translate;
 window.buildClubIndex = buildClubIndex;
 window.buildSearchIndex = _searchEngine.buildIndex;
+
+// ================================================================
+// 统一球员匹配引擎 V2.0 — __playerMatcher
+// 合并 getPlayerKey, _searchEngine, showUnifiedPlayerDetail 的匹配逻辑
+// 单一入口: match(query, context) → { key, confidence, candidates, matchType, autoSelect }
+// 上下文消歧(DOB/国籍/位置)覆盖所有匹配层
+// ================================================================
+window.__playerMatcher = (function() {
+    var _built = false;
+    var _exactIndex = {};    // 精确名(小写)→key
+    var _normIndex = {};     // 归一化名→key
+    var _cnIndex = {};       // 中文名→key
+    var _nkIndex = {};       // 昵称/nk→key
+    var _trigramIndex = {};  // trigram→{key:true,...}
+    var _dobIndex = {};      // DOB→[key,...]
+    var _natIndex = {};      // 国籍→[key,...]
+    var _posIndex = {};      // 位置大类→[key,...]
+    var _cache = {};         // key→player对象
+    var _allKeys = [];       // 所有key(兜底用)
+
+    // ========== 字符串工具 ==========
+    function normAccent(s) {
+        return (s||'').toLowerCase()
+            .replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a')
+            .replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th')
+            .replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i')
+            .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    }
+
+    function normName(s) {
+        return normAccent(s).replace(/[^a-z]/g,'');
+    }
+
+    function normDob(d) {
+        if (!d) return '';
+        var s = String(d);
+        var m1 = s.match(/(\d{4})-(\d{2})-(\d{2})/);
+        if (m1) return m1[1]+'-'+m1[2]+'-'+m1[3];
+        var m2 = s.match(/(\d{2})\.(\d{2})\.(\d{4})/);
+        if (m2) return m2[3]+'-'+m2[2]+'-'+m2[1];
+        var m3 = s.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+        if (m3) return m3[1]+'-'+('0'+m3[2]).slice(-2)+'-'+('0'+m3[3]).slice(-2);
+        var m4 = s.match(/(\d{4})/);
+        if (m4) return m4[1];
+        return '';
+    }
+
+    function getTrigrams(s) {
+        var padded = '__' + s + '__';
+        var result = {};
+        for (var i = 0; i < padded.length - 2; i++) {
+            result[padded.substring(i, i+3)] = true;
+        }
+        return result;
+    }
+
+    // Jaro-Winkler 相似度 (0-1)
+    function jaroWinkler(s1, s2) {
+        if (s1 === s2) return 1.0;
+        var len1 = s1.length, len2 = s2.length;
+        if (len1 === 0 || len2 === 0) return 0.0;
+        var matchDist = Math.max(0, Math.floor(Math.max(len1, len2) / 2) - 1);
+        var m1 = new Array(len1), m2 = new Array(len2);
+        var matches = 0, i, j;
+        for (i = 0; i < len1; i++) {
+            var start = Math.max(0, i - matchDist);
+            var end = Math.min(i + matchDist + 1, len2);
+            for (j = start; j < end; j++) {
+                if (m2[j] || s1[i] !== s2[j]) continue;
+                m1[i] = true; m2[j] = true; matches++; break;
+            }
+        }
+        if (matches === 0) return 0.0;
+        var trans = 0, k = 0;
+        for (i = 0; i < len1; i++) {
+            if (!m1[i]) continue;
+            while (!m2[k]) k++;
+            if (s1[i] !== s2[k]) trans++;
+            k++;
+        }
+        var jaro = (matches/len1 + matches/len2 + (matches - trans/2)/matches) / 3;
+        var prefix = 0;
+        for (i = 0; i < Math.min(4, Math.min(len1, len2)); i++) {
+            if (s1[i] === s2[i]) prefix++; else break;
+        }
+        return jaro + prefix * 0.1 * (1 - jaro);
+    }
+
+    function posGroup(mp) {
+        if (!mp) return '';
+        var m = String(mp).toLowerCase();
+        if (/goalkeeper|goalie|gk/.test(m)) return 'gk';
+        if (/defender|defence|back|sweeper/.test(m)) return 'df';
+        if (/midfield|midfielder/.test(m)) return 'mf';
+        if (/forward|attack|striker|winger/.test(m)) return 'fw';
+        return '';
+    }
+
+    function getSearchTexts(pd, key) {
+        var t = [];
+        if (pd.n) t.push(pd.n);
+        if (pd.nn && pd.nn !== pd.n) t.push(pd.nn);
+        if (pd.en && pd.en !== pd.n && pd.en !== pd.nn) t.push(pd.en);
+        if (pd.cn) t.push(pd.cn);
+        if (pd.nk) t.push(pd.nk);
+        t.push(key);
+        return t;
+    }
+
+    // ========== 索引构建 (单次遍历) ==========
+    function buildIndex() {
+        if (_built) return;
+        if (typeof playerDB === 'undefined') { return; }
+        // 合并补充球员数据 (原 groupsdata.js IIFE 职责，V2.0 由统一引擎接管)
+        if (typeof supplementalPlayers !== 'undefined') {
+            for (var _spk in supplementalPlayers) {
+                if (!playerDB[_spk]) { playerDB[_spk] = supplementalPlayers[_spk]; }
+            }
+        }
+        var count = 0;
+        for (var key in playerDB) {
+            if (!playerDB.hasOwnProperty(key)) continue;
+            var pd = playerDB[key];
+            _cache[key] = pd;
+            _allKeys.push(key);
+            count++;
+            var texts = getSearchTexts(pd, key);
+            for (var t = 0; t < texts.length; t++) {
+                var text = texts[t];
+                if (!text) continue;
+                var lower = text.toLowerCase().trim();
+                // V2.0: 支持多值索引 (同名球员 → 数组，用于上下文消歧)
+                if (!_exactIndex[lower]) _exactIndex[lower] = [];
+                if (_exactIndex[lower].indexOf(key) < 0) _exactIndex[lower].push(key);
+                var normed = normName(text);
+                if (normed) {
+                    if (!_normIndex[normed]) _normIndex[normed] = [];
+                    if (_normIndex[normed].indexOf(key) < 0) _normIndex[normed].push(key);
+                }
+                if (/[\u4e00-\u9fff]/.test(text)) {
+                    if (!_cnIndex[text]) _cnIndex[text] = [];
+                    if (_cnIndex[text].indexOf(key) < 0) _cnIndex[text].push(key);
+                    if (!_cnIndex[lower]) _cnIndex[lower] = [];
+                    if (_cnIndex[lower].indexOf(key) < 0) _cnIndex[lower].push(key);
+                }
+                if (pd.nk && text === pd.nk) {
+                    if (!_nkIndex[text]) _nkIndex[text] = [];
+                    if (_nkIndex[text].indexOf(key) < 0) _nkIndex[text].push(key);
+                    if (!_nkIndex[lower]) _nkIndex[lower] = [];
+                    if (_nkIndex[lower].indexOf(key) < 0) _nkIndex[lower].push(key);
+                }
+                var trigrams = getTrigrams(normed || lower);
+                for (var tg in trigrams) {
+                    if (!_trigramIndex[tg]) _trigramIndex[tg] = {};
+                    _trigramIndex[tg][key] = true;
+                }
+            }
+            // dobIndex
+            var dob = normDob(pd.bd);
+            if (dob) {
+                if (!_dobIndex[dob]) _dobIndex[dob] = [];
+                _dobIndex[dob].push(key);
+            }
+            // natIndex
+            if (pd.nt) {
+                var nt = pd.nt.toLowerCase().trim();
+                if (!_natIndex[nt]) _natIndex[nt] = [];
+                if (_natIndex[nt].indexOf(key) < 0) _natIndex[nt].push(key);
+            }
+            if (pd.nat) {
+                var nc = pd.nat.toUpperCase().trim();
+                if (!_natIndex[nc]) _natIndex[nc] = [];
+                if (_natIndex[nc].indexOf(key) < 0) _natIndex[nc].push(key);
+            }
+            // posIndex
+            if (pd.mp) {
+                var pg = posGroup(pd.mp);
+                if (pg) {
+                    if (!_posIndex[pg]) _posIndex[pg] = [];
+                    if (_posIndex[pg].indexOf(key) < 0) _posIndex[pg].push(key);
+                }
+            }
+        }
+        _built = true;
+        console.log('[playerMatcher] 索引构建完成: ' + count + ' 球员 | exact:' + Object.keys(_exactIndex).length +
+            ' norm:' + Object.keys(_normIndex).length + ' cn:' + Object.keys(_cnIndex).length +
+            ' trigram:' + Object.keys(_trigramIndex).length);
+    }
+
+    // ========== 上下文评分 ==========
+    function scoreContext(pd, ctx) {
+        if (!ctx || !pd) return 0;
+        var score = 0;
+        // DOB
+        if (ctx.dob && pd.bd) {
+            var cd = normDob(ctx.dob), pdd = normDob(pd.bd);
+            if (cd && pdd) {
+                if (cd === pdd) score += 20;
+                else {
+                    var cy = cd.substring(0,4), py = pdd.substring(0,4);
+                    if (cy && py) {
+                        if (cy === py) score += 15;
+                        else { var diff = Math.abs(parseInt(cy)-parseInt(py)); if (diff === 1) score += 8; else if (diff === 2) score += 4; }
+                    }
+                }
+            }
+        }
+        // 国籍
+        if (ctx.nationality) {
+            var cn = ctx.nationality.toLowerCase().trim();
+            var pn = (pd.nt||'').toLowerCase().trim();
+            var pnc = (pd.nat||'').toUpperCase().trim();
+            if (pn === cn || pnc.toLowerCase() === cn) score += 15;
+            else if (pn.indexOf(cn) >= 0 || cn.indexOf(pn) >= 0) score += 10;
+        }
+        // 位置
+        if (ctx.position && pd.mp) {
+            var cg = posGroup(ctx.position), pg = posGroup(pd.mp);
+            if (cg && pg && cg === pg) score += 5;
+        }
+        return score;
+    }
+
+    // ========== 主匹配函数 ==========
+    function match(query, context) {
+        buildIndex();
+        if (!query || typeof query !== 'string' || !query.trim()) return null;
+        var q = query.trim(), qLower = q.toLowerCase(), qNorm = normName(q), qAccent = normAccent(q);
+        var candidates = [], seen = {};
+
+        function add(key, score, type) {
+            if (seen[key]) return; seen[key] = true;
+            candidates.push({ key: key, baseScore: score, matchType: type });
+        }
+
+        // V2.0: 辅助 — 从多值索引批量添加候选
+        function addFromIndex(idx, score, type) {
+            if (!idx) return;
+            if (Array.isArray(idx)) { for (var ai = 0; ai < idx.length; ai++) add(idx[ai], score, type); }
+            else add(idx, score, type);
+        }
+
+        // === Layer 0: 精确索引 ===
+        addFromIndex(_exactIndex[qLower], 100, 'exact');
+        addFromIndex(_nkIndex[q], 98, 'nickname');
+        addFromIndex(_nkIndex[qLower], 98, 'nickname-lower');
+        addFromIndex(_cnIndex[q], 100, 'cn-exact');
+        if (qAccent !== qLower) addFromIndex(_exactIndex[qAccent], 95, 'exact-noaccent');
+
+        // === Layer 1: 归一化 ===
+        if (qNorm) addFromIndex(_normIndex[qNorm], 90, 'normalized');
+        // 名姓交换
+        var words = q.split(/\s+/);
+        if (words.length >= 2) {
+            var sw = words.slice(1).concat(words[0]).join(' ');
+            var swl = sw.toLowerCase(), swn = normName(sw), swa = normAccent(sw);
+            addFromIndex(_exactIndex[swl], 88, 'swapped-exact');
+            if (swa !== swl) addFromIndex(_exactIndex[swa], 85, 'swapped-exact-noaccent');
+            if (swn) addFromIndex(_normIndex[swn], 85, 'swapped-norm');
+        }
+        // 后缀剥离 Jr/Sr/II/III...
+        var noSfx = q.replace(/\s+(Jr|Sr|II|III|IV|Júnior|Júnior|Junior|Senior)\.?$/i, '').trim();
+        if (noSfx !== q) {
+            var nsl = noSfx.toLowerCase(), nsn = normName(noSfx);
+            addFromIndex(_exactIndex[nsl], 88, 'nosuffix-exact');
+            if (nsn) addFromIndex(_normIndex[nsn], 85, 'nosuffix-norm');
+        }
+        // 缩写 M. Klose → Klose
+        var abbrM = q.match(/^[A-Z]\.\s*(.+)$/);
+        if (abbrM) {
+            var ln = abbrM[1].toLowerCase().trim(), lnn = normName(ln);
+            addFromIndex(_exactIndex[ln], 82, 'abbr-lastname');
+            if (lnn) addFromIndex(_normIndex[lnn], 82, 'abbr-ln-norm');
+            for (var ek in _exactIndex) {
+                if (ek.length > ln.length && ek.substring(ek.length - ln.length) === ln) addFromIndex(_exactIndex[ek], 75, 'abbr-suffix');
+            }
+        }
+        // 连字符 In-beom → Inbeom
+        if (q.indexOf('-') >= 0) {
+            var nh = q.replace(/-/g, ''), nhl = nh.toLowerCase(), nhn = normName(nh);
+            addFromIndex(_exactIndex[nhl], 85, 'nohyphen-exact');
+            if (nhn) addFromIndex(_normIndex[nhn], 85, 'nohyphen-norm');
+        }
+
+        // === Layer 2: Trigram + Jaro-Winkler ===
+        if (candidates.length === 0) {
+            var qTgs = getTrigrams(qNorm || qAccent || qLower);
+            var tgHits = {}, tgCount = 0;
+            for (var tg in qTgs) { tgCount++; if (!_trigramIndex[tg]) continue;
+                for (var tk in _trigramIndex[tg]) { tgHits[tk] = (tgHits[tk]||0) + 1; }
+            }
+            var minH = Math.max(1, Math.floor(tgCount * 0.3));
+            var jwList = [];
+            for (var ck in tgHits) {
+                if (tgHits[ck] < minH) continue;
+                var cpd = _cache[ck]; if (!cpd) continue;
+                var bestJw = 0;
+                var cTexts = getSearchTexts(cpd, ck);
+                for (var ti = 0; ti < cTexts.length; ti++) {
+                    var tn = normName(cTexts[ti]); if (!tn) continue;
+                    var jw = jaroWinkler(qNorm || qLower, tn);
+                    if (jw > bestJw) bestJw = jw;
+                    // token级JW
+                    var qw = (qNorm || qLower).split(/[\s\-]+/);
+                    var tw = tn.split(/[\s\-]+/);
+                    for (var qi = 0; qi < qw.length; qi++) {
+                        if (qw[qi].length < 2) continue;
+                        for (var tji = 0; tji < tw.length; tji++) {
+                            if (tw[tji].length < 2) continue;
+                            var tjw = jaroWinkler(qw[qi], tw[tji]);
+                            if (tjw > bestJw) bestJw = tjw;
+                        }
+                    }
+                }
+                if (bestJw >= 0.75) jwList.push({ key: ck, jw: bestJw });
+            }
+            jwList.sort(function(a,b) { return b.jw - a.jw; });
+            for (var j = 0; j < Math.min(jwList.length, 20); j++) {
+                add(jwList[j].key, Math.round(jwList[j].jw * 85), 'jaro-winkler');
+            }
+        }
+
+        // === Layer 3: Trigram纯模糊兜底 ===
+        if (candidates.length === 0 && qNorm && qNorm.length >= 3) {
+            var qtgs2 = getTrigrams(qNorm), qtgC2 = 0;
+            for (var tg2 in qtgs2) { qtgC2++; }
+            var tgS2 = {};
+            for (var tg2 in qtgs2) { if (!_trigramIndex[tg2]) continue;
+                for (var tk2 in _trigramIndex[tg2]) { tgS2[tk2] = (tgS2[tk2]||0) + 1; }
+            }
+            var sorted = [];
+            for (var sk in tgS2) {
+                var ov = tgS2[sk] / qtgC2;
+                if (ov >= 0.25) sorted.push({ key: sk, ov: ov });
+            }
+            sorted.sort(function(a,b) { return b.ov - a.ov; });
+            for (var s = 0; s < Math.min(sorted.length, 30); s++) {
+                add(sorted[s].key, Math.round(sorted[s].ov * 50), 'trigram');
+            }
+        }
+
+        // === Layer 4: 上下文消歧 (所有候选) ===
+        if (context && candidates.length > 0) {
+            for (var c = 0; c < candidates.length; c++) {
+                var cand = candidates[c];
+                var pdx = _cache[cand.key];
+                cand.contextScore = pdx ? scoreContext(pdx, context) : 0;
+                cand.finalScore = cand.baseScore + cand.contextScore;
+            }
+            candidates.sort(function(a,b) { return b.finalScore - a.finalScore; });
+        } else {
+            for (var c = 0; c < candidates.length; c++) {
+                candidates[c].contextScore = 0;
+                candidates[c].finalScore = candidates[c].baseScore;
+            }
+        }
+
+        // === 兜底: 前缀/子串 ===
+        if (candidates.length === 0 && qLower.length >= 3) {
+            var subM = [];
+            for (var ek2 in _exactIndex) { if (ek2.indexOf(qLower) >= 0) { var _ev = _exactIndex[ek2]; if (Array.isArray(_ev)) { for (var _evi=0;_evi<_ev.length;_evi++) subM.push(_ev[_evi]); } else subM.push(_ev); } }
+            if (subM.length === 0 && qNorm) {
+                for (var nk2 in _normIndex) { if (nk2.indexOf(qNorm) >= 0) { var _nv = _normIndex[nk2]; if (Array.isArray(_nv)) { for (var _nvi=0;_nvi<_nv.length;_nvi++) { if (subM.indexOf(_nv[_nvi])<0) subM.push(_nv[_nvi]); } } else if (subM.indexOf(_nv)<0) subM.push(_nv); } }
+            }
+            var seen2 = {};
+            for (var sm = 0; sm < subM.length; sm++) {
+                if (!seen2[subM[sm]]) { seen2[subM[sm]] = true; add(subM[sm], 30, 'substring'); }
+            }
+            if (context) {
+                for (var c = 0; c < candidates.length; c++) {
+                    var cpx = _cache[candidates[c].key];
+                    candidates[c].contextScore = cpx ? scoreContext(cpx, context) : 0;
+                    candidates[c].finalScore = candidates[c].baseScore + candidates[c].contextScore;
+                }
+                candidates.sort(function(a,b) { return b.finalScore - a.finalScore; });
+            }
+        }
+
+        if (candidates.length === 0) return null;
+
+        var best = candidates[0];
+        var bestFinal = (best.finalScore != null) ? best.finalScore : best.baseScore;
+        var secondFinal = candidates.length > 1 ? ((candidates[1].finalScore != null) ? candidates[1].finalScore : candidates[1].baseScore) : 0;
+        var conf = Math.min(100, bestFinal);
+        // autoSelect: 考虑上下文加分后的真实分差 (≥15分差距才自动选择)
+        var auto = bestFinal >= 90 && (candidates.length === 1 || bestFinal - secondFinal >= 15);
+
+        return {
+            key: best.key,
+            confidence: conf,
+            candidates: candidates.slice(0, 15),
+            matchType: best.matchType,
+            autoSelect: auto
+        };
+    }
+
+    // ========== 便捷API ==========
+    function getPlayer(key) { buildIndex(); return _cache[key] || (typeof playerDB !== 'undefined' ? playerDB[key] : null) || null; }
+    function quickMatch(query) { var r = match(query, null); return r ? r.key : null; }
+    function getIndexes() {
+        buildIndex();
+        var flat = {};
+        function flatten(idx) {
+            for (var k in idx) {
+                var v = idx[k];
+                if (Array.isArray(v)) { for (var i = 0; i < v.length; i++) { flat[k + '_' + i] = v[i]; } }
+                else flat[k] = v;
+            }
+        }
+        flatten(_exactIndex); flatten(_normIndex); flatten(_cnIndex); flatten(_nkIndex);
+        return flat;
+    }
+
+    return {
+        match: match, quickMatch: quickMatch, getPlayer: getPlayer,
+        buildIndex: buildIndex, getIndexes: getIndexes,
+        normDob: normDob, normName: normName
+    };
+})();
+// ===== 统一球员匹配引擎结束 =====
 
 // 自动初始化聚合索引
 // 立即设置 dataReady 标记 (防止 DOMContentLoaded 已触发导致页面卡死)
@@ -1870,81 +2274,58 @@ window.showUnifiedPlayerDetail = function(playerKeyOrName) {
     var key = playerKeyOrName;
     var pd = null;
 
-    // 尝试从 playerDB 查找
-    if (typeof playerDB !== 'undefined') {
-        // 1. 精确匹配
+    // ===== V2.0: 优先使用统一匹配引擎 =====
+    if (typeof window.__playerMatcher !== 'undefined') {
+        // 尝试从 playerDB 精确获值
+        if (typeof playerDB !== 'undefined' && playerDB[key]) {
+            pd = playerDB[key];
+        } else {
+            // 解析格式化名称 "中文(English)" → 提取英文名
+            var _query = key;
+            var _enParen = (typeof key === 'string') ? key.match(/\(([^)]+)\)/) : null;
+            if (_enParen) _query = _enParen[1].trim();
+            // 用统一引擎匹配
+            var _mResult = window.__playerMatcher.match(_query, null);
+            if (_mResult) {
+                key = _mResult.key;
+                pd = window.__playerMatcher.getPlayer(key) || (typeof playerDB !== 'undefined' ? playerDB[key] : null);
+            }
+        }
+    }
+
+    // 回退: 兼容无 __playerMatcher 的旧逻辑
+    if (!pd && typeof playerDB !== 'undefined') {
         if (playerDB[key]) {
             pd = playerDB[key];
-        // 2. 重音不敏感匹配 (Vinícius Júnior → Vinicius Junior)
         } else if (typeof key === 'string') {
             var normKey = key.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
             for (var k in playerDB) {
                 if (!playerDB.hasOwnProperty(k)) continue;
                 if (k.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') === normKey) {
-                    key = k;
-                    pd = playerDB[k];
-                    break;
+                    key = k; pd = playerDB[k]; break;
                 }
             }
         }
-        // 3. getPlayerKey 辅助
         if (!pd && typeof getPlayerKey === 'function') {
             var resolved = getPlayerKey(key);
-            if (resolved && playerDB[resolved]) {
-                key = resolved;
-                pd = playerDB[resolved];
+            if (resolved && playerDB[resolved]) { key = resolved; pd = playerDB[resolved]; }
+        }
+        if (!pd && typeof key === 'string') {
+            var enInParenFb = key.match(/\(([^)]+)\)/);
+            if (enInParenFb) {
+                var enPartFb = enInParenFb[1].trim();
+                var cnPartFb = key.substring(0, key.indexOf('(')).trim();
+                if (playerDB[enPartFb]) { key = enPartFb; pd = playerDB[enPartFb]; }
             }
         }
-        // 增强模糊匹配: 处理来自 squad 的格式化名称 "中文(English)"
-        if (!pd && typeof key === 'string') {
-            var searchKey = key;
-            // 提取括号内的英文名作为主要搜索键
-            var enInParen = key.match(/\(([^)]+)\)/);
-            var cnPart = '';
-            var enPart = '';
-            if (enInParen) {
-                enPart = enInParen[1].trim();
-                cnPart = key.substring(0, key.indexOf('(')).trim();
-                // 优先用英文名查
-                if (playerDB[enPart]) { key = enPart; pd = playerDB[enPart]; }
-            }
-            if (!pd) {
-                // 尝试通过搜索引擎查找 (O(1) 优先索引 + O(n) 兜底归一化匹配)
-                var normQ = normalizeName(enPart || key);
-                // 先尝试 _playerDBLCIndex 和 _searchEngine 的预构建索引
-                var foundViaIndex = false;
-                if (typeof _playerDBLCIndex !== 'undefined' && _playerDBLCIndex) {
-                    var lcKey = (enPart || key).toLowerCase();
-                    if (_playerDBLCIndex[lcKey]) {
-                        key = _playerDBLCIndex[lcKey]; pd = playerDB[key]; foundViaIndex = true;
-                    }
-                }
-                if (!foundViaIndex && typeof _searchEngine !== 'undefined' && _searchEngine.search) {
-                    var sr = _searchEngine.search(enPart || key);
-                    if (sr && !sr._multiple) { pd = sr; foundViaIndex = true; }
-                }
-                if (!foundViaIndex) {
-                    // 兜底：O(n) 遍历（仅在索引查找失败时）
-                    for (var k in playerDB) {
-                        if (!playerDB.hasOwnProperty(k)) continue;
-                        var p = playerDB[k];
-                        var pEn = p.en || '';
-                        if (!pEn && p.n && !/[\u4e00-\u9fff]/.test(p.n)) pEn = p.n;
-                        if (!pEn && p.nn && !/[\u4e00-\u9fff]/.test(p.nn)) pEn = p.nn;
-                        var pNorm = normalizeName(pEn);
-                        if (normQ && pNorm === normQ) {
-                            key = k; pd = p; break;
-                        }
-                        // 也检查 n/nn/cn 是否匹配中文部分
-                        if (cnPart && (p.n === cnPart || p.cn === cnPart || p.nn === cnPart)) {
-                            key = k; pd = p; break;
-                        }
-                    }
-                }
-            }
-            // 最后尝试: 遍历所有 squadDB 构建临时球员数据
-            if (!pd && typeof squadDB !== 'undefined') {
-                for (var teamCode in squadDB) {
+    }
+    // squadDB 兜底 (回退路径保留)
+    if (!pd && typeof squadDB !== 'undefined') {
+        var _fbKey = key;
+        var _fbEnParen = (typeof _fbKey === 'string') ? _fbKey.match(/\(([^)]+)\)/) : null;
+        var _fbEn = _fbEnParen ? _fbEnParen[1].trim() : _fbKey;
+        var _fbCn = _fbEnParen ? _fbKey.substring(0, _fbKey.indexOf('(')).trim() : '';
+        for (var teamCode in squadDB) {
                     if (!squadDB.hasOwnProperty(teamCode)) continue;
                     var squad = squadDB[teamCode];
                     var categories = ['gk','df','mf','fw'];
@@ -1955,14 +2336,13 @@ window.showUnifiedPlayerDetail = function(playerKeyOrName) {
                             var sp = players[pi];
                             if (!sp.n) continue;
                             // 匹配原始名或格式化后含此名 (统一使用去重音归一化)
-                            var spNorm = sp.n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ');
-                            var matchNorm = (enPart || key || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ');
-                            if (sp.n === enPart || sp.n === key || sp.n === cnPart || spNorm === matchNorm) {
-                                // 构建临时 pd 用于展示
-                                pd = {
-                                    n: sp.n,
-                                    en: sp.n,
-                                    cn: cnPart || '',
+                        var spNorm = sp.n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ');
+                    var matchNorm = (_fbEn || _fbKey || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ');
+                    if (sp.n === _fbEn || sp.n === _fbKey || sp.n === _fbCn || spNorm === matchNorm) {
+                        pd = {
+                            n: sp.n,
+                            en: sp.n,
+                            cn: _fbCn || '',
                                     nat: (typeof teamMap !== 'undefined' && teamMap[teamCode]) ? teamMap[teamCode].en : teamCode,
                                     ht: (sp.h && sp.h > 0) ? sp.h + 'cm' : '',
                                     wt: '',
@@ -1981,8 +2361,6 @@ window.showUnifiedPlayerDetail = function(playerKeyOrName) {
                     if (foundInSquad) break;
                 }
             }
-        }
-    }
 
     // 移除旧弹窗（再次确认）
     var existing2 = document.querySelector('.player-detail-overlay');
@@ -2041,19 +2419,30 @@ if (typeof window !== 'undefined') {
     window.nationToCN = nationToCN;
     window.formatValueWan = formatValueWanV3;
     
-    // 构建并导出搜索索引供快速查找
+    // 构建并导出搜索索引供快速查找 (V2.0: 同时构建新旧两套索引)
     window.buildSearchIndex = function() {
         _searchEngine.buildIndex();
-        // 将内部索引导出为全局变量
         window.__playerSearchIndex = _searchEngine.getIndexes ? _searchEngine.getIndexes() : {};
-        console.log('[engine.js] 搜索索引已构建并导出');
+        // V2.0: 同时构建统一匹配引擎索引
+        if (typeof window.__playerMatcher !== 'undefined') {
+            window.__playerMatcher.buildIndex();
+        }
+        console.log('[engine.js] 搜索索引已构建并导出 (V2.0 双引擎)');
     };
-    
-    // 自动构建搜索索引
+
+    // 自动构建搜索索引 (V2.0: 优先构建新引擎)
     if (typeof playerDB !== 'undefined') {
         try {
+            // V2.0: 构建统一匹配引擎
+            if (typeof window.__playerMatcher !== 'undefined') {
+                window.__playerMatcher.buildIndex();
+                window.__playerSearchIndex = window.__playerMatcher.getIndexes();
+            }
+            // 兼容旧引擎
             _searchEngine.buildIndex();
-            window.__playerSearchIndex = _searchEngine.getIndexes ? _searchEngine.getIndexes() : {};
+            if (!window.__playerSearchIndex || Object.keys(window.__playerSearchIndex).length === 0) {
+                window.__playerSearchIndex = _searchEngine.getIndexes ? _searchEngine.getIndexes() : {};
+            }
         } catch(e) {
             console.warn('[engine.js] 搜索索引自动构建失败:', e.message);
         }

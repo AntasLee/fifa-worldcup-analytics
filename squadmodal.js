@@ -711,6 +711,25 @@ window.showSquadModal = function(code, btnEl, clickTime) {
       }
     }
     
+    // ★ V2.0 策略1.5: 统一匹配引擎 + 上下文消歧 (DOB/国籍/位置 加权评分)
+    if (origName && typeof window.__playerMatcher !== 'undefined') {
+      var _ctx = {};
+      if (squadDob) _ctx.dob = squadDob;
+      if (teamNat) _ctx.nationality = teamNat;
+      if (data.p) _ctx.position = data.p;
+      var _mr = window.__playerMatcher.match(origName, _ctx);
+      if (_mr && _mr.autoSelect && _mr.confidence >= 85) {
+        if (typeof showUnifiedPlayerDetail === 'function') {
+          if (data.v && data.v !== '?' && data.v !== '—') {
+            window._squadValueMap = window._squadValueMap || {};
+            window._squadValueMap[_mr.key] = data.v;
+          }
+          showUnifiedPlayerDetail(_mr.key);
+          return;
+        }
+      }
+    }
+
     // 策略2: 出生日期匹配（最可靠）
     // ★ V1.74: 添加名称重叠验证，防止DOB碰撞导致错误匹配（如Vinícius Júnior→Ronaldo, 同DOB同国籍）
     if (squadDob && typeof playerDB !== 'undefined') {

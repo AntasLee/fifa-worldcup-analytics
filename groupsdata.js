@@ -270,221 +270,42 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){try{var pd=
 
 
 
-// ===== 球员搜索索引 (一次性构建，O(1)查找) =====
+// ===== V2.0: 球员搜索索引由 engine.js __playerMatcher 统一构建 =====
+// __playerSearchIndex 会在 engine.js 加载后由 __playerMatcher.getIndexes() 覆盖
+// supplementalPlayers 合并也由 __playerMatcher.buildIndex() 接管
 var __playerSearchIndex = {};
-(function buildPlayerSearchIndex() {
-    if (typeof playerDB === 'undefined') { console.warn('playerDB not loaded, skipping index build'); return; }
-    var count = 0;
-    // 合并补充球员数据
-    if (typeof supplementalPlayers !== 'undefined') {
-        for (var sk in supplementalPlayers) {
-            if (!playerDB[sk]) { playerDB[sk] = supplementalPlayers[sk]; }
-        }
-    }
-    for (var key in playerDB) {
-        var pd = playerDB[key];
-        // 索引所有可搜索字段
-        var terms = [];
-        if (pd.n) terms.push(pd.n.toLowerCase().trim());
-        if (pd.nn && pd.nn !== pd.n) terms.push(pd.nn.toLowerCase().trim());
-        if (pd.nk) terms.push(pd.nk.toLowerCase().trim());
-        if (pd.slug) terms.push(pd.slug.toLowerCase().trim());
-        // Key 本身也索引
-        terms.push(key.toLowerCase().trim());
-        
-        for (var i = 0; i < terms.length; i++) {
-            var t = terms[i];
-            if (t && !__playerSearchIndex[t]) {
-                __playerSearchIndex[t] = key;
-                count++;
-            }
-        }
-        // 额外：索引归一化版本（特殊字符→ASCII，支持 Od-eg-rd 匹配 Ødegaard 等）
-        for (var i = 0; i < terms.length; i++) {
-            var t = terms[i];
-            var norm = t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a').replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th').replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
-            if (norm !== t && norm && !__playerSearchIndex[norm]) {
-                __playerSearchIndex[norm] = key;
-                count++;
-            }
-        }
-        // 索引中文名（通过翻译引擎生成）
-        var cnName = (typeof translate !== 'undefined' && translate.player) ? translate.player(pd) : '';
-        if (cnName && cnName !== pd.n && cnName !== pd.nn && !__playerSearchIndex[cnName]) {
-            __playerSearchIndex[cnName] = key;
-            __playerSearchIndex[cnName.toLowerCase()] = key;
-            count++;
-        }
-        // 额外：索引按空格拆分的词（支持 "Cristiano Ronaldo" → "cristiano", "ronaldo" 部分匹配）
-        var allText = ((pd.n||'') + ' ' + (pd.nn||'') + ' ' + key).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-        var words = allText.split(/[\s,·\.\-]+/);
-        var skipWords = { 'undefined':1, 'null':1, 'nan':1, '':1 };
-        for (var w = 0; w < words.length; w++) {
-            var word = words[w];
-            if (word && word.length >= 2 && !skipWords[word] && !__playerSearchIndex[word]) {
-                __playerSearchIndex[word] = key;
-                count++;
-            }
-        }
-    }
-    console.log('🔍 球员搜索索引已构建: ' + count + ' 条, 覆盖 ' + Object.keys(playerDB).length + ' 名球员');
-})();
 
-// ===== Helper: 从显示名获取 playerDB key (O(1)) =====
+// ===== Helper: 从显示名获取 playerDB key =====
+// V2.0: 委托统一匹配引擎 __playerMatcher，旧逻辑已清理
 function getPlayerKey(displayName) {
     if (!displayName || typeof playerDB === 'undefined') return null;
-    
-    // 1. 直接 key 匹配
+
+    // 1. 直接 key 匹配 (最快)
     if (playerDB[displayName]) return displayName;
-    
-    // 2. 小写索引查找
+
+    // 2. V2.0: 委托统一匹配引擎 (含精确/归一化/Jaro-Winkler/trigram 全层)
+    if (typeof window.__playerMatcher !== 'undefined') {
+        var _m = window.__playerMatcher.match(displayName, null);
+        if (_m && _m.autoSelect) return _m.key;
+        // 高置信度 (>85) 的单候选也信任
+        if (_m && _m.candidates.length === 1 && _m.confidence >= 85) return _m.key;
+    }
+
+    // 3. 回退: 旧 __playerSearchIndex (由 engine.js __playerMatcher.getIndexes() 填充)
+    //    仅做 O(1) 精确查找，不做模糊遍历（模糊能力已由 __playerMatcher 完全接管）
     var lower = displayName.toLowerCase().trim();
-    if (__playerSearchIndex[lower]) return __playerSearchIndex[lower];
-    // 去重音规范化 (支持 Olić→Olic, Higuaín→Higuain)
-    var lowerNoAccent = lower.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a').replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th').replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
-    if (lowerNoAccent !== lower && __playerSearchIndex[lowerNoAccent]) return __playerSearchIndex[lowerNoAccent];
-    
-    // ★ V1.74 修复: 去除常见姓名后缀 (对所有输入格式生效，不仅限于括号格式)
-    // 处理 "NEYMAR JR" → "NEYMAR", "VINICIUS JUNIOR" → "VINICIUS" 等
-    var suffixStripped = displayName.replace(/\s+(Jr|Sr|II|III|IV|Júnior|Júnior|Junior|Senior)\.?$/i, '').trim();
-    if (suffixStripped !== displayName) {
-        if (playerDB[suffixStripped]) return suffixStripped;
-        var sfxLower = suffixStripped.toLowerCase();
-        if (__playerSearchIndex[sfxLower]) return __playerSearchIndex[sfxLower];
-        var sfxNoAccent = sfxLower.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a').replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th').replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
-        if (sfxNoAccent !== sfxLower && __playerSearchIndex[sfxNoAccent]) return __playerSearchIndex[sfxNoAccent];
+    if (typeof __playerSearchIndex !== 'undefined') {
+        if (__playerSearchIndex[lower]) return __playerSearchIndex[lower];
+        // 去重音
+        var lowerNoAccent = lower.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a')
+            .replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th')
+            .replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
+        if (lowerNoAccent !== lower && __playerSearchIndex[lowerNoAccent])
+            return __playerSearchIndex[lowerNoAccent];
     }
-    
-    // ★ V1.74 修复: 名姓顺序交换 (对所有输入格式生效)
-    // 处理 "Hwang In-beom" ↔ "In-beom Hwang" 等
-    var wordsForSwap = displayName.split(' ');
-    if (wordsForSwap.length >= 2) {
-        var swappedName = wordsForSwap.slice(1).concat(wordsForSwap[0]).join(' ');
-        if (swappedName !== displayName) {
-            if (playerDB[swappedName]) return swappedName;
-            var swLower = swappedName.toLowerCase();
-            if (__playerSearchIndex[swLower]) return __playerSearchIndex[swLower];
-            var swNoAccent = swLower.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a').replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th').replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
-            if (swNoAccent !== swLower && __playerSearchIndex[swNoAccent]) return __playerSearchIndex[swNoAccent];
-        }
-    }
-    
-    // 3. 处理 "中文名 (English Name)" 格式
-    var parenIdx = displayName.indexOf(' (');
-    if (parenIdx >= 0) {
-        var cnPart = displayName.substring(0, parenIdx).trim();
-        var enPart = displayName.substring(parenIdx + 2).replace(')', '').trim();
-        
-        // 尝试中文部分
-        if (playerDB[cnPart]) return cnPart;
-        if (__playerSearchIndex[cnPart.toLowerCase()]) return __playerSearchIndex[cnPart.toLowerCase()];
-        
-        // 尝试英文部分 (优先精确匹配)
-        if (playerDB[enPart]) return enPart;
-        if (__playerSearchIndex[enPart.toLowerCase()]) return __playerSearchIndex[enPart.toLowerCase()];
-        
-        // 英文部分去重音后再试
-        var enNoAccent = enPart.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a').replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th').replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
-        if (enNoAccent !== enPart.toLowerCase() && __playerSearchIndex[enNoAccent]) return __playerSearchIndex[enNoAccent];
-        
-        // ★ V1.74 修复: 去除常见姓名后缀 (Jr, Sr, II, III, Júnior 等)
-        var enPartStripped = enPart.replace(/\s+(Jr|Sr|II|III|IV|Júnior|Júnior|Junior|Senior)\.?$/i, '').trim();
-        if (enPartStripped !== enPart) {
-            if (playerDB[enPartStripped]) return enPartStripped;
-            var enStrippedLower = enPartStripped.toLowerCase();
-            if (__playerSearchIndex[enStrippedLower]) return __playerSearchIndex[enStrippedLower];
-            var enStrippedNoAccent = enStrippedLower.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a').replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th').replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
-            if (enStrippedNoAccent !== enStrippedLower && __playerSearchIndex[enStrippedNoAccent]) return __playerSearchIndex[enStrippedNoAccent];
-        }
-        
-        // ★ V1.74 修复: 尝试交换名姓顺序 ("Hwang In-beom" ↔ "In-beom Hwang")
-        var enWords = enPart.split(' ');
-        if (enWords.length >= 2) {
-            // 尝试交换顺序: 首词移到最后
-            var swapped = enWords.slice(1).concat(enWords[0]).join(' ');
-            if (swapped !== enPart) {
-                if (playerDB[swapped]) return swapped;
-                var swappedLower = swapped.toLowerCase();
-                if (__playerSearchIndex[swappedLower]) return __playerSearchIndex[swappedLower];
-                var swappedNoAccent = swappedLower.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a').replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th').replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
-                if (swappedNoAccent !== swappedLower && __playerSearchIndex[swappedNoAccent]) return __playerSearchIndex[swappedNoAccent];
-            }
-            
-            var lastName = enWords[enWords.length - 1];
-            if (__playerSearchIndex[lastName.toLowerCase()]) return __playerSearchIndex[lastName.toLowerCase()];
-            // 去重音后的姓
-            var lnNoAccent = lastName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a').replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th').replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
-            if (lnNoAccent !== lastName.toLowerCase() && __playerSearchIndex[lnNoAccent]) return __playerSearchIndex[lnNoAccent];
-            
-            // ★ V1.74 修复: 连字符名处理 — 尝试去连字符版本 ("In-beom" → "Inbeom")
-            if (lastName.indexOf('-') >= 0) {
-                var lastNameNoHyphen = lastName.replace(/-/g, '');
-                var lnNoHyphenLower = lastNameNoHyphen.toLowerCase();
-                if (__playerSearchIndex[lnNoHyphenLower]) return __playerSearchIndex[lnNoHyphenLower];
-                var lnNoHyphenNoAccent = lnNoHyphenLower.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[åÅ]/g,'a').replace(/[łŁ]/g,'l').replace(/[đĐð]/g,'d').replace(/[þÞ]/g,'th').replace(/[ß]/g,'ss').replace(/[ıİ]/g,'i');
-                if (lnNoHyphenNoAccent !== lnNoHyphenLower && __playerSearchIndex[lnNoHyphenNoAccent]) return __playerSearchIndex[lnNoHyphenNoAccent];
-            }
-        }
-    }
-    
-    // 3.5 缩写名处理：M. Klose → 提取 Klose 并按姓搜索
-    var abbrMatch = displayName.match(/^[A-Z]\.\s*(.+)$/);
-    if (abbrMatch) {
-        var lastName = abbrMatch[1];
-        var lnLower = lastName.toLowerCase().trim();
-        // 按姓精确匹配索引
-        if (__playerSearchIndex[lnLower]) return __playerSearchIndex[lnLower];
-        // 按姓后缀匹配索引
-        for (var idxKey in __playerSearchIndex) {
-            if (idxKey.endsWith(lnLower) && idxKey.length > lnLower.length) {
-                return __playerSearchIndex[idxKey];
-            }
-        }
-        // 按姓遍历 playerDB
-        for (var key in playerDB) {
-            var pd = playerDB[key];
-            if (pd.n) {
-                var nLower = pd.n.toLowerCase();
-                var nParts = nLower.split(' ');
-                if (nParts[nParts.length - 1] === lnLower) return key;
-            }
-        }
-    }
-    
-    // 4. 模糊匹配：遍历索引查找包含查询的条目
-    var matches = [];
-    for (var idxKey in __playerSearchIndex) {
-        if (idxKey.indexOf(lower) >= 0 && matches.indexOf(__playerSearchIndex[idxKey]) < 0) {
-            matches.push(__playerSearchIndex[idxKey]);
-        }
-    }
-    if (matches.length === 1) { var _sk=matches[0]; var _sp=playerDB[_sk]; if(_sp){ var _sf=[(_sp.n||""),(_sp.nn||""),(_sp.cn||""),(_sp.en||""),_sk]; var _ff=false; for(var _si=0;_si<_sf.length;_si++){ if(_sf[_si].toLowerCase().indexOf(lower)>=0){ _ff=true; break; } } if(_ff) return _sk; } }
-    
-    // 5. 最终回退：遍历 playerDB (慢但保证能找到)
-    // V1.74 添加最低相关性要求，避免短查询误匹配（如"希门尼斯"误匹配到"Emam Ashour"）
-    if (lower.length >= 3) {
-        for (var key in playerDB) {
-            var pd = playerDB[key];
-            // 精确子串匹配
-            if (pd.n && pd.n.toLowerCase().indexOf(lower) >= 0) {
-                // 额外验证：查询长度≥4 或 匹配在单词边界上
-                if (lower.length >= 4) return key;
-                var nLower = pd.n.toLowerCase();
-                var idx = nLower.indexOf(lower);
-                var atWordStart = (idx === 0 || nLower.charAt(idx-1) === ' ');
-                if (atWordStart) return key;
-            }
-            if (pd.nn && pd.nn.toLowerCase().indexOf(lower) >= 0) {
-                if (lower.length >= 4) return key;
-                var nnLower = pd.nn.toLowerCase();
-                var idx2 = nnLower.indexOf(lower);
-                var atWordStart2 = (idx2 === 0 || nnLower.charAt(idx2-1) === ' ');
-                if (atWordStart2) return key;
-            }
-        }
-    }
-    
-    return null; // 模糊匹配不自动返回，交由上层searchPlayer展示下拉列表
+
+    return null; // 未命中，由上层 searchPlayer 展示候选列表
 }
 
 // ===== 渲染球员详情 Modal =====
@@ -1151,18 +972,25 @@ window.searchPlayer = function() {
     var ql = query.toLowerCase();
     var matches = [];
     var seen = {};
-    
-    // 1. 尝试使用引擎搜索
-    if (typeof window._playerSearchEngine !== 'undefined' && window._playerSearchEngine.search) {
-        var engineResult = window._playerSearchEngine.search(query);
-        if (engineResult && engineResult.id) {
-            showPlayerDetail(engineResult.id);
-            if (dropdown) dropdown.style.display = 'none';
-            return;
+
+    // ★ V2.0: 使用统一匹配引擎获取候选列表 (含Jaro-Winkler + trigram)
+    if (typeof window.__playerMatcher !== 'undefined') {
+        var _mr = window.__playerMatcher.match(query, null);
+        if (_mr) {
+            if (_mr.autoSelect && _mr.candidates.length === 1) {
+                showPlayerDetail(_mr.key);
+                if (dropdown) dropdown.style.display = 'none';
+                return;
+            }
+            // 使用候选列表
+            for (var _ci = 0; _ci < _mr.candidates.length; _ci++) {
+                var _ck = _mr.candidates[_ci].key;
+                if (!seen[_ck]) { matches.push(_ck); seen[_ck] = true; }
+            }
         }
     }
-    
-    // 2. 索引模糊搜索 (__playerSearchIndex 已在 engine.js 中构建)
+
+    // 1. 索引模糊搜索 (__playerSearchIndex — 由 engine.js __playerMatcher.getIndexes() 构建)
     if (typeof __playerSearchIndex !== 'undefined') {
         for (var idxKey in __playerSearchIndex) {
             if (idxKey.indexOf(ql) >= 0) {

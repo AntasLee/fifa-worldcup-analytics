@@ -517,6 +517,45 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|I|NOR|SEN": {
+    score: { sh: 3, sa: 2 },
+    date: "2026-06-23",
+    time: "00:00",
+    venue: "MetLife体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 43,    side: "home", scorer: "马库斯·彼得森", type: "shot" },
+      { min: 48,    side: "home", scorer: "哈兰德", type: "shot", assist: "厄德高" },
+      { min: 53,    side: "away", scorer: "伊斯梅拉·萨尔", type: "shot", assist: "萨迪奥·马内" },
+      { min: 58,    side: "home", scorer: "哈兰德", type: "shot", assist: "帕特里克·贝格" },
+      { min: "90+3",side: "away", scorer: "伊斯梅拉·萨尔", type: "shot", assist: "尼古拉斯·杰克逊" }
+    ],
+    stats: {
+      possession:      { h: 42, a: 58 },
+      shots:           { h: 10, a: 11 },
+      shotsOnTarget:   { h: 7,  a: 4 },
+      corners:         { h: 5,  a: 4 },
+      fouls:           { h: 13, a: 5 },
+      yellowCards:     { h: 0,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      offsides:        { h: 0,  a: 4 },
+      attacks:         { h: 87, a: 100 },
+      dangerousAttacks:{ h: 32, a: 60 }
+    },
+    attendance: null,
+    referee: "Wilton Sampaio (BRA)",
+    xg: null,
+    mediaRating: {
+      motm: "哈兰德",
+      sources: ["Al Jazeera", "FotMob", "bulinews", "FIFA"],
+      home: {score: 8, quotes: "哈兰德连续两场梅开二度，52场国家队狂轰59球，挪威自1998年来首进世界杯淘汰赛。厄德高精妙直塞助攻展现双核威力，替补彼得森世界杯首秀即破门。下半场一度掌控局面，但最后时刻防守松懈险些葬送胜局。"},
+      away: {score: 5, quotes: "萨尔梅开二度成为首位在两届世界杯进球的塞内加尔球员，但防线失误代价惨重。门将门迪让彼得森的射门从身下漏过，此后因伤退场；队长库利巴利解围失误直接导致首粒失球。两连败后出线仅存理论可能，末轮必须击败伊拉克。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   "2026|J|ARG|ALG": {
     score: { sh: 3, sa: 0 },
     date: "2026-06-17",
