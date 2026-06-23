@@ -1514,6 +1514,17 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     attendance: null,
     referee: "TBD"
   },
+
+  "2026|I|FRA|IRQ": {
+    score: { sh: 3, sa: 0 },
+    goals: [
+      { min: 15, side: "home", scorer: "姆巴佩 (Kylian Mbappé)",    type: "shot", assist: "奥利赛 (Michael Olise)" },
+      { min: 55, side: "home", scorer: "姆巴佩 (Kylian Mbappé)",    type: "shot", assist: "登贝莱 (Ousmane Dembélé)" },
+      { min: 66, side: "home", scorer: "登贝莱 (Ousmane Dembélé)",  type: "shot", assist: "奥利赛 (Michael Olise)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
   "2026|J|ARG|ALG": { // V1.78: gkSaves已确认 (Opta: Algeria 0 SOT)
     score: { sh: 3, sa: 0 },
     gkSaves: { home: { name: "Emiliano Martínez", nameZh: "埃米利亚诺·马丁内斯", saves: 0 }, away: { name: "Luca Zidane", nameZh: "卢卡·齐达内", saves: 3 } },
@@ -1543,6 +1554,16 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     },
     attendance: null,
     referee: "TBD"
+  },
+
+  "2026|J|ARG|AUT": {
+    score: { sh: 2, sa: 0 },
+    goals: [
+      { min: 38,    side: "home", scorer: "梅西 (Lionel Messi)",     type: "shot", assist: "梅迪纳 (Facundo Medina)" },
+      { min: "90+5",side: "home", scorer: "梅西 (Lionel Messi)",     type: "shot" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: null, referee: "TBD"
   },
 
   "2026|K|POR|COD": {
@@ -1645,8 +1666,10 @@ matchStats["2026|G|IRN|NZL"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:12,sh2:1
 matchStats["2026|G|NZL|EGY"] = {p1:"44%",p2:"56%",ps1:null,ps2:null,sh1:8,sh2:13,so1:5,so2:7,sb1:3,sb2:6,co1:4,co2:3,fo1:14,fo2:8,os1:3,os2:0,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:118,da1:43,da2:51,pk1:0,pk2:0};
 matchStats["2026|I|FRA|SEN"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:5,so1:8,so2:2,sb1:1,sb2:3,co1:6,co2:4,fo1:5,fo2:9,os1:1,os2:3,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:113,at2:99,da1:32,da2:27,pk1:0,pk2:0};
 matchStats["2026|I|IRQ|NOR"] = {p1:"39%",p2:"61%",ps1:null,ps2:null,sh1:9,sh2:10,so1:1,so2:5,sb1:8,sb2:5,co1:2,co2:5,fo1:12,fo2:13,os1:1,os2:0,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:79,at2:89,da1:27,da2:39,pk1:0,pk2:0};
+matchStats["2026|I|FRA|IRQ"] = {p1:"56%",p2:"44%",ps1:null,ps2:null,sh1:15,sh2:3,so1:5,so2:0,sb1:10,sb2:3,co1:4,co2:2,fo1:8,fo2:4,os1:1,os2:0,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:123,at2:94,da1:99,da2:29,pk1:0,pk2:0};
 matchStats["2026|J|ARG|ALG"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:10,sh2:4,so1:6,so2:0,sb1:4,sb2:4,co1:2,co2:2,fo1:13,fo2:8,os1:3,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:85,at2:119,da1:24,da2:45,pk1:0,pk2:0};
 matchStats["2026|J|AUT|JOR"] = {p1:"63%",p2:"37%",ps1:null,ps2:null,sh1:10,sh2:9,so1:4,so2:4,sb1:6,sb2:5,co1:4,co2:3,fo1:12,fo2:7,os1:3,os2:1,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:132,at2:86,da1:55,da2:45,pk1:1,pk2:0};
+matchStats["2026|J|ARG|AUT"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:5,so1:5,so2:1,sb1:4,sb2:4,co1:1,co2:3,fo1:13,fo2:13,os1:2,os2:0,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:82,at2:114,da1:33,da2:59,pk1:1,pk2:0};
 matchStats["2026|K|POR|COD"] = {p1:"75%",p2:"25%",ps1:null,ps2:null,sh1:5,sh2:5,so1:1,so2:2,sb1:4,sb2:3,co1:5,co2:4,fo1:9,fo2:10,os1:3,os2:2,yc1:3,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:135,at2:56,da1:75,da2:28,pk1:0,pk2:0};
 matchStats["2026|K|UZB|COL"] = {p1:"40%",p2:"60%",ps1:null,ps2:null,sh1:6,sh2:11,so1:2,so2:4,sb1:4,sb2:7,co1:3,co2:4,fo1:14,fo2:11,os1:0,os2:3,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:67,at2:98,da1:28,da2:41,pk1:0,pk2:0};
 matchStats["2026|L|ENG|CRO"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:17,sh2:8,so1:11,so2:5,sb1:6,sb2:3,co1:8,co2:2,fo1:10,fo2:12,os1:0,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:87,at2:81,da1:33,da2:38,pk1:1,pk2:0};

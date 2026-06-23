@@ -481,6 +481,42 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|I|FRA|IRQ": {
+    score: { sh: 3, sa: 0 },
+    date: "2026-06-23",
+    time: "05:00",
+    venue: "林肯金融球场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 15, side: "home", scorer: "姆巴佩", type: "shot", assist: "奥利赛" },
+      { min: 55, side: "home", scorer: "姆巴佩", type: "shot", assist: "登贝莱" },
+      { min: 66, side: "home", scorer: "登贝莱", type: "shot", assist: "奥利赛" }
+    ],
+    stats: {
+      possession:      { h: 56, a: 44 },
+      shots:           { h: 15, a: 3 },
+      shotsOnTarget:   { h: 5,  a: 0 },
+      corners:         { h: 4,  a: 2 },
+      fouls:           { h: 8,  a: 4 },
+      yellowCards:     { h: 0,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 123,a: 94 },
+      dangerousAttacks:{ h: 99, a: 29 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "基利安·姆巴佩",
+      sources: ["FIFA", "ESPN", "L'Équipe"],
+      home: {score: 9, quotes: "法国以一场3-0完胜提前锁定出线。姆巴佩梅开二度展现超级巨星风采，奥利赛两记精妙助攻串联全场，登贝莱锦上添花。伊拉克全场零射正毫无还手之力。"},
+      away: {score: 2, quotes: "伊拉克面对卫冕亚军的凌厉攻势完全无法抵挡。全场零射正、仅29%控球，实力差距一览无余。两连败后出线仅存理论可能。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   "2026|J|ARG|ALG": {
     score: { sh: 3, sa: 0 },
     date: "2026-06-17",
@@ -549,6 +585,41 @@ const wc2026AllMatches = {
       sources: ["ESPN", "The Guardian", "NYT"],
       home: {score: 7, quotes: "奥地利时隔36年再获世界杯胜利。施密德的世界波为比赛定调，替补上场的阿瑙托维奇点球锁定比分。整体表现稳健但仍有提升空间。"},
       away: {score: 5, quotes: "世界杯新军约旦展现了令人尊敬的斗志。奥尔万的反击进球一度将比分扳平，全场11次射门4次射正证明了他们的竞争力。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|J|ARG|AUT": {
+    score: { sh: 2, sa: 0 },
+    date: "2026-06-23",
+    time: "01:00",
+    venue: "AT&T体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 38,    side: "home", scorer: "梅西",   type: "shot",   assist: "梅迪纳" },
+      { min: "90+5",side: "home", scorer: "梅西",   type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 54, a: 46 },
+      shots:           { h: 9,  a: 5 },
+      shotsOnTarget:   { h: 5,  a: 1 },
+      corners:         { h: 1,  a: 3 },
+      fouls:           { h: 13, a: 13 },
+      yellowCards:     { h: 2,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 82, a: 114 },
+      dangerousAttacks:{ h: 33, a: 59 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "利昂内尔·梅西",
+      sources: ["FIFA", "The Guardian", "ESPN"],
+      home: {score: 9, quotes: "梅西以第17和第18粒世界杯进球超越克洛泽成为男足世界杯历史射手王。虽射失一粒点球，但梅开二度率阿根廷提前晋级淘汰赛，卫冕冠军霸气尽显。"},
+      away: {score: 5, quotes: "奥地利顽强抵抗了38分钟，但面对梅西的魔力无力回天。全场仅1次射正，朗尼克的弟子们虽展现战术纪律但缺乏致命一击。末轮对阵约旦将是出线关键战。"}
     },
     aiPreMatch: null,
     aiPostReview: null
