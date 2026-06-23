@@ -1,4 +1,4 @@
-// perfboard_engine.js — 表现榜引擎 | V1.78
+// perfboard_engine.js — 表现榜引擎 | V1.79
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 //
@@ -424,6 +424,6 @@ window.PerfBoard = {
   }
 };
 
-console.log('✅ perfboard_engine.js 加载完成 — 表现榜引擎 V1.78 (逐场落差算法)');
+console.log('✅ perfboard_engine.js 加载完成 — 表现榜引擎 V1.79 (逐场落差算法)');
 
 })();

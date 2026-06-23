@@ -1764,7 +1764,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     // Fast path: session cache hit → skip animation
     var _sessionFastPath = false;
     try {
-      if (sessionStorage.getItem('engineDataBuilt') === 'V1.74') {
+      if (sessionStorage.getItem('engineDataBuilt') === 'V1.79') {
         _sessionFastPath = true;
         sessionStorage.removeItem('engineDataBuilt');
       }
@@ -1941,7 +1941,7 @@ window.scrollToContinent = filterByContinent; // backward compat
 			}
 			window.__playerDataReady = true;
 			window.__playerDBReady = true;
-			try { sessionStorage.setItem('engineDataBuilt', 'V1.74'); } catch(e) {}
+			try { sessionStorage.setItem('engineDataBuilt', 'V1.79'); } catch(e) {}
 			return;
 		}
 		var script = document.createElement('script');

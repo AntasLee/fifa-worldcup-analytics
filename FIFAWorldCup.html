@@ -14,7 +14,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <meta name="theme-color" content="#0a0e14">
-<title>FIFA WORLD CUP - DATA ANALYSIS | V1.78</title>
+<title>FIFA WORLD CUP - DATA ANALYSIS | V1.79</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4);--blue:#6c5ce7;--blue-light:#7d6ff0;--orange:#e67e22;--orange-light:#f39c12}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -3308,7 +3308,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .ptab.g4:hover{border-color:rgba(255,224,160,0.5);color:#ffe8c0;background:rgba(255,224,160,0.15)}
 .ptab.g4.active{background:#d4a020;border-color:#ffe0a0;color:#111;box-shadow:0 0 18px rgba(212,160,32,0.5),0 0 36px rgba(255,224,160,0.2)}
 
-/* ===== 数据统计四弹窗样式 (V1.78) ===== */
+/* ===== 数据统计四弹窗样式 (V1.79) ===== */
 /* G1: 进攻数据 — 琥珀橙 #ff8f00 */
 .ov-modal{max-width:640px;width:94%;max-height:88vh;border-radius:14px;padding:0;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .ov-modal.ov-g1{background:linear-gradient(180deg,#120c04 0%,#0a0602 100%);border:1.5px solid rgba(255,143,0,0.18);box-shadow:0 0 40px rgba(255,143,0,0.12),0 0 80px rgba(255,143,0,0.05)}
@@ -3498,7 +3498,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .pb-note{font-size:0.7rem; color:#b89860; padding:14px 4px 0; line-height:1.7; text-align:center; letter-spacing:0.3px;}
 .pb-note strong{color:#e0b860;}
 
-/* ===== ov-g4: 赔率榜 — 统一暖铜金 (V1.78) ===== */
+/* ===== ov-g4: 赔率榜 — 统一暖铜金 (V1.79) ===== */
 .ov-modal.ov-g4{max-width:620px; background:linear-gradient(180deg,#120c04 0%,#0a0602 100%); border:1.5px solid rgba(198,132,48,0.20); box-shadow:0 0 40px rgba(198,132,48,0.14),0 0 80px rgba(198,132,48,0.06);}
 .ov-modal.ov-g4 .ov-modal-hd{border-bottom:1px solid rgba(198,132,48,0.14);}
 .ov-modal.ov-g4 .ov-modal-hd .hd-title{color:#c68430;}
@@ -3776,7 +3776,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   // Fast path: if engine data was already built in this session, skip animation entirely
   var _hasEngineData = false;
   try {
-    if (sessionStorage.getItem('engineDataBuilt') === 'V1.77') {
+    if (sessionStorage.getItem('engineDataBuilt') === 'V1.79') {
       _hasEngineData = true;
       sessionStorage.removeItem('engineDataBuilt');
     }
@@ -4266,7 +4266,7 @@ function toggleProbUpdate() {
 <div class="ov-modal-body" id="ovSaveRankContent"></div>
 </div></div>
 
-<!-- V1.78 赔率榜弹窗 -->
+<!-- V1.79 赔率榜弹窗 -->
 <div class="modal-overlay" id="ovOddsBoardModal"><div class="modal-box ov-modal ov-g4">
 <div class="ov-modal-hd"><span class="hd-title">📈 赔率榜</span><span class="modal-close" onclick="closeOvModal('ovOddsBoardModal')">✕</span></div>
 <div class="ov-modal-body" id="ovOddsBoardContent"></div>
@@ -4874,7 +4874,7 @@ console.log('🏆 Bracket V8 embedded — ready');
             window.__playerDataReady = true;
             // Set sessionStorage for fast reload on next visit
             try {
-                sessionStorage.setItem('engineDataBuilt', 'V1.77');
+                sessionStorage.setItem('engineDataBuilt', 'V1.79');
             } catch(e) {}
             return;
         }
@@ -5782,7 +5782,7 @@ function findPhotoByLookup(nameEn, teamCode){
   var idx=_buildPhotoIndex();
   var map=idx[teamCode]; if(!map) return '';
   if(map[n]) return map[n];
-  // V1.78: 收紧子串匹配 — 仅匹配 ≥5字符的高置信子串，避免碎片化命中
+  // V1.79: 收紧子串匹配 — 仅匹配 ≥5字符的高置信子串，避免碎片化命中
   for(var k in map){
     if(k.length<4) continue;
     if(k.indexOf(n)>=0 && n.length>=5) return map[k];
@@ -5791,7 +5791,7 @@ function findPhotoByLookup(nameEn, teamCode){
   return '';
 }
 
-// V1.78 统一照片解析 — 6级回退策略，替换原有的 getPlayerPhoto()+findPhotoByLookup() 二段链
+// V1.79 统一照片解析 — 6级回退策略，替换原有的 getPlayerPhoto()+findPhotoByLookup() 二段链
 function resolvePlayerPhoto(nameEn, nameZh, teamCode){
   // 0) 无姓名直接返回
   if(!nameEn && !nameZh) return '';
@@ -5940,7 +5940,7 @@ function buildRankHTML(summaryItems,heroes,list,note,showSummary){
   return h;
 }
 
-// [V1.78 DEPRECATED] getMatchData 返回 wc2026AllMatches（进球数据未同步官方记录）
+// [V1.79 DEPRECATED] getMatchData 返回 wc2026AllMatches（进球数据未同步官方记录）
 // 榜单渲染已统一改用 wcMatchDetails（正确数据），此函数保留仅供 stats 引擎兼容
 function getMatchData(){
   if(typeof wc2026AllMatches!=='undefined') return wc2026AllMatches;
@@ -5972,12 +5972,57 @@ function getFifaRankApprox(code){
 }
 function opponentCoef(teamCode){ return 1.0+Math.max(0,85-getFifaRankApprox(teamCode))/85; }
 
+// ===== V1.79: 英文名主键解析（四大榜单共用）=====
+// 数据格式 "中文简称 (English Name)" → 提取英文名 → getPlayerKey 规范化 → playerDB 取队伍
+// 英文名做聚合主键（避免中文同姓碰撞），中文全名从 squadDB 补全用于显示
+function resolvePlayerFromEnName(enName, cnName, teamCodeGuess){
+  var r={key:enName||cnName, nameEn:enName||cnName, nameZh:cnName||enName, teamCode:teamCodeGuess||'???'};
+  if(!enName) return r;
+
+  // Layer 1: getPlayerKey (主路径 — groupsdata.js)
+  var pk=null;
+  if(typeof getPlayerKey==='function') pk=getPlayerKey(enName);
+
+  // Layer 2: __playerMatcher.match 回退 (engine.js)
+  if(!pk&&typeof window.__playerMatcher!=='undefined'){
+    var m=window.__playerMatcher.match(enName,null);
+    if(m&&m.key) pk=m.key;
+  }
+
+  if(pk&&typeof playerDB!=='undefined'&&playerDB[pk]){
+    var pd=playerDB[pk];
+    r.key=pk;
+    r.nameEn=pd.n||enName;
+    r.teamCode=pd.nat||teamCodeGuess;
+    // 从 squadDB 索引补全中文全名（逆查 pdbKey → fullCn）
+    var ci=_buildCnToInfo();
+    for(var ck in ci){if(ci[ck].pdbKey===pk){r.nameZh=ci[ck].fullCn||cnName;break;}}
+    return r;
+  }
+
+  // Layer 3: _buildCnToInfo 中文名回退（往届/无英文名数据）
+  if(cnName){
+    var ci3=_buildCnToInfo(); var info=ci3[cnName];
+    if(!info){var dp=cnName.split('·'); if(dp.length>1) info=ci3[dp[dp.length-1]];}
+    if(info){
+      r.key=info.pdbKey||enName;
+      r.nameEn=info.pdbKey||info.enName||enName;
+      r.nameZh=info.fullCn||cnName;
+      r.teamCode=info.nat||teamCodeGuess;
+      return r;
+    }
+  }
+
+  // Layer 4: 原始值兜底
+  return r;
+}
+
 // 建立 squadDB 中文→{playerDB key, 全中文名, 英文名, 国籍} 索引 (懒初始化, 身价/射手榜共用)
 var _cnToInfo=null;
 function _buildCnToInfo(){
-  if(_cnToInfo) return _cnToInfo;
+  if(_cnToInfo && Object.keys(_cnToInfo).length>0) return _cnToInfo;
+  if(typeof squadDB==='undefined'||typeof playerDB==='undefined') return {};
   _cnToInfo={};
-  if(typeof squadDB==='undefined'||typeof playerDB==='undefined') return _cnToInfo;
   var pdbIdx={};
   function _n(s){var r=(s||'').toLowerCase(); try{r=r.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}catch(e){} return r.replace(/[^a-z0-9]/g,''); }
   for(var pk in playerDB){var pp=playerDB[pk];pdbIdx[_n(pk)]=pk;if(pp.n)pdbIdx[_n(pp.n)]=pk;if(pp.nn)pdbIdx[_n(pp.nn)]=pk;}
@@ -5995,17 +6040,12 @@ function _buildCnToInfo(){
   return _cnToInfo;
 }
 
-// ========== 身价榜 ==========
+// ========== 身价榜 — V1.79 英文名主键 ==========
 window.showOvValueRank = function(){
   var year=getActiveYear(); var yl=yearLabels[year]||year;
   document.getElementById('ovVRYear').textContent=yl;
   var players=[];
-  // 2026: 实时 squadDB | 往届: 预置历史数据
   if(year==='2026'){
-    var sqToPdb={};
-    if(typeof squadDB!=='undefined'&&typeof _buildCnToInfo==='function'){
-      var ci=_buildCnToInfo(); for(var ck in ci){ var inf=ci[ck]; if(inf.pdbKey){sqToPdb[inf.enName]=inf.pdbKey;sqToPdb[inf.enName.toUpperCase().replace(/\s+/g,' ')]=inf.pdbKey;} }
-    }
     if(typeof squadDB!=='undefined'){
       for(var tc in squadDB){
         var sq=squadDB[tc]; var groups=['gk','df','mf','fw'];
@@ -6013,12 +6053,11 @@ window.showOvValueRank = function(){
           var arr=sq[groups[gi]]; if(!arr) continue;
           for(var pi=0;pi<arr.length;pi++){
             var p=arr[pi]; var v=parseFloat(p.v); if(isNaN(v)) continue;
-            var rn=p.n||''; var rnUp=rn.toUpperCase().replace(/\s+/g,' ');
-            var rnParts=rn.toLowerCase().split(/\s+/);
-            var rnRev=rnParts.length>=2?rnParts[1].charAt(0).toUpperCase()+rnParts[1].slice(1)+' '+rnParts[0].charAt(0).toUpperCase()+rnParts[0].slice(1):'';
-            var pdbKey=sqToPdb[rn]||sqToPdb[rnUp]||sqToPdb[rnRev]||sqToPdb[rnRev.toUpperCase().replace(/\s+/g,' ')]||'';
-            var enDisplay=function(sn){var ps=(sn||'').toLowerCase().split(/\s+/);if(ps.length>=2)return ps[1].charAt(0).toUpperCase()+ps[1].slice(1)+' '+ps[0].charAt(0).toUpperCase()+ps[0].slice(1);return(sn||'').charAt(0)+(sn||'').slice(1).toLowerCase();}(p.n);
-            players.push({nameEn:pdbKey||enDisplay,nameZh:p.cn||p.n,teamCode:tc,value:v,sortVal:v});
+            // squadDB 存 "LAST First" → 转 "First Last" 给 resolvePlayerFromEnName
+            var nameParts=(p.n||'').toLowerCase().split(/\s+/);
+            var enName=nameParts.length>=2?nameParts[1].charAt(0).toUpperCase()+nameParts[1].slice(1)+' '+nameParts[0].charAt(0).toUpperCase()+nameParts[0].slice(1):(p.n||'');
+            var res=resolvePlayerFromEnName(enName, p.cn||p.n, tc);
+            players.push({nameEn:res.nameEn,nameZh:res.nameZh||p.cn||p.n,teamCode:tc,value:v,sortVal:v});
           }
         }
       }
@@ -6038,13 +6077,12 @@ window.showOvValueRank = function(){
 };
 
 // ========== 射手榜 ==========
+// V1.79: 射手榜 — 英文名主键聚合（避免中文同姓碰撞）
 window.showOvScorerRank = function(){
   var year=getActiveYear(); var yl=yearLabels[year]||year;
   document.getElementById('ovSRYear').textContent=yl;
-  // 建立 squadDB 中文→{playerDB key, 全中文名, 英文名, 国籍} 索引 (懒初始化)
   var scorerMap={};
   var matchData={};
-  // V1.78: 统一使用 wcMatchDetails + wc2026MatchDetails（正确进球数据）
   if(typeof wcMatchDetails!=='undefined'){
     Object.keys(wcMatchDetails).forEach(function(key){if(key.indexOf(year+'|')===0){var m=wcMatchDetails[key];if(m&&m.goals)matchData[key]=m;}});
   }
@@ -6053,36 +6091,23 @@ window.showOvScorerRank = function(){
   }
   Object.keys(matchData).forEach(function(key){
     var m=matchData[key]; if(!m||!m.goals) return;
+    // team code from match key (home)
+    var mtc=(key.split('|')[2])||'';
     m.goals.forEach(function(g){
       if(g.type==='own_goal') return;
       var raw=g.scorer;
-      // 解析 "中文名 (English Name)" 格式 (wcMatchDetails 往届数据)
       var parenIdx=raw.indexOf(' (');
-      var nm=parenIdx>0?raw.substring(0,parenIdx):raw;
-      var enInParen=parenIdx>0?raw.substring(parenIdx+2,raw.length-1):'';
-      var info=_buildCnToInfo()[nm];
-      // squadDB 找不到则尝试括号内英文名匹配
-      if(!info&&enInParen){info=_buildCnToInfo()[enInParen];}
-      // 中文名模糊回退: 比赛数据简称 vs squadDB 全名
-      if(!info&&nm.length>=2){
-        var ci=_buildCnToInfo();
-        // 策略1: 子串匹配 ("翁达夫" in "德尼兹·温达夫"? "温达夫" 包含 "达夫")
-        for(var ck in ci){ if(ck.indexOf(nm)>=0){info=ci[ck];break;} }
-        // 策略2: 反向子串 (nm 更完整)
-        if(!info) for(var ck2 in ci){ if(nm.indexOf(ck2)>=0){info=ci[ck2];break;} }
-        // 策略3: 尾字匹配
-        if(!info&&nm.length>=2){var tail=nm.slice(-2);for(var ck3 in ci){if(ck3.slice(-2)===tail){info=ci[ck3];break;}}}
-        // 策略4: 字符交集≥2
-        if(!info&&nm.length>=2){var nc=nm.split('');var best=0;for(var ck4 in ci){var cnt=0;for(var i4=0;i4<nc.length;i4++){if(ck4.indexOf(nc[i4])>=0)cnt++;}if(cnt>=1&&cnt>best){best=cnt;info=ci[ck4];}}}
-      }
-      var zhFull=info?info.fullCn:nm;
-      var enName=info?(info.pdbKey||info.enName):(enInParen||nm);
-      var tc=info?info.nat:(g.side==='home'?key.split('|')[2]:key.split('|')[3])||'';
-      if(!scorerMap[nm]) scorerMap[nm]={goals:0,pens:0,zhFull:zhFull,enName:enName,tc:tc};
-      scorerMap[nm].goals++; if(g.type==='penalty') scorerMap[nm].pens++;
+      var cnName=parenIdx>0?raw.substring(0,parenIdx):raw;
+      var enName=parenIdx>0?raw.substring(parenIdx+2,raw.length-1):'';
+      // 优先用进球方的队伍码
+      var tcGuess=g.side==='home'?mtc:(key.split('|')[3])||mtc;
+      var res=resolvePlayerFromEnName(enName,cnName,tcGuess);
+      var aggKey=res.key;
+      if(!scorerMap[aggKey]) scorerMap[aggKey]={goals:0,pens:0,nameZh:res.nameZh,nameEn:res.nameEn,tc:res.teamCode};
+      scorerMap[aggKey].goals++; if(g.type==='penalty') scorerMap[aggKey].pens++;
     });
   });
-  var list=Object.keys(scorerMap).map(function(k){var s=scorerMap[k];return{nameZh:s.zhFull,nameEn:s.enName,teamCode:s.tc,goals:s.goals,pens:s.pens};});
+  var list=Object.keys(scorerMap).map(function(k){var s=scorerMap[k];return{nameZh:s.nameZh,nameEn:s.nameEn,teamCode:s.tc,goals:s.goals,pens:s.pens};});
   list.sort(function(a,b){return b.goals-a.goals;});
   var totalGoals=list.reduce(function(s,p){return s+p.goals;},0);
   var top3=list.slice(0,3).map(function(p){return{nameZh:p.nameZh,nameEn:p.nameEn,teamCode:p.teamCode,stat:p.goals+' 球',statSub:p.pens>0?('含 '+p.pens+' 点球'):'',sortVal:p.goals};});
@@ -6093,15 +6118,14 @@ window.showOvScorerRank = function(){
   document.getElementById('ovScorerRankModal').classList.add('visible');
 };
 
-// ========== 助攻榜 ==========
-// V1.78: 纯动态聚合，直接从 wcMatchDetails.goals[].assist 累计，无静态兜底
+// ========== 助攻榜 — V1.79 英文名主键 ==========
+// 从 wc2026MatchDetails.goals[].assist 纯动态聚合，英文名做主键避免中文同姓碰撞
 window.showOvAssistRank = function(){
   var year=getActiveYear(); var yl=yearLabels[year]||year;
   document.getElementById('ovARYear').textContent=yl;
   var list=[];
 
   if(year==='2026'){
-    // —— 2026 动态聚合：从 wcMatchDetails + wc2026MatchDetails.goals[].assist 累计 ——
     var matchData={};
     if(typeof wcMatchDetails!=='undefined'){
       Object.keys(wcMatchDetails).forEach(function(key){if(key.indexOf('2026|')===0){var m=wcMatchDetails[key];if(m&&m.goals)matchData[key]=m;}});
@@ -6112,25 +6136,17 @@ window.showOvAssistRank = function(){
     var assistMap={};
     Object.keys(matchData).forEach(function(key){
       var m=matchData[key]; if(!m||!m.goals) return;
+      var mtc=(key.split('|')[2])||'';
       m.goals.forEach(function(g){
             if(!g.assist) return; if(g.type==='own_goal') return;
-            var nm=g.assist;
-            var parenIdx=nm.indexOf(' (');
-            var enInParen=parenIdx>0?nm.substring(parenIdx+2,nm.length-1):'';
-            if(parenIdx>0) nm=nm.substring(0,parenIdx);
-            var info=_buildCnToInfo()[nm];
-            if(!info&&enInParen){info=_buildCnToInfo()[enInParen];}
-            if(!info&&nm.length>=2){
-              var ci=_buildCnToInfo();
-              for(var ck in ci){if(ck.indexOf(nm)>=0||nm.indexOf(ck)>=0){info=ci[ck];break;}}
-              if(!info){var tail=nm.slice(-2);for(var ck2 in ci){if(ck2.slice(-2)===tail){info=ci[ck2];break;}}}
-            }
-            var zhFull=info?info.fullCn:nm;
-            var enName=info?(info.pdbKey||info.enName):nm;
-            var tc=info?info.nat:(key.split('|')[2]);
-            var mk=zhFull;
-            if(!assistMap[mk]) assistMap[mk]={nameZh:zhFull,nameEn:enName,teamCode:tc,assists:0};
-            assistMap[mk].assists++;
+            var raw=g.assist;
+            var parenIdx=raw.indexOf(' (');
+            var cnName=parenIdx>0?raw.substring(0,parenIdx):raw;
+            var enName=parenIdx>0?raw.substring(parenIdx+2,raw.length-1):'';
+            var res=resolvePlayerFromEnName(enName,cnName,mtc);
+            var aggKey=res.key;
+            if(!assistMap[aggKey]) assistMap[aggKey]={nameZh:res.nameZh,nameEn:res.nameEn,teamCode:res.teamCode,assists:0};
+            assistMap[aggKey].assists++;
           });
         });
         for(var mk in assistMap) list.push(assistMap[mk]);
@@ -6150,7 +6166,7 @@ window.showOvAssistRank = function(){
   document.getElementById('ovAssistRankModal').classList.add('visible');
 };
 
-// ========== 扑救榜 — V1.78 动态聚合引擎 ==========
+// ========== 扑救榜 — V1.79 动态聚合引擎 ==========
 // 优先级: match.gkSaves 精确数据 > 公式估算 (so - goals)
 // 公式估算 = 射正 - 进球(含封堵)，精确数据排除非门将封堵
 window.showOvSaveRank = function(){
@@ -6168,14 +6184,16 @@ window.showOvSaveRank = function(){
       Object.keys(wc2026MatchDetails).forEach(function(key){var m=wc2026MatchDetails[key];if(m&&m.score&&m.score.sh!==null)matchData[key]=m;});
     }
 
-    // —— 构建 GK 姓名回退映射: saveStats2026(实际出场) > squadDB[0](推测) ——
+    // —— 构建 GK 姓名映射: gkSaves实际出场 > squadDB推测首发 ——
     var gkLookup={};
-    if(typeof saveStats2026!=='undefined'){
-      for(var sk in saveStats2026){
-        var sv=saveStats2026[sk];
-        if(sv.teamCode) gkLookup[sv.teamCode]={nameEn:sv.nameEn,nameZh:sv.nameZh};
-      }
-    }
+    // 第一优先级: 从 wc2026MatchDetails.gkSaves 提取实际出场门将（英文名主键）
+    Object.keys(matchData).forEach(function(key){
+      var m=matchData[key]; if(!m||!m.gkSaves) return;
+      var parts=key.split('|'); var hTc=parts[2], aTc=parts[3];
+      if(m.gkSaves.home){var h=m.gkSaves.home; if(h.name&&!gkLookup[hTc]) gkLookup[hTc]={nameEn:h.name,nameZh:h.nameZh||h.name};}
+      if(m.gkSaves.away){var a=m.gkSaves.away; if(a.name&&!gkLookup[aTc]) gkLookup[aTc]={nameEn:a.name,nameZh:a.nameZh||a.name};}
+    });
+    // 第二优先级: squadDB 推测首发门将
     if(typeof squadDB!=='undefined'){
       for(var tc in squadDB){
         if(!gkLookup[tc]&&squadDB[tc]&&squadDB[tc].gk&&squadDB[tc].gk.length>0){
@@ -6291,7 +6309,7 @@ window.showOvSaveRank = function(){
   document.getElementById('ovSaveRankModal').classList.add('visible');
 };
 
-console.log('✅ V1.78 数据统计四弹窗已安装（助攻榜/扑救榜已升级为动态聚合引擎）');
+console.log('✅ V1.79 数据统计四弹窗已安装（助攻榜/扑救榜已升级为动态聚合引擎）');
 })();
 </script>
 
