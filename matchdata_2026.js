@@ -915,6 +915,40 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|L|PAN|CRO": {
+    score: { sh: 0, sa: 1 },
+    date: "2026-06-24",
+    time: "07:00",
+    venue: "BMO球场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 54, side: "away", scorer: "安特·布迪米尔", type: "shot", assist: "约瑟普·斯塔尼希奇" }
+    ],
+    stats: {
+      possession:      { h: 42, a: 58 },
+      shots:           { h: 6,  a: 5 },
+      shotsOnTarget:   { h: 1,  a: 2 },
+      corners:         { h: 7,  a: 2 },
+      fouls:           { h: 19, a: 12 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 96, a: 110 },
+      dangerousAttacks:{ h: 59, a: 43 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "安特·布迪米尔",
+      sources: ["ESPN", "FIFA", "Yahoo Sports", "Fox Sports"],
+      home: {score: 5, quotes: "连续两场0-1惜败，巴拿马的世界杯处子季提前一轮结束。穆里略右路突破制造威胁，防守纪律值得肯定，但两战零进球暴露了进攻端缺乏致命一击的现实。球队展现了令人尊敬的竞争力，虽败犹荣。"},
+      away: {score: 6, quotes: "布迪米尔第54分钟一击制胜，克罗地亚收获本届首胜保住出线希望。莫德里奇状态回暖掌控中场节奏，斯塔尼希奇的助攻展现边路威胁。末轮对阵加纳将是生死战，若无胜则将面临小组出局。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // B组
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },
