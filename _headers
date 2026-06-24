@@ -1,9 +1,17 @@
 # ============================================================
-# 世界杯数据站 — HTTP 缓存策略
+# 世界杯数据站 — HTTP 缓存策略 (fifaseek.com)
+# 目标：部署后 1 分钟内用户可见最新内容
 # ============================================================
 
-# === 比分数据文件 — 30秒即过期，必须向服务器验证 ===
-# 用户更新比分后最长 30 秒即可看到最新数据
+# === SEO 文件 — 30分钟缓存 ===
+/robots.txt
+  Cache-Control: max-age=1800
+
+/sitemap.xml
+  Cache-Control: max-age=1800
+
+# === 核心数据文件 — 30秒过期，必须验证 ===
+# 比分、小组积分、赔率等实时数据
 /matchdata.js
   Cache-Control: max-age=30, must-revalidate
 
@@ -13,19 +21,86 @@
 /groupsdata.js
   Cache-Control: max-age=30, must-revalidate
 
-# HTML 页面 — 每次都验证最新版本
+/oddsdata.js
+  Cache-Control: max-age=30, must-revalidate
+
+# === 球员 & 阵容数据 — 60秒过期，必须验证 ===
+/playerdata_core.js
+  Cache-Control: max-age=60, must-revalidate
+
+/playerdata_career.js
+  Cache-Control: max-age=60, must-revalidate
+
+/playerdata_media.js
+  Cache-Control: max-age=60, must-revalidate
+
+/playerdata_meta.js
+  Cache-Control: max-age=60, must-revalidate
+
+/playerdata_cn_gen.js
+  Cache-Control: max-age=60, must-revalidate
+
+/player_stats_2026.js
+  Cache-Control: max-age=60, must-revalidate
+
+/player_stats_past.js
+  Cache-Control: max-age=60, must-revalidate
+
+/squaddata.js
+  Cache-Control: max-age=60, must-revalidate
+
+# === 球队 & 教练 & 场地数据 — 60秒过期 ===
+/teamdata.js
+  Cache-Control: max-age=60, must-revalidate
+
+/clubdata.js
+  Cache-Control: max-age=60, must-revalidate
+
+/coachdata.js
+  Cache-Control: max-age=60, must-revalidate
+
+/venuedata.js
+  Cache-Control: max-age=60, must-revalidate
+
+# === 引擎 & 应用逻辑 — 60秒过期 + 后台静默刷新 ===
+# 引擎更新频率低于数据，用 stale-while-revalidate 兼顾性能
+/app.js
+  Cache-Control: max-age=60, stale-while-revalidate=600
+
+/engine.js
+  Cache-Control: max-age=60, stale-while-revalidate=600
+
+/prob_engine.js
+  Cache-Control: max-age=60, stale-while-revalidate=600
+
+/match_eval_engine.js
+  Cache-Control: max-age=60, stale-while-revalidate=600
+
+/oddsboard_engine.js
+  Cache-Control: max-age=60, stale-while-revalidate=600
+
+/perfboard_engine.js
+  Cache-Control: max-age=60, stale-while-revalidate=600
+
+/bracket_overlay.js
+  Cache-Control: max-age=60, stale-while-revalidate=600
+
+/squadmodal.js
+  Cache-Control: max-age=60, stale-while-revalidate=600
+
+# === HTML 页面 — 每次都向服务器验证 ===
 /*.html
   Cache-Control: no-cache
 
-# JavaScript 数据 & 引擎 — 5分钟缓存 + 后台静默刷新
-/*.js
-  Cache-Control: max-age=300, stale-while-revalidate=3600
-
-# CSS 样式 — 5分钟缓存 + 后台静默刷新
+# === CSS 样式 — 60秒过期 + 后台刷新 ===
 /*.css
-  Cache-Control: max-age=300, stale-while-revalidate=3600
+  Cache-Control: max-age=60, stale-while-revalidate=600
 
-# 图片 — 球员头像 / 国旗等几乎不变，30天缓存
+# === JS 兜底（未单独列出的 .js 文件）— 必须验证 ===
+/*.js
+  Cache-Control: max-age=60, must-revalidate
+
+# === 图片 — 几乎不变，30天缓存 ===
 /*.png
   Cache-Control: max-age=2592000, immutable
 
@@ -38,6 +113,6 @@
 /*.webp
   Cache-Control: max-age=2592000, immutable
 
-# 字体 — 永久缓存
+# === 字体 — 永久缓存 ===
 /*.woff2
   Cache-Control: max-age=2592000, immutable

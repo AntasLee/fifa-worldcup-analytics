@@ -1689,6 +1689,29 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 2, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: null, referee: "TBD"
   },
+
+  "2026|B|BIH|QAT": {
+    score: { sh: 3, sa: 1 },
+    goals: [
+      { min: 29, side: "home", scorer: "克里姆·阿拉伊贝格维奇 (Kerim Alajbegovic)", type: "shot", assist: "伊万·巴希奇 (Ivan Basic)" },
+      { min: 34, side: "away", scorer: "马哈茂德·阿布纳达 (Mahmoud Abunada)", type: "own_goal" },
+      { min: 42, side: "away", scorer: "哈桑·海多斯 (Hassan Al Haydos)",  type: "shot", assist: "埃德米尔松 (Edmílson Junior)" },
+      { min: 80, side: "home", scorer: "爱尔明·马赫米奇 (Ermin Mahmic)", type: "shot", assist: "丹尼尔斯·哈季卡度尼奇 (Daniels Hajkadunic)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
+
+  "2026|B|SUI|CAN": {
+    score: { sh: 2, sa: 1 },
+    goals: [
+      { min: 46, side: "home", scorer: "鲁文·巴尔加斯 (Rubén Vargas)", type: "shot", assist: "约翰·曼赞比 (Johan Manzambi)" },
+      { min: 57, side: "home", scorer: "约翰·曼赞比 (Johan Manzambi)", type: "shot", assist: "布雷尔·恩博洛 (Breel Embolo)" },
+      { min: 76, side: "away", scorer: "普罗米斯·戴维 (Promise David)", type: "shot", assist: "纳坦·迪伦·萨利巴 (Nathan Saliba)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: null, referee: "Ramon Abatti (BRA)"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1742,3 +1765,5 @@ matchStats["2026|L|GHA|PAN"] = {p1:"38%",p2:"62%",ps1:null,ps2:null,sh1:6,sh2:9,
 matchStats["2026|L|ENG|GHA"] = {p1:"79%",p2:"21%",ps1:null,ps2:null,sh1:13,sh2:1,so1:3,so2:1,sb1:10,sb2:0,co1:9,co2:2,fo1:14,fo2:15,os1:2,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:131,at2:40,da1:78,da2:10,pk1:0,pk2:0};
 matchStats["2026|L|PAN|CRO"] = {p1:"42%",p2:"58%",ps1:null,ps2:null,sh1:6,sh2:5,so1:1,so2:2,sb1:5,sb2:3,co1:7,co2:2,fo1:19,fo2:12,os1:1,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:110,da1:59,da2:43,pk1:0,pk2:0};
 matchStats["2026|K|COL|COD"] = {p1:"64%",p2:"36%",ps1:null,ps2:null,sh1:15,sh2:5,so1:9,so2:2,sb1:6,sb2:3,co1:5,co2:4,fo1:12,fo2:16,os1:7,os2:0,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:102,at2:68,da1:31,da2:22,pk1:0,pk2:0};
+matchStats["2026|B|BIH|QAT"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:9,so1:5,so2:3,sb1:4,sb2:6,co1:5,co2:5,fo1:9,fo2:14,os1:1,os2:3,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:75,da1:46,da2:33,pk1:0,pk2:0};
+matchStats["2026|B|SUI|CAN"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:5,sh2:10,so1:4,so2:7,sb1:1,sb2:3,co1:2,co2:7,fo1:19,fo2:13,os1:1,os2:3,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:74,at2:96,da1:24,da2:51,pk1:0,pk2:0};

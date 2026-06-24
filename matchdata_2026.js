@@ -983,6 +983,79 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|B|BIH|QAT": {
+    score: { sh: 3, sa: 1 },
+    date: "2026-06-25",
+    time: "03:00",
+    venue: "西雅图体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 29, side: "home", scorer: "阿拉伊贝格维奇", type: "shot", assist: "伊万·巴希奇" },
+      { min: 34, side: "away", scorer: "阿布纳达", type: "own_goal" },
+      { min: 42, side: "away", scorer: "海多斯", type: "shot", assist: "埃德米尔松" },
+      { min: 80, side: "home", scorer: "爱尔明·马赫米奇", type: "shot", assist: "哈季卡度尼奇" }
+    ],
+    stats: {
+      possession:      { h: 54, a: 46 },
+      shots:           { h: 9,  a: 9 },
+      shotsOnTarget:   { h: 5,  a: 3 },
+      corners:         { h: 5,  a: 5 },
+      fouls:           { h: 9,  a: 14 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 96, a: 75 },
+      dangerousAttacks:{ h: 46, a: 33 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "阿拉伊贝格维奇",
+      sources: ["ESPN", "FIFA", "Marca", "FotMob"],
+      home: {score: 7, quotes: "波黑以一场3-1大胜结束小组征程，4分有望竞争最佳小组第三晋级。阿拉伊贝格维奇远射世界波首开纪录，海多斯短暂扳回后马赫米奇终场锁定胜局。卡塔尔的乌龙送礼让波黑半场确立优势，巴尔干雄鹰展现了技术足球的底蕴。"},
+      away: {score: 3, quotes: "三战仅积1分提前出局，东道主卡塔尔的世界杯之旅以失望告终。阿布纳达的乌龙球雪上加霜，虽海多斯一度扳回一球展现斗志，但整体实力与对手差距明显。继惨败加拿大后再次失利，亚洲冠军的世界杯噩梦继续。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|B|SUI|CAN": {
+    score: { sh: 2, sa: 1 },
+    date: "2026-06-25",
+    time: "03:00",
+    venue: "BC Place球场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 46, side: "home", scorer: "鲁文·巴尔加斯", type: "shot", assist: "约翰·曼赞比" },
+      { min: 57, side: "home", scorer: "约翰·曼赞比", type: "shot", assist: "布雷尔·恩博洛" },
+      { min: 76, side: "away", scorer: "普罗米斯·戴维", type: "shot", assist: "萨利巴" }
+    ],
+    stats: {
+      possession:      { h: 48, a: 52 },
+      shots:           { h: 5,  a: 10 },
+      shotsOnTarget:   { h: 4,  a: 7 },
+      corners:         { h: 2,  a: 7 },
+      fouls:           { h: 19, a: 13 },
+      yellowCards:     { h: 1,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 74, a: 96 },
+      dangerousAttacks:{ h: 24, a: 51 }
+    },
+    attendance: null,
+    referee: "Ramon Abatti (BRA)",
+    xg: null,
+    mediaRating: {
+      motm: "约翰·曼赞比",
+      sources: ["ESPN", "Sky Sports", "FIFA", "FotMob"],
+      home: {score: 8, quotes: "瑞士下半场闪电逆转锁定B组头名，继续保持淘汰赛主场优势。曼赞比一传一射闪耀BC Place，恩博洛策动两粒进球展现核心价值。巴尔加斯下半场仅39秒即破门彻底改变战局，瑞士三战不败2胜1平延续大赛稳健传统。"},
+      away: {score: 5, quotes: "加拿大虽败仍以小组第二历史性晋级淘汰赛。普罗米斯·戴维扳回一球保留希望，但上半场过于保守（仅30.5%控球）埋下祸根。失去温哥华主场优势令人遗憾，但队史首次晋级淘汰赛已创造历史。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // B组
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },
