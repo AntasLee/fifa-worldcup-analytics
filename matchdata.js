@@ -1680,6 +1680,15 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: null, referee: "TBD"
   },
+
+  "2026|K|COL|COD": {
+    score: { sh: 1, sa: 0 },
+    goals: [
+      { min: 76, side: "home", scorer: "丹尼尔·穆尼奥斯 (Daniel Muñoz)", type: "shot", assist: "胡安·金特罗 (Juan Quintero)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1732,3 +1741,4 @@ matchStats["2026|L|ENG|CRO"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:17,sh2:8
 matchStats["2026|L|GHA|PAN"] = {p1:"38%",p2:"62%",ps1:null,ps2:null,sh1:6,sh2:9,so1:2,so2:4,sb1:4,sb2:5,co1:2,co2:2,fo1:9,fo2:11,os1:4,os2:1,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:93,at2:101,da1:35,da2:60,pk1:0,pk2:0};
 matchStats["2026|L|ENG|GHA"] = {p1:"79%",p2:"21%",ps1:null,ps2:null,sh1:13,sh2:1,so1:3,so2:1,sb1:10,sb2:0,co1:9,co2:2,fo1:14,fo2:15,os1:2,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:131,at2:40,da1:78,da2:10,pk1:0,pk2:0};
 matchStats["2026|L|PAN|CRO"] = {p1:"42%",p2:"58%",ps1:null,ps2:null,sh1:6,sh2:5,so1:1,so2:2,sb1:5,sb2:3,co1:7,co2:2,fo1:19,fo2:12,os1:1,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:110,da1:59,da2:43,pk1:0,pk2:0};
+matchStats["2026|K|COL|COD"] = {p1:"64%",p2:"36%",ps1:null,ps2:null,sh1:15,sh2:5,so1:9,so2:2,sb1:6,sb2:3,co1:5,co2:4,fo1:12,fo2:16,os1:7,os2:0,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:102,at2:68,da1:31,da2:22,pk1:0,pk2:0};

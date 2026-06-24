@@ -949,6 +949,40 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|K|COL|COD": {
+    score: { sh: 1, sa: 0 },
+    date: "2026-06-24",
+    time: "10:00",
+    venue: "瓜达拉哈拉体育场",
+    stage: "group",
+    round: 2,
+    goals: [
+      { min: 76, side: "home", scorer: "丹尼尔·穆尼奥斯", type: "shot", assist: "胡安·金特罗" }
+    ],
+    stats: {
+      possession:      { h: 64, a: 36 },
+      shots:           { h: 15, a: 5 },
+      shotsOnTarget:   { h: 9,  a: 2 },
+      corners:         { h: 5,  a: 4 },
+      fouls:           { h: 12, a: 16 },
+      yellowCards:     { h: 2,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 102,a: 68 },
+      dangerousAttacks:{ h: 31, a: 22 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "丹尼尔·穆尼奥斯",
+      sources: ["BBC Sport", "AP News", "Sky Sports", "FIFA"],
+      home: {score: 7, quotes: "穆尼奥斯连续两场进球助哥伦比亚提前锁定32强席位。面对刚果门将姆帕西的多次神扑，哥伦比亚狂轰15射9正，迪亚斯两粒进球被吹越位。金特罗的精准传球终破铁桶，两连胜稳居K组头名。"},
+      away: {score: 6, quotes: "门将姆帕西前20分钟5次神扑堪称英勇，第76分钟终被折射击败。刚果全场仅2次射正进攻威胁有限，首轮逼平葡萄牙后未能延续黑马奇迹。末轮必须击败乌兹别克斯坦方可保留出线希望。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // B组
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },
