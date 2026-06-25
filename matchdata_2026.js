@@ -1056,6 +1056,81 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|C|SCO|BRA": {
+    score: { sh: 0, sa: 3 },
+    date: "2026-06-25",
+    time: "06:00",
+    venue: "迈阿密体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 7,     side: "away", scorer: "维尼修斯",   type: "shot", assist: "拉扬" },
+      { min: "45+4",side: "away", scorer: "维尼修斯",   type: "header", assist: "布鲁诺·吉马良斯" },
+      { min: 60,    side: "away", scorer: "马特乌斯·库尼亚", type: "shot", assist: "布鲁诺·吉马良斯" }
+    ],
+    stats: {
+      possession:      { h: 46, a: 54 },
+      shots:           { h: 11, a: 16 },
+      shotsOnTarget:   { h: 5,  a: 9 },
+      corners:         { h: 7,  a: 7 },
+      fouls:           { h: 10, a: 11 },
+      yellowCards:     { h: 1,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 96, a: 103 },
+      dangerousAttacks:{ h: 37, a: 41 }
+    },
+    attendance: null,
+    referee: "César Ramos (MEX)",
+    xg: null,
+    mediaRating: {
+      motm: "维尼修斯",
+      sources: ["The Athletic", "Yahoo Sports", "Fox Sports", "FIFA"],
+      home: {score: 4, quotes: "苏格兰面对五星巴西毫无招架之力。麦肯纳第7分钟致命失误让维尼修斯早早破门，半场补时布鲁诺·吉马良斯精准传中助其头球梅开二度。库尼亚下半场再下一城锁定0-3。全场11射仅5正，两粒净负球让晋级前景悬于一线。"},
+      away: {score: 9, quotes: "维尼修斯梅开二度闪耀迈阿密，布鲁诺·吉马良斯两记助攻展现中场大师风范。库尼亚锦上添花助巴西3-0完胜锁定C组头名。首轮平局后两连胜强势反弹，桑巴军团正式切换淘汰赛模式。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|C|MAR|HAI": {
+    score: { sh: 4, sa: 2 },
+    date: "2026-06-25",
+    time: "06:00",
+    venue: "亚特兰大体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 10,    side: "away", scorer: "亚辛·布努",   type: "own_goal" },
+      { min: 39,    side: "home", scorer: "阿什拉夫·哈基米", type: "shot" },
+      { min: 43,    side: "away", scorer: "威尔逊·伊西多尔", type: "shot", assist: "迪韦纳" },
+      { min: "45+1",side: "home", scorer: "伊斯梅尔·赛巴里", type: "shot", assist: "阿什拉夫·哈基米" },
+      { min: 78,    side: "home", scorer: "苏菲安·拉希米", type: "shot", assist: "沙迪·里亚德" },
+      { min: 89,    side: "home", scorer: "贾西姆·亚辛",   type: "shot", assist: "苏菲安·拉希米" }
+    ],
+    stats: {
+      possession:      { h: 69, a: 31 },
+      shots:           { h: 17, a: 6 },
+      shotsOnTarget:   { h: 11, a: 2 },
+      corners:         { h: 9,  a: 1 },
+      fouls:           { h: 10, a: 18 },
+      yellowCards:     { h: 0,  a: 3 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 109,a: 73 },
+      dangerousAttacks:{ h: 62, a: 13 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "阿什拉夫·哈基米",
+      sources: ["USA Today", "ESPN", "Morocco World News", "FIFA"],
+      home: {score: 8, quotes: "摩洛哥在这场进球大战中4-2力克海地，7分锁定C组第二强势出线。布努罕见乌龙送礼后，哈基米世界波扳平并助攻赛巴里得分展现领袖风范。下半场拉希米和亚辛终结悬念，阿特拉斯雄狮延续2022黑马传奇。"},
+      away: {score: 5, quotes: "已提前出局的海地展现了令人动容的斗志。伊西多尔连续两场进球无愧加勒比锋线旗帜，全队面对摩洛哥毫不退缩。虽三战皆墨，但世界杯处子秀每个进球都值得铭记，海地足球在世界舞台留下了印记。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // B组
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },

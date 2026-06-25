@@ -1712,6 +1712,31 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 1, red: 0 }, away: { yellow: 2, red: 0 } },
     attendance: null, referee: "Ramon Abatti (BRA)"
   },
+
+  "2026|C|SCO|BRA": {
+    score: { sh: 0, sa: 3 },
+    goals: [
+      { min: 7,     side: "away", scorer: "维尼修斯 (Vinícius Júnior)",  type: "shot", assist: "拉扬 (Rayan)" },
+      { min: "45+4",side: "away", scorer: "维尼修斯 (Vinícius Júnior)",  type: "header", assist: "布鲁诺·吉马良斯 (Bruno Guimarães)" },
+      { min: 60,    side: "away", scorer: "马特乌斯·库尼亚 (Matheus Cunha)", type: "shot", assist: "布鲁诺·吉马良斯 (Bruno Guimarães)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: null, referee: "César Ramos (MEX)"
+  },
+
+  "2026|C|MAR|HAI": {
+    score: { sh: 4, sa: 2 },
+    goals: [
+      { min: 10,    side: "away", scorer: "亚辛·布努 (Yassine Bounou)",      type: "own_goal" },
+      { min: 39,    side: "home", scorer: "阿什拉夫·哈基米 (Achraf Hakimi)", type: "shot" },
+      { min: 43,    side: "away", scorer: "威尔逊·伊西多尔 (Wilson Isidor)",  type: "shot", assist: "让·凯文·迪韦纳 (Jean-Kévin Duverne)" },
+      { min: "45+1",side: "home", scorer: "伊斯梅尔·赛巴里 (Ismael Saibari)", type: "shot", assist: "阿什拉夫·哈基米 (Achraf Hakimi)" },
+      { min: 78,    side: "home", scorer: "苏菲安·拉希米 (Soufiane Rahimi)", type: "shot", assist: "沙迪·里亚德 (Chadi Riad)" },
+      { min: 89,    side: "home", scorer: "贾西姆·亚辛 (Jassim Yassine)",    type: "shot", assist: "苏菲安·拉希米 (Soufiane Rahimi)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 3, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1767,3 +1792,5 @@ matchStats["2026|L|PAN|CRO"] = {p1:"42%",p2:"58%",ps1:null,ps2:null,sh1:6,sh2:5,
 matchStats["2026|K|COL|COD"] = {p1:"64%",p2:"36%",ps1:null,ps2:null,sh1:15,sh2:5,so1:9,so2:2,sb1:6,sb2:3,co1:5,co2:4,fo1:12,fo2:16,os1:7,os2:0,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:102,at2:68,da1:31,da2:22,pk1:0,pk2:0};
 matchStats["2026|B|BIH|QAT"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:9,so1:5,so2:3,sb1:4,sb2:6,co1:5,co2:5,fo1:9,fo2:14,os1:1,os2:3,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:75,da1:46,da2:33,pk1:0,pk2:0};
 matchStats["2026|B|SUI|CAN"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:5,sh2:10,so1:4,so2:7,sb1:1,sb2:3,co1:2,co2:7,fo1:19,fo2:13,os1:1,os2:3,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:74,at2:96,da1:24,da2:51,pk1:0,pk2:0};
+matchStats["2026|C|SCO|BRA"] = {p1:"46%",p2:"54%",ps1:null,ps2:null,sh1:11,sh2:16,so1:5,so2:9,sb1:6,sb2:7,co1:7,co2:7,fo1:10,fo2:11,os1:0,os2:1,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:103,da1:37,da2:41,pk1:0,pk2:0};
+matchStats["2026|C|MAR|HAI"] = {p1:"69%",p2:"31%",ps1:null,ps2:null,sh1:17,sh2:6,so1:11,so2:2,sb1:6,sb2:4,co1:9,co2:1,fo1:10,fo2:18,os1:5,os2:0,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:109,at2:73,da1:62,da2:13,pk1:0,pk2:0};
