@@ -586,7 +586,7 @@ window._customPct = {};         // { stratId: pct, ... } — 用户自定义仓�
 // ================================================================
 
 // ── Worker API 地址（部署后替换为实际 URL）──
-var WORKER_URL = 'https://fifaseek-activation.122196401.workers.dev';
+var WORKER_URL = 'https://fifaseek.com';
 
 // ── Token 存储键名 ──
 var INVITE_STORAGE_KEY = '_fifaseek_invite_v2';
@@ -626,7 +626,7 @@ window.verifyTokenRemote = function() {
     if (!data || !data.token) return;
     var ua = encodeURIComponent(navigator.userAgent || '');
     var token = encodeURIComponent(data.token);
-    fetch(WORKER_URL + '/verify?token=' + token + '&ua=' + ua)
+    fetch(WORKER_URL + '/api/verify?token=' + token + '&ua=' + ua)
       .then(function(r) { return r.json(); })
       .then(function(res) {
         if (!res.valid) { localStorage.removeItem(INVITE_STORAGE_KEY); window.applyFreemiumUI(); }
@@ -657,7 +657,7 @@ window.verifyInviteCode = async function() {
   msgEl.textContent = ''; msgEl.className = 'invite-msg';
 
   try {
-    var resp = await fetch(WORKER_URL + '/validate', {
+    var resp = await fetch(WORKER_URL + '/api/validate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code: code, ua: navigator.userAgent || '' })

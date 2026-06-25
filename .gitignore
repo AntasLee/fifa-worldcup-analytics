@@ -20,8 +20,7 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# 云函数/Worker（暂不需要）
-functions/
+# Worker（独立部署，不进 Pages）
 worker/
 
 # ── 激活码密钥（绝对不能上传）──
