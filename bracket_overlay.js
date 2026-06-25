@@ -353,7 +353,7 @@ Bracket.open=function(){
 Bracket.close=function(){
   var overlay=document.getElementById('bracketOverlay');if(!overlay)return;
   overlay.classList.remove('active');
-  var btn=document.getElementById('btnBracketToggle');if(btn){btn.classList.remove('active');btn.textContent='📋 晋级路线图';}
+  var btn=document.getElementById('btnBracketToggle');if(btn){btn.classList.remove('active');btn.textContent='📋 晋级路线';}
   closePicker();
 };
 
@@ -389,7 +389,7 @@ function showConfirm(msg, onOk, onCancel){
 }
 
 Bracket.resetAll=function(){
-  showConfirm('确定清空晋级路线图所有预测？此操作不可撤销。', function(){
+  showConfirm('确定清空晋级路线所有预测？此操作不可撤销。', function(){
     preds={};save();
     requestAnimationFrame(function(){
       renderAll();
@@ -455,7 +455,7 @@ Bracket.closeSaveModal=function(){
 };
 
 Bracket.confirmSave=function(){
-  Bracket.closeSaveModal();save();Bracket.toast('💾 晋级路线图已保存');
+  Bracket.closeSaveModal();save();Bracket.toast('💾 晋级路线已保存');
 };
 
 Bracket.closePicker=closePicker;

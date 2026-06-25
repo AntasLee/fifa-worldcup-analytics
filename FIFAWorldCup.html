@@ -223,7 +223,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .player-dot.forward{border-color:#f0d070;color:#f0d070}
 .formation-label{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:0.65rem;font-weight:700;color:#fff;background:rgba(0,0,0,0.5);padding:2px 8px;border-radius:4px;z-index:4;letter-spacing:1px}
 .footer-note{text-align:center;padding:20px;color:var(--text-secondary);font-size:0.75rem;letter-spacing:0.5px}
-@media(max-width:768px){.groups-grid{grid-template-columns:1fr}.toolbar{flex-direction:column;align-items:stretch}.toolbar-left{flex-direction:column}.search-input{width:100%}.match-item{flex-wrap:wrap;gap:5px}.team-block{min-width:90px}.standings-panel{margin:6px 6px 0 6px;padding:8px;border-radius:4px 4px 0 0}.standings-table{font-size:0.65rem}.standings-table th,.standings-table td{padding:4px 3px}.standings-table .rnk-badge{width:18px;height:18px;font-size:0.6rem;border-radius:3px}.standings-table .pts-pill{padding:2px 7px;font-size:0.7rem;min-width:26px;border-radius:3px}.modal-box.prob-modal,.modal-box.backtest-modal,.modal-box.data-overview-modal,.modal-box.venue-analysis-modal{max-width:95vw;padding:12px}.modal-box.analysis-modal{max-width:95vw;padding:12px}.prob-matrix{font-size:0.6rem}.prob-matrix th,.prob-matrix td{padding:4px 2px}}
+@media(max-width:768px){.groups-grid{grid-template-columns:1fr}.toolbar{flex-direction:column;align-items:stretch}.toolbar-left{flex-direction:column}.search-input{width:100%}.match-item{flex-wrap:wrap;gap:5px}.team-block{min-width:90px}.standings-panel{margin:6px 6px 0 6px;padding:8px;border-radius:4px 4px 0 0}.standings-table{font-size:0.65rem}.standings-table th,.standings-table td{padding:4px 3px}.standings-table .rnk-badge{width:18px;height:18px;font-size:0.6rem;border-radius:3px}.standings-table .pts-pill{padding:2px 7px;font-size:0.7rem;min-width:26px;border-radius:3px}.modal-box.prob-modal,.modal-box.venue-analysis-modal{max-width:95vw;padding:12px}.modal-box.analysis-modal{max-width:95vw;padding:12px}.prob-matrix{font-size:0.6rem}.prob-matrix th,.prob-matrix td{padding:4px 2px}}
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
@@ -323,7 +323,6 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .src-footer{padding:7px 14px;font-size:0.58rem;color:#444;text-align:right;border-top:1px solid rgba(255,255,255,0.04)}
 @media(max-width:768px){.analysis-hero-refined{grid-template-columns:1fr;gap:12px}.fm-dual-row{grid-template-columns:1fr}}
 /* ========== 策略回测弹窗样式 ========== */
-.backtest-modal{max-width:1100px!important;width:95%;max-height:88vh}
 .backtest-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
 .backtest-summary-card{background:var(--surface2);border-radius:10px;padding:18px 16px;text-align:center;border:1px solid var(--border);transition:all 0.2s}
 .backtest-summary-card:hover{border-color:var(--gold);transform:translateY(-2px)}
@@ -452,11 +451,6 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .past-pk-detail{display:none;font-size:0.58rem;color:#e74c3c;margin-top:2px;font-weight:600}
 .past-pk-detail.show{display:block}
 
-/* Backtest modal additional */
-.backtest-modal .stage-summary-cards{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0}
-.backtest-modal .stage-summary-cards .ssc{flex:1;min-width:130px;background:var(--surface);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border)}
-.backtest-modal .ssc .ssc-val{font-size:1.3rem;font-weight:800}
-.backtest-modal .ssc .ssc-lbl{font-size:0.65rem;color:var(--text-secondary);margin-top:2px}
 
 
 .match-detail-modal{max-width:750px!important;width:95%;max-height:88vh}
@@ -499,7 +493,6 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .detail-stat-item .stat-val{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:2px}
 .detail-stat-item .stat-lbl{font-size:0.62rem;color:var(--text-secondary)}
 /* ========== 数据统计弹窗样式 ========== */
-.data-overview-modal{max-width:1100px!important;width:95%;max-height:88vh}
 .overview-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
 .overview-stat-card{background:var(--surface2);border-radius:8px;padding:14px 12px;text-align:center;border:1px solid var(--border)}
 .overview-stat-card .stat-num{font-size:1.4rem;font-weight:800;color:var(--gold-light)}
@@ -1412,18 +1405,18 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
 .btn-bracket-primary {
   padding: 12px 24px;
-  border: 2px solid rgba(240,208,112,0.7);
+  border: 2px solid rgba(160,175,190,0.5);
   border-radius: 10px;
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 700;
   background: rgba(20,27,34,0.9);
-  color: #f0d070;
+  color: #c0c8d0;
   letter-spacing: 1px;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 16px rgba(240,208,112,0.3), 0 0 36px rgba(240,208,112,0.12), 0 0 60px rgba(240,208,112,0.05), inset 0 0 12px rgba(240,208,112,0.05);
+  box-shadow: 0 0 10px rgba(180,195,210,0.25), 0 0 24px rgba(180,195,210,0.08), inset 0 0 8px rgba(180,195,210,0.04);
 }
 .btn-bracket-primary::after {
   content: '';
@@ -1432,7 +1425,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   left: -120%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(240,208,112,0.12), transparent);
+  background: linear-gradient(90deg, transparent, rgba(200,210,220,0.12), transparent);
   transform: skewX(-25deg);
   animation: streakSweep 3.5s ease-in-out infinite;
   pointer-events: none;
@@ -1442,16 +1435,16 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   animation-duration: 1.5s;
 }
 .btn-bracket-primary:hover {
-  border-color: #f8e090;
+  border-color: rgba(200,215,225,0.7);
   color: #fff;
-  box-shadow: 0 0 24px rgba(240,208,112,0.5), 0 0 48px rgba(240,208,112,0.2), 0 0 80px rgba(240,208,112,0.08), inset 0 0 18px rgba(240,208,112,0.1);
+  box-shadow: 0 0 18px rgba(180,195,210,0.45), 0 0 36px rgba(180,195,210,0.18), 0 0 54px rgba(180,195,210,0.06), inset 0 0 14px rgba(180,195,210,0.08);
   transform: translateY(-2px);
 }
 .btn-bracket-primary.active {
-  background: linear-gradient(135deg, #d4a843, #f0d070);
-  border-color: #f0d070;
+  background: linear-gradient(135deg, #6a7a90, #8a9aa8);
+  border-color: #a0b0c0;
   color: #111;
-  box-shadow: 0 0 28px rgba(240,208,112,0.5), 0 0 56px rgba(240,208,112,0.25), inset 0 0 16px rgba(255,255,255,0.2);
+  box-shadow: 0 0 22px rgba(180,195,210,0.45), 0 0 44px rgba(180,195,210,0.2), inset 0 0 12px rgba(255,255,255,0.15);
 }
 
 
@@ -1462,7 +1455,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 /* 工具栏统一：mainToolbar 与 searchToolbar 同 padding / 间距 / 按钮 */
 #mainToolbar{padding:10px 18px !important;gap:8px !important;margin-bottom:8px !important}
 #mainToolbar .btn,#mainToolbar .btn-primary,#mainToolbar .btn-bracket-primary,#mainToolbar .btn-accent{padding:6px 12px !important;font-size:0.78rem !important;min-height:32px !important;height:auto !important;line-height:1.3 !important;border-radius:6px !important}
-#mainToolbar .btn-bracket-primary{box-shadow:0 0 10px rgba(240,208,112,0.2),0 0 20px rgba(240,208,112,0.08),inset 0 0 8px rgba(240,208,112,0.04) !important;border-width:1.5px !important}
+#mainToolbar .btn-bracket-primary{box-shadow:0 0 10px rgba(180,195,210,0.2),0 0 20px rgba(180,195,210,0.08),inset 0 0 8px rgba(180,195,210,0.04) !important;border-width:1.5px !important}
 #searchToolbar{padding:10px 18px !important;margin-bottom:8px !important}
 #searchToolbar .search-input{padding:6px 10px !important;font-size:0.78rem !important;height:32px !important}
 #searchToolbar .btn{padding:6px 12px !important;font-size:0.78rem !important;min-height:32px !important;height:auto !important}
@@ -2209,89 +2202,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
 
   /* ── V1.74 策略回测弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
-  .backtest-modal {
-    padding: 12px !important;
-  }
-  .backtest-modal h3 {
-    font-size: 0.82rem !important;
-    gap: 4px !important;
-    flex-wrap: wrap !important;
-  }
-  .backtest-modal h3 .btn-compare {
-    font-size: 0.58rem !important;
-    padding: 3px 8px !important;
-    min-height: 24px !important;
-  }
-  .backtest-summary-grid {
-    grid-template-columns: 1fr;
-    gap: 6px;
-    margin: 8px 0 !important;
-  }
-  .backtest-summary-card {
-    padding: 10px 8px !important;
-  }
-  .backtest-summary-card .card-label {
-    font-size: 0.62rem !important;
-    margin-bottom: 2px !important;
-  }
-  .backtest-summary-card .card-value {
-    font-size: 1.15rem !important;
-    margin-bottom: 2px !important;
-  }
-  .backtest-summary-card .card-sub {
-    font-size: 0.56rem !important;
-    line-height: 1.4 !important;
-  }
-  .backtest-section-title {
-    font-size: 0.7rem !important;
-    margin: 10px 0 6px !important;
-    padding-bottom: 4px !important;
-  }
-  .backtest-insight {
-    font-size: 0.6rem !important;
-    padding: 8px 10px !important;
-    margin: 6px 0 !important;
-    line-height: 1.5 !important;
-  }
-  .backtest-table {
-    font-size: 0.58rem !important;
-    margin: 6px 0 !important;
-  }
-  .backtest-table th {
-    padding: 6px 4px !important;
-    font-size: 0.55rem !important;
-  }
-  .backtest-table td {
-    padding: 5px 4px !important;
-    font-size: 0.55rem !important;
-  }
-  .backtest-detail-table {
-    font-size: 0.55rem !important;
-    margin: 4px 0 !important;
-  }
-  .backtest-detail-table th {
-    padding: 5px 3px !important;
-    font-size: 0.52rem !important;
-  }
-  .backtest-detail-table td {
-    padding: 4px 3px !important;
-    font-size: 0.52rem !important;
-  }
-  .backtest-modal .stage-summary-cards {
-    gap: 4px !important;
-    margin: 6px 0 !important;
-  }
-  .backtest-modal .stage-summary-cards .ssc {
-    min-width: 90px !important;
-    padding: 8px 6px !important;
-  }
-  .backtest-modal .ssc .ssc-val {
-    font-size: 1rem !important;
-  }
-  .backtest-modal .ssc .ssc-lbl {
-    font-size: 0.55rem !important;
-  }
-  .backtest-legend {
+    .backtest-legend {
     font-size: 0.55rem !important;
     gap: 8px !important;
     margin: 4px 0 !important;
@@ -2431,20 +2342,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
 
   /* ── V1.74 数据统计弹窗 — 移动端全面优化（参照 prob-modal 定位）── */
-  .data-overview-modal {
-    padding: 12px !important;
-  }
-  .data-overview-modal h3 {
-    font-size: 0.82rem !important;
-    gap: 4px !important;
-    flex-wrap: wrap !important;
-  }
-  .data-overview-modal h3 .btn-compare {
-    font-size: 0.58rem !important;
-    padding: 3px 8px !important;
-    min-height: 24px !important;
-  }
-  .overview-summary-grid {
+    .overview-summary-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 6px !important;
     margin: 8px 0 !important;
@@ -3085,104 +2983,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
      ═══════════════════════════════════════════════════ */
 
   /* ① 所有容器div：强制裁剪溢出 + 宽度锁定 */
-  #backtestModal div,
-  #dataOverviewModal div,
-  #venueAnalysisModal div {
-    overflow-x: hidden !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    min-width: 0 !important;
   }
-
-  /* ② 表格：强制适配 + 锁定宽度 */
-  #backtestModal table,
-  #dataOverviewModal table,
-  #venueAnalysisModal table {
-    table-layout: fixed !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    display: table !important;
-    overflow: hidden !important;
-  }
-
-  /* ③ 所有单元格：允许换行 + 极紧凑字号 + 最小间距 */
-  #backtestModal th,
-  #backtestModal td,
-  #dataOverviewModal th,
-  #dataOverviewModal td,
-  #venueAnalysisModal th,
-  #venueAnalysisModal td {
-    white-space: normal !important;
-    word-break: break-all !important;
-    overflow-wrap: anywhere !important;
-    hyphens: auto !important;
-    min-width: 0 !important;
-    padding: 2px 2px !important;
-    font-size: 0.42rem !important;
-    line-height: 1.15 !important;
-  }
-
-  /* ④ 内容区：仅垂直滚动，禁止水平滚动 + contain封锁 */
-  #backtestContent,
-  #dataOverviewContent,
-  #venueAnalysisContent {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    max-width: 100% !important;
-    contain: inline-size !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-
-  /* ⑤ 弹窗框容器 */
-  #backtestModal .modal-box,
-  #dataOverviewModal .modal-box,
-  #venueAnalysisModal .modal-box {
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    max-width: 95vw !important;
-    contain: inline-size !important;
-  }
-
-  /* ⑥ 摘要卡片紧凑 */
-  #backtestModal .backtest-summary-card,
-  #dataOverviewModal .backtest-summary-card { padding: 5px 4px !important; }
-  #backtestModal .card-value,
-  #dataOverviewModal .card-value { font-size: 0.85rem !important; }
-  #backtestModal .card-label,
-  #dataOverviewModal .card-label { font-size: 0.48rem !important; }
-  #backtestModal .card-sub,
-  #dataOverviewModal .card-sub { font-size: 0.42rem !important; line-height: 1.2 !important; }
-
-  /* ⑦ 标题 + 洞察紧凑 */
-  #backtestModal .backtest-section-title,
-  #dataOverviewModal .backtest-section-title { font-size: 0.55rem !important; margin: 4px 0 2px !important; padding-bottom: 2px !important; }
-  #backtestModal .backtest-insight,
-  #dataOverviewModal .backtest-insight { font-size: 0.46rem !important; padding: 4px 6px !important; line-height: 1.25 !important; margin: 3px 0 !important; }
-
-  /* ⑧ 射手榜超紧凑 */
-  #dataOverviewModal .scorer-table { font-size: 0.42rem !important; }
-  #dataOverviewModal .scorer-table th { padding: 3px 2px !important; font-size: 0.38rem !important; }
-  #dataOverviewModal .scorer-table td { padding: 2px 2px !important; font-size: 0.38rem !important; line-height: 1.15 !important; }
-
-  /* ⑨ h3 + 按钮紧凑 + flex允许换行 */
-  #backtestModal h3,
-  #dataOverviewModal h3,
-  #venueAnalysisModal h3 { font-size: 0.65rem !important; padding: 4px 6px !important; flex-wrap: wrap !important; gap: 4px !important; }
-  #backtestModal h3 .btn-compare,
-  #dataOverviewModal h3 .btn-compare { font-size: 0.58rem !important; padding: 3px 8px !important; min-height: 24px !important; }
-  #backtestModal h3 .modal-close,
-  #dataOverviewModal h3 .modal-close,
-  #venueAnalysisModal h3 .modal-close { font-size: 1.1rem !important; padding: 8px !important; }
-
-  /* ⑩ 图表容器防溢出 */
-  #backtestModal .backtest-chart-container,
-  #dataOverviewModal .overview-bar-chart,
-  #venueAnalysisModal [style*="overflow"] {
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-  }
-}
 
 /* ===== V1.74 本场表现评价弹窗 — 紫金主题 ===== */
 .eval-modal{max-width:720px;background:linear-gradient(180deg,#0d0b1a 0%,#0a0814 100%);border-radius:12px;border:1px solid #7c3aed30;padding:0;overflow-y:auto}
@@ -4159,9 +3960,9 @@ function toggleProbUpdate() {
   <div class="prob-update-wrapper">
     <span class="prob-update-capsule expanded" onclick="toggleProbUpdate()">📊 版本更新 ▴</span>
     <div class="prob-update-dropdown expanded" id="probUpdateDropdown">
-	      <div class="prob-update-item prob-update-gold">📈 数据统计完全登陆</div>
-	      <div class="prob-update-item">✨ 新增表现评价引擎</div>
-	      <div class="prob-update-item">🎯 赛果命中概率结算</div>
+      <div class="prob-update-item prob-update-gold">⚔️ 策略引擎进入测试</div>
+      <div class="prob-update-item prob-update-gold">📈 数据统计完全登陆</div>
+      <div class="prob-update-item">✨ 新增表现评价引擎</div>
       <div class="prob-update-divider"></div>
       <div class="prob-update-hint">
 <button class="btn-hard-refresh" onclick="hardRefresh()" title="完全等效 CTRL+SHIFT+R：清除所有缓存并强制刷新全部资源">🔄 点击加载新版</button>
@@ -4207,14 +4008,14 @@ function toggleProbUpdate() {
 <div class="container">
 <div class="toolbar" id="mainToolbar" style="visibility:hidden;">
   <div class="toolbar-left">
-    <button class="btn btn-bracket-primary" id="btnBracketToggle" onclick="Bracket.toggle()">📋 晋级路线图</button>
-      <button class="btn btn-primary" onclick="showRulesModal()">📖 比赛规则</button>
       <button class="btn btn-primary" onclick="switchToTab('Strategy/strategy.html','strategy_tab')" title="世界杯策略回测引擎 — 胜平负·让球盘·大小球·量化策略">⚔️ 策略引擎</button>
+    <button class="btn btn-bracket-primary" id="btnBracketToggle" onclick="Bracket.toggle()" style="color:#c0c8d0;border-color:rgba(160,175,190,0.4);box-shadow:0 0 10px rgba(180,195,210,0.25),0 0 24px rgba(180,195,210,0.08),inset 0 0 8px rgba(180,195,210,0.04);">📋 晋级路线</button>
+      <button class="btn btn-primary" onclick="showRulesModal()" style="color:#c0c8d0;border-color:rgba(160,175,190,0.4);box-shadow:0 0 10px rgba(180,195,210,0.25),0 0 24px rgba(180,195,210,0.08),inset 0 0 8px rgba(180,195,210,0.04);">📖 比赛规则</button>
   </div>
   <div style="display:flex;gap:8px;">
-    <button class="btn" onclick="resetAllPredictions()">🔄 重置小组预测</button>
-    <button class="btn btn-accent" onclick="showMyPredictionsModal()">📋 我的预测汇总</button>
-    <button class="btn btn-primary" onclick="savePredictions()">💾 保存全部预测</button>
+    <button class="btn btn-accent" onclick="showMyPredictionsModal()">📋 预测明细</button>
+    <button class="btn" onclick="resetAllPredictions()">🔄 重置预测</button>
+    <button class="btn btn-primary" onclick="savePredictions()">💾 保存预测</button>
   </div>
 </div>
 <div class="toolbar search-row-toolbar" id="searchToolbar" style="padding:10px 18px;">
@@ -4238,7 +4039,7 @@ function toggleProbUpdate() {
   <div class="bk-header">
     <div class="bk-header-left">
       <span class="bk-header-trophy">🏆</span>
-      <span class="bk-header-title">2026 世界杯 · 晋级路线图</span>
+      <span class="bk-header-title">2026 世界杯 · 晋级路线</span>
       <span class="bk-header-subtitle">FIFA World Cup 2026™ — Knockout Bracket</span>
     </div>
     <div class="bk-header-right">
@@ -4266,7 +4067,7 @@ function toggleProbUpdate() {
   <div class="bk-picker-popup" id="bkPickerPopup"></div>
   <div class="bk-save-overlay" id="bkSaveOverlay">
     <div class="bk-save-box">
-      <h3>💾 保存晋级路线图</h3>
+      <h3>💾 保存晋级路线</h3>
       <div style="font-size:0.75rem;color:#a09888;margin-bottom:14px;" id="bkSavePreview"></div>
       <div class="save-confirm">
         <button class="bk-btn gold" onclick="Bracket.confirmSave()">✅ 确认保存</button>
@@ -4291,8 +4092,6 @@ function toggleProbUpdate() {
 <div class="past-wc-main-container" id="pastWCMainContainer">
   <div class="past-wc-main-toolbar">
     <div class="past-wc-subtabs" id="pastWCStageTabsMain"></div>
-    <button class="btn" onclick="runFlatBacktestMain()" style="margin-right:4px;background:transparent;border-color:#4caf84;color:#6ecc98;">📊 均注策略</button><button class="btn" onclick="runBacktest()" style="background:transparent;border-color:#ff8c42;color:#ffb366;">🎯 优选策略</button>
-    <button class="btn" onclick="showDataOverview()" style="background:transparent;border-color:#ab47bc;color:#ce93d8;">📈 数据统计</button>
   </div>
   <div class="past-wc-main-info" id="pastWCInfoMain"></div>
   <div id="pastWCContentMain" style="max-height:60vh;overflow-y:auto;"></div>
@@ -4321,12 +4120,6 @@ function toggleProbUpdate() {
 <div class="toast" id="toast"></div>
 
 
-<!-- 策略回测弹窗 V20 -->
-<div class="modal-overlay" id="backtestModal"><div class="modal-box backtest-modal">
-<h3><span class="modal-title-text" id="backtestModalTitle">📊 策略回测</span> <span style="font-size:0.7rem;color:var(--text-secondary);" id="backtestYearLabel"></span> <span style="display:flex;align-items:center;gap:8px;"><button class="btn btn-compare" onclick="event.stopPropagation();runComparison();">📊 数据对比</button><span class="modal-close" onclick="closeBacktestModal()">✕</span></span></h3>
-<div id="backtestContent" style="max-height:65vh;overflow-y:auto;"></div>
-</div></div>
-
 <!-- 比赛详情弹窗 -->
 
 <div class="modal-overlay" id="matchDetailModal"><div class="modal-box match-detail-modal">
@@ -4338,12 +4131,6 @@ function toggleProbUpdate() {
 <div class="modal-overlay" id="evalModal"><div class="modal-box eval-modal" id="evalModalBox">
 <h3 class="eval-modal-hd"><span>🎮 本场表现评价</span><span class="modal-close" onclick="closeMatchEval()">✕</span></h3>
 <div id="evalContent"></div>
-</div></div>
-
-<!-- 数据统计弹窗 -->
-<div class="modal-overlay" id="dataOverviewModal"><div class="modal-box data-overview-modal">
-<h3>📈 数据统计 <span style="font-size:0.7rem;color:var(--text-secondary);" id="dataOverviewYearLabel"></span> <span style="display:flex;align-items:center;gap:8px;"><button class="btn btn-compare" onclick="event.stopPropagation();runDataOverviewComparison();">📊 数据对比</button><span class="modal-close" onclick="closeDataOverview()">✕</span></span></h3>
-<div id="dataOverviewContent" style="max-height:65vh;overflow-y:auto;"></div>
 </div></div>
 
 <!-- V1.77 四弹窗：数据统计拆分 -->
@@ -4414,7 +4201,7 @@ function toggleProbUpdate() {
 <!-- World Cup Bracket V9 Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
 <script>
-// Bracket 延迟加载器 — bracket_overlay.js (21KB) 首屏不加载，点击晋级路线图时按需注入
+// Bracket 延迟加载器 — bracket_overlay.js (21KB) 首屏不加载，点击晋级路线时按需注入
 (function() {
   var _loading = false, _loaded = false;
   window._loadBracket = function(cb) {
@@ -4438,7 +4225,7 @@ function toggleProbUpdate() {
       var btn = document.getElementById('btnBracketToggle');
       if (btn) { btn.textContent = '⏳ 加载中...'; btn.disabled = true; }
       window._loadBracket(function() {
-        if (btn) { btn.textContent = '📋 晋级路线图'; btn.disabled = false; }
+        if (btn) { btn.textContent = '📋 晋级路线'; btn.disabled = false; }
         window.Bracket.toggle();
       });
     };
@@ -4807,7 +4594,7 @@ Bracket.toggle=function(){
   var isVisible=section.classList.contains('visible');
   if(isVisible){
     section.classList.remove('visible');
-    if(btn){btn.classList.remove('active');btn.textContent='📋 晋级路线图';}
+    if(btn){btn.classList.remove('active');btn.textContent='📋 晋级路线';}
     var groupsC=document.getElementById('groupsContainer');
     var koPanel=document.getElementById('knockoutPanel');
     var mainToolbar=document.getElementById('mainToolbar');
@@ -4837,7 +4624,7 @@ Bracket.toggle=function(){
 };
 
 Bracket.resetAll=function(){
-  if(!confirm('确定清空晋级路线图所有预测？此操作不可撤销。'))return;
+  if(!confirm('确定清空晋级路线所有预测？此操作不可撤销。'))return;
   preds={};
   save();
   ALL_SLOTS.forEach(function(s){
@@ -4846,7 +4633,7 @@ Bracket.resetAll=function(){
     if(cardElements[s.id])updateCardEl(cardElements[s.id],s);
   });
   updateProgress();
-  Bracket.toast('已清空晋级路线图');
+  Bracket.toast('已清空晋级路线');
 };
 
 Bracket.toast=function(msg){
@@ -4868,7 +4655,7 @@ Bracket.saveImage=function(){
     link.download='WorldCupBracket_V8.png';
     link.href=canvas.toDataURL('image/png');
     link.click();
-    Bracket.toast('📸 晋级路线图已导出');
+    Bracket.toast('📸 晋级路线已导出');
   }).catch(function(){
     alert('截图失败，请重试');
   });
@@ -4881,7 +4668,7 @@ Bracket.closeSaveModal=function(){
 Bracket.confirmSave=function(){
   Bracket.closeSaveModal();
   save();
-  Bracket.toast('💾 晋级路线图已保存');
+  Bracket.toast('💾 晋级路线已保存');
 };
 
 var _initialized=false;

@@ -1757,6 +1757,27 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: null, referee: "TBD"
   },
+
+  "2026|E|ECU|GER": {
+    score: { sh: 2, sa: 1 },
+    goals: [
+      { min: 2,  side: "away", scorer: "勒鲁瓦·萨内 (Leroy Sané)",        type: "shot", assist: "佛洛里安·维尔茨 (Florian Wirtz)" },
+      { min: 9,  side: "home", scorer: "尼尔松·安古洛 (Nilson Angulo)",    type: "shot", assist: "佩德罗·比特 (Pedro Vite)" },
+      { min: 77, side: "home", scorer: "贡萨洛·普拉塔 (Gonzalo Plata)",    type: "shot", assist: "凯文·罗德里格斯 (Kevin Rodríguez)" }
+    ],
+    cards: { home: { yellow: 3, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "Tori Penso (USA)"
+  },
+
+  "2026|E|CUW|CIV": {
+    score: { sh: 0, sa: 2 },
+    goals: [
+      { min: 7,  side: "away", scorer: "尼古拉·佩佩 (Nicolas Pépé)", type: "shot", assist: "杨·迪奥曼德 (Yan Diomandé)" },
+      { min: 64, side: "away", scorer: "尼古拉·佩佩 (Nicolas Pépé)", type: "shot", assist: "易卜拉欣·桑加雷 (Ibrahim Sangaré)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1816,3 +1837,5 @@ matchStats["2026|C|SCO|BRA"] = {p1:"46%",p2:"54%",ps1:null,ps2:null,sh1:11,sh2:1
 matchStats["2026|C|MAR|HAI"] = {p1:"69%",p2:"31%",ps1:null,ps2:null,sh1:17,sh2:6,so1:11,so2:2,sb1:6,sb2:4,co1:9,co2:1,fo1:10,fo2:18,os1:5,os2:0,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:109,at2:73,da1:62,da2:13,pk1:0,pk2:0};
 matchStats["2026|A|CZE|MEX"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:9,sh2:9,so1:1,so2:5,sb1:8,sb2:4,co1:5,co2:1,fo1:9,fo2:13,os1:1,os2:0,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:93,at2:86,da1:28,da2:31,pk1:0,pk2:0};
 matchStats["2026|A|RSA|KOR"] = {p1:"32%",p2:"68%",ps1:null,ps2:null,sh1:9,sh2:7,so1:4,so2:3,sb1:5,sb2:4,co1:4,co2:6,fo1:7,fo2:9,os1:3,os2:0,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:80,at2:138,da1:22,da2:92,pk1:0,pk2:0};
+matchStats["2026|E|ECU|GER"] = {p1:"39%",p2:"61%",ps1:null,ps2:null,sh1:5,sh2:6,so1:3,so2:3,sb1:2,sb2:3,co1:3,co2:2,fo1:15,fo2:10,os1:0,os2:0,yc1:3,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:102,at2:113,da1:40,da2:56,pk1:0,pk2:0};
+matchStats["2026|E|CUW|CIV"] = {p1:"37%",p2:"63%",ps1:null,ps2:null,sh1:9,sh2:6,so1:2,so2:3,sb1:7,sb2:3,co1:4,co2:6,fo1:11,fo2:6,os1:2,os2:1,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:86,at2:114,da1:37,da2:54,pk1:0,pk2:0};

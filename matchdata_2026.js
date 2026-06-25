@@ -1201,6 +1201,77 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|E|ECU|GER": {
+    score: { sh: 2, sa: 1 },
+    date: "2026-06-26",
+    time: "04:00",
+    venue: "MetLife体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 2,  side: "away", scorer: "勒鲁瓦·萨内",   type: "shot", assist: "佛洛里安·维尔茨" },
+      { min: 9,  side: "home", scorer: "尼尔松·安古洛",   type: "shot", assist: "佩德罗·比特" },
+      { min: 77, side: "home", scorer: "贡萨洛·普拉塔",   type: "shot", assist: "凯文·罗德里克斯" }
+    ],
+    stats: {
+      possession:      { h: 39, a: 61 },
+      shots:           { h: 5,  a: 6 },
+      shotsOnTarget:   { h: 3,  a: 3 },
+      corners:         { h: 3,  a: 2 },
+      fouls:           { h: 15, a: 10 },
+      yellowCards:     { h: 3,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 102,a: 113 },
+      dangerousAttacks:{ h: 40, a: 56 }
+    },
+    attendance: null,
+    referee: "Tori Penso (USA)",
+    xg: null,
+    mediaRating: {
+      motm: "贡萨洛·普拉塔",
+      sources: ["FOX Sports", "ABC News", "ESPN", "FIFA"],
+      home: {score: 9, quotes: "厄瓜多尔爆出本届最大冷门逆转德国！萨内2分钟闪电破门后，安古洛7分钟后即扳平。普拉塔第77分钟打入制胜球，全场39%控球却以高效反击三度射正两度破门。这场胜利让4分的厄瓜多尔强势竞逐最佳小组第三。"},
+      away: {score: 4, quotes: "德国虽已提前出线但冷负敲响警钟。萨内闪击后全队松懈，防线被厄瓜多尔两次反击击溃。61%控球仅3次射正，纳格尔斯曼轮换策略适得其反，终结此前11连胜纪录。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|E|CUW|CIV": {
+    score: { sh: 0, sa: 2 },
+    date: "2026-06-26",
+    time: "04:00",
+    venue: "费城体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 7,  side: "away", scorer: "尼古拉·佩佩", type: "shot", assist: "杨·迪奥曼德" },
+      { min: 64, side: "away", scorer: "尼古拉·佩佩", type: "shot", assist: "易卜拉欣·桑加雷" }
+    ],
+    stats: {
+      possession:      { h: 37, a: 63 },
+      shots:           { h: 9,  a: 6 },
+      shotsOnTarget:   { h: 2,  a: 3 },
+      corners:         { h: 4,  a: 6 },
+      fouls:           { h: 11, a: 6 },
+      yellowCards:     { h: 2,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 86, a: 114 },
+      dangerousAttacks:{ h: 37, a: 54 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "尼古拉·佩佩",
+      sources: ["FOX Sports", "VAVEL", "FIFA", "Yahoo Sports"],
+      home: {score: 4, quotes: "库拉索的世界杯童话到此结束。门将鲁姆再献英勇表现但面对佩佩的梅开二度无力回天。三战积1分虽已淘汰，这支加勒比小国零封厄瓜多尔已赢得世界尊重。"},
+      away: {score: 8, quotes: "佩佩梅开二度助科特迪瓦锁定E组第二出线。迪奥曼德开场抢断助攻首球，桑加雷下半场再送妙传。三战6分延续非洲足球强势表现，大象军团从首轮绝杀到末轮完胜展现了令人敬畏的战斗力。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // B组
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },
