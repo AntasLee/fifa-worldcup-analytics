@@ -7,7 +7,7 @@
 
 // FIFA World Cup Data Analysis - Player & Match Database
 // Auto-generated from HTML data section. Update this file to modify data.
-// Version: V1.79 | Generated: 2026-07-19
+// Version: V1.80 | Generated: 2026-07-19
 // These variables are at global scope and accessible from the main application.
 
 // ===== Global shared state (used by both data & UI) =====

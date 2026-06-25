@@ -24,10 +24,27 @@ npm-debug.log*
 functions/
 worker/
 
+# ── 激活码密钥（绝对不能上传）──
+Strategy/Classified/
+
+# ── 内部开发文档 ──
+Strategy/freemium-实施记录.md
+Strategy/VIBECODING-GUIDE.md
+Strategy/strategy-notes.md
+Strategy/*改动记录*.md
+Strategy/*设计记录*.md
+IMPLEMENTATION_PLAN_FREEMIUM.md
+Operating_Specification/
+
+# ── 工具脚本（不需要部署）──
+tools/
+
 # 临时文件
 tmp/
 temp/
 *.tmp
+_test_result.txt
+desktop.ini
 
 # Claude Code 本地配置（含密钥）
 .mcp.json

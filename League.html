@@ -1764,7 +1764,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     // Fast path: session cache hit → skip animation
     var _sessionFastPath = false;
     try {
-      if (sessionStorage.getItem('engineDataBuilt') === 'V1.79') {
+      if (sessionStorage.getItem('engineDataBuilt') === 'V1.80') {
         _sessionFastPath = true;
         sessionStorage.removeItem('engineDataBuilt');
       }
@@ -1864,7 +1864,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 window.scrollToContinent = filterByContinent; // backward compat
 })();
 </script>
-<div class="footer-note">* 联赛&俱乐部，提供对现有数据库内容进行汇总和查询的功能。版本 V1.74</div>
+<div class="footer-note">* 联赛&俱乐部，提供对现有数据库内容进行汇总和查询的功能。版本 V1.80</div>
 
 <script>
 // === 跨页面标签切换 ===
@@ -1941,7 +1941,7 @@ window.scrollToContinent = filterByContinent; // backward compat
 			}
 			window.__playerDataReady = true;
 			window.__playerDBReady = true;
-			try { sessionStorage.setItem('engineDataBuilt', 'V1.79'); } catch(e) {}
+			try { sessionStorage.setItem('engineDataBuilt', 'V1.80'); } catch(e) {}
 			return;
 		}
 		var script = document.createElement('script');
