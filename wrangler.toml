@@ -14,3 +14,8 @@ SITE_TITLE = "FIFA World Cup Analytics"
 # 开发服务器配置（可选）
 [dev]
 port = 8080
+
+# ── Pages Functions KV 绑定 ──
+[[kv_namespaces]]
+binding = "ACTIVATION_CODES"
+id = "7993ff95b247423fa1a960c79279ad09"
