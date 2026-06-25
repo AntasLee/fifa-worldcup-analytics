@@ -1131,6 +1131,76 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|A|CZE|MEX": {
+    score: { sh: 0, sa: 3 },
+    date: "2026-06-25",
+    time: "09:00",
+    venue: "阿兹台克球场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 55,    side: "away", scorer: "马特奥·查韦斯",   type: "shot", assist: "路易斯·罗莫" },
+      { min: 61,    side: "away", scorer: "胡利安·基尼奥内斯", type: "shot", assist: "豪尔赫·桑切斯" },
+      { min: "90+4",side: "away", scorer: "阿尔瓦罗·菲达尔戈", type: "shot", assist: "罗伯托·阿尔瓦拉多" }
+    ],
+    stats: {
+      possession:      { h: 52, a: 48 },
+      shots:           { h: 9,  a: 9 },
+      shotsOnTarget:   { h: 1,  a: 5 },
+      corners:         { h: 5,  a: 1 },
+      fouls:           { h: 9,  a: 13 },
+      yellowCards:     { h: 0,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 93, a: 86 },
+      dangerousAttacks:{ h: 28, a: 31 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "马特奥·查韦斯",
+      sources: ["Sky Sports", "ESPN", "Fox Sports", "FIFA"],
+      home: {score: 3, quotes: "捷克三战仅积1分沦为A组副班长提前出局。上半场尚能与墨西哥周旋，但下半场防线崩盘连丢三球。全场仅1次射正、9次犯规暴露了攻防两端的全面劣势，10年前的历史荣光已渐行渐远。"},
+      away: {score: 8, quotes: "墨西哥9分完美收官创造队史首次小组全胜。查韦斯下半场打破僵局，基尼奥内斯和菲达尔戈相继锦上添花。奥乔亚第6届世界杯替补登场点燃阿兹台克，三战零失球展现东道主霸气。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|A|RSA|KOR": {
+    score: { sh: 1, sa: 0 },
+    date: "2026-06-25",
+    time: "09:00",
+    venue: "蒙特雷体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 63, side: "home", scorer: "塔佩洛·马塞科", type: "shot", assist: "采庞·莫雷米" }
+    ],
+    stats: {
+      possession:      { h: 32, a: 68 },
+      shots:           { h: 9,  a: 7 },
+      shotsOnTarget:   { h: 4,  a: 3 },
+      corners:         { h: 4,  a: 6 },
+      fouls:           { h: 7,  a: 9 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 80, a: 138 },
+      dangerousAttacks:{ h: 22, a: 92 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "塔佩洛·马塞科",
+      sources: ["Sky Sports", "The Guardian", "ESPN", "FIFA"],
+      home: {score: 9, quotes: "南非创造历史！马塞科第63分钟制胜球将巴法纳巴法纳首次送入世界杯淘汰赛。全场仅32%控球却以高效反击致命一击，莫雷米的助攻展现默契。从首轮9人惨败墨西哥到两场不败逆袭，布鲁斯的球队书写了非洲足球的励志传奇。"},
+      away: {score: 4, quotes: "韩国虽68%控球却无法转化为进球。主帅洪明甫将孙兴慜放在替补席引发争议，下半场换上后仍未能改变战局。3分仍可竞争最佳小组第三，但进攻端效率低下是不容忽视的致命短板。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // B组
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },

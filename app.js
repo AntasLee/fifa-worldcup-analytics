@@ -351,9 +351,9 @@ window.switchEdition=function(edition){
   // Always keep search toolbar visible
   if(searchToolbar) searchToolbar.style.display='flex';
   if(is2026){
-    if(g2026) g2026.style.display='block';
-    if(tabContainer) tabContainer.style.display='flex';
-    if(mainToolbar) mainToolbar.style.display='flex';
+    if(g2026){g2026.style.display='block';g2026.style.visibility='visible';}
+    if(tabContainer){tabContainer.style.display='flex';tabContainer.style.visibility='visible';}
+    if(mainToolbar){mainToolbar.style.display='flex';mainToolbar.style.visibility='visible';}
     if(pastMain) pastMain.classList.remove('visible');
     if(typeof mTab!=='undefined'&&mTab==='knockout'){
       if(ko2026) ko2026.classList.add('visible');

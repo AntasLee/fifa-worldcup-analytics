@@ -10,7 +10,7 @@
 <meta http-equiv="Expires" content="0">
 
 <!-- ===== SEO Meta ===== -->
-<title>FIFASeek | 世界杯数据分析 | 赛程·比分·球员·榜单·赔率·评估·预测</title>
+<title>FIFASeekWorldCup | 世界杯数据分析 | 赛程·比分·球员·榜单·赔率·评估·预测</title>
 <meta name="description" content="2026美加墨世界杯 & 2022卡塔尔世界杯完整数据平台。实时赛程、比分直播、球员数据库、球队排名、赔率分析、淘汰赛对阵图，一站式世界杯数据分析工具。">
 <meta name="keywords" content="世界杯,2026世界杯,世界杯数据,世界杯赛程,世界杯比分,球员数据,FIFA,World Cup,世界杯分析,足球数据">
 <meta name="author" content="ZHENTAO LI">
@@ -71,7 +71,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .header h1{font-size:1.35rem;font-weight:800;letter-spacing:2px;background:linear-gradient(180deg,#f0d070 0%,#d4a843 50%,#b8862d 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:2px}
 .header .subtitle{font-size:0.72rem;color:var(--text-secondary);letter-spacing:1px}
 .sticky-top-group{position:sticky;top:0;z-index:650;background:#0d1b2a;box-shadow:0 2px 20px rgba(0,0,0,0.5)}
-.container{max-width:1400px;margin:0 auto;padding:20px 16px}
+.container{max-width:1400px;margin:0 auto;padding:20px 16px;min-height:calc(100vh - 180px)}
 .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:20px;padding:14px 18px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border)}
 .toolbar-left{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 /* ===== Neon Streak 按钮系统 ===== */
@@ -104,6 +104,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .tab.active{background:var(--surface2);color:var(--gold-light);border-color:var(--gold)}
 .tab:hover{color:var(--gold-light);border-color:var(--gold)}
 .groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:16px}
+#groupsContainer{min-height:600px}
+#knockoutPanel{min-height:500px}
 .group-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow)}
 .group-card:hover{border-color:var(--gold)}
 .group-header{background:var(--surface2);padding:12px 16px;font-weight:700;font-size:1.05rem;letter-spacing:1px;color:var(--gold-light);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
@@ -1372,6 +1374,36 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   color: #ffffff;
   margin-bottom: 10px;
 }
+#bracketOverlay .bk-confirm-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  background: rgba(0,0,0,0.65);
+  justify-content: center;
+  align-items: center;
+}
+#bracketOverlay .bk-confirm-overlay.show { display: flex; }
+#bracketOverlay .bk-confirm-box {
+  background: #0d1520;
+  border: 2px solid #e05555;
+  border-radius: 10px;
+  padding: 20px 24px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+  max-width: 360px;
+}
+#bracketOverlay .bk-confirm-box p {
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+#bracketOverlay .bk-confirm-box .confirm-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
 #bracketOverlay .bk-save-box .save-confirm {
   display: flex;
   gap: 8px;
@@ -1647,6 +1679,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   }
   .container {
     padding: 10px 6px;
+    min-height: calc(100vh - 130px);
   }
 
   /* ── 3. WC EDITION BAR ── */
@@ -1855,6 +1888,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     grid-template-columns: 1fr;
     gap: 8px;
   }
+  #groupsContainer { min-height: 400px; }
+  #knockoutPanel { min-height: 350px; }
   .group-card {
     border-radius: 8px;
     overflow: hidden;
@@ -2096,6 +2131,10 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     padding: 14px;
   }
   #bracketOverlay .bk-save-box h3 { font-size: 0.9rem; }
+  #bracketOverlay .bk-confirm-box {
+    margin: 0 16px;
+    padding: 14px 16px;
+  }
 
   /* ── 9. MODALS (ALL) ── */
   /* 移动端弹窗：仅 .visible 时 block 显示，避免空弹窗覆盖页面 */
@@ -4166,7 +4205,7 @@ function toggleProbUpdate() {
 </div>
 
 <div class="container">
-<div class="toolbar" id="mainToolbar" style="display:none;">
+<div class="toolbar" id="mainToolbar" style="visibility:hidden;">
   <div class="toolbar-left">
     <button class="btn btn-bracket-primary" id="btnBracketToggle" onclick="Bracket.toggle()">📋 晋级路线图</button>
       <button class="btn btn-primary" onclick="showRulesModal()">📖 比赛规则</button>
@@ -4189,8 +4228,8 @@ function toggleProbUpdate() {
   </div>
   <div style="font-size:0.65rem;color:var(--text-secondary);margin-top:4px;">* 点击任意球员姓名可查看详情</div>
 </div>
-<div class="tabs" id="tabContainer" style="display:none;"><div class="tab active" data-tab="groups" onclick="switchMainTab('groups')">📅 小组赛</div><div class="tab" data-tab="knockout" onclick="switchMainTab('knockout')">🏟️ 淘汰赛</div></div>
-<div id="groupsContainer" style="display:none;"><div class="tabs" id="groupTabs"></div><div class="groups-grid" id="groupsGrid"></div></div>
+<div class="tabs" id="tabContainer" style="visibility:hidden;"><div class="tab active" data-tab="groups" onclick="switchMainTab('groups')">📅 小组赛</div><div class="tab" data-tab="knockout" onclick="switchMainTab('knockout')">🏟️ 淘汰赛</div></div>
+<div id="groupsContainer" style="visibility:hidden;"><div class="tabs" id="groupTabs"></div><div class="groups-grid" id="groupsGrid"></div></div>
 <div class="knockout-panel" id="knockoutPanel"><div class="tabs" id="koTabs"></div><div id="koContent"></div></div>
 
 <!-- World Cup Bracket — Full-Screen Overlay -->
@@ -4231,6 +4270,15 @@ function toggleProbUpdate() {
       <div class="save-confirm">
         <button class="bk-btn gold" onclick="Bracket.confirmSave()">✅ 确认保存</button>
         <button class="bk-btn" onclick="Bracket.closeSaveModal()">取消</button>
+      </div>
+    </div>
+  </div>
+  <div class="bk-confirm-overlay" id="bkConfirmOverlay">
+    <div class="bk-confirm-box">
+      <p id="bkConfirmMsg">确定执行此操作？</p>
+      <div class="confirm-actions">
+        <button class="bk-btn danger" id="bkConfirmOk">确认清空</button>
+        <button class="bk-btn" id="bkConfirmCancel">取消</button>
       </div>
     </div>
   </div>
@@ -4764,11 +4812,11 @@ Bracket.toggle=function(){
     var mainToolbar=document.getElementById('mainToolbar');
     var searchToolbar=document.getElementById('searchToolbar');
     var tabContainer=document.getElementById('tabContainer');
-    if(groupsC)groupsC.style.display='';
+    if(groupsC){groupsC.style.display='';groupsC.style.visibility='visible';}
     if(koPanel){koPanel.classList.remove('visible');}
-    if(mainToolbar)mainToolbar.style.display='';
+    if(mainToolbar){mainToolbar.style.display='';mainToolbar.style.visibility='visible';}
     if(searchToolbar)searchToolbar.style.display='';
-    if(tabContainer)tabContainer.style.display='';
+    if(tabContainer){tabContainer.style.display='';tabContainer.style.visibility='visible';}
   }else{
     var groupsC2=document.getElementById('groupsContainer');
     var koPanel2=document.getElementById('knockoutPanel');
@@ -5109,44 +5157,44 @@ function switchMainTab(tabName) {
         if (typeof switchMainTab === 'function') switchMainTab('groups');
         // Show toolbar
         var toolbar = document.getElementById('mainToolbar');
-        if (toolbar) toolbar.style.display = 'flex';
+        if (toolbar) { toolbar.style.display = 'flex'; toolbar.style.visibility = 'visible'; }
         var searchToolbar = document.getElementById('searchToolbar');
         if (searchToolbar) searchToolbar.style.display = 'block';
         var groupsContainer = document.getElementById('groupsContainer');
-        if (groupsContainer) groupsContainer.style.display = 'block';
+        if (groupsContainer) { groupsContainer.style.display = 'block'; groupsContainer.style.visibility = 'visible'; }
         var knockoutPanel = document.getElementById('knockoutPanel');
         if (knockoutPanel) knockoutPanel.style.display = 'none';
         var pastWC = document.getElementById('pastWCMainContainer');
         if (pastWC) pastWC.style.display = 'none';
         var tabContainer = document.getElementById('tabContainer');
-        if (tabContainer) tabContainer.style.display = 'flex';
+        if (tabContainer) { tabContainer.style.display = 'flex'; tabContainer.style.visibility = 'visible'; }
       } else if (previewMode === 'knockout') {
         if (typeof switchMainTab === 'function') switchMainTab('knockout');
         // Show toolbar
         var toolbar = document.getElementById('mainToolbar');
-        if (toolbar) toolbar.style.display = 'flex';
+        if (toolbar) { toolbar.style.display = 'flex'; toolbar.style.visibility = 'visible'; }
         var searchToolbar = document.getElementById('searchToolbar');
         if (searchToolbar) searchToolbar.style.display = 'block';
         var groupsContainer = document.getElementById('groupsContainer');
         if (groupsContainer) groupsContainer.style.display = 'none';
         var knockoutPanel = document.getElementById('knockoutPanel');
-        if (knockoutPanel) knockoutPanel.style.display = 'block';
+        if (knockoutPanel) { knockoutPanel.style.display = 'block'; knockoutPanel.style.visibility = 'visible'; }
         var pastWC = document.getElementById('pastWCMainContainer');
         if (pastWC) pastWC.style.display = 'none';
         var tabContainer = document.getElementById('tabContainer');
-        if (tabContainer) tabContainer.style.display = 'flex';
+        if (tabContainer) { tabContainer.style.display = 'flex'; tabContainer.style.visibility = 'visible'; }
       } else if (previewMode === 'modals') {
         if (typeof switchMainTab === 'function') switchMainTab('groups');
         var toolbar = document.getElementById('mainToolbar');
-        if (toolbar) toolbar.style.display = 'flex';
+        if (toolbar) { toolbar.style.display = 'flex'; toolbar.style.visibility = 'visible'; }
         var searchToolbar = document.getElementById('searchToolbar');
         if (searchToolbar) searchToolbar.style.display = 'block';
         var groupsContainer = document.getElementById('groupsContainer');
-        if (groupsContainer) groupsContainer.style.display = 'block';
+        if (groupsContainer) { groupsContainer.style.display = 'block'; groupsContainer.style.visibility = 'visible'; }
         var pastWC = document.getElementById('pastWCMainContainer');
         if (pastWC) pastWC.style.display = 'none';
         var tabContainer = document.getElementById('tabContainer');
-        if (tabContainer) tabContainer.style.display = 'flex';
+        if (tabContainer) { tabContainer.style.display = 'flex'; tabContainer.style.visibility = 'visible'; }
         // Show a sample modal after delay
         setTimeout(function() {
           // Try to show match detail or player modal

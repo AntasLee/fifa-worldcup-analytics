@@ -103,7 +103,9 @@ function renderAll(){
   layer.innerHTML='';cardElements={};
   var scene=document.getElementById('bkScene');
   var oldHeaders=scene.querySelectorAll('.bk-col-header');
-  oldHeaders.forEach(function(h){h.remove();});
+  for(var i=0;i<oldHeaders.length;i++){oldHeaders[i].remove();}
+
+  var frag=document.createDocumentFragment();
 
   COLUMNS.forEach(function(col,ci){
     var x=colX(ci);
@@ -122,14 +124,14 @@ function renderAll(){
         [0,1].forEach(function(pos){
           var el=createCardEl(slot.id,String(pos+1));
           el.style.left=x+'px';el.style.top=(pos===0?y1:y2)+'px';
-          updateCardEl(el,String(pos+1));layer.appendChild(el);
+          updateCardEl(el,String(pos+1));frag.appendChild(el);
           cardElements[slot.id+'_'+(pos+1)]=el;
         });
       }else if(slot.isThirdPlace){
         var g3=40;
         [0,1].forEach(function(pos){
           var el3b=createCardEl(slot.id,String(pos+1));el3b.classList.add('tp-card');el3b.style.left=x+'px';el3b.style.top=(baseY+(pos===0?-g3/2:g3/2))+'px';
-          updateCardEl(el3b,String(pos+1));layer.appendChild(el3b);cardElements[slot.id+'_'+(pos+1)]=el3b;
+          updateCardEl(el3b,String(pos+1));frag.appendChild(el3b);cardElements[slot.id+'_'+(pos+1)]=el3b;
           if(pos===0)cardElements[slot.id]=el3b;
         });
       }else if(slot.round==='FINAL'){
@@ -138,7 +140,7 @@ function renderAll(){
         var gF=42;
         [0,1].forEach(function(pos){
           var elFb=createCardEl(slot.id,String(pos+1));elFb.classList.add('final-card');elFb.style.left=x+'px';elFb.style.top=(baseY+(pos===0?-gF/2:gF/2))+'px';
-          updateCardEl(elFb,String(pos+1));layer.appendChild(elFb);cardElements[slot.id+'_'+(pos+1)]=elFb;
+          updateCardEl(elFb,String(pos+1));frag.appendChild(elFb);cardElements[slot.id+'_'+(pos+1)]=elFb;
           if(pos===0)cardElements[slot.id]=elFb;
         });
       }else{
@@ -147,12 +149,14 @@ function renderAll(){
         var g2=40;
         [0,1].forEach(function(pos){
           var el2=createCardEl(slot.id,String(pos+1));el2.style.left=x+'px';el2.style.top=(baseY+(pos===0?-g2/2:g2/2))+'px';
-          updateCardEl(el2,String(pos+1));layer.appendChild(el2);cardElements[slot.id+'_'+(pos+1)]=el2;
+          updateCardEl(el2,String(pos+1));frag.appendChild(el2);cardElements[slot.id+'_'+(pos+1)]=el2;
           if(pos===0)cardElements[slot.id]=el2;
         });
       }
     });
   });
+
+  layer.appendChild(frag);
   // ── Final / Third Place bilingual labels ──
   var oldFrame=document.getElementById('bkFinalFrame');if(oldFrame)oldFrame.remove();
   var oldLabel=document.getElementById('bkFinalLabel');if(oldLabel)oldLabel.remove();
@@ -358,10 +362,40 @@ Bracket.toggle=function(){
   if(overlay.classList.contains('active')){Bracket.close();}else{Bracket.open();}
 };
 
+// ── Async confirm dialog (non-blocking, avoids INP penalty) ──
+function showConfirm(msg, onOk, onCancel){
+  var overlay = document.getElementById('bkConfirmOverlay');
+  var msgEl = document.getElementById('bkConfirmMsg');
+  var okBtn = document.getElementById('bkConfirmOk');
+  var cancelBtn = document.getElementById('bkConfirmCancel');
+  if(!overlay || !msgEl){ if(onCancel)onCancel(); return; }
+  msgEl.textContent = msg;
+  overlay.classList.add('show');
+  function cleanup(){
+    overlay.classList.remove('show');
+    okBtn.removeEventListener('click', handleOk);
+    cancelBtn.removeEventListener('click', handleCancel);
+  }
+  function handleOk(){
+    cleanup();
+    if(onOk) onOk();
+  }
+  function handleCancel(){
+    cleanup();
+    if(onCancel) onCancel();
+  }
+  okBtn.addEventListener('click', handleOk);
+  cancelBtn.addEventListener('click', handleCancel);
+}
+
 Bracket.resetAll=function(){
-  if(!confirm('确定清空晋级路线图所有预测？'))return;
-  preds={};save();renderAll();
-  Bracket.toast('🔄 已全部重置');
+  showConfirm('确定清空晋级路线图所有预测？此操作不可撤销。', function(){
+    preds={};save();
+    requestAnimationFrame(function(){
+      renderAll();
+      Bracket.toast('🔄 已全部重置');
+    });
+  });
 };
 
 Bracket.saveImage=function(){

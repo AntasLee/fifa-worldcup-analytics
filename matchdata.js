@@ -1737,6 +1737,26 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 0, red: 0 }, away: { yellow: 3, red: 0 } },
     attendance: null, referee: "TBD"
   },
+
+  "2026|A|CZE|MEX": {
+    score: { sh: 0, sa: 3 },
+    goals: [
+      { min: 55,    side: "away", scorer: "马特奥·查韦斯 (Mateo Chávez)",     type: "shot", assist: "路易斯·罗莫 (Luis Romo)" },
+      { min: 61,    side: "away", scorer: "胡利安·基尼奥内斯 (Julián Quiñones)", type: "shot", assist: "豪尔赫·桑切斯 (Jorge Sánchez)" },
+      { min: "90+4",side: "away", scorer: "阿尔瓦罗·菲达尔戈 (Álvaro Fidalgo)",  type: "shot", assist: "罗伯托·阿尔瓦拉多 (Roberto Alvarado)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
+
+  "2026|A|RSA|KOR": {
+    score: { sh: 1, sa: 0 },
+    goals: [
+      { min: 63, side: "home", scorer: "塔佩洛·马塞科 (Thapelo Maseko)", type: "shot", assist: "采庞·莫雷米 (Chepang Moremi)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1794,3 +1814,5 @@ matchStats["2026|B|BIH|QAT"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:9,sh2:9,
 matchStats["2026|B|SUI|CAN"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:5,sh2:10,so1:4,so2:7,sb1:1,sb2:3,co1:2,co2:7,fo1:19,fo2:13,os1:1,os2:3,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:74,at2:96,da1:24,da2:51,pk1:0,pk2:0};
 matchStats["2026|C|SCO|BRA"] = {p1:"46%",p2:"54%",ps1:null,ps2:null,sh1:11,sh2:16,so1:5,so2:9,sb1:6,sb2:7,co1:7,co2:7,fo1:10,fo2:11,os1:0,os2:1,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:96,at2:103,da1:37,da2:41,pk1:0,pk2:0};
 matchStats["2026|C|MAR|HAI"] = {p1:"69%",p2:"31%",ps1:null,ps2:null,sh1:17,sh2:6,so1:11,so2:2,sb1:6,sb2:4,co1:9,co2:1,fo1:10,fo2:18,os1:5,os2:0,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:109,at2:73,da1:62,da2:13,pk1:0,pk2:0};
+matchStats["2026|A|CZE|MEX"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:9,sh2:9,so1:1,so2:5,sb1:8,sb2:4,co1:5,co2:1,fo1:9,fo2:13,os1:1,os2:0,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:93,at2:86,da1:28,da2:31,pk1:0,pk2:0};
+matchStats["2026|A|RSA|KOR"] = {p1:"32%",p2:"68%",ps1:null,ps2:null,sh1:9,sh2:7,so1:4,so2:3,sb1:5,sb2:4,co1:4,co2:6,fo1:7,fo2:9,os1:3,os2:0,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:80,at2:138,da1:22,da2:92,pk1:0,pk2:0};
