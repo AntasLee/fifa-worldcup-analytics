@@ -53,7 +53,7 @@ export async function onRequestPost({ request, env }) {
     return new Response(JSON.stringify({ success: true, token: token }), { status: 200, headers });
 
   } catch (e) {
-    return new Response(JSON.stringify({ success: false, error: 'server_error' }), { status: 500, headers });
+    return new Response(JSON.stringify({ success: false, error: 'server_error', msg: e.message, stack: e.stack }), { status: 500, headers });
   }
 }
 
