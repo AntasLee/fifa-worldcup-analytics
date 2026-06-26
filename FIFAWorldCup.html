@@ -5048,7 +5048,7 @@ function renderMatchEval(e) {
   h+='<div class="eval-score-nums"><span class="eval-score-num">'+e.score.sh+'</span><span class="eval-score-div">—</span><span class="eval-score-num">'+e.score.sa+'</span></div>';
   h+='<div class="eval-score-team"><div class="eval-score-flag"><img src="'+e.awayFlag+'" onerror="this.style.display=\'none\'" style="width:48px;height:32px;object-fit:cover;border-radius:3px;"></div><div class="eval-score-name">'+e.awayName+'</div></div>';
   h+='</div>';
-  h+='<div class="eval-meta">'+(e.stage==='group'?'小组赛 '+e.stage.toUpperCase()+' 组 · 第 '+e.round+' 轮':e.stage)+'</div>';
+  h+='<div class="eval-meta">'+(e.stage==='group'?(function(){var pk=e.matchKey.split('|');var gl=pk.length>=2?pk[1]:'';return '小组赛 GROUP '+gl+'组 · 第 '+e.round+' 轮';})():e.stage)+'</div>';
   if(e.motm) h+='<div style="text-align:center"><span class="eval-motm">⭐ FIFA全场最佳 · '+e.motm+'</span></div>';
   h+='</div>';
 

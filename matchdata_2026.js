@@ -1272,6 +1272,148 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|F|TUN|NED": {
+    score: { sh: 1, sa: 3 },
+    date: "2026-06-26",
+    time: "07:00",
+    venue: "箭头体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 3,  side: "away", scorer: "埃利亚斯·斯希里",   type: "own_goal" },
+      { min: 7,  side: "away", scorer: "布莱恩·布罗比",   type: "shot", assist: "维吉尔·范戴克" },
+      { min: 54, side: "home", scorer: "哈奇姆·马斯图里",   type: "header", assist: "汉尼拔·梅布里" },
+      { min: 62, side: "away", scorer: "扬·保罗·范黑克",   type: "header", assist: "蒂贾尼·赖茵德斯" }
+    ],
+    stats: {
+      possession:      { h: 28, a: 72 },
+      shots:           { h: 9,  a: 15 },
+      shotsOnTarget:   { h: 4,  a: 7 },
+      corners:         { h: 4,  a: 6 },
+      fouls:           { h: 11, a: 10 },
+      yellowCards:     { h: 0,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 55, a: 140 },
+      dangerousAttacks:{ h: 23, a: 82 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "布莱恩·布罗比",
+      sources: ["AP News", "Opta Analyst", "AS USA", "FIFA"],
+      home: {score: 2, quotes: "突尼斯三战全败丢12球告别世界杯。斯希里3分钟乌龙锁定败局，虽马斯图里一度扳回一球但无力回天。解雇主帅拉穆希后仍无起色，锋线三战仅入1球，非洲雄鹰的噩梦终于结束。"},
+      away: {score: 8, quotes: "荷兰9分全胜锁定F组头名创Opta控球纪录(71.7%)。布罗比延续火热状态三战三球全部来自首次射门，范迪克头球助攻展现队长价值。小组赛狂轰10球火力全开，16强将迎战摩洛哥。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|F|JPN|SWE": {
+    score: { sh: 1, sa: 1 },
+    date: "2026-06-26",
+    time: "07:00",
+    venue: "达拉斯体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 56, side: "home", scorer: "前田大然",   type: "shot", assist: "堂安律" },
+      { min: 62, side: "away", scorer: "安东尼·埃兰加", type: "shot", assist: "维克托·哲凯赖什" }
+    ],
+    stats: {
+      possession:      { h: 52, a: 48 },
+      shots:           { h: 6,  a: 8 },
+      shotsOnTarget:   { h: 3,  a: 5 },
+      corners:         { h: 2,  a: 8 },
+      fouls:           { h: 20, a: 11 },
+      yellowCards:     { h: 1,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 78, a: 92 },
+      dangerousAttacks:{ h: 32, a: 68 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "安东尼·埃兰加",
+      sources: ["Sky Sports", "BBC Sport", "ESPN", "FIFA"],
+      home: {score: 7, quotes: "前田大然接堂安律妙传巧射破门助日本连续三届晋级淘汰赛。蓝武士以5分锁定小组第二创队史单届7球纪录。下半场控球占优但瑞典反击更具威胁，16强对阵巴西将是历史性考验。"},
+      away: {score: 7, quotes: "埃兰加接哲凯赖什助攻内切世界波拯救瑞典。从1-5惨败荷兰中重整旗鼓，4分锁定最佳小组第三。8次角球制造持续威胁，波特治下北欧劲旅展现韧性，16强极可能对阵法国。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|D|TUR|USA": {
+    score: { sh: 3, sa: 2 },
+    date: "2026-06-26",
+    time: "10:00",
+    venue: "洛杉矶体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 3,     side: "away", scorer: "奥斯顿·特拉斯蒂",   type: "shot", assist: "塞巴斯蒂安·贝尔哈特" },
+      { min: 10,    side: "home", scorer: "阿尔达·居莱尔",     type: "shot", assist: "巴勒什·伊尔马兹" },
+      { min: 31,    side: "home", scorer: "巴勒什·伊尔马兹",   type: "shot", assist: "奥尔昆·柯克曲" },
+      { min: 49,    side: "away", scorer: "塞巴斯蒂安·贝尔哈特", type: "shot" },
+      { min: "90+8",side: "home", scorer: "卡恩·艾汉",        type: "shot", assist: "詹·乌尊" }
+    ],
+    stats: {
+      possession:      { h: 47, a: 53 },
+      shots:           { h: 6,  a: 13 },
+      shotsOnTarget:   { h: 4,  a: 7 },
+      corners:         { h: 2,  a: 9 },
+      fouls:           { h: 13, a: 13 },
+      yellowCards:     { h: 0,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 97, a: 91 },
+      dangerousAttacks:{ h: 46, a: 41 }
+    },
+    attendance: null,
+    referee: "Mustapha Ghorbal (ALG)",
+    xg: null,
+    mediaRating: {
+      motm: "卡恩·艾汉",
+      sources: ["Sky Sports", "ESPN", "Yahoo Sports", "FIFA"],
+      home: {score: 8, quotes: "土耳其虽已淘汰但用一场荡气回肠的3-2告别世界杯。艾汉第98分钟绝杀为疯狂比赛画上句号，居莱尔和伊尔马兹上半场逆转展现新月军团血性。此前两战62射零进球后终破球荒，昂首离开洛杉矶。"},
+      away: {score: 5, quotes: "美国轮换阵容遭遇首败但无碍头名出线。特拉斯蒂3分钟闪击、贝尔哈特下半场扳平展现深度，普利西奇替补复出中柱是最大利好。波切蒂诺需警惕防守端连丢三球的问题，16强对阵波黑不容有失。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|D|PAR|AUS": {
+    score: { sh: 0, sa: 0 },
+    date: "2026-06-26",
+    time: "10:00",
+    venue: "旧金山湾区体育场",
+    stage: "group",
+    round: 3,
+    goals: [],
+    stats: {
+      possession:      { h: 44, a: 56 },
+      shots:           { h: 6,  a: 9 },
+      shotsOnTarget:   { h: 2,  a: 5 },
+      corners:         { h: 1,  a: 3 },
+      fouls:           { h: 9,  a: 6 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 95, a: 116 },
+      dangerousAttacks:{ h: 21, a: 45 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "杰克逊·欧文",
+      sources: ["ESPN", "Opta Analyst", "BBC Sport", "FIFA"],
+      home: {score: 5, quotes: "巴拉圭以一场谨慎的0-0锁定4分，极大概率作为最佳小组第三晋级。全场仅0.25xG创赛事新低，直到第37分钟才完成首次射门。阿尔法罗的务实策略奏效，迭戈·戈麦斯累计黄牌将缺席16强。"},
+      away: {score: 6, quotes: "澳大利亚第三次晋级世界杯淘汰赛。波波维奇的球队56%控球占据主动，12射5正压制对手但未能破门。欧文中场掌控力突出，16强将对阵G组第二。连续两届世界杯进入淘汰赛创造历史。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // B组
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },

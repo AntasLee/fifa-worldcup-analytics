@@ -1778,6 +1778,48 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 2, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: null, referee: "TBD"
   },
+
+  "2026|F|TUN|NED": {
+    score: { sh: 1, sa: 3 },
+    goals: [
+      { min: 3,  side: "away", scorer: "埃利亚斯·斯希里 (Ellyes Skhiri)", type: "own_goal" },
+      { min: 7,  side: "away", scorer: "布莱恩·布罗比 (Brian Brobbey)", type: "shot", assist: "维吉尔·范戴克 (Virgil van Dijk)" },
+      { min: 54, side: "home", scorer: "哈奇姆·马斯图里 (Hazem Mastouri)", type: "header", assist: "汉尼拔·梅布里 (Hannibal Mejbri)" },
+      { min: 62, side: "away", scorer: "扬·保罗·范黑克 (Jan Paul van Hecke)", type: "header", assist: "蒂贾尼·赖茵德斯 (Tijjani Reijnders)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 0, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
+
+  "2026|F|JPN|SWE": {
+    score: { sh: 1, sa: 1 },
+    goals: [
+      { min: 56, side: "home", scorer: "前田大然 (Daizen Maeda)", type: "shot", assist: "堂安律 (Ritsu Doan)" },
+      { min: 62, side: "away", scorer: "安东尼·埃兰加 (Anthony Elanga)", type: "shot", assist: "维克托·哲凯赖什 (Viktor Gyökeres)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
+
+  "2026|D|TUR|USA": {
+    score: { sh: 3, sa: 2 },
+    goals: [
+      { min: 3,     side: "away", scorer: "奥斯顿·特拉斯蒂 (Auston Trusty)",       type: "shot", assist: "塞巴斯蒂安·贝尔哈特 (Sebastian Berhalter)" },
+      { min: 10,    side: "home", scorer: "阿尔达·居莱尔 (Arda Güler)",           type: "shot", assist: "巴勒什·伊尔马兹 (Barış Alper Yılmaz)" },
+      { min: 31,    side: "home", scorer: "巴勒什·伊尔马兹 (Barış Alper Yılmaz)",  type: "shot", assist: "奥尔昆·柯克曲 (Orkun Kökçü)" },
+      { min: 49,    side: "away", scorer: "塞巴斯蒂安·贝尔哈特 (Sebastian Berhalter)", type: "shot" },
+      { min: "90+8",side: "home", scorer: "卡恩·艾汉 (Kaan Ayhan)",               type: "shot", assist: "詹·乌尊 (Can Uzun)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "Mustapha Ghorbal (ALG)"
+  },
+
+  "2026|D|PAR|AUS": {
+    score: { sh: 0, sa: 0 },
+    goals: [],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1839,3 +1881,7 @@ matchStats["2026|A|CZE|MEX"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:9,sh2:9,
 matchStats["2026|A|RSA|KOR"] = {p1:"32%",p2:"68%",ps1:null,ps2:null,sh1:9,sh2:7,so1:4,so2:3,sb1:5,sb2:4,co1:4,co2:6,fo1:7,fo2:9,os1:3,os2:0,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:80,at2:138,da1:22,da2:92,pk1:0,pk2:0};
 matchStats["2026|E|ECU|GER"] = {p1:"39%",p2:"61%",ps1:null,ps2:null,sh1:5,sh2:6,so1:3,so2:3,sb1:2,sb2:3,co1:3,co2:2,fo1:15,fo2:10,os1:0,os2:0,yc1:3,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:102,at2:113,da1:40,da2:56,pk1:0,pk2:0};
 matchStats["2026|E|CUW|CIV"] = {p1:"37%",p2:"63%",ps1:null,ps2:null,sh1:9,sh2:6,so1:2,so2:3,sb1:7,sb2:3,co1:4,co2:6,fo1:11,fo2:6,os1:2,os2:1,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:86,at2:114,da1:37,da2:54,pk1:0,pk2:0};
+matchStats["2026|F|TUN|NED"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:9,sh2:15,so1:4,so2:7,sb1:5,sb2:8,co1:4,co2:6,fo1:11,fo2:10,os1:2,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:55,at2:140,da1:23,da2:82,pk1:0,pk2:0};
+matchStats["2026|F|JPN|SWE"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:6,sh2:8,so1:3,so2:5,sb1:3,sb2:3,co1:2,co2:8,fo1:20,fo2:11,os1:3,os2:2,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:78,at2:92,da1:32,da2:68,pk1:0,pk2:0};
+matchStats["2026|D|TUR|USA"] = {p1:"47%",p2:"53%",ps1:null,ps2:null,sh1:6,sh2:13,so1:4,so2:7,sb1:2,sb2:6,co1:2,co2:9,fo1:13,fo2:13,os1:2,os2:5,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:97,at2:91,da1:46,da2:41,pk1:0,pk2:0};
+matchStats["2026|D|PAR|AUS"] = {p1:"44%",p2:"56%",ps1:null,ps2:null,sh1:6,sh2:9,so1:2,so2:5,sb1:4,sb2:4,co1:1,co2:3,fo1:9,fo2:6,os1:0,os2:0,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:95,at2:116,da1:21,da2:45,pk1:0,pk2:0};
