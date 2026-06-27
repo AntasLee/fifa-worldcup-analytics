@@ -1820,6 +1820,48 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: null, referee: "TBD"
   },
+
+  "2026|I|SEN|IRQ": {
+    score: { sh: 5, sa: 0 },
+    goals: [
+      { min: 4,  side: "home", scorer: "哈比卜·迪亚拉 (Habib Diarra)",       type: "shot", assist: "阿卜杜拉耶·赛克 (Abdoulaye Seck)" },
+      { min: 56, side: "home", scorer: "伊斯梅拉·萨尔 (Ismaïla Sarr)",      type: "shot", assist: "拉明·卡马拉 (Lamine Camara)" },
+      { min: 59, side: "home", scorer: "帕普·盖耶 (Pape Gueye)",            type: "shot", assist: "伊斯梅拉·萨尔 (Ismaïla Sarr)" },
+      { min: 71, side: "home", scorer: "帕普·盖耶 (Pape Gueye)",            type: "shot", assist: "伊利曼·恩迪亚耶 (Iliman Ndiaye)" },
+      { min: 82, side: "home", scorer: "伊利曼·恩迪亚耶 (Iliman Ndiaye)",    type: "shot", assist: "帕普·盖耶 (Pape Gueye)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 2, red: 1 } },
+    attendance: null, referee: "Anthony Taylor (ENG)"
+  },
+
+  "2026|I|NOR|FRA": {
+    score: { sh: 1, sa: 4 },
+    goals: [
+      { min: 7,     side: "away", scorer: "奥斯曼·登贝莱 (Ousmane Dembélé)",   type: "shot", assist: "基利安·姆巴佩 (Kylian Mbappé)" },
+      { min: 20,    side: "away", scorer: "奥斯曼·登贝莱 (Ousmane Dembélé)",   type: "shot", assist: "基利安·姆巴佩 (Kylian Mbappé)" },
+      { min: 21,    side: "home", scorer: "特洛·奥斯高 (Thelo Aasgaard)",      type: "shot", assist: "安德烈亚斯·谢尔德鲁普 (Andreas Schjelderup)" },
+      { min: 32,    side: "away", scorer: "奥斯曼·登贝莱 (Ousmane Dembélé)",   type: "shot", assist: "奥雷利安·楚阿梅尼 (Aurélien Tchouaméni)" },
+      { min: "90+4",side: "away", scorer: "德西雷·杜埃 (Désiré Doué)",        type: "header", assist: "布拉德利·巴尔科拉 (Bradley Barcola)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "Michael Oliver (ENG)"
+  },
+
+  "2026|H|CPV|KSA": {
+    score: { sh: 0, sa: 0 },
+    goals: [],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 3, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
+
+  "2026|H|URU|ESP": {
+    score: { sh: 0, sa: 1 },
+    goals: [
+      { min: 42, side: "away", scorer: "阿莱克斯·巴埃纳 (Álex Baena)", type: "shot", assist: "马科斯·略伦特 (Marcos Llorente)" }
+    ],
+    cards: { home: { yellow: 3, red: 1 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "Ismail Elfath (USA)"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1885,3 +1927,7 @@ matchStats["2026|F|TUN|NED"] = {p1:"28%",p2:"72%",ps1:null,ps2:null,sh1:9,sh2:15
 matchStats["2026|F|JPN|SWE"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:6,sh2:8,so1:3,so2:5,sb1:3,sb2:3,co1:2,co2:8,fo1:20,fo2:11,os1:3,os2:2,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:78,at2:92,da1:32,da2:68,pk1:0,pk2:0};
 matchStats["2026|D|TUR|USA"] = {p1:"47%",p2:"53%",ps1:null,ps2:null,sh1:6,sh2:13,so1:4,so2:7,sb1:2,sb2:6,co1:2,co2:9,fo1:13,fo2:13,os1:2,os2:5,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:97,at2:91,da1:46,da2:41,pk1:0,pk2:0};
 matchStats["2026|D|PAR|AUS"] = {p1:"44%",p2:"56%",ps1:null,ps2:null,sh1:6,sh2:9,so1:2,so2:5,sb1:4,sb2:4,co1:1,co2:3,fo1:9,fo2:6,os1:0,os2:0,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:95,at2:116,da1:21,da2:45,pk1:0,pk2:0};
+matchStats["2026|I|SEN|IRQ"] = {p1:"68%",p2:"32%",ps1:null,ps2:null,sh1:23,sh2:2,so1:12,so2:1,sb1:11,sb2:1,co1:12,co2:3,fo1:10,fo2:11,os1:1,os2:0,yc1:2,yc2:2,rc1:0,rc2:1,tk1:null,tk2:null,at1:129,at2:54,da1:90,da2:15,pk1:0,pk2:0};
+matchStats["2026|I|NOR|FRA"] = {p1:"44%",p2:"56%",ps1:null,ps2:null,sh1:7,sh2:15,so1:4,so2:9,sb1:3,sb2:6,co1:4,co2:5,fo1:9,fo2:11,os1:1,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:89,at2:103,da1:39,da2:64,pk1:1,pk2:0};
+matchStats["2026|H|CPV|KSA"] = {p1:"51%",p2:"49%",ps1:null,ps2:null,sh1:10,sh2:4,so1:2,so2:3,sb1:8,sb2:1,co1:4,co2:2,fo1:10,fo2:16,os1:2,os2:0,yc1:1,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:112,at2:103,da1:50,da2:41,pk1:0,pk2:0};
+matchStats["2026|H|URU|ESP"] = {p1:"33%",p2:"67%",ps1:null,ps2:null,sh1:4,sh2:5,so1:1,so2:1,sb1:3,sb2:4,co1:1,co2:6,fo1:14,fo2:14,os1:5,os2:2,yc1:3,yc2:1,rc1:1,rc2:0,tk1:null,tk2:null,at1:94,at2:107,da1:42,da2:37,pk1:0,pk2:0};

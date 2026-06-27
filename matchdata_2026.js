@@ -1414,6 +1414,148 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|I|SEN|IRQ": {
+    score: { sh: 5, sa: 0 },
+    date: "2026-06-27",
+    time: "03:00",
+    venue: "BMO球场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 4,  side: "home", scorer: "哈比卜·迪亚拉",   type: "shot", assist: "阿卜杜拉耶·赛克" },
+      { min: 56, side: "home", scorer: "伊斯梅拉·萨尔",   type: "shot", assist: "拉明·卡马拉" },
+      { min: 59, side: "home", scorer: "帕普·盖耶",      type: "shot", assist: "伊斯梅拉·萨尔" },
+      { min: 71, side: "home", scorer: "帕普·盖耶",      type: "shot", assist: "伊利曼·恩迪亚耶" },
+      { min: 82, side: "home", scorer: "伊利曼·恩迪亚耶",  type: "shot", assist: "帕普·盖耶" }
+    ],
+    stats: {
+      possession:      { h: 68, a: 32 },
+      shots:           { h: 23, a: 2 },
+      shotsOnTarget:   { h: 12, a: 1 },
+      corners:         { h: 12, a: 3 },
+      fouls:           { h: 10, a: 11 },
+      yellowCards:     { h: 2,  a: 2 },
+      redCards:        { h: 0,  a: 1 },
+      attacks:         { h: 129,a: 54 },
+      dangerousAttacks:{ h: 90, a: 15 }
+    },
+    attendance: null,
+    referee: "Anthony Taylor (ENG)",
+    xg: null,
+    mediaRating: {
+      motm: "帕普·盖耶",
+      sources: ["BBC Sport", "Al Jazeera", "Fox Sports", "FIFA"],
+      home: {score: 8, quotes: "塞内加尔5-0大胜十人伊拉克强势竞逐最佳小组第三。盖耶替补登场梅开二度（弧线球+半凌空），萨尔一传一射建功。迪亚拉开场4分钟折射首开纪录，苏拉卡13分钟红牌后伊拉克彻底崩盘。"},
+      away: {score: 1, quotes: "三战全败零分出局。苏拉卡13分钟拉倒马内被VAR红牌罚下成转折点，伊克巴尔失误直接导致第二球。1986年以来首次世界杯之旅以惨淡收场，亚洲球队集体低迷。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|I|NOR|FRA": {
+    score: { sh: 1, sa: 4 },
+    date: "2026-06-27",
+    time: "03:00",
+    venue: "吉列体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 7,     side: "away", scorer: "奥斯曼·登贝莱",   type: "shot", assist: "基利安·姆巴佩" },
+      { min: 20,    side: "away", scorer: "奥斯曼·登贝莱",   type: "shot", assist: "基利安·姆巴佩" },
+      { min: 21,    side: "home", scorer: "特洛·奥斯高",     type: "shot", assist: "安德烈亚斯·谢尔德鲁普" },
+      { min: 32,    side: "away", scorer: "奥斯曼·登贝莱",   type: "shot", assist: "奥雷利安·楚阿梅尼" },
+      { min: "90+4",side: "away", scorer: "德西雷·杜埃",     type: "header", assist: "布拉德利·巴尔科拉" }
+    ],
+    stats: {
+      possession:      { h: 44, a: 56 },
+      shots:           { h: 7,  a: 15 },
+      shotsOnTarget:   { h: 4,  a: 9 },
+      corners:         { h: 4,  a: 5 },
+      fouls:           { h: 9,  a: 11 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 89, a: 103 },
+      dangerousAttacks:{ h: 39, a: 64 }
+    },
+    attendance: null,
+    referee: "Michael Oliver (ENG)",
+    xg: null,
+    mediaRating: {
+      motm: "奥斯曼·登贝莱",
+      sources: ["Sporting News", "NBC Sports", "Yahoo Sports", "FIFA"],
+      home: {score: 5, quotes: "挪威轮换阵容1-4不敌法国但6分锁定小组第二。哈兰德全场替补未登场，奥斯高一度扳回2-1点燃希望。斯特兰德·拉尔森点球被扑错失追分良机，替补防线难以招架法国三叉戟。"},
+      away: {score: 9, quotes: "登贝莱25分钟帽子戏法创世界杯历史第二快纪录，姆巴佩无私两记助攻。杜埃补时头球锁定4-1。法国三战全胜狂轰11球头名出线，卫冕亚军状态火热剑指冠军。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|H|CPV|KSA": {
+    score: { sh: 0, sa: 0 },
+    date: "2026-06-27",
+    time: "08:00",
+    venue: "TBD",
+    stage: "group",
+    round: 3,
+    goals: [],
+    stats: {
+      possession:      { h: 51, a: 49 },
+      shots:           { h: 10, a: 4 },
+      shotsOnTarget:   { h: 2,  a: 3 },
+      corners:         { h: 4,  a: 2 },
+      fouls:           { h: 10, a: 16 },
+      yellowCards:     { h: 1,  a: 3 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 112,a: 103 },
+      dangerousAttacks:{ h: 50, a: 41 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "沃济尼亚",
+      sources: ["ABC News", "FIFA", "ESPN", "BBC Sport"],
+      home: {score: 9, quotes: "佛得角0-0逼平沙特历史性晋级世界杯淘汰赛！门将沃济尼亚再献神级表现力保零封，蓝鲨从首轮逼平西班牙的冷门到末轮锁定出线，非洲小国的足球童话仍在继续。瓜达拉哈拉的这场平局将载入佛得角体育史册。"},
+      away: {score: 4, quotes: "沙特三战仅积2分遗憾出局。全场49%控球与佛得角不相上下但进攻效率低下。首轮战平乌拉圭的惊喜未能延续，多尼斯的球队虽有进步但仍未跻身非洲球队的竞争力水平。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|H|URU|ESP": {
+    score: { sh: 0, sa: 1 },
+    date: "2026-06-27",
+    time: "08:00",
+    venue: "瓜达拉哈拉体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 42, side: "away", scorer: "阿莱克斯·巴埃纳", type: "shot", assist: "马科斯·略伦特" }
+    ],
+    stats: {
+      possession:      { h: 33, a: 67 },
+      shots:           { h: 4,  a: 5 },
+      shotsOnTarget:   { h: 1,  a: 1 },
+      corners:         { h: 1,  a: 6 },
+      fouls:           { h: 14, a: 14 },
+      yellowCards:     { h: 3,  a: 1 },
+      redCards:        { h: 1,  a: 0 },
+      attacks:         { h: 94, a: 107 },
+      dangerousAttacks:{ h: 42, a: 37 }
+    },
+    attendance: null,
+    referee: "Ismail Elfath (USA)",
+    xg: null,
+    mediaRating: {
+      motm: "阿莱克斯·巴埃纳",
+      sources: ["Yahoo Sports", "FotMob", "Transfermarkt", "FIFA"],
+      home: {score: 4, quotes: "乌拉圭0-1负于西班牙惨遭淘汰。贝尔萨的高压体系全场仅1次射正，穆斯莱拉失误导致巴埃纳破门。卡诺比奥补时红牌雪上加霜，两届世界杯冠军自2002年以来首次小组出局。"},
+      away: {score: 7, quotes: "德拉富恩特的西班牙以三连胜零失球完美收官。巴埃纳第42分钟接略伦特传中打入制胜球，全场67%控球掌控节奏。小组赛7分头名出线，三场零封展现冠军级防守。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // B组
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },
