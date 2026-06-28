@@ -414,7 +414,7 @@ const wc2026AllMatches = {
     stage: "group",
     round: 1,
     goals: [
-      { min: 66,    side: "home", scorer: "姆巴佩",   type: "shot" },
+      { min: 66,    side: "home", scorer: "姆巴佩",   type: "shot", assist: "迈克尔·奥利塞" },
       { min: 82,    side: "home", scorer: "巴尔科拉", type: "shot" },
       { min: "90+5",side: "away", scorer: "姆巴耶",   type: "shot" },
       { min: "90+6",side: "home", scorer: "姆巴佩",   type: "shot" }
@@ -489,9 +489,9 @@ const wc2026AllMatches = {
     stage: "group",
     round: 2,
     goals: [
-      { min: 15, side: "home", scorer: "姆巴佩", type: "shot", assist: "奥利赛" },
+      { min: 15, side: "home", scorer: "姆巴佩", type: "shot", assist: "迈克尔·奥利塞" },
       { min: 55, side: "home", scorer: "姆巴佩", type: "shot", assist: "登贝莱" },
-      { min: 66, side: "home", scorer: "登贝莱", type: "shot", assist: "奥利赛" }
+      { min: 66, side: "home", scorer: "登贝莱", type: "shot", assist: "迈克尔·奥利塞" }
     ],
     stats: {
       possession:      { h: 56, a: 44 },
@@ -510,7 +510,7 @@ const wc2026AllMatches = {
     mediaRating: {
       motm: "基利安·姆巴佩",
       sources: ["FIFA", "ESPN", "L'Équipe"],
-      home: {score: 9, quotes: "法国以一场3-0完胜提前锁定出线。姆巴佩梅开二度展现超级巨星风采，奥利赛两记精妙助攻串联全场，登贝莱锦上添花。伊拉克全场零射正毫无还手之力。"},
+      home: {score: 9, quotes: "法国以一场3-0完胜提前锁定出线。姆巴佩梅开二度展现超级巨星风采，迈克尔·奥利塞两记精妙助攻串联全场，登贝莱锦上添花。伊拉克全场零射正毫无还手之力。"},
       away: {score: 2, quotes: "伊拉克面对卫冕亚军的凌厉攻势完全无法抵挡。全场零射正、仅29%控球，实力差距一览无余。两连败后出线仅存理论可能。"}
     },
     aiPreMatch: null,
@@ -1765,6 +1765,82 @@ const wc2026AllMatches = {
       sources: ["ESPN", "Sofascore", "FIFA", "Yahoo Sports"],
       home: {score: 8, quotes: "刚果民主共和国4分历史性晋级淘汰赛！肖穆罗多夫10分钟吊射破门后，维萨点球扳平+补时远射锁定3-1。马耶莱替补78分钟制胜球展现板凳深度。16强将对阵英格兰，非洲豹子继续书写奇迹。"},
       away: {score: 2, quotes: "乌兹别克斯坦三战全败0分出局。肖穆罗多夫惊艳吊射是唯一亮点，但全场仅3次射门的进攻乏力无法支撑更高目标。世界杯新军成长之路刚刚开始，卡纳瓦罗的执教任期或将终结。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|J|JOR|ARG": {
+    score: { sh: 1, sa: 3 },
+    date: "2026-06-28",
+    time: "10:00",
+    venue: "达拉斯体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 19, side: "away", scorer: "乔瓦尼·洛塞尔索",   type: "free_kick" },
+      { min: 31, side: "away", scorer: "劳塔罗·马丁内斯",   type: "penalty" },
+      { min: 55, side: "home", scorer: "穆萨·塔迈里",       type: "shot", assist: "伊赫桑·哈达德" },
+      { min: 80, side: "away", scorer: "利昂内尔·梅西",     type: "free_kick" }
+    ],
+    stats: {
+      possession:      { h: 27, a: 73 },
+      shots:           { h: 3,  a: 11 },
+      shotsOnTarget:   { h: 1,  a: 4 },
+      corners:         { h: 2,  a: 6 },
+      fouls:           { h: 13, a: 7 },
+      yellowCards:     { h: 3,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 61, a: 122 },
+      dangerousAttacks:{ h: 23, a: 46 }
+    },
+    attendance: null,
+    referee: "István Kovács (ROU)",
+    xg: null,
+    mediaRating: {
+      motm: "利昂内尔·梅西",
+      sources: ["ESPN", "FIFA", "FotMob", "Sportstar"],
+      home: {score: 6, quotes: "世界杯新军约旦以三战皆墨告别首次世界杯之旅。塔迈里下半场一度扳成1-2展现不屈斗志，但面对阿根廷巨星组合终究力不从心。首次参赛即面对阿根廷、奥地利、阿尔及利亚，这段经历将永载约旦足球史册。"},
+      away: {score: 8, quotes: "阿根廷9分全胜完美收官。洛塞尔索19分钟任意球破门、劳塔罗点球扩大优势，梅西替补登场后80分钟任意球锁定胜局——6粒世界杯进球超越马拉多纳。卫冕冠军16强将迎战佛得角。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|J|ALG|AUT": {
+    score: { sh: 3, sa: 3 },
+    date: "2026-06-28",
+    time: "10:00",
+    venue: "堪萨斯城体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 28,    side: "away", scorer: "马尔科·阿瑙托维奇", type: "shot", assist: "大卫·阿拉巴" },
+      { min: 45,    side: "home", scorer: "拉菲克·贝尔加利",   type: "shot" },
+      { min: 55,    side: "away", scorer: "马塞尔·萨比策",     type: "shot", assist: "康拉德·莱默" },
+      { min: 60,    side: "home", scorer: "里亚德·马赫雷斯",   type: "shot", assist: "胡萨姆·阿瓦尔" },
+      { min: "90+3",side: "home", scorer: "里亚德·马赫雷斯",   type: "shot", assist: "胡萨姆·阿瓦尔" },
+      { min: "90+6",side: "away", scorer: "萨沙·卡莱季奇",     type: "header", assist: "米夏埃尔·格雷戈里奇" }
+    ],
+    stats: {
+      possession:      { h: 65, a: 35 },
+      shots:           { h: 10, a: 9 },
+      shotsOnTarget:   { h: 5,  a: 3 },
+      corners:         { h: 0,  a: 3 },
+      fouls:           { h: 3,  a: 7 },
+      yellowCards:     { h: 0,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 139,a: 81 },
+      dangerousAttacks:{ h: 43, a: 39 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "里亚德·马赫雷斯",
+      sources: ["BBC Sport", "ESPN", "FIFA", "FotMob"],
+      home: {score: 8, quotes: "马赫雷斯梅开二度+阿瓦尔两记助攻险些创造奇迹。阿尔及利亚65%控球碾压对手，90+3'马赫雷斯的准绝杀令全场沸腾，但卡莱季奇96分钟头球将比分定格为3-3。沙漠之狐4分锁定小组第三，等待最佳第三排名确认晋级。"},
+      away: {score: 7, quotes: "卡莱季奇96分钟替补头球绝平拯救奥地利！阿瑙托维奇和萨比策进球建立两度领先，但防线被马赫雷斯+阿瓦尔组合反复撕破。4分锁定J组第二出线，16强将迎战西班牙——朗尼克的高压足球将面临终极考验。"}
     },
     aiPreMatch: null,
     aiPostReview: null

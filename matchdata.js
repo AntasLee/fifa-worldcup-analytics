@@ -1489,7 +1489,7 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
       { min: 66,    side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot",   assist: "迈克尔·奥利塞 (Michael Olise)" },
       { min: 82,    side: "home", scorer: "巴尔科拉 (Bradley Barcola)", type: "shot",  assist: "阿德里安·拉比奥 (Adrien Rabiot)" },
       { min: "90+5",side: "away", scorer: "姆巴耶 (Mbaye)",   type: "shot",           assist: "伊利曼·恩迪亚耶 (Iliman Ndiaye)" },
-      { min: "90+6",side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot",   assist: "迈克尔·奥利塞 (Michael Olise)" }
+      { min: "90+6",side: "home", scorer: "姆巴佩 (Kylian Mbappé)",   type: "shot" }
     ],
     cards: {
       home: { yellow: 0, red: 0 },
@@ -1518,9 +1518,9 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
   "2026|I|FRA|IRQ": {
     score: { sh: 3, sa: 0 },
     goals: [
-      { min: 15, side: "home", scorer: "姆巴佩 (Kylian Mbappé)",    type: "shot", assist: "奥利赛 (Michael Olise)" },
+      { min: 15, side: "home", scorer: "姆巴佩 (Kylian Mbappé)",    type: "shot", assist: "迈克尔·奥利塞 (Michael Olise)" },
       { min: 55, side: "home", scorer: "姆巴佩 (Kylian Mbappé)",    type: "shot", assist: "登贝莱 (Ousmane Dembélé)" },
-      { min: 66, side: "home", scorer: "登贝莱 (Ousmane Dembélé)",  type: "shot", assist: "奥利赛 (Michael Olise)" }
+      { min: 66, side: "home", scorer: "登贝莱 (Ousmane Dembélé)",  type: "shot", assist: "迈克尔·奥利塞 (Michael Olise)" }
     ],
     cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: null, referee: "TBD"
@@ -1926,6 +1926,32 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 3, red: 0 }, away: { yellow: 2, red: 0 } },
     attendance: null, referee: "TBD"
   },
+
+  "2026|J|JOR|ARG": {
+    score: { sh: 1, sa: 3 },
+    goals: [
+      { min: 19, side: "away", scorer: "乔瓦尼·洛塞尔索 (Giovani Lo Celso)",   type: "free_kick" },
+      { min: 31, side: "away", scorer: "劳塔罗·马丁内斯 (Lautaro Martínez)",   type: "penalty" },
+      { min: 55, side: "home", scorer: "穆萨·塔迈里 (Mousa Tamari)",          type: "shot", assist: "伊赫桑·哈达德 (Ihsan Haddad)" },
+      { min: 80, side: "away", scorer: "利昂内尔·梅西 (Lionel Messi)",         type: "free_kick" }
+    ],
+    cards: { home: { yellow: 3, red: 0 }, away: { yellow: 0, red: 0 } },
+    attendance: null, referee: "István Kovács (ROU)"
+  },
+
+  "2026|J|ALG|AUT": {
+    score: { sh: 3, sa: 3 },
+    goals: [
+      { min: 28,    side: "away", scorer: "马尔科·阿瑙托维奇 (Marko Arnautovic)", type: "shot", assist: "大卫·阿拉巴 (David Alaba)" },
+      { min: 45,    side: "home", scorer: "拉菲克·贝尔加利 (Rafik Belghali)",    type: "shot" },
+      { min: 55,    side: "away", scorer: "马塞尔·萨比策 (Marcel Sabitzer)",     type: "shot", assist: "康拉德·莱默 (Konrad Laimer)" },
+      { min: 60,    side: "home", scorer: "里亚德·马赫雷斯 (Riyad Mahrez)",      type: "shot", assist: "胡萨姆·阿瓦尔 (Houssem Aouar)" },
+      { min: "90+3",side: "home", scorer: "里亚德·马赫雷斯 (Riyad Mahrez)",      type: "shot", assist: "胡萨姆·阿瓦尔 (Houssem Aouar)" },
+      { min: "90+6",side: "away", scorer: "萨沙·卡莱季奇 (Sasa Kalajdzic)",     type: "header", assist: "米夏埃尔·格雷戈里奇 (Michael Gregoritsch)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -2001,3 +2027,5 @@ matchStats["2026|L|PAN|ENG"] = {p1:"32%",p2:"68%",ps1:null,ps2:null,sh1:10,sh2:1
 matchStats["2026|L|CRO|GHA"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:6,sh2:4,so1:4,so2:1,sb1:2,sb2:3,co1:3,co2:2,fo1:9,fo2:13,os1:1,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:89,at2:103,da1:35,da2:25,pk1:0,pk2:0};
 matchStats["2026|K|COL|POR"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:17,sh2:9,so1:6,so2:2,sb1:11,sb2:7,co1:5,co2:2,fo1:12,fo2:6,os1:3,os2:2,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:88,at2:83,da1:67,da2:38,pk1:0,pk2:0};
 matchStats["2026|K|COD|UZB"] = {p1:"58%",p2:"42%",ps1:null,ps2:null,sh1:18,sh2:3,so1:4,so2:1,sb1:14,sb2:2,co1:2,co2:4,fo1:6,fo2:16,os1:3,os2:1,yc1:3,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:145,at2:90,da1:54,da2:45,pk1:1,pk2:0};
+matchStats["2026|J|JOR|ARG"] = {p1:"27%",p2:"73%",ps1:null,ps2:null,sh1:3,sh2:11,so1:1,so2:4,sb1:2,sb2:7,co1:2,co2:6,fo1:13,fo2:7,os1:1,os2:3,yc1:3,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:61,at2:122,da1:23,da2:46,pk1:0,pk2:1};
+matchStats["2026|J|ALG|AUT"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:10,sh2:9,so1:5,so2:3,sb1:5,sb2:6,co1:0,co2:3,fo1:3,fo2:7,os1:1,os2:3,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:139,at2:81,da1:43,da2:39,pk1:0,pk2:0};
