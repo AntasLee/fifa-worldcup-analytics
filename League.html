@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LEAGUE · CLUB DATA ANALYSIS · V1.74</title>
+<title>LEAGUE · CLUB DATA ANALYSIS · V1.81</title>
 <style>
 :root{--bg:#0a0e14;--surface:#141b22;--surface2:#1c2530;--border:#2a3540;--gold:#d4a843;--gold-light:#f0d070;--text:#c8d0d8;--text-secondary:#8899aa;--accent:#2e8b57;--accent2:#c0392b;--highlight:#1a3a4a;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,0.4)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -265,7 +265,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 <div class="sticky-top-group">
 <div class="header">
     <h1>⚽ LEAGUE & CLUB</h1>
-    <div class="subtitle">LEAGUE & CLUB · All Editions · Data Analysis V1.74 | Author: Antas Lee</div>
+    <div class="subtitle">LEAGUE & CLUB · All Editions · Data Analysis V1.81 | Author: Antas Lee</div>
 </div>
 
 <!-- Continent Navigation (full-width, like WC Edition Bar) -->
@@ -1740,16 +1740,16 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
     // ========== Init ==========
     function init() {
-        console.log('[league V1.74] 🗺️ 五大洲架构初始化中...');
+        console.log('[league V1.81] 🗺️ 五大洲架构初始化中...');
         if (!aggData || Object.keys(aggData.leagues).length === 0) {
             aggData = buildAggregation();
         }
-        console.log('[league V1.74] 联赛总数:', Object.keys(aggData.leagues).length, '俱乐部总数:', Object.keys(aggData.clubs).length);
+        console.log('[league V1.81] 联赛总数:', Object.keys(aggData.leagues).length, '俱乐部总数:', Object.keys(aggData.clubs).length);
         document.getElementById('statusText').textContent = '✅ 数据就绪 | 联赛: ' + Object.keys(aggData.leagues).length + ' | 俱乐部: ' + Object.keys(aggData.clubs).length;
         updateStats();
         renderCountryView();
         document.getElementById('continentNav').style.display = 'flex';
-        console.log('[league V1.74] ✅ 五大洲视图渲染完成');
+        console.log('[league V1.81] ✅ 五大洲视图渲染完成');
     }
 
     // ===== Welcome Loading (League) =====
@@ -1764,7 +1764,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     // Fast path: session cache hit → skip animation
     var _sessionFastPath = false;
     try {
-      if (sessionStorage.getItem('engineDataBuilt') === 'V1.80') {
+      if (sessionStorage.getItem('engineDataBuilt') === 'V1.81') {
         _sessionFastPath = true;
         sessionStorage.removeItem('engineDataBuilt');
       }
@@ -1864,7 +1864,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 window.scrollToContinent = filterByContinent; // backward compat
 })();
 </script>
-<div class="footer-note">* 联赛&俱乐部，提供对现有数据库内容进行汇总和查询的功能。版本 V1.80</div>
+<div class="footer-note">* 联赛&俱乐部，提供对现有数据库内容进行汇总和查询的功能。版本 V1.81</div>
 
 <script>
 // === 跨页面标签切换 ===
@@ -1941,7 +1941,7 @@ window.scrollToContinent = filterByContinent; // backward compat
 			}
 			window.__playerDataReady = true;
 			window.__playerDBReady = true;
-			try { sessionStorage.setItem('engineDataBuilt', 'V1.80'); } catch(e) {}
+			try { sessionStorage.setItem('engineDataBuilt', 'V1.81'); } catch(e) {}
 			return;
 		}
 		var script = document.createElement('script');

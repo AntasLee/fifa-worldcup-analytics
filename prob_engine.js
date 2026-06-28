@@ -14,6 +14,7 @@
   // ========== 桥接外部数据 ==========
   const teamDB = window.teamDB || {};
   const matchOdds = window.matchOdds || {};
+  const knockoutOdds = window.knockoutOdds || {};
   const liveOdds = window.liveOdds || {};
   const allGM = window.allGM || [];
   const teamMap = window.teamMap || {};
@@ -1060,8 +1061,8 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     var homeCode = m.home.code, awayCode = m.away.code;
     var homeName = m.home.zh, awayName = m.away.zh;
 
-    // 赔率数据 - 优先使用当场比赛赔率(matchOdds)，回退至球队平均赔率(liveOdds)
-    var md = matchOdds[mid] || null;
+    // 赔率数据 - 优先使用当场比赛赔率(matchOdds→knockoutOdds)，回退至球队平均赔率(liveOdds)
+    var md = matchOdds[mid] || knockoutOdds[mid] || null;
     var ho, ao;
     if (md) {
         ho = { w: md.hw, d: md.d, l: md.aw };

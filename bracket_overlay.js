@@ -1,8 +1,8 @@
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 // ============================================
-// WORLD CUP BRACKET V10 — Auto-fill + Simplified UX
-// 自动读取比赛结果填充32强，点击选择胜者晋级，未确定显示"待角逐"
+// WORLD CUP BRACKET V13 — 淘汰赛比分自动晋级 + FIFA Annex C
+// 自动读取小组赛结果填充32强，淘汰赛比分自动判定胜者落位，未确定显示"待角逐"
 // ============================================
 ;(function(){
 'use strict';
@@ -125,12 +125,16 @@ function getMatchResult(gid, homeIdx, awayIdx) {
   var revKey = '2026|' + gid + '|' + away.code + '|' + home.code;
 
   if (typeof wc2026MatchDetails !== 'undefined') {
-    var md = wc2026MatchDetails[key] || wc2026MatchDetails[revKey];
+    var md = wc2026MatchDetails[key];
     if (md && md.score) return { sh: md.score.sh, sa: md.score.sa, isReal: true };
+    md = wc2026MatchDetails[revKey];
+    if (md && md.score) return { sh: md.score.sa, sa: md.score.sh, isReal: true };
   }
   if (typeof wc2026AllMatches !== 'undefined') {
-    var ma = wc2026AllMatches[key] || wc2026AllMatches[revKey];
+    var ma = wc2026AllMatches[key];
     if (ma && ma.score) return { sh: ma.score.sh, sa: ma.score.sa, isReal: true };
+    ma = wc2026AllMatches[revKey];
+    if (ma && ma.score) return { sh: ma.score.sa, sa: ma.score.sh, isReal: true };
   }
   try {
     var gPreds = JSON.parse(localStorage.getItem('wc2026_groups') || '{}');
@@ -183,24 +187,96 @@ function getAllThirdPlaceTeams(allStandings) {
   return thirds;
 }
 
+// ═══════════════════════════════════════════
+//  FIFA ANNEX C — 小组第三官方分配表 (495种组合)
+//  Source: FIFA World Cup 26 Regulations, Annex C, pp. 80-97
+//  列顺序 A,B,D,E,G,I,K,L → 对应胜者组 → R32 slot 6,14,10,0,11,1,15,7
+// ═══════════════════════════════════════════
+var ANNEX_C_WINNERS = ["A","B","D","E","G","I","K","L"];
+var ANNEX_C_ROWS = [
+ "EJIFHGLK","HGIDJFLK","EJIDHGLK","EJIDHFLK","EGIDJFLK","EGJDHFLK","EGIDHFLK","EGJDHFLI","EGJDHFIK",
+ "HGICJFLK","EJICHGLK","EJICHFLK","EGICJFLK","EGJCHFLK","EGICHFLK","EGJCHFLI","EGJCHFIK","HGICJDLK",
+ "CJIDHFLK","CGIDJFLK","CGJDHFLK","CGIDHFLK","CGJDHFLI","CGJDHFIK","EJICHDLK","EGICJDLK","EGJCHDLK",
+ "EGICHDLK","EGJCHDLI","EGJCHDIK","CJEDIFLK","CJEDHFLK","CEIDHFLK","CJEDHFLI","CJEDHFIK","CGEDJFLK",
+ "CGEDIFLK","CGEDJFLI","CGEDJFIK","CGEDHFLK","CGJDHFLE","CGJDHFEK","CGEDHFLI","CGEDHFIK","CGJDHFEI",
+ "HJBFIGLK","EJIBHGLK","EJBFIHLK","EJBFIGLK","EJBFHGLK","EGBFIHLK","EJBFHGLI","EJBFHGIK","HJBDIGLK",
+ "HJBDIFLK","IGBDJFLK","HGBDJFLK","HGBDIFLK","HGBDJFLI","HGBDJFIK","EJBDIHLK","EJBDIGLK","EJBDHGLK",
+ "EGBDIHLK","EJBDHGLI","EJBDHGIK","EJBDIFLK","EJBDHFLK","EIBDHFLK","EJBDHFLI","EJBDHFIK","EGBDJFLK",
+ "EGBDIFLK","EGBDJFLI","EGBDJFIK","EGBDHFLK","HGBDJFLE","HGBDJFEK","EGBDHFLI","EGBDHFIK","HGBDJFEI",
+ "HJBCIGLK","HJBCIFLK","IGBCJFLK","HGBCJFLK","HGBCIFLK","HGBCJFLI","HGBCJFIK","EJBCIHLK","EJBCIGLK",
+ "EJBCHGLK","EGBCIHLK","EJBCHGLI","EJBCHGIK","EJBCIFLK","EJBCHFLK","EIBCHFLK","EJBCHFLI","EJBCHFIK",
+ "EGBCJFLK","EGBCIFLK","EGBCJFLI","EGBCJFIK","EGBCHFLK","HGBCJFLE","HGBCJFEK","EGBCHFLI","EGBCHFIK",
+ "HGBCJFEI","HJBCIDLK","IGBCJDLK","HGBCJDLK","HGBCIDLK","HGBCJDLI","HGBCJDIK","CJBDIFLK","CJBDHFLK",
+ "CIBDHFLK","CJBDHFLI","CJBDHFIK","CGBDJFLK","CGBDIFLK","CGBDJFLI","CGBDJFIK","CGBDHFLK","CGBDHFLJ",
+ "HGBCJFDK","CGBDHFLI","CGBDHFIK","HGBCJFDI","EJBCIDLK","EJBCHDLK","EIBCHDLK","EJBCHDLI","EJBCHDIK",
+ "EGBCJDLK","EGBCIDLK","EGBCJDLI","EGBCJDIK","EGBCHDLK","HGBCJDLE","HGBCJDEK","EGBCHDLI","EGBCHDIK",
+ "HGBCJDEI","CJBDEFLK","CEBDIFLK","CJBDEFLI","CJBDEFIK","CEBDHFLK","CJBDHFLE","CJBDHFEK","CEBDHFLI",
+ "CEBDHFIK","CJBDHFEI","CGBDEFLK","CGBDJFLE","CGBDJFEK","CGBDEFLI","CGBDEFIK","CGBDJFEI","CGBDHFLE",
+ "CGBDHFEK","HGBCJFDE","CGBDHFEI","HJIFAGLK","EJIAHGLK","EJIFAHLK","EJIFAGLK","EGJFAHLK","EGIFAHLK",
+ "EGJFAHLI","EGJFAHIK","HJIDAGLK","HJIDAFLK","IGJDAFLK","HGJDAFLK","HGIDAFLK","HGJDAFLI","HGJDAFIK",
+ "EJIDAHLK","EJIDAGLK","EGJDAHLK","EGIDAHLK","EGJDAHLI","EGJDAHIK","EJIDAFLK","HJEDAFLK","HEIDAFLK",
+ "HJEDAFLI","HJEDAFIK","EGJDAFLK","EGIDAFLK","EGJDAFLI","EGJDAFIK","HGEDAFLK","HGJDAFLE","HGJDAFEK",
+ "HGEDAFLI","HGEDAFIK","HGJDAFEI","HJICAGLK","HJICAFLK","IGJCAFLK","HGJCAFLK","HGICAFLK","HGJCAFLI",
+ "HGJCAFIK","EJICAHLK","EJICAGLK","EGJCAHLK","EGICAHLK","EGJCAHLI","EGJCAHIK","EJICAFLK","HJECAFLK",
+ "HEICAFLK","HJECAFLI","HJECAFIK","EGJCAFLK","EGICAFLK","EGJCAFLI","EGJCAFIK","HGECAFLK","HGJCAFLE",
+ "HGJCAFEK","HGECAFLI","HGECAFIK","HGJCAFEI","HJICADLK","IGJCADLK","HGJCADLK","HGICADLK","HGJCADLI",
+ "HGJCADIK","CJIDAFLK","HJFCADLK","HFICADLK","HJFCADLI","HJFCADIK","CGJDAFLK","CGIDAFLK","CGJDAFLI",
+ "CGJDAFIK","HGFCADLK","CGJDAFLH","HGJCAFDK","HGFCADLI","HGFCADIK","HGJCAFDI","EJICADLK","HJECADLK",
+ "HEICADLK","HJECADLI","HJECADIK","EGJCADLK","EGICADLK","EGJCADLI","EGJCADIK","HGECADLK","HGJCADLE",
+ "HGJCADEK","HGECADLI","HGECADIK","HGJCADEI","CJEDAFLK","CEIDAFLK","CJEDAFLI","CJEDAFIK","HEFCADLK",
+ "HJFCADLE","HJECAFDK","HEFCADLI","HEFCADIK","HJECAFDI","CGEDAFLK","CGJDAFLE","CGJDAFEK","CGEDAFLI",
+ "CGEDAFIK","CGJDAFEI","HGFCADLE","HGECAFDK","HGJCAFDE","HGECAFDI","HJBAIGLK","HJBAIFLK","IJBFAGLK",
+ "HJBFAGLK","HGBAIFLK","HJBFAGLI","HJBFAGIK","EJBAIHLK","EJBAIGLK","EJBAHGLK","EGBAIHLK","EJBAHGLI",
+ "EJBAHGIK","EJBAIFLK","EJBFAHLK","EIBFAHLK","EJBFAHLI","EJBFAHIK","EJBFAGLK","EGBAIFLK","EJBFAGLI",
+ "EJBFAGIK","EGBFAHLK","HJBFAGLE","HJBFAGEK","EGBFAHLI","EGBFAHIK","HJBFAGEI","IJBDAHLK","IJBDAGLK",
+ "HJBDAGLK","IGBDAHLK","HJBDAGLI","HJBDAGIK","IJBDAFLK","HJBDAFLK","HIBDAFLK","HJBDAFLI","HJBDAFIK",
+ "FJBDAGLK","IGBDAFLK","FJBDAGLI","FJBDAGIK","HGBDAFLK","HGBDAFLJ","HGBDAFJK","HGBDAFLI","HGBDAFIK",
+ "HGBDAFIJ","EJBAIDLK","EJBDAHLK","EIBDAHLK","EJBDAHLI","EJBDAHIK","EJBDAGLK","EGBAIDLK","EJBDAGLI",
+ "EJBDAGIK","EGBDAHLK","HJBDAGLE","HJBDAGEK","EGBDAHLI","EGBDAHIK","HJBDAGEI","EJBDAFLK","EIBDAFLK",
+ "EJBDAFLI","EJBDAFIK","HEBDAFLK","HJBDAFLE","HJBDAFEK","HEBDAFLI","HEBDAFIK","HJBDAFEI","EGBDAFLK",
+ "EGBDAFLJ","EGBDAFJK","EGBDAFLI","EGBDAFIK","EGBDAFIJ","HGBDAFLE","HGBDAFEK","HGBDAFEJ","HGBDAFEI",
+ "IJBCAHLK","IJBCAGLK","HJBCAGLK","IGBCAHLK","HJBCAGLI","HJBCAGIK","IJBCAFLK","HJBCAFLK","HIBCAFLK",
+ "HJBCAFLI","HJBCAFIK","CJBFAGLK","IGBCAFLK","CJBFAGLI","CJBFAGIK","HGBCAFLK","HGBCAFLJ","HGBCAFJK",
+ "HGBCAFLI","HGBCAFIK","HGBCAFIJ","EJBAICLK","EJBCAHLK","EIBCAHLK","EJBCAHLI","EJBCAHIK","EJBCAGLK",
+ "EGBAICLK","EJBCAGLI","EJBCAGIK","EGBCAHLK","HJBCAGLE","HJBCAGEK","EGBCAHLI","EGBCAHIK","HJBCAGEI",
+ "EJBCAFLK","EIBCAFLK","EJBCAFLI","EJBCAFIK","HEBCAFLK","HJBCAFLE","HJBCAFEK","HEBCAFLI","HEBCAFIK",
+ "HJBCAFEI","EGBCAFLK","EGBCAFLJ","EGBCAFJK","EGBCAFLI","EGBCAFIK","EGBCAFIJ","HGBCAFLE","HGBCAFEK",
+ "HGBCAFEJ","HGBCAFEI","IJBCADLK","HJBCADLK","HIBCADLK","HJBCADLI","HJBCADIK","CJBDAGLK","IGBCADLK",
+ "CJBDAGLI","CJBDAGIK","HGBCADLK","HGBCADLJ","HGBCADJK","HGBCADLI","HGBCADIK","HGBCADIJ","CJBDAFLK",
+ "CIBDAFLK","CJBDAFLI","CJBDAFIK","HFBCADLK","CJBDAFLH","HJBCAFDK","HFBCADLI","HFBCADIK","HJBCAFDI",
+ "CGBDAFLK","CGBDAFLJ","CGBDAFJK","CGBDAFLI","CGBDAFIK","CGBDAFIJ","CGBDAFLH","HGBCAFDK","HGBCAFDJ",
+ "HGBCAFDI","EJBCADLK","EIBCADLK","EJBCADLI","EJBCADIK","HEBCADLK","HJBCADLE","HJBCADEK","HEBCADLI",
+ "HEBCADIK","HJBCADEI","EGBCADLK","EGBCADLJ","EGBCADJK","EGBCADLI","EGBCADIK","EGBCADIJ","HGBCADLE",
+ "HGBCADEK","HGBCADEJ","HGBCADEI","CEBDAFLK","CJBDAFLE","CJBDAFEK","CEBDAFLI","CEBDAFIK","CJBDAFEI",
+ "HFBCADLE","HEBCAFDK","HJBCAFDE","HEBCAFDI","CGBDAFLE","CGBDAFEK","CGBDAFEJ","CGBDAFEI","HGBCAFDE"
+];
+// 构建快速查找 Map: 排序后的出线组 → 分配行
+var ANNEX_C_MAP = {};
+ANNEX_C_ROWS.forEach(function(row) {
+  var sorted = row.split('').sort().join('');
+  ANNEX_C_MAP[sorted] = row;
+});
+// ANNEX_C_WINNERS 列顺序 → R32 slot 索引
+// A→M79(s6), B→M85(s14), D→M81(s10), E→M74(s0), G→M82(s11), I→M77(s1), K→M87(s15), L→M80(s7)
+var ANNEX_C_WINNER_TO_SLOT = { A:6, B:14, D:10, E:0, G:11, I:1, K:15, L:7 };
+
 function allocateThirdPlace(rankedThirds) {
-  var order = [0, 1, 6, 7, 10, 11, 14, 15]; // M74,M77,M79,M80,M81,M82,M85,M87
-  var pool = rankedThirds.slice(0);
+  // 仅前8名小组第三晋级 (2026赛制: 12组取8)
+  var top8 = rankedThirds.slice(0, 8);
+  var qualifying = top8.map(function(t){ return t.group; }).sort().join('');
+  var row = ANNEX_C_MAP[qualifying];
+  if (!row) { console.warn('Annex C lookup failed for: '+qualifying); return null; }
   var assigned = {};
-  var used = {};
-  order.forEach(function(si) {
-    var pairing = R32_PAIRINGS[si];
-    var opts = (pairing.b.opts || '').split('');
-    var ownGroup = pairing.a.g;
-    for (var r = 0; r < pool.length; r++) {
-      var t = pool[r];
-      if (used[t.group] || t.group === ownGroup || opts.indexOf(t.group) === -1) continue;
-      assigned[si] = t;
-      used[t.group] = true;
-      pool.splice(r, 1);
-      break;
+  for (var i = 0; i < 8; i++) {
+    var winnerGroup = ANNEX_C_WINNERS[i];
+    var thirdGroup = row[i];
+    var slotIdx = ANNEX_C_WINNER_TO_SLOT[winnerGroup];
+    var thirdTeam = null;
+    for (var j = 0; j < top8.length; j++) {
+      if (top8[j].group === thirdGroup) { thirdTeam = top8[j]; break; }
     }
-  });
+    if (thirdTeam) assigned[slotIdx] = thirdTeam;
+  }
   return assigned;
 }
 
@@ -274,6 +350,90 @@ function autoFillBracket() {
   });
 
   if (changed) save();
+
+  // V13: 小组赛完成后，自动从淘汰赛实际比分推进晋级路线
+  if (allComplete) {
+    autoAdvanceKnockoutResults();
+  }
+}
+
+// ═══════════════════════════════════════════
+//  AUTO-ADVANCE FROM MATCH RESULTS (V13)
+//  读取 wc2026AllMatches/wc2026MatchDetails 中淘汰赛实际比分
+//  自动判定胜者并传播到下游轮次
+// ═══════════════════════════════════════════
+
+function getKnockoutMatchResult(stage, teamA, teamB) {
+  if (!teamA || !teamB) return null;
+  if (!teamA.code || !teamB.code) return null;
+  var key1 = '2026|' + stage + '|' + teamA.code + '|' + teamB.code;
+  var key2 = '2026|' + stage + '|' + teamB.code + '|' + teamA.code;
+
+  // 优先 wc2026MatchDetails（含进球明细），其次 wc2026AllMatches
+  if (typeof wc2026MatchDetails !== 'undefined') {
+    var md = wc2026MatchDetails[key1];
+    if (md && md.score && md.score.sh != null && md.score.sa != null) {
+      return { sh: Number(md.score.sh), sa: Number(md.score.sa), key: key1, source: 'details' };
+    }
+    md = wc2026MatchDetails[key2];
+    if (md && md.score && md.score.sh != null && md.score.sa != null) {
+      return { sh: Number(md.score.sa), sa: Number(md.score.sh), key: key2, source: 'details' };
+    }
+  }
+  if (typeof wc2026AllMatches !== 'undefined') {
+    var ma = wc2026AllMatches[key1];
+    if (ma && ma.score && ma.score.sh != null && ma.score.sa != null) {
+      return { sh: Number(ma.score.sh), sa: Number(ma.score.sa), key: key1, source: 'allMatches' };
+    }
+    ma = wc2026AllMatches[key2];
+    if (ma && ma.score && ma.score.sh != null && ma.score.sa != null) {
+      return { sh: Number(ma.score.sa), sa: Number(ma.score.sh), key: key2, source: 'allMatches' };
+    }
+  }
+  return null;
+}
+
+function autoAdvanceKnockoutResults() {
+  var changed = false;
+  // 按轮次排序：R32 → R16 → QF → SF → TP → FINAL
+  var orderedSlots = R32.concat(R16, QF, SF, [TP, FIN]);
+  var processed = {};
+
+  orderedSlots.forEach(function(slot) {
+    // 季军赛特殊处理：通过 SF 败者自动填充，不从 matchdata 读取
+    if (slot.isThirdPlace) return;
+
+    var p = gpred(slot.id);
+    if (!p) return;
+    if (!p.teams[0] || !p.teams[1]) return; // 双方未齐
+    if (p.winner !== null && p.winner !== undefined) return; // 已有胜者，跳过
+
+    var result = getKnockoutMatchResult(slot.round, p.teams[0], p.teams[1]);
+    if (!result) return;
+
+    // 判断胜者
+    if (result.sh > result.sa) {
+      p.winner = 0;
+    } else if (result.sa > result.sh) {
+      p.winner = 1;
+    } else {
+      return; // 平局 → 需点球数据，暂不判定
+    }
+
+    console.log('Bracket: ' + slot.round + ' auto-advance ' +
+      p.teams[p.winner].code + ' (' + result.sh + '-' + result.sa + ') via ' + result.source);
+
+    changed = true;
+    processed[slot.id] = true;
+  });
+
+  if (changed) {
+    save();
+    // 按轮次级联传播
+    orderedSlots.forEach(function(slot) {
+      if (processed[slot.id]) propagate(slot.id);
+    });
+  }
 }
 
 // ═══════════════════════════════════════════
@@ -614,6 +774,9 @@ function clearDownstream(slotId){
 // ═══════════════════════════════════════════
 
 window.Bracket = window.Bracket || {};
+// 暴露 Annex C 全局查询供 groupsdata.js 等模块使用
+window.Bracket.allocateThirdPlace = allocateThirdPlace;
+window.ANNEX_C_DATA = { winners: ANNEX_C_WINNERS, map: ANNEX_C_MAP, winnerToSlot: ANNEX_C_WINNER_TO_SLOT };
 
 Bracket.open = function(){
   var overlay = document.getElementById('bracketOverlay'); if (!overlay) return;
@@ -751,5 +914,5 @@ window.addEventListener('resize', function(){
 });
 
 load();
-console.log('🏆 Bracket Overlay V10 ready — Auto-fill from match results');
+console.log('🏆 Bracket Overlay V13 ready — auto-advance from knockout results + FIFA Annex C');
 })();

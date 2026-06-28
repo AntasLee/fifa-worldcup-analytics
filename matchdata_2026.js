@@ -1,4 +1,4 @@
-// matchdata_2026.js — 2026世界杯比赛数据层 | V1.80
+// matchdata_2026.js — 2026世界杯比赛数据层 | V1.81
 // ===== matchdata_2026.js — 2026世界杯完整比赛数据层 =====
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
@@ -10,7 +10,8 @@
 //   4. 渐进填充：赛前score=null，赛后动态更新
 //
 // Key格式: "2026|阶段|主队|客队"
-//   阶段: A~P(小组) / R32 / R16 / QF / SF / TP / FINAL
+//   阶段: A~L(小组) / R32 / R16 / QF / SF / TP / FINAL
+//   V1.81: R32 淘汰赛 16 场全部写入，基于 FIFA 官方确认对阵 (2026-06-28)
 // ================================================================
 
 const wc2026AllMatches = {
@@ -2324,9 +2325,109 @@ const wc2026AllMatches = {
   //   xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
   // },
 
-  // ========= 淘汰赛预留框架 =========
-  // R32: 16场, R16: 8场, QF: 4场, SF: 2场, TP: 1场, FINAL: 1场
-  // 格式: "2026|R16|???|???"
+  // ========= 淘汰赛 R32 (16场) — FIFA 官方确认对阵 | 北京时间 =========
+  // 数据来源: FIFA.com / Wikipedia / FOX Sports / worldcupwiki.com
+  // 更新时间: 2026-06-28 小组赛全部结束
+
+  // M73 · 6月29日 03:00 · SoFi体育场 (洛杉矶)
+  "2026|R32|RSA|CAN": {
+    score: null, date: "2026-06-29", time: "03:00", venue: "SoFi体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M76 · 6月30日 01:00 · NRG体育场 (休斯顿)
+  "2026|R32|BRA|JPN": {
+    score: null, date: "2026-06-30", time: "01:00", venue: "NRG体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M74 · 6月30日 04:30 · 吉列体育场 (波士顿)
+  "2026|R32|GER|PAR": {
+    score: null, date: "2026-06-30", time: "04:30", venue: "吉列体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M75 · 6月30日 09:00 · BBVA球场 (蒙特雷)
+  "2026|R32|NED|MAR": {
+    score: null, date: "2026-06-30", time: "09:00", venue: "BBVA球场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M78 · 7月1日 01:00 · AT&T体育场 (达拉斯)
+  "2026|R32|CIV|NOR": {
+    score: null, date: "2026-07-01", time: "01:00", venue: "AT&T体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M77 · 7月1日 05:00 · 大都会人寿体育场 (纽约)
+  "2026|R32|FRA|SWE": {
+    score: null, date: "2026-07-01", time: "05:00", venue: "大都会人寿体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M79 · 7月1日 09:00 · 阿兹特克球场 (墨西哥城)
+  "2026|R32|MEX|ECU": {
+    score: null, date: "2026-07-01", time: "09:00", venue: "阿兹特克球场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M80 · 7月2日 00:00 · 梅赛德斯-奔驰体育场 (亚特兰大)
+  "2026|R32|ENG|COD": {
+    score: null, date: "2026-07-02", time: "00:00", venue: "梅赛德斯-奔驰体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M82 · 7月2日 04:00 · 流明球场 (西雅图)
+  "2026|R32|BEL|SEN": {
+    score: null, date: "2026-07-02", time: "04:00", venue: "流明球场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M81 · 7月2日 08:00 · 李维斯体育场 (旧金山)
+  "2026|R32|USA|BIH": {
+    score: null, date: "2026-07-02", time: "08:00", venue: "李维斯体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M84 · 7月3日 03:00 · SoFi体育场 (洛杉矶)
+  "2026|R32|ESP|AUT": {
+    score: null, date: "2026-07-03", time: "03:00", venue: "SoFi体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M83 · 7月3日 07:00 · BMO球场 (多伦多)
+  "2026|R32|POR|CRO": {
+    score: null, date: "2026-07-03", time: "07:00", venue: "BMO球场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M85 · 7月3日 11:00 · BC Place体育场 (温哥华)
+  "2026|R32|SUI|ALG": {
+    score: null, date: "2026-07-03", time: "11:00", venue: "BC Place体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M88 · 7月4日 02:00 · AT&T体育场 (达拉斯)
+  "2026|R32|AUS|EGY": {
+    score: null, date: "2026-07-04", time: "02:00", venue: "AT&T体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M86 · 7月4日 06:00 · 硬石体育场 (迈阿密)
+  "2026|R32|ARG|CPV": {
+    score: null, date: "2026-07-04", time: "06:00", venue: "硬石体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  },
+  // M87 · 7月4日 09:30 · 箭头体育场 (堪萨斯城)
+  "2026|R32|COL|GHA": {
+    score: null, date: "2026-07-04", time: "09:30", venue: "箭头体育场", stage: "R32",
+    goals: null, stats: null, attendance: null, referee: null,
+    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+  }
+
+  // ========= R16 / QF / SF / TP / FINAL 预留框架 =========
+  // 赛后将动态填充格式: "2026|R16|???|???"
 };
 
 // ================================================================

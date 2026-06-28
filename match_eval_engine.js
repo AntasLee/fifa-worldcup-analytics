@@ -1,4 +1,4 @@
-// match_eval_engine.js — 本场表现评价引擎 | V1.80
+// match_eval_engine.js — 本场表现评价引擎 | V1.81
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 //
@@ -537,6 +537,6 @@ window.MatchEval={
   parseMatchKey:parseMatchKey
 };
 
-console.log('✅ match_eval_engine.js 加载完成 — 六维评价引擎 V1.80');
+console.log('✅ match_eval_engine.js 加载完成 — 六维评价引擎 V1.81');
 
 })();

@@ -1952,8 +1952,105 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: null, referee: "TBD"
   },
-};
 
+  // ========= 淘汰赛 R32 (16场) — FIFA 官方确认对阵 =========
+  // M73 · 6月29日 03:00 北京时间 · SoFi体育场
+  "2026|R32|RSA|CAN": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M76 · 6月30日 01:00 · NRG体育场
+  "2026|R32|BRA|JPN": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M74 · 6月30日 04:30 · 吉列体育场
+  "2026|R32|GER|PAR": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M75 · 6月30日 09:00 · BBVA球场
+  "2026|R32|NED|MAR": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M78 · 7月1日 01:00 · AT&T体育场
+  "2026|R32|CIV|NOR": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M77 · 7月1日 05:00 · 大都会人寿体育场
+  "2026|R32|FRA|SWE": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M79 · 7月1日 09:00 · 阿兹特克球场
+  "2026|R32|MEX|ECU": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M80 · 7月2日 00:00 · 梅赛德斯-奔驰体育场
+  "2026|R32|ENG|COD": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M82 · 7月2日 04:00 · 流明球场
+  "2026|R32|BEL|SEN": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M81 · 7月2日 08:00 · 李维斯体育场
+  "2026|R32|USA|BIH": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M84 · 7月3日 03:00 · SoFi体育场
+  "2026|R32|ESP|AUT": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M83 · 7月3日 07:00 · BMO球场
+  "2026|R32|POR|CRO": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M85 · 7月3日 11:00 · BC Place体育场
+  "2026|R32|SUI|ALG": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M88 · 7月4日 02:00 · AT&T体育场
+  "2026|R32|AUS|EGY": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M86 · 7月4日 06:00 · 硬石体育场
+  "2026|R32|ARG|CPV": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+  // M87 · 7月4日 09:30 · 箭头体育场
+  "2026|R32|COL|GHA": {
+    score: null,
+    goals: null, cards: null,
+    attendance: null, referee: null
+  },
+};
 // ========== 2026世界杯 比赛统计数据 ==========
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
 matchStats["2026|A|KOR|CZE"] = {p1:"62%",p2:"38%",ps1:480,ps2:390,sh1:11,sh2:7,so1:6,so2:4,sb1:5,sb2:3,co1:4,co2:5,fo1:12,fo2:14,os1:2,os2:2,yc1:1,yc2:0,rc1:0,rc2:0,tk1:14,tk2:16,at1:98,at2:90,da1:38,da2:42,pk1:0,pk2:0};

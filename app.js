@@ -7,7 +7,7 @@
 
 // FIFA World Cup Data Analysis - Player & Match Database
 // Auto-generated from HTML data section. Update this file to modify data.
-// Version: V1.80 | Generated: 2026-07-19
+// Version: V1.81 | Generated: 2026-06-28
 // These variables are at global scope and accessible from the main application.
 
 // ===== Global shared state (used by both data & UI) =====
@@ -78,6 +78,7 @@ window.switchEdition=function(edition){
     if(pastMain) pastMain.classList.remove('visible');
     if(typeof mTab!=='undefined'&&mTab==='knockout'){
       if(ko2026) ko2026.classList.add('visible');
+      if(g2026) g2026.style.display='none';
     }
     if(typeof rGM==='function') rGM(); else console.warn('rGM not available yet, will retry on next switchEdition call');
     if(typeof mTab!=='undefined'&&mTab==='knockout'){ if(typeof autoFillKO==='function') autoFillKO(); if(typeof rKP==='function') rKP(); }

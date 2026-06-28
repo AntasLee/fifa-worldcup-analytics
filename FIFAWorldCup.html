@@ -154,12 +154,21 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .knockout-panel.visible{display:block}
 .ko-round-section{display:none}
 .ko-round-section.active{display:block}
-.ko-match{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;margin-bottom:8px;flex-wrap:wrap}
+.ko-match{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;margin-bottom:8px;flex-wrap:wrap;border:2px solid transparent;transition:all 0.2s;cursor:default}
+.ko-match:hover{background:var(--surface);border-color:var(--border)}
+.ko-match.predicted{border-left:3px solid var(--accent)}
+.ko-match.finished{border-left:3px solid #2ecc71;background:rgba(46,204,113,0.12);cursor:pointer;transition:all 0.35s ease;position:relative;box-shadow:0 0 6px rgba(46,204,113,0.08)}
+.ko-match.finished:hover{background:rgba(46,204,113,0.22);border-color:#2ecc71;box-shadow:0 0 22px rgba(46,204,113,0.28);transform:translateY(-3px);z-index:2}
+.ko-match.finished::before{content:'';position:absolute;inset:-2px;border-radius:inherit;border:2px solid transparent;transition:border-color 0.35s;pointer-events:none}
+.ko-match.finished:hover::before{border-color:rgba(46,204,113,0.35);animation:finishPulse 1.5s ease-in-out infinite}
 .ko-team{flex:1;display:flex;align-items:center;gap:6px;cursor:pointer;position:relative}
+.ko-match > .ko-team:nth-of-type(1){justify-content:flex-end}
+.ko-match > .ko-team:nth-of-type(2){justify-content:flex-start}
 .ko-team select{display:none;position:absolute;top:100%;left:0;width:100%;z-index:10}
 .ko-team.editing select{display:block}
 .ko-team .display{display:flex;align-items:center;gap:6px;min-height:30px}
 .ko-score-group{display:flex;align-items:center;gap:4px}
+.ko-actions{display:flex;gap:4px;flex-wrap:wrap}
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:999;justify-content:center;align-items:center}
 #playerDetailModal{z-index:10000!important}
 .modal-overlay.visible{display:flex}
@@ -1985,11 +1994,14 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     margin: 0 1px;
   }
 
-  /* Row 2: action buttons — order: 2 after ::after break */
+  /* Row 2: action buttons — order: 2 after ::after break (group + knockout) */
   .match-item .btn-prob,
   .match-item .btn-analysis,
   .match-item .btn-venue,
-  .match-item .btn-eval {
+  .match-item .btn-eval,
+  .ko-actions .btn-prob,
+  .ko-actions .btn-analysis,
+  .ko-actions .btn-venue {
     order: 2 !important;
     flex: 1 1 0 !important;
     min-width: 48px !important;
@@ -2006,11 +2018,122 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .knockout-panel {
     margin-top: 6px;
   }
-  /* Knockout match cards */
-  .ko-match-card {
-    font-size: 0.64rem;
-    padding: 6px 4px;
+
+  /* Knockout grid → single column on mobile */
+  .ko-round-section > div {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
   }
+
+  /* Knockout match: same 2-row layout as group stage match-item */
+  .ko-match {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px 4px;
+    align-items: center;
+    padding: 4px 5px;
+    font-size: 0.62rem;
+    overflow-x: hidden;
+    min-height: auto;
+    margin-bottom: 4px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+  }
+  /* Force line break between row 1 & row 2 */
+  .ko-match::after {
+    content: '';
+    flex-basis: 100%;
+    order: 1;
+    height: 0;
+    font-size: 0;
+  }
+
+  /* Hide predict-indicator on mobile (same as group stage) */
+  .ko-match > .predict-indicator {
+    display: none;
+  }
+
+  /* Row 1: match time */
+  .ko-match > .match-time {
+    order: -1;
+    font-size: 0.5rem;
+    min-width: 44px;
+    text-align: left;
+    flex-shrink: 0;
+    margin-right: 2px;
+    line-height: 1.3;
+  }
+
+  /* Row 1: ko-team — compact flex share */
+  .ko-team {
+    flex: 1 1 0;
+    max-width: 30%;
+    min-width: 0;
+    font-size: 0.7rem;
+    gap: 2px;
+  }
+  .ko-team .display {
+    min-height: auto;
+  }
+  .ko-team .team-flag,
+  .ko-team img {
+    width: 16px !important;
+    height: 11px !important;
+    flex-shrink: 0;
+  }
+
+  /* Row 1: VS badge */
+  .ko-match > .vs-badge {
+    flex: 0 0 auto;
+    font-size: 0.55rem;
+    padding: 0 1px;
+    min-width: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* Row 1: score group */
+  .ko-score-group {
+    flex: 0 0 auto;
+    font-size: 0.72rem;
+    padding: 1px 3px !important;
+    border-radius: 4px;
+  }
+  .ko-score-group input.score-input {
+    width: 26px !important;
+    height: 22px !important;
+    font-size: 0.68rem !important;
+    padding: 0 2px !important;
+  }
+  .ko-score-group .score-colon {
+    margin: 0 1px;
+    font-size: 0.7rem;
+  }
+
+  /* KnRT tabs — compact horizontal scroll */
+  #koTabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    gap: 3px;
+  }
+  #koTabs .tab {
+    padding: 5px 10px;
+    font-size: 0.68rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+
+  /* Row 2: action buttons container */
+  .ko-actions {
+    flex-basis: 100%;
+    order: 2;
+    display: flex;
+    gap: 2px;
+    margin-top: 3px !important;
+    flex-wrap: wrap;
+  }
+  /* Buttons inside ko-actions styled by shared rule ↑ (line ~1995) */
 
   /* ── 8. BRACKET OVERLAY (see standalone @media blocks below) ── */
 
@@ -3638,7 +3761,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   // Fast path: if engine data was already built in this session, skip animation entirely
   var _hasEngineData = false;
   try {
-    if (sessionStorage.getItem('engineDataBuilt') === 'V1.80') {
+    if (sessionStorage.getItem('engineDataBuilt') === 'V1.81') {
       _hasEngineData = true;
       sessionStorage.removeItem('engineDataBuilt');
     }
@@ -3992,7 +4115,7 @@ function toggleProbUpdate() {
   </div>
   <div style="font-size:0.65rem;color:var(--text-secondary);margin-top:4px;">* 点击任意球员姓名可查看详情</div>
 </div>
-<div class="tabs" id="tabContainer" style="visibility:hidden;"><div class="tab active" data-tab="groups" onclick="switchMainTab('groups')">📅 小组赛</div><div class="tab" data-tab="knockout" onclick="switchMainTab('knockout')">🏟️ 淘汰赛</div></div>
+<div class="tabs" id="tabContainer" style="visibility:hidden;"><div class="tab" data-tab="groups" onclick="switchMainTab('groups')">📅 小组赛</div><div class="tab active" data-tab="knockout" onclick="switchMainTab('knockout')">🏟️ 淘汰赛</div></div>
 <div id="groupsContainer" style="visibility:hidden;"><div class="tabs" id="groupTabs"></div><div class="groups-grid" id="groupsGrid"></div></div>
 <div class="knockout-panel" id="knockoutPanel"><div class="tabs" id="koTabs"></div><div id="koContent"></div></div>
 
@@ -4063,7 +4186,7 @@ function toggleProbUpdate() {
 <h3>👤 球员详情 <span style="font-size:0.65rem;color:var(--text-secondary);" id="playerDetailSubtitle"></span> <span class="modal-close" onclick="closePlayerDetail()">✕</span></h3>
 <div id="playerDetailContent" style="max-height:68vh;overflow-y:auto;"></div>
 </div></div>
-<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.80</div>
+<div class="footer-note">* 点击比赛卡片选择比赛，填写比分完成预测。小组前两名及8个成绩最好的小组第三晋级32强淘汰赛。所有时间均为中国北京时间（UTC+8）。版本 V1.81</div>
 </div>
 
 <div class="modal-overlay" id="summaryModal"><div class="modal-box" style="max-width:600px"><h3>📋 我的预测汇总 <span class="modal-close" onclick="closeSummaryModal()">✕</span></h3><div id="summaryContent"></div></div></div>
@@ -4751,7 +4874,7 @@ console.log('🏆 Bracket V8 embedded — ready');
             window.__playerDataReady = true;
             // Set sessionStorage for fast reload on next visit
             try {
-                sessionStorage.setItem('engineDataBuilt', 'V1.80');
+                sessionStorage.setItem('engineDataBuilt', 'V1.81');
             } catch(e) {}
             return;
         }
@@ -6186,7 +6309,7 @@ window.showOvSaveRank = function(){
   document.getElementById('ovSaveRankModal').classList.add('visible');
 };
 
-console.log('✅ V1.80 数据统计四弹窗已安装（助攻榜/扑救榜已升级为动态聚合引擎）');
+console.log('✅ V1.81 数据统计四弹窗已安装（助攻榜/扑救榜已升级为动态聚合引擎）');
 })();
 </script>
 

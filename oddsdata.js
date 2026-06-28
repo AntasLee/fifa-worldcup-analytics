@@ -27,7 +27,7 @@ SWE:{w:2.95,d:3.85,l:2.49},TUN:{w:4.86,d:3.63,l:1.93},TUR:{w:2.05,d:3.61,l:4.26}
 URU:{w:1.53,d:4.56,l:7.74},USA:{w:1.94,d:3.8,l:4.53},UZB:{w:7.49,d:4.67,l:1.66}};
 
 let liveOdds=JSON.parse(JSON.stringify(initialOdds));
-let lastUpdate='2026-06-12';
+	let lastUpdate='2026-06-28';
 
 // ========== 比赛级赔率 (72场小组赛, 扩展9字段) ==========
 // 字段: h(主队), a(客队), hw(主胜赔), d(平赔), aw(客胜赔),
@@ -69,17 +69,40 @@ K_1_2:{h:'COD',a:'UZB',hw:2.3,d:3.2,aw:3,ahLine:-0.25,ahHome:1.98,ahAway:1.83,ou
 K_3_0:{h:'COL',a:'POR',hw:3.4,d:3.2,aw:2.1,ahLine:0.25,ahHome:1.98,ahAway:1.83,ouLine:2.5,ouOver:2.1,ouUnder:1.67},K_3_1:{h:'COL',a:'COD',hw:1.44,d:3.9,aw:7,ahLine:-1.25,ahHome:2.08,ahAway:1.75,ouLine:2.5,ouOver:2.1,ouUnder:1.67},
 L_0_1:{h:'ENG',a:'CRO',hw:1.73,d:3.6,aw:4.6,ahLine:-0.75,ahHome:1.97,ahAway:1.93,ouLine:2.5,ouOver:2.05,ouUnder:1.7},L_0_2:{h:'ENG',a:'GHA',hw:1.3,d:5,aw:10,ahLine:-1.5,ahHome:1.89,ahAway:1.91,ouLine:2.5,ouOver:1.67,ouUnder:2.1},
 L_1_2:{h:'CRO',a:'GHA',hw:1.65,d:3.6,aw:5,ahLine:-0.75,ahHome:1.78,ahAway:2.05,ouLine:2.5,ouOver:2.1,ouUnder:1.67},L_2_3:{h:'GHA',a:'PAN',hw:2.1,d:3.3,aw:3.4,ahLine:-0.25,ahHome:1.9,ahAway:2.01,ouLine:2.5,ouOver:2.15,ouUnder:1.65},
-L_3_0:{h:'PAN',a:'ENG',hw:10,d:5.8,aw:1.25,ahLine:1.5,ahHome:1.99,ahAway:1.82,ouLine:2.5,ouOver:1.62,ouUnder:2.2},L_3_1:{h:'PAN',a:'CRO',hw:6.5,d:3.6,aw:1.55,ahLine:1,ahHome:1.85,ahAway:1.94,ouLine:2.5,ouOver:1.95,ouUnder:1.75}
-};
-// ========== 从 matchOdds 自动计算 liveOdds ==========
-(function(){
-  var ts={};
-  Object.values(matchOdds).forEach(function(m){
-    if(!ts[m.h])ts[m.h]={hw:[],aw:[],d:[]};
-    if(!ts[m.a])ts[m.a]={hw:[],aw:[],d:[]};
-    ts[m.h].hw.push(m.hw);ts[m.h].d.push(m.d);
-    ts[m.a].aw.push(m.aw);ts[m.a].d.push(m.d);
-  });
+	L_3_0:{h:'PAN',a:'ENG',hw:10,d:5.8,aw:1.25,ahLine:1.5,ahHome:1.99,ahAway:1.82,ouLine:2.5,ouOver:1.62,ouUnder:2.2},L_3_1:{h:'PAN',a:'CRO',hw:6.5,d:3.6,aw:1.55,ahLine:1,ahHome:1.85,ahAway:1.94,ouLine:2.5,ouOver:1.95,ouUnder:1.75}
+	};
+	// ========== 淘汰赛比赛级赔率 (R32, 16场) ==========
+	// 数据源: William Hill (via DraftKings/FOX/bet365/flashscore 交叉验证)
+	// 更新时间: 2026-06-28
+	const knockoutOdds={
+	R32_1:{h:'GER',a:'PAR',hw:1.38,d:5.00,aw:8.50,ahLine:-1.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.80,ouUnder:1.90},
+	R32_2:{h:'FRA',a:'SWE',hw:1.29,d:5.75,aw:10.00,ahLine:-1.5,ahHome:1.85,ahAway:1.95,ouLine:3.5,ouOver:2.05,ouUnder:1.70},
+	R32_3:{h:'RSA',a:'CAN',hw:3.50,d:3.20,aw:2.10,ahLine:0.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.10,ouUnder:1.65},
+	R32_4:{h:'NED',a:'MAR',hw:2.15,d:3.30,aw:3.70,ahLine:-0.25,ahHome:1.85,ahAway:1.95,ouLine:2.5,ouOver:1.95,ouUnder:1.75},
+	R32_5:{h:'BRA',a:'JPN',hw:1.70,d:3.75,aw:5.50,ahLine:-0.75,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.90,ouUnder:1.80},
+	R32_6:{h:'CIV',a:'NOR',hw:2.70,d:3.10,aw:2.60,ahLine:0,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.00,ouUnder:1.73},
+	R32_7:{h:'MEX',a:'ECU',hw:1.62,d:3.80,aw:5.50,ahLine:-0.75,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.85,ouUnder:1.85},
+	R32_8:{h:'ENG',a:'COD',hw:1.20,d:7.00,aw:15.00,ahLine:-2,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.80,ouUnder:1.90},
+	R32_9:{h:'POR',a:'CRO',hw:1.85,d:3.40,aw:4.20,ahLine:-0.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.90,ouUnder:1.83},
+	R32_10:{h:'ESP',a:'AUT',hw:1.36,d:4.75,aw:8.50,ahLine:-1.5,ahHome:1.95,ahAway:1.85,ouLine:2.5,ouOver:1.80,ouUnder:1.90},
+	R32_11:{h:'USA',a:'BIH',hw:1.55,d:4.00,aw:5.50,ahLine:-1,ahHome:1.95,ahAway:1.85,ouLine:2.5,ouOver:1.85,ouUnder:1.85},
+	R32_12:{h:'BEL',a:'SEN',hw:1.70,d:3.60,aw:5.00,ahLine:-0.75,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.85,ouUnder:1.85},
+	R32_13:{h:'ARG',a:'CPV',hw:1.14,d:8.00,aw:15.00,ahLine:-2.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.62,ouUnder:2.20},
+	R32_14:{h:'AUS',a:'EGY',hw:2.40,d:3.10,aw:3.00,ahLine:-0.25,ahHome:1.95,ahAway:1.85,ouLine:2.5,ouOver:2.15,ouUnder:1.62},
+	R32_15:{h:'SUI',a:'ALG',hw:1.80,d:3.40,aw:4.50,ahLine:-0.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.00,ouUnder:1.73},
+	R32_16:{h:'COL',a:'GHA',hw:1.67,d:3.75,aw:5.50,ahLine:-0.75,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.90,ouUnder:1.80}
+	};
+	// ========== 从 matchOdds + knockoutOdds 自动计算 liveOdds ==========
+	(function(){
+	  var ts={};
+	  // 合并小组赛 + 淘汰赛赔率
+	  var allOdds=Object.assign({},matchOdds,knockoutOdds);
+	  Object.values(allOdds).forEach(function(m){
+	    if(!ts[m.h])ts[m.h]={hw:[],aw:[],d:[]};
+	    if(!ts[m.a])ts[m.a]={hw:[],aw:[],d:[]};
+	    ts[m.h].hw.push(m.hw);ts[m.h].d.push(m.d);
+	    ts[m.a].aw.push(m.aw);ts[m.a].d.push(m.d);
+	  });
   Object.keys(liveOdds).forEach(function(c){
     var t=ts[c];
     if(t&&t.hw.length>0){
@@ -92,13 +115,14 @@ L_3_0:{h:'PAN',a:'ENG',hw:10,d:5.8,aw:1.25,ahLine:1.5,ahHome:1.99,ahAway:1.82,ou
   });
 })();
 
-// ========== 暴露到全局 ==========
-window.matchOdds = matchOdds;
-window.initialOdds = initialOdds;
-window.liveOdds = liveOdds;
-window.lastUpdate = lastUpdate;
-window.dataSource = 'William Hill';
-
-console.log('✅ oddsdata.js 已加载: 72场比赛 (含AH/OU扩展字段) | 数据源: William Hill');
+	// ========== 暴露到全局 ==========
+	window.matchOdds = matchOdds;
+	window.knockoutOdds = knockoutOdds;
+	window.initialOdds = initialOdds;
+	window.liveOdds = liveOdds;
+	window.lastUpdate = lastUpdate;
+	window.dataSource = 'William Hill';
+	
+	console.log('✅ oddsdata.js 已加载: 72场小组赛 + 16场淘汰赛R32 (含AH/OU扩展字段) | 数据源: William Hill');
 
 })();
