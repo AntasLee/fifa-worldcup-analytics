@@ -1556,6 +1556,220 @@ const wc2026AllMatches = {
     aiPostReview: null
   },
 
+  "2026|G|NZL|BEL": {
+    score: { sh: 1, sa: 5 },
+    date: "2026-06-27",
+    time: "11:00",
+    venue: "BC Place球场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 28,    side: "away", scorer: "莱安德罗·特罗萨德",   type: "shot" },
+      { min: 50,    side: "away", scorer: "莱安德罗·特罗萨德",   type: "shot", assist: "汉斯·范纳肯" },
+      { min: 66,    side: "away", scorer: "凯文·德布劳内",       type: "shot" },
+      { min: 84,    side: "home", scorer: "以利亚·贾斯特",       type: "shot" },
+      { min: 86,    side: "away", scorer: "罗梅卢·卢卡库",       type: "header", assist: "尼古拉·拉斯坎" },
+      { min: "90+4",side: "away", scorer: "亚历克西斯·萨勒马科尔斯", type: "shot", assist: "罗梅卢·卢卡库" }
+    ],
+    stats: {
+      possession:      { h: 45, a: 55 },
+      shots:           { h: 5,  a: 23 },
+      shotsOnTarget:   { h: 2,  a: 10 },
+      corners:         { h: 5,  a: 8 },
+      fouls:           { h: 10, a: 7 },
+      yellowCards:     { h: 2,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 74, a: 111 },
+      dangerousAttacks:{ h: 32, a: 69 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "莱安德罗·特罗萨德",
+      sources: ["Opta Analyst", "FotMob", "FIFA", "OFC"],
+      home: {score: 3, quotes: "新西兰三战仅积1分结束第三次世界杯之旅。贾斯特打入队史第5粒世界杯进球成为唯一亮点，面对比利时35次射门的狂轰滥炸防线完全崩溃。虽以淘汰告终但代表大洋洲的拼搏精神值得尊敬。"},
+      away: {score: 9, quotes: "特罗萨德梅开二度+策动第三球闪耀BC Place，德布劳内远射破门，卢卡库替补头球超越威尔莫茨加冕队史世界杯射手王。全场35射+3.65xG的恐怖数据宣告欧洲红魔强势归来，锁定G组头名。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|G|EGY|IRN": {
+    score: { sh: 1, sa: 1 },
+    date: "2026-06-27",
+    time: "11:00",
+    venue: "西雅图体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 5,  side: "home", scorer: "马哈茂德·萨贝尔",  type: "shot", assist: "马哈茂德·特雷泽盖" },
+      { min: 14, side: "away", scorer: "拉明·雷扎扬",     type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 61, a: 39 },
+      shots:           { h: 9,  a: 10 },
+      shotsOnTarget:   { h: 3,  a: 4 },
+      corners:         { h: 8,  a: 2 },
+      fouls:           { h: 11, a: 16 },
+      yellowCards:     { h: 3,  a: 4 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 118,a: 100 },
+      dangerousAttacks:{ h: 47, a: 38 }
+    },
+    attendance: null,
+    referee: "Szymon Marciniak (POL)",
+    xg: null,
+    mediaRating: {
+      motm: "马哈茂德·萨贝尔",
+      sources: ["Sky Sports", "ESPN", "AP News", "FIFA"],
+      home: {score: 7, quotes: "埃及5分锁定G组第二首度晋级淘汰赛。萨贝尔第5分钟接特雷泽盖助攻穿裆破门闪击，舒贝尔扑出塔雷米点球功不可没。萨拉赫57分钟伤退引发担忧，但法老王仍创造历史。16强将对阵澳大利亚。"},
+      away: {score: 6, quotes: "伊朗3分有望竞争最佳小组第三。雷扎扬第14分钟补射扳平展现顽强斗志，哈利勒扎德93分钟绝杀被VAR吹越位令人心碎。埃扎托拉希97分钟头球中柱，球队距离历史性晋级仅差毫米。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|L|PAN|ENG": {
+    score: { sh: 0, sa: 2 },
+    date: "2026-06-28",
+    time: "05:00",
+    venue: "大都会人寿球场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 62, side: "away", scorer: "祖德·贝林厄姆", type: "shot", assist: "布卡约·萨卡" },
+      { min: 67, side: "away", scorer: "哈里·凯恩",       type: "header", assist: "祖德·贝林厄姆" }
+    ],
+    stats: {
+      possession:      { h: 32, a: 68 },
+      shots:           { h: 10, a: 14 },
+      shotsOnTarget:   { h: 2,  a: 6 },
+      corners:         { h: 3,  a: 7 },
+      fouls:           { h: 16, a: 13 },
+      yellowCards:     { h: 2,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 54, a: 129 },
+      dangerousAttacks:{ h: 21, a: 67 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "祖德·贝林厄姆",
+      sources: ["BBC Sport", "FIFA", "Sofascore", "ESPN"],
+      home: {score: 5, quotes: "巴拿马三战零分零进球告别世界杯。上半场5-4-1低位防守成功零封英格兰令人尊敬，法哈尔多进球被吹越位。但下半场贝林厄姆角球破门后防线崩盘，世界杯处子季虽未取得积分但展现了中北美足球的坚韧。"},
+      away: {score: 7, quotes: "贝林厄姆一传一射（9.2分全场最佳）终结巴拿马铁桶，凯恩头球超越莱因克尔加冕英格兰世界杯射手王(11球)。图赫尔轮换阵容下半场发力，三战7分头名出线，16强将迎战小组第三。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|L|CRO|GHA": {
+    score: { sh: 2, sa: 1 },
+    date: "2026-06-28",
+    time: "05:00",
+    venue: "费城体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 31, side: "home", scorer: "佩尔塔·苏契奇",   type: "shot", assist: "马特奥·科瓦契奇" },
+      { min: 73, side: "away", scorer: "德里克·卢卡森埃",  type: "shot", assist: "内斯特·努瓦马" },
+      { min: 83, side: "home", scorer: "尼古拉·弗拉西奇",   type: "header", assist: "卢卡·莫德里奇" }
+    ],
+    stats: {
+      possession:      { h: 54, a: 46 },
+      shots:           { h: 6,  a: 4 },
+      shotsOnTarget:   { h: 4,  a: 1 },
+      corners:         { h: 3,  a: 2 },
+      fouls:           { h: 9,  a: 13 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 89, a: 103 },
+      dangerousAttacks:{ h: 35, a: 25 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "尼古拉·弗拉西奇",
+      sources: ["ESPN", "Yahoo Sports", "FIFA", "AP News"],
+      home: {score: 7, quotes: "弗拉西奇头球绝杀助克罗地亚力压加纳锁定小组第二。苏契奇31分钟接科瓦契奇传球抽射破门技惊四座，莫德里奇角球精准助攻展现大师风范。6分出线16强将迎战葡萄牙，格子军团延续大赛韧性。"},
+      away: {score: 6, quotes: "加纳虽败仍以4分锁定最佳小组第三历史性晋级淘汰赛。卢卡森埃任意球头球一度扳平展现斗志。塞梅尼约三场零进球成为遗憾，但黑星军团自2010年以来首度进入世界杯淘汰赛。16强将战哥伦比亚。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|K|COL|POR": {
+    score: { sh: 0, sa: 0 },
+    date: "2026-06-28",
+    time: "07:30",
+    venue: "迈阿密体育场",
+    stage: "group",
+    round: 3,
+    goals: [],
+    stats: {
+      possession:      { h: 54, a: 46 },
+      shots:           { h: 17, a: 9 },
+      shotsOnTarget:   { h: 6,  a: 2 },
+      corners:         { h: 5,  a: 2 },
+      fouls:           { h: 12, a: 6 },
+      yellowCards:     { h: 1,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 88, a: 83 },
+      dangerousAttacks:{ h: 67, a: 38 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "迪奥戈·科斯塔",
+      sources: ["ESPN", "Fox Sports", "FIFA", "Yahoo Sports"],
+      home: {score: 7, quotes: "哥伦比亚7分锁定K组头名。全场17射6正碾压葡萄牙，桑切斯补时头球破门被VAR吹越位毫厘之差。迪亚斯突破制造持续威胁，安切洛蒂的球队三战仅失1球展现冠军级防守。"},
+      away: {score: 6, quotes: "迪奥戈·科斯塔6次神扑力保葡萄牙不败出线。C罗全场低迷延续对阵强队进球荒，进攻端仅2次射正暴露问题。5分出线的葡萄牙16强将对阵克罗地亚，马丁内斯亟需解决进攻哑火。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
+  "2026|K|COD|UZB": {
+    score: { sh: 3, sa: 1 },
+    date: "2026-06-28",
+    time: "07:30",
+    venue: "亚特兰大体育场",
+    stage: "group",
+    round: 3,
+    goals: [
+      { min: 10,    side: "away", scorer: "埃尔多·肖穆罗多夫", type: "shot", assist: "阿克玛·莫兹戈沃伊" },
+      { min: 68,    side: "home", scorer: "约内·维萨",       type: "penalty" },
+      { min: 78,    side: "home", scorer: "菲斯顿·马耶莱",    type: "shot" },
+      { min: "90+1",side: "home", scorer: "约内·维萨",       type: "shot", assist: "梅沙克·埃利亚" }
+    ],
+    stats: {
+      possession:      { h: 58, a: 42 },
+      shots:           { h: 18, a: 3 },
+      shotsOnTarget:   { h: 4,  a: 1 },
+      corners:         { h: 2,  a: 4 },
+      fouls:           { h: 6,  a: 16 },
+      yellowCards:     { h: 3,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 145,a: 90 },
+      dangerousAttacks:{ h: 54, a: 45 }
+    },
+    attendance: null,
+    referee: "TBD",
+    xg: null,
+    mediaRating: {
+      motm: "约内·维萨",
+      sources: ["ESPN", "Sofascore", "FIFA", "Yahoo Sports"],
+      home: {score: 8, quotes: "刚果民主共和国4分历史性晋级淘汰赛！肖穆罗多夫10分钟吊射破门后，维萨点球扳平+补时远射锁定3-1。马耶莱替补78分钟制胜球展现板凳深度。16强将对阵英格兰，非洲豹子继续书写奇迹。"},
+      away: {score: 2, quotes: "乌兹别克斯坦三战全败0分出局。肖穆罗多夫惊艳吊射是唯一亮点，但全场仅3次射门的进攻乏力无法支撑更高目标。世界杯新军成长之路刚刚开始，卡纳瓦罗的执教任期或将终结。"}
+    },
+    aiPreMatch: null,
+    aiPostReview: null
+  },
+
   // B组
   "2026|B|CAN|BIH": {
     score: { sh: 1, sa: 1 },

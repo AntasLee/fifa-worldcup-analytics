@@ -1862,6 +1862,70 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 3, red: 1 }, away: { yellow: 1, red: 0 } },
     attendance: null, referee: "Ismail Elfath (USA)"
   },
+
+  "2026|G|NZL|BEL": {
+    score: { sh: 1, sa: 5 },
+    goals: [
+      { min: 28,    side: "away", scorer: "莱安德罗·特罗萨德 (Leandro Trossard)",    type: "shot" },
+      { min: 50,    side: "away", scorer: "莱安德罗·特罗萨德 (Leandro Trossard)",    type: "shot", assist: "汉斯·范纳肯 (Hans Vanaken)" },
+      { min: 66,    side: "away", scorer: "凯文·德布劳内 (Kevin De Bruyne)",         type: "shot" },
+      { min: 84,    side: "home", scorer: "以利亚·贾斯特 (Elijah Just)",              type: "shot" },
+      { min: 86,    side: "away", scorer: "罗梅卢·卢卡库 (Romelu Lukaku)",            type: "header", assist: "尼古拉·拉斯坎 (Nicolas Raskin)" },
+      { min: "90+4",side: "away", scorer: "亚历克西斯·萨勒马科尔斯 (Alexis Saelemaekers)", type: "shot", assist: "罗梅卢·卢卡库 (Romelu Lukaku)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 0, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
+
+  "2026|G|EGY|IRN": {
+    score: { sh: 1, sa: 1 },
+    goals: [
+      { min: 5,  side: "home", scorer: "马哈茂德·萨贝尔 (Mahmoud Saber)",   type: "shot", assist: "马哈茂德·特雷泽盖 (Trezeguet)" },
+      { min: 14, side: "away", scorer: "拉明·雷扎扬 (Ramin Rezaeian)",     type: "shot" }
+    ],
+    cards: { home: { yellow: 3, red: 0 }, away: { yellow: 4, red: 0 } },
+    attendance: null, referee: "Szymon Marciniak (POL)"
+  },
+
+  "2026|L|PAN|ENG": {
+    score: { sh: 0, sa: 2 },
+    goals: [
+      { min: 62, side: "away", scorer: "祖德·贝林厄姆 (Jude Bellingham)", type: "shot", assist: "布卡约·萨卡 (Bukayo Saka)" },
+      { min: 67, side: "away", scorer: "哈里·凯恩 (Harry Kane)", type: "header", assist: "祖德·贝林厄姆 (Jude Bellingham)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
+
+  "2026|L|CRO|GHA": {
+    score: { sh: 2, sa: 1 },
+    goals: [
+      { min: 31, side: "home", scorer: "佩尔塔·苏契奇 (Petar Sucic)",       type: "shot", assist: "马特奥·科瓦契奇 (Mateo Kovacic)" },
+      { min: 73, side: "away", scorer: "德里克·卢卡森埃 (Derrick Luckassen)",  type: "shot", assist: "内斯特·努瓦马 (Ernest Nuamah)" },
+      { min: 83, side: "home", scorer: "尼古拉·弗拉西奇 (Nikola Vlasic)",     type: "header", assist: "卢卡·莫德里奇 (Luka Modric)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
+
+  "2026|K|COL|POR": {
+    score: { sh: 0, sa: 0 },
+    goals: [],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 0, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
+
+  "2026|K|COD|UZB": {
+    score: { sh: 3, sa: 1 },
+    goals: [
+      { min: 10,    side: "away", scorer: "埃尔多·肖穆罗多夫 (Eldor Shomurodov)", type: "shot", assist: "阿克玛·莫兹戈沃伊 (Akmal Mozgovoy)" },
+      { min: 68,    side: "home", scorer: "约内·维萨 (Yoane Wissa)",            type: "penalty" },
+      { min: 78,    side: "home", scorer: "菲斯顿·马耶莱 (Fiston Mayele)",       type: "shot" },
+      { min: "90+1",side: "home", scorer: "约内·维萨 (Yoane Wissa)",            type: "shot", assist: "梅沙克·埃利亚 (Meschack Elia)" }
+    ],
+    cards: { home: { yellow: 3, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: null, referee: "TBD"
+  },
 };
 
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -1931,3 +1995,9 @@ matchStats["2026|I|SEN|IRQ"] = {p1:"68%",p2:"32%",ps1:null,ps2:null,sh1:23,sh2:2
 matchStats["2026|I|NOR|FRA"] = {p1:"44%",p2:"56%",ps1:null,ps2:null,sh1:7,sh2:15,so1:4,so2:9,sb1:3,sb2:6,co1:4,co2:5,fo1:9,fo2:11,os1:1,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:89,at2:103,da1:39,da2:64,pk1:1,pk2:0};
 matchStats["2026|H|CPV|KSA"] = {p1:"51%",p2:"49%",ps1:null,ps2:null,sh1:10,sh2:4,so1:2,so2:3,sb1:8,sb2:1,co1:4,co2:2,fo1:10,fo2:16,os1:2,os2:0,yc1:1,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:112,at2:103,da1:50,da2:41,pk1:0,pk2:0};
 matchStats["2026|H|URU|ESP"] = {p1:"33%",p2:"67%",ps1:null,ps2:null,sh1:4,sh2:5,so1:1,so2:1,sb1:3,sb2:4,co1:1,co2:6,fo1:14,fo2:14,os1:5,os2:2,yc1:3,yc2:1,rc1:1,rc2:0,tk1:null,tk2:null,at1:94,at2:107,da1:42,da2:37,pk1:0,pk2:0};
+matchStats["2026|G|NZL|BEL"] = {p1:"45%",p2:"55%",ps1:null,ps2:null,sh1:5,sh2:23,so1:2,so2:10,sb1:3,sb2:13,co1:5,co2:8,fo1:10,fo2:7,os1:1,os2:1,yc1:2,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:74,at2:111,da1:32,da2:69,pk1:0,pk2:0};
+matchStats["2026|G|EGY|IRN"] = {p1:"61%",p2:"39%",ps1:null,ps2:null,sh1:9,sh2:10,so1:3,so2:4,sb1:6,sb2:6,co1:8,co2:2,fo1:11,fo2:16,os1:0,os2:3,yc1:3,yc2:4,rc1:0,rc2:0,tk1:null,tk2:null,at1:118,at2:100,da1:47,da2:38,pk1:0,pk2:1};
+matchStats["2026|L|PAN|ENG"] = {p1:"32%",p2:"68%",ps1:null,ps2:null,sh1:10,sh2:14,so1:2,so2:6,sb1:8,sb2:8,co1:3,co2:7,fo1:16,fo2:13,os1:4,os2:4,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:54,at2:129,da1:21,da2:67,pk1:0,pk2:0};
+matchStats["2026|L|CRO|GHA"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:6,sh2:4,so1:4,so2:1,sb1:2,sb2:3,co1:3,co2:2,fo1:9,fo2:13,os1:1,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:89,at2:103,da1:35,da2:25,pk1:0,pk2:0};
+matchStats["2026|K|COL|POR"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:17,sh2:9,so1:6,so2:2,sb1:11,sb2:7,co1:5,co2:2,fo1:12,fo2:6,os1:3,os2:2,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:88,at2:83,da1:67,da2:38,pk1:0,pk2:0};
+matchStats["2026|K|COD|UZB"] = {p1:"58%",p2:"42%",ps1:null,ps2:null,sh1:18,sh2:3,so1:4,so2:1,sb1:14,sb2:2,co1:2,co2:4,fo1:6,fo2:16,os1:3,os2:1,yc1:3,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:145,at2:90,da1:54,da2:45,pk1:1,pk2:0};
