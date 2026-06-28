@@ -2,8 +2,8 @@
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 /**
  * ============================================================
- *  prob_engine.js — 增强概率计算引擎 (V1.74)
- *  Phase 3: AI融合推算(8因子) + 历史底蕴 + 本届表现 + 综合推算
+ *  prob_engine.js — 增强概率计算引擎 (V1.82)
+ *  Phase 3: AI融合推算(8因子) + 历史底蕴 + 本届表现(淘汰赛权重上调) + 综合推算
  *  依赖: oddsdata.js, groupsdata_v2.js, matchdata_2026.js
  *        squaddata.js, coachdata.js, venuedata.js
  * ============================================================
@@ -296,13 +296,14 @@
   /**
    * calcTournamentForm — 计算球队在本届世界杯中的动态表现分
    * 数据源: window.wc2026AllMatches (来自 matchdata_2026.js)
-   * 渐进激活: 赛前0% → 第一轮后8% → 第二轮后15% → ... → 淘汰赛22%
+   * 渐进激活: 赛前0% → 1场8% → 2场15% → 3场24% → 4+场26%
+   * 淘汰赛额外激活: roundPressure 1.50-1.80 替代小组赛 1.0-1.40
    * @returns {{ delta: number, completedMatches: number, formWeight: number }}
    */
   function calcTournamentForm(code, matchKey) {
-    // V1.74: 通过 matchKey 排除自循环；FORM_WEIGHT_SCHEDULE 用低权重处理小样本
+    // V1.82: 淘汰赛阶段3场样本充足，上调权重；FWS 支持覆盖
     const allMatches = window.wc2026AllMatches;
-    const FWS = window.FORM_WEIGHT_SCHEDULE || { 0:0, 1:0.08, 2:0.15, 3:0.20, 4:0.22, 5:0.22, 6:0.22, 7:0.22 };
+    const FWS = window.FORM_WEIGHT_SCHEDULE || { 0:0, 1:0.08, 2:0.15, 3:0.24, 4:0.26, 5:0.26, 6:0.26, 7:0.26 };
     
     if (!allMatches) return { delta: 0, completedMatches: 0, formWeight: 0, details: [] };
     
@@ -499,11 +500,11 @@
   }
 
   // ================================================================
-   //  🔥 AI 融合概率推算 (V1.74: 8因子 + 历史底蕴 + 本届表现)
+   //  🔥 AI 融合概率推算 (V1.82: 8因子 + 历史底蕴 + 本届表现·淘汰赛加压)
   // ================================================================
 
   /**
-   * calcAIPbs — AI多参数融合概率计算 (V1.74)
+   * calcAIPbs — AI多参数融合概率计算 (V1.82)
    * 
    * 8大因子:
    *   1. FIFA排名差 → 实力基础分
@@ -622,8 +623,20 @@
     // ===== B. 本届表现因子 =====
     const formH = calcTournamentForm(homeCode, matchKey);
     const formA = calcTournamentForm(awayCode, matchKey);
-    // 晋级压力系数：小组后段比赛，历史表现更具参考价值
-    const roundPressure = (round === 3) ? 1.40 : (round === 2) ? 1.20 : 1.0;
+    // 晋级压力系数: 淘汰赛>小组R3>R2>R1
+    var roundPressure = 1.0;
+    if (matchKey) {
+      var koStage = matchKey.split('|')[1];
+      if (koStage === 'FINAL') roundPressure = 1.80;
+      else if (koStage === 'SF' || koStage === 'TP') roundPressure = 1.65;
+      else if (koStage === 'QF') roundPressure = 1.55;
+      else if (koStage === 'R16' || koStage === 'R32') roundPressure = 1.50;
+      else if (round === 3) roundPressure = 1.40;
+      else if (round === 2) roundPressure = 1.20;
+    } else {
+      if (round === 3) roundPressure = 1.40;
+      else if (round === 2) roundPressure = 1.20;
+    }
     const formDeltaHome = formH.delta * formH.formWeight * roundPressure;
     const formDeltaAway = formA.delta * formA.formWeight * roundPressure;
 
@@ -1296,11 +1309,11 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
   window.calcTournamentForm = calcTournamentForm;
   window.computeCompositeAnalysis = computeCompositeAnalysis;
 
-  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.74 + 综合推算');
+  console.log('✅ prob_engine.js 加载完成 — AI融合概率引擎 V1.82 (淘汰赛本届表现权重上调) + 综合推算');
   console.log('   calcAIPbs(8因子) | calcHistoryPedigree | calcTournamentForm | renderProbModalV4');
 
   // ================================================================
-  //  🔗 V1.74 桥接
+  //  🔗 V1.82 桥接
   // ================================================================
   (function installV161Bridge() {
     if (typeof window.calcP === 'function') {
@@ -1315,7 +1328,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
         var modal = document.getElementById('probModal');
         if (modal) modal.classList.add('visible');
       };
-      console.log('🔗 V1.74 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
+      console.log('🔗 V1.82 桥接已安装 — calcP → renderProbModalV4 (综合推算版)');
     }
   })();
 

@@ -96,7 +96,8 @@ function getCompositeWeight(stage, round){
   if(stage==='group') return 0.6 + (round||1)*0.2;  // R1:0.8 R2:1.0 R3:1.2
   if(stage==='R32'||stage==='R16') return 1.4;
   if(stage==='QF') return 1.6;
-  if(stage==='SF'||stage==='TP'||stage==='FINAL') return 1.8;
+  if(stage==='FINAL') return 2.0;
+  if(stage==='SF'||stage==='TP') return 1.8;
   return 1.0;
 }
 

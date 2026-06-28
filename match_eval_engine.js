@@ -1,15 +1,17 @@
-// match_eval_engine.js — 本场表现评价引擎 | V1.81
+// match_eval_engine.js — 本场表现评价引擎 | V1.82
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 //
 // 六维评价模型 (100分制) — 职责完全分离:
 //   SD  统计统治力 Statistical Dominance    16分  衡量场面控制: 控球率·射门占比·射正率·危险进攻·角球·总攻
-//   EvR 预实对比差 Expectation vs Reality    20分  衡量实力兑现: 盘口概率差·让球盘击穿·赛果是否匹配纸面预期
+//   EvR 预实对比差 Expectation vs Reality    16分  衡量实力兑现: 盘口概率差·让球盘击穿·赛果是否匹配纸面预期
 //   CE  进攻效率   Clinical Efficiency       18分  衡量终结质量: 射门转化率·射正率·关键时段进球·点球/运动战区分
 //   DR  防守韧性   Defensive Resilience      18分  衡量防守品质: 纪律控制(4)+防守成就·零封·扑救·对手转化率抑制(8)
-//   GS  出线前景   Group Situation            18分  衡量赛程接受度: 纸面实力差+赛果→对出线是否有利(与EvR解耦)
-//   EC  外部评论   External Commentary        10分  媒体共识校验: 多家媒体评分映射
+//   GS  出线前景   Group Situation            18分  小组赛: 纸面实力差+赛果→对出线是否有利(与EvR解耦)
+//   AP  晋级表现   Advancement Performance    18分  淘汰赛: 阶段基础+晋级方式+净胜球+零封+逆转+绝杀
+//   EC  外部评论   External Commentary        14分  媒体共识校验: 多家媒体评分映射
 //
+// V1.82: 淘汰赛 GS→AP 重构 — 淘汰赛维度五替换为"晋级表现"，双方不再同分
 // 依赖: prob_engine.js, matchdata_2026.js, groupsdata.js
 // ================================================================
 (function(){
@@ -145,9 +147,9 @@ function calcExpectationVsReality(homeCode, awayCode, actualScore, side){
 
   var myGA=side==='home'?sa:sh;
   if(myDraw&&myIsFav&&probGap>=15) score=Math.max(1,score-5);       // 热门被逼平罚分
-  if(myDraw&&!myIsFav&&probGap>=15){ score=Math.min(20,score+8); if(myGA===0) score=Math.min(20,score+4); } // 冷门逼平加分, 零封额外
+  if(myDraw&&!myIsFav&&probGap>=15){ score=Math.min(16,score+8); if(myGA===0) score=Math.min(16,score+4); } // 冷门逼平加分, 零封额外
   if(myLose&&myIsFav) score=Math.max(1,score-10);                    // 热门输球重罚
-  if(myWin&&!myIsFav) score=Math.min(20,score+8);                    // 冷门取胜加分
+  if(myWin&&!myIsFav) score=Math.min(16,score+8);                    // 冷门取胜加分
   // 冷门方败北: 净胜球越大 EvR 越低 (避免 0-3 输球与赢家同分)
   if(myLose&&!myIsFav&&goalDiff>=1) score=Math.max(6,score-Math.min(12,goalDiff*4));
 
@@ -161,7 +163,7 @@ function calcExpectationVsReality(homeCode, awayCode, actualScore, side){
   else if(myLose&&myIsFav) sideType=ZONE.MAJOR_COLD;                  // 大热输球→爆冷
   else sideType=ZONE.NORMAL;                                          // 不被看好·输球正常→预期
 
-  score=Math.min(20,Math.max(1,Math.round(score)));
+  score=Math.min(16,Math.max(1,Math.round(score)));
   return {score:score, summary:summary, resultType:rType, sideType:sideType, impliedProb:imp, probGap:probGap, favSide:favSide};
 }
 
@@ -262,15 +264,81 @@ function calcDefensiveResilience(stats, goals, matchData, side, teamCode, oppCod
   return {score:score, summary:summary};
 }
 
-// ========== 维度五：出线前景 (20分) ==========
+// ========== KO_STAGES 常量 ==========
+var KO_STAGES=['R32','R16','QF','SF','TP','FINAL'];
+
+// ========== 维度五-A：晋级表现 (18分) — 淘汰赛专用 ==========
+// 职责: 衡量淘汰赛"胜利含金量与晋级方式"，替换小组赛的"出线前景"
+// 因子: 阶段基础分 + 晋级方式 + 净胜球 + 零封 + 逆转 + 绝杀
+function calcAdvancementPerformance(teamCode, matchKey, matchData){
+  var parsed=parseMatchKey(matchKey);
+  var stage=parsed.stage;
+  var stageBase={R32:6,R16:8,QF:10,SF:11,TP:11,FINAL:12};
+  var base=stageBase[stage]||6;
+  var goals=matchData?matchData.goals:null;
+  var sh=matchData.score.sh, sa=matchData.score.sa;
+  var isHome=parsed.home===teamCode;
+  var gf=isHome?sh:sa, ga=isHome?sa:sh;
+  var gd=gf-ga;
+  var isWin=gf>ga, isLoss=gf<ga;
+  // ET/点球检测: matchData 显式标记 或 进球分钟>90
+  var isET=!!(matchData&&matchData.aet);
+  var isPen=!!(matchData&&matchData.penalties);
+  if(!isET&&goals&&goals.length>0){
+    for(var i=0;i<goals.length;i++){ if((parseInt(goals[i].min)||0)>90){ isET=true; break; } }
+  }
+  if(!isPen&&goals&&goals.length>0){
+    for(var i=0;i<goals.length;i++){ if(goals[i].type==='penalty_shootout'){ isPen=true; break; } }
+  }
+
+  var score=0, summary='';
+
+  if(isWin){
+    score=base;
+    if(isPen)           { score+=1; summary='点球大战险胜，心理素质过硬晋级'; }
+    else if(isET)       { score+=2; summary='加时赛决胜，持久战力更胜一筹'; }
+    else                { score+=4; summary='常规时间解决战斗，淘汰赛统治力十足'; }
+    // 净胜球加成 (点球胜不适用)
+    if(!isPen){
+      if(gd>=3)      { score+=3; }
+      else if(gd>=2) { score+=2; }
+      else           { score+=1; }
+    }
+    // 零封加成
+    if(ga===0){ score+=2; summary+=',零封对手防线完美'; }
+    // 逆转加成
+    if(goals&&goals.length>0){
+      var firstG=goals[0];
+      if(firstG.side!==(isHome?'home':'away')){ score+=2; summary+=',先失球后逆转展现大心脏'; }
+    }
+    // 绝杀加成 (85'+ 致胜球, 且1球小胜)
+    if(goals&&goals.length>0&&!isPen){
+      var myG=goals.filter(function(g){return g.side===(isHome?'home':'away');});
+      if(myG.length>0){
+        var lastMin=parseInt(myG[myG.length-1].min)||0;
+        if(lastMin>=85&&gf-ga<=1){ score+=1; summary+=',末段绝杀一击致命'; }
+      }
+    }
+  }else if(isLoss){
+    if(isPen)        { score=5; summary='点球大战惜败，战至最后一刻虽败犹荣'; }
+    else if(isET)    { score=4; summary='加时赛落败，鏖战120分钟功亏一篑'; }
+    else if(gd<=-3)  { score=2; summary='常规时间完败，实力差距明显止步'+stage; }
+    else if(gd===-2) { score=3; summary='两球落败，淘汰赛之旅就此终结'; }
+    else             { score=Math.max(3,6+gd); summary='一球小负，毫厘之差遗憾出局'; }
+  }
+
+  score=Math.min(18,Math.max(2,Math.round(score)));
+  return {score:score, summary:summary, isET:isET, isPen:isPen};
+}
+
+// ========== 维度五-B：出线前景 (18分) — 小组赛专用 ==========
 // 职责: 衡量"以该队纸面实力为基准，这个赛果对出线是否有利"
 // 与 EvR 解耦: GS 只看 paperGap(排名差) + 赛果 + 积分形势，不看盘口
 function calcGroupSituation(teamCode, matchKey, matchData){
   var parsed=parseMatchKey(matchKey);
   var stage=parsed.stage, round=matchData?matchData.round:1;
-  if(stage==='R32'||stage==='R16'||stage==='QF'||stage==='SF'||stage==='TP'||stage==='FINAL'){
-    var koBase={R32:14,R16:16,QF:18,SF:19,TP:19,FINAL:20};
-    return {score:koBase[stage]||14, summary:'淘汰赛阶段，双方战意均处峰值'};
+  if(KO_STAGES.indexOf(stage)>=0){
+    return calcAdvancementPerformance(teamCode, matchKey, matchData);
   }
 
   // 小组赛: paperGap = 对手排名 - 己方排名 (FIFA排名数字越小越强, 正=对手弱我强)
@@ -440,14 +508,14 @@ function computeMatchEvaluation(matchKey){
   var gsH=calcGroupSituation(homeCode, matchKey, match);
   var gsA=calcGroupSituation(awayCode, matchKey, match);
 
-  // ========== 维度六：外部评论 (10分) ==========
+  // ========== 维度六：外部评论 (14分) ==========
   function calcExternalCommentary(match, side){
     var mr=match&&match.mediaRating;
-    if(!mr) return {score:5, summary:'外部评论数据待接入 (Phase 2)'};
+    if(!mr) return {score:7, summary:'外部评论数据待接入 (Phase 2)'};
     var data=side==='home'?mr.home:mr.away;
-    if(!data||data.score===undefined) return {score:5, summary:'该侧暂无媒体评分'};
-    var score=Math.round(data.score*1.0);
-    score=Math.min(10,Math.max(1,score));
+    if(!data||data.score===undefined) return {score:7, summary:'该侧暂无媒体评分'};
+    var score=Math.round(data.score*1.4);
+    score=Math.min(14,Math.max(1,score));
     var summary='';
     if(score>=8) summary='媒体一致盛赞，将其视为全场最佳之一';
     else if(score>=6) summary='媒体评价正面，认可其场上表现';
@@ -494,6 +562,38 @@ function computeMatchEvaluation(matchKey){
     else motm=goals.filter(function(g){return g.side==='away';}).map(function(g){return g.scorer;})[0]||'';
   }
 
+  // 5.5 淘汰赛专属成就徽章
+  var isKO=KO_STAGES.indexOf(match.stage)>=0;
+  if(isKO){
+    var koACH=['','']; // [home成就, away成就]
+    var gh=gsH,gA=gsA;
+    // 加时晋级
+    if(gh.isET&&gh.score>gA.score) koACH[0]='⏱️ 加时晋级';
+    if(gA.isET&&gA.score>gh.score) koACH[1]='⏱️ 加时晋级';
+    // 点球决胜
+    if(gh.isPen&&gh.score>gA.score) koACH[0]='🎯 点球决胜';
+    if(gA.isPen&&gA.score>gh.score) koACH[1]='🎯 点球决胜';
+    // 逆转剧本
+    if(gh.summary.indexOf('先失球后逆转')>=0) koACH[0]='🔄 逆转剧本';
+    if(gA.summary.indexOf('先失球后逆转')>=0) koACH[1]='🔄 逆转剧本';
+    // 绝杀时刻
+    if(gh.summary.indexOf('末段绝杀')>=0) koACH[0]='⏰ 绝杀时刻';
+    if(gA.summary.indexOf('末段绝杀')>=0) koACH[1]='⏰ 绝杀时刻';
+    // 零封晋级
+    if(gh.summary.indexOf('零封对手')>=0) koACH[0]='🧤 零封晋级';
+    if(gA.summary.indexOf('零封对手')>=0) koACH[1]='🧤 零封晋级';
+    // 碾压晋级
+    if(gh.summary.indexOf('常规时间解决')>=0&&(sh>sa?sh-sa:sa-sh)>=3) koACH[0]='💪 碾压晋级';
+    if(gA.summary.indexOf('常规时间解决')>=0&&(sa>sh?sa-sh:sh-sa)>=3) koACH[1]='💪 碾压晋级';
+    // 将KO成就注入ach列表 (替换最后一个)
+    if(koACH[0]){ achH.pop(); achH.push({cls:'gold', text:koACH[0]}); }
+    if(koACH[1]){ achA.pop(); achA.push({cls:'gold', text:koACH[1]}); }
+  }
+
+  // 淘汰赛维度标签
+  var dimLabel5=isKO?'晋级表现':'出线形势';
+  var dimEmoji5=isKO?'🏆':'🗺️';
+
   // 6. 构建返回
   var evalResult={
     matchKey:matchKey,
@@ -512,11 +612,11 @@ function computeMatchEvaluation(matchKey){
     achH:achH, achA:achA,
     dimensions:[
       {emoji:'📊', label:'统计统治', h:Math.round(sdH.score/16*100), a:Math.round(sdA.score/16*100), hSummary:sdH.summary, aSummary:sdA.summary},
-      {emoji:'🎯', label:'预实对比', h:Math.round(evrH.score/20*100), a:Math.round(evrA.score/20*100), hSummary:evrH.summary, aSummary:evrA.summary},
+      {emoji:'🎯', label:'预实对比', h:Math.round(evrH.score/16*100), a:Math.round(evrA.score/16*100), hSummary:evrH.summary, aSummary:evrA.summary},
       {emoji:'⚡', label:'进攻效率', h:Math.round(ceH.score/18*100), a:Math.round(ceA.score/18*100), hSummary:ceH.summary, aSummary:ceA.summary},
       {emoji:'🛡️', label:'防守韧性', h:Math.round(drH.score/18*100), a:Math.round(drA.score/18*100), hSummary:drH.summary, aSummary:drA.summary},
-      {emoji:'🗺️', label:'出线形势', h:Math.round(gsH.score/18*100), a:Math.round(gsA.score/18*100), hSummary:gsH.summary, aSummary:gsA.summary},
-      {emoji:'💬', label:'外部评论', h:Math.round(ecH.score/10*100), a:Math.round(ecA.score/10*100), hSummary:ecH.summary, aSummary:ecA.summary}
+      {emoji:dimEmoji5, label:dimLabel5, h:Math.round(gsH.score/18*100), a:Math.round(gsA.score/18*100), hSummary:gsH.summary, aSummary:gsA.summary},
+      {emoji:'💬', label:'外部评论', h:Math.round(ecH.score/14*100), a:Math.round(ecA.score/14*100), hSummary:ecH.summary, aSummary:ecA.summary}
     ],
     aiPreMatch:aiPreMatch,
     mediaRating:match.mediaRating||null,
@@ -537,6 +637,6 @@ window.MatchEval={
   parseMatchKey:parseMatchKey
 };
 
-console.log('✅ match_eval_engine.js 加载完成 — 六维评价引擎 V1.81');
+console.log('✅ match_eval_engine.js 加载完成 — 六维评价引擎 V1.82 (淘汰赛GS→AP重构)');
 
 })();

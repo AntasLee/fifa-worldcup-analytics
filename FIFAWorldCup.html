@@ -3777,6 +3777,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
         if (typeof switchEdition === 'function') {
           clearInterval(_fastPoll);
           switchEdition('2026');
+          if (typeof switchMainTab === 'function') switchMainTab('knockout');
         }
       }, 30);
       return;
@@ -3896,6 +3897,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
         hideOverlay();
         setTimeout(function() {
           switchEdition(edition);
+          if (edition === '2026' && typeof switchMainTab === 'function') switchMainTab('knockout');
         }, 150);
       } else {
         // switchEdition not ready - show brief feedback
@@ -3906,6 +3908,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
             hideOverlay();
             setTimeout(function() {
               switchEdition(edition);
+              if (edition === '2026' && typeof switchMainTab === 'function') switchMainTab('knockout');
             }, 100);
           }
         }, 100);
@@ -5177,8 +5180,8 @@ function renderMatchEval(e) {
   }
 
   // hex radar chart — 维度重排序：过程(上) / 赛果(下)
-  // 原始: [0]统计统治 [1]预实对比 [2]进攻效率 [3]纪律韧性 [4]出线形势 [5]外部评论
-  // 目标: top=统计统治 UR=进攻效率 LR=外部评论 bot=预实对比 LL=出线形势 UL=纪律韧性
+  // 原始: [0]统计统治 [1]预实对比 [2]进攻效率 [3]防守韧性 [4]出线形势/晋级表现 [5]外部评论
+  // 目标: top=统计统治 UR=进攻效率 LR=外部评论 bot=预实对比 LL=出线形势/晋级表现 UL=防守韧性
   var reorder=[0,2,5,1,4,3];
   var dims=reorder.map(function(i){ return e.dimensions[i]; });
   var homeVals=dims.map(function(d){return d.h;}), awayVals=dims.map(function(d){return d.a;});

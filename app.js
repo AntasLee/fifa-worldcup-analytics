@@ -78,10 +78,11 @@ window.switchEdition=function(edition){
     if(pastMain) pastMain.classList.remove('visible');
     if(typeof mTab!=='undefined'&&mTab==='knockout'){
       if(ko2026) ko2026.classList.add('visible');
-      if(g2026) g2026.style.display='none';
     }
-    if(typeof rGM==='function') rGM(); else console.warn('rGM not available yet, will retry on next switchEdition call');
+    if(typeof rGM==='function') rGM();
     if(typeof mTab!=='undefined'&&mTab==='knockout'){ if(typeof autoFillKO==='function') autoFillKO(); if(typeof rKP==='function') rKP(); }
+    // Sync tab visibility after render (covers all call sites)
+    if(typeof switchMainTab==='function'&&typeof mTab!=='undefined') switchMainTab(mTab);
   } else if(isPast){
     if(g2026) g2026.style.display='none';
     if(ko2026) ko2026.classList.remove('visible');

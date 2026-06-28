@@ -269,7 +269,7 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 // ========== TABS ==========
 function bGT(){const c=document.getElementById('groupTabs');let h='<div class="tab'+(cGT==='nearby'?' active':'')+'" data-group="nearby" onclick="sGT(\'nearby\')">📍 邻近比赛</div><div class="tab'+(cGT==='all'?' active':'')+'" data-group="all" onclick="sGT(\'all\')">全部小组</div>';groupsData.forEach(g=>{h+='<div class="tab'+(cGT===g.id?' active':'')+'" data-group="'+g.id+'" onclick="sGT(\''+g.id+'\')">'+g.name+'</div>';});c.innerHTML=h;}
 window.sGT=function(tid){cGT=tid;document.querySelectorAll('#groupTabs .tab').forEach(t=>t.classList.remove('active'));const tb=document.querySelector('#groupTabs .tab[data-group="'+tid+'"]');if(tb)tb.classList.add('active');document.getElementById('searchInput').value='';if(tid==='nearby')rNM();else rGM();};
-window.switchMainTab=function(tab){mTab=tab;document.querySelectorAll('#tabContainer .tab').forEach(t=>t.classList.remove('active'));var tb=document.querySelector('#tabContainer .tab[data-tab="'+tab+'"]');if(tb)tb.classList.add('active');document.getElementById('groupsContainer').style.display=tab==='groups'?'block':'none';document.getElementById('knockoutPanel').classList.toggle('visible',tab==='knockout');if(tab==='knockout'){autoFillKO();rKP();}};
+window.switchMainTab=function(tab){mTab=tab;document.querySelectorAll('#tabContainer .tab').forEach(t=>t.classList.remove('active'));var tb=document.querySelector('#tabContainer .tab[data-tab="'+tab+'"]');if(tb)tb.classList.add('active');var gc=document.getElementById('groupsContainer');var kp=document.getElementById('knockoutPanel');if(tab==='groups'){gc.style.display='block';gc.style.visibility='visible';if(kp)kp.classList.remove('visible');}else{gc.style.display='none';gc.style.visibility='hidden';if(kp)kp.classList.add('visible');}if(tab==='knockout'){autoFillKO();rKP();}};
 window.filterTeams=function(){if(currentEdition==='2026'){if(cGT==='nearby')rNM();else rGM();}else{renderPastWCMatchesMain();}};
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){try{var pd=document.querySelector('.player-detail-overlay');if(pd){pd.remove();e.stopImmediatePropagation();return;}var pdm=document.getElementById('playerDetailModal');if(pdm&&pdm.classList.contains('visible')){if(typeof closePlayerDetail==='function')closePlayerDetail();e.stopImmediatePropagation();return;}var sm=document.getElementById('squadModal');if(sm&&sm.classList.contains('visible')){if(typeof closeSquadModal==='function')closeSquadModal();e.stopImmediatePropagation();return;}var modals=[{id:'matchDetailModal',close:closeMatchDetail},{id:'analysisModal',close:closeAnalysisModal},{id:'venueAnalysisModal',close:closeVenueAnalysis},{id:'probModal',close:closeProbModal},{id:'summaryModal',close:closeSummaryModal},{id:'ovGoalTimeModal',close:function(){closeOvModal('ovGoalTimeModal')}},{id:'ovGoalTypeModal',close:function(){closeOvModal('ovGoalTypeModal')}},{id:'ovCornerModal',close:function(){closeOvModal('ovCornerModal')}},{id:'ovDisciplineModal',close:function(){closeOvModal('ovDisciplineModal')}},{id:'ovPerfBoardModal',close:function(){closeOvModal('ovPerfBoardModal')}},{id:'ovValueRankModal',close:function(){closeOvModal('ovValueRankModal')}},{id:'ovScorerRankModal',close:function(){closeOvModal('ovScorerRankModal')}},{id:'ovAssistRankModal',close:function(){closeOvModal('ovAssistRankModal')}},{id:'ovSaveRankModal',close:function(){closeOvModal('ovSaveRankModal')}}];for(var i=0;i<modals.length;i++){var m=document.getElementById(modals[i].id);if(m&&m.classList.contains('visible')){modals[i].close();e.stopImmediatePropagation();return;}}selMid=null;if(mTab==='groups')rGM();}catch(e){}}if(e.ctrlKey&&e.key==='s'){e.preventDefault();savePredictions();}});
 // pastWCModal removed - using main page view instead
@@ -1131,14 +1131,15 @@ class Player {
 function init(){
 koMs.forEach(m=>{if(kPreds[m.id]){if(kPreds[m.id].af===undefined)kPreds[m.id].af=true;}});
 if(typeof window!=='undefined'&&window.innerWidth>480)cGT='all';
-	bGT();if(cGT==='nearby')rNM();else rGM();autoFillKO();
-	if(mTab==='knockout'){
-		var gEl=document.getElementById('groupsContainer');
-		var kEl=document.getElementById('knockoutPanel');
-		if(gEl) gEl.style.display='none';
-		if(kEl) kEl.classList.add('visible');
-		rKP();
-	}
+		bGT();
+		if(mTab==='knockout'){
+			var gEl=document.getElementById('groupsContainer');
+			var kEl=document.getElementById('knockoutPanel');
+			if(gEl){gEl.style.display='none';gEl.style.visibility='hidden';}
+			if(kEl) kEl.classList.add('visible');
+		}
+		if(cGT==='nearby')rNM();else rGM();autoFillKO();
+		if(mTab==='knockout') rKP();
 // ===== 开发测试：模拟当前时间为 2026-06-14 03:30 北京时间 =====
 // 生产环境注释下行即可使用真实时间
 // window.__nearbySimTime = new Date(2026, 5, 14, 3, 30);
