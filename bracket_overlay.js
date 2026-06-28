@@ -1,8 +1,8 @@
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 // ============================================
-// WORLD CUP BRACKET V13 — 淘汰赛比分自动晋级 + FIFA Annex C
-// 自动读取小组赛结果填充32强，淘汰赛比分自动判定胜者落位，未确定显示"待角逐"
+// WORLD CUP BRACKET V14 — 硬编码R32落位 + 淘汰赛比分自动晋级
+// R32 16场对阵直接硬编码（来源 matchdata_2026.js），不再依赖小组积分算法
 // ============================================
 ;(function(){
 'use strict';
@@ -281,61 +281,58 @@ function allocateThirdPlace(rankedThirds) {
 }
 
 // ═══════════════════════════════════════════
-//  AUTO-FILL
+//  R32 HARDCODED TEAMS (V14)
+//  依据 matchdata_2026.js 实际淘汰赛对阵，直接硬编码落位
+//  槽位顺序 = bracket_overlay R32_PAIRINGS (M73-M88)
+// ═══════════════════════════════════════════
+var HARDCODED_R32 = [
+  ['GER','PAR'],  // 0: M74  E1 vs 3rd
+  ['FRA','SWE'],  // 1: M77  I1 vs 3rd
+  ['RSA','CAN'],  // 2: M73  A2 vs B2
+  ['NED','MAR'],  // 3: M75  F1 vs C2
+  ['BRA','JPN'],  // 4: M76  C1 vs F2
+  ['CIV','NOR'],  // 5: M78  E2 vs I2
+  ['MEX','ECU'],  // 6: M79  A1 vs 3rd
+  ['ENG','COD'],  // 7: M80  L1 vs 3rd
+  ['POR','CRO'],  // 8: M83  K2 vs L2
+  ['ESP','AUT'],  // 9: M84  H1 vs J2
+  ['USA','BIH'],  // 10: M81 D1 vs 3rd
+  ['BEL','SEN'],  // 11: M82 G1 vs 3rd
+  ['ARG','CPV'],  // 12: M86 J1 vs H2
+  ['AUS','EGY'],  // 13: M88 D2 vs G2
+  ['SUI','ALG'],  // 14: M85 B1 vs 3rd
+  ['COL','GHA']   // 15: M87 K1 vs 3rd
+];
+
+// ═══════════════════════════════════════════
+//  AUTO-FILL (V14: 硬编码R32 + 自动晋级)
 // ═══════════════════════════════════════════
 
-var _groupCache = {};
-
-function refreshGroupCache() {
-  _groupCache = {};
-  'ABCDEFGHIJKL'.split('').forEach(function(gid) {
-    _groupCache[gid] = computeGroupStandings(gid);
-  });
-}
-
-function allGroupsComplete() {
-  return 'ABCDEFGHIJKL'.split('').every(function(g) { return !!_groupCache[g]; });
-}
-
-function isSlotPositionDetermined(g, p) {
-  if (g === '*') return allGroupsComplete();
-  return !!_groupCache[g];
+function resolveTeamByCode(code) {
+  var map = buildTeamMap();
+  var t = map[code];
+  if (t) return { zh: t.zh, en: t.en, code: t.code };
+  // fallback: 无teamMap时用code自身
+  return { zh: code, en: code, code: code };
 }
 
 function autoFillBracket() {
-  refreshGroupCache();
   var changed = false;
-  var allComplete = allGroupsComplete();
-  var thirdAlloc = null;
-  if (allComplete) {
-    var allThirds = getAllThirdPlaceTeams(_groupCache);
-    if (allThirds) thirdAlloc = allocateThirdPlace(allThirds);
-  }
 
   R32.forEach(function(slot, i) {
-    var pairing = R32_PAIRINGS[i];
-    var teamA = null, teamB = null;
-
-    if (pairing.a.g !== '*') {
-      var sa = _groupCache[pairing.a.g];
-      if (sa) teamA = { zh: sa[pairing.a.p - 1].team.zh, en: sa[pairing.a.p - 1].team.en, code: sa[pairing.a.p - 1].team.code };
-    }
-    if (pairing.b.g !== '*') {
-      var sb = _groupCache[pairing.b.g];
-      if (sb) teamB = { zh: sb[pairing.b.p - 1].team.zh, en: sb[pairing.b.p - 1].team.en, code: sb[pairing.b.p - 1].team.code };
-    } else if (thirdAlloc && thirdAlloc[i]) {
-      var t3 = thirdAlloc[i];
-      teamB = { zh: t3.team.zh, en: t3.team.en, code: t3.team.code };
-    }
+    var hard = HARDCODED_R32[i];
+    if (!hard) return;
+    var teamA = resolveTeamByCode(hard[0]);
+    var teamB = resolveTeamByCode(hard[1]);
 
     var p = gpred(slot.id);
     if (!p) { p = { teams: [null, null], winner: null }; spred(slot.id, p); }
 
     var updateNeeded = false;
-    if (teamA && (!p.teams[0] || p.teams[0].code !== teamA.code)) {
+    if (!p.teams[0] || p.teams[0].code !== teamA.code) {
       p.teams[0] = teamA; updateNeeded = true;
     }
-    if (teamB && (!p.teams[1] || p.teams[1].code !== teamB.code)) {
+    if (!p.teams[1] || p.teams[1].code !== teamB.code) {
       p.teams[1] = teamB; updateNeeded = true;
     }
 
@@ -345,16 +342,15 @@ function autoFillBracket() {
       changed = true;
     }
 
-    p._lockedA = (pairing.a.g !== '*') ? !isSlotPositionDetermined(pairing.a.g, pairing.a.p) : !allComplete;
-    p._lockedB = (pairing.b.g !== '*') ? !isSlotPositionDetermined(pairing.b.g, pairing.b.p) : (!allComplete || !thirdAlloc);
+    // V14: 硬编码落位，全部解锁（不再显示"待角逐"）
+    p._lockedA = false;
+    p._lockedB = false;
   });
 
   if (changed) save();
 
-  // V13: 小组赛完成后，自动从淘汰赛实际比分推进晋级路线
-  if (allComplete) {
-    autoAdvanceKnockoutResults();
-  }
+  // V13: 自动从淘汰赛实际比分推进晋级路线
+  autoAdvanceKnockoutResults();
 }
 
 // ═══════════════════════════════════════════
@@ -528,8 +524,9 @@ function renderAll(){
       var p = gpred(slot.id);
 
       if (slot.round === 'R32') {
-        var lockedA = p ? !!p._lockedA : !isSlotPositionDetermined(slot.ga.g, slot.ga.p);
-        var lockedB = p ? !!p._lockedB : !isSlotPositionDetermined(slot.gb.g, slot.gb.p);
+        // V14: 硬编码后全部解锁；fallback 处理旧缓存
+        var lockedA = p ? !!p._lockedA : false;
+        var lockedB = p ? !!p._lockedB : false;
         var y1 = baseY - gap / 2, y2 = baseY + gap / 2;
         [0, 1].forEach(function(pos){
           var isLocked = pos === 0 ? lockedA : lockedB;
@@ -914,5 +911,5 @@ window.addEventListener('resize', function(){
 });
 
 load();
-console.log('🏆 Bracket Overlay V13 ready — auto-advance from knockout results + FIFA Annex C');
+console.log('🏆 Bracket Overlay V14 ready — hardcoded R32 teams + auto-advance knockout results');
 })();
