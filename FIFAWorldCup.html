@@ -3941,11 +3941,13 @@ function toggleProbUpdate() {
 	}
 
 // ===== 强制刷新：完全等效 CTRL+SHIFT+R =====
-			// 策略：清除 Cache API → 注销 Service Worker → 带 cache-busting 参数导航
-			// location.reload() 仅等效 F5（max-age=0），子资源仍可能走 disk cache。
-			// 改用带唯一时间戳的新 URL 导航，浏览器将其视为全新请求，
-			// 对主文档及所有子资源(JS/CSS/图片)强制发送 no-cache 等效请求，不走任何缓存层。
-			// 页面加载后立即通过 history.replaceState 清理时间戳，URL 不留痕迹。
+			// Step 1-2: 清除 Cache API + 注销 Service Worker
+			// Step 3: fetch(cache:'reload') 预刷核心 JS → 更新 HTTP disk cache
+			// Step 4-5: 清除 sessionStorage + 带时间戳导航
+			//
+			// Ctrl+Shift=R 对每个请求发送 Cache-Control:no-cache。
+			// fetch(cache:'reload') 等效于对每个子资源执行此行为：
+			// 浏览器将最新响应写入 HTTP cache，后续 <script> 加载命中新鲜版本。
 			function hardRefresh() {
 			    var tasks = [];
 
@@ -3966,20 +3968,32 @@ function toggleProbUpdate() {
 			        );
 			    }
 
-			    // 等待所有清理完成后执行硬刷新，最多等 3 秒兜底
+			    // 3. 预刷核心 JS：fetch(cache:'reload') → 浏览器发送 no-cache → 更新 disk cache
+			    var CRITICAL_JS = [
+			        'app.js', 'engine.js', 'bracket_overlay.js', 'squadmodal.js',
+			        'matchdata_2026.js', 'matchdata.js', 'groupsdata.js', 'oddsdata.js',
+			        'prob_engine.js', 'match_eval_engine.js', 'oddsboard_engine.js',
+			        'perfboard_engine.js', 'teamdata.js', 'squaddata.js',
+			        'player_stats_2026.js', 'venuedata.js'
+			    ];
+			    tasks.push(
+			        Promise.all(CRITICAL_JS.map(function(r) {
+			            return fetch(r, { cache: 'reload' }).catch(function(){});
+			        }))
+			    );
+
+			    // 等待所有清理+预刷完成后执行导航，最多等 3 秒兜底
 			    var done = false;
 			    var doReload = function() {
 			        if (done) return;
 			        done = true;
-			        // 3. 清除 sessionStorage（保留跨标签页标记）
+			        // 4. 清除 sessionStorage（保留跨标签页标记）
 			        try {
 			            var xtab = sessionStorage.getItem('_xtab_open');
 			            sessionStorage.clear();
 			            if (xtab) sessionStorage.setItem('_xtab_open', xtab);
 			        } catch(e) {}
-			        // 4. 带 cache-busting 时间戳导航，等效于 CTRL+SHIFT+R 的 no-cache 行为。
-			        //    浏览器对带新查询参数的 URL 视为全新资源，强制全量重新下载。
-			        //    页面初始化时会通过 history.replaceState 清除 _hr 参数，URL 不留痕迹。
+			        // 5. 带 cache-busting 时间戳导航
 			        var url = new URL(window.location.href);
 			        url.searchParams.set('_hr', Date.now());
 			        window.location.href = url.toString();
