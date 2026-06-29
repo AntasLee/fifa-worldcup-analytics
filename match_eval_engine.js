@@ -474,6 +474,7 @@ function computeMatchEvaluation(matchKey){
 
   var parsed=parseMatchKey(matchKey);
   var homeCode=parsed.home, awayCode=parsed.away;
+  var sh=match.score.sh, sa=match.score.sa;
   var stats=match.stats||null;
   var goals=match.goals||null;
   var redH=stats?stats.redCards.h:0, redA=stats?stats.redCards.a:0;

@@ -1956,9 +1956,12 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
   // ========= 淘汰赛 R32 (16场) — FIFA 官方确认对阵 =========
   // M73 · 6月29日 03:00 北京时间 · SoFi体育场
   "2026|R32|RSA|CAN": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 0, sa: 1 },
+    goals: [
+      { min: "90+2", side: "away", scorer: "斯蒂芬·欧斯塔基奥 (Stephen Eustáquio)", type: "shot" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: null, referee: "TBD"
   },
   // M76 · 6月30日 01:00 · NRG体育场
   "2026|R32|BRA|JPN": {
@@ -2126,3 +2129,4 @@ matchStats["2026|K|COL|POR"] = {p1:"54%",p2:"46%",ps1:null,ps2:null,sh1:17,sh2:9
 matchStats["2026|K|COD|UZB"] = {p1:"58%",p2:"42%",ps1:null,ps2:null,sh1:18,sh2:3,so1:4,so2:1,sb1:14,sb2:2,co1:2,co2:4,fo1:6,fo2:16,os1:3,os2:1,yc1:3,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:145,at2:90,da1:54,da2:45,pk1:1,pk2:0};
 matchStats["2026|J|JOR|ARG"] = {p1:"27%",p2:"73%",ps1:null,ps2:null,sh1:3,sh2:11,so1:1,so2:4,sb1:2,sb2:7,co1:2,co2:6,fo1:13,fo2:7,os1:1,os2:3,yc1:3,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:61,at2:122,da1:23,da2:46,pk1:0,pk2:1};
 matchStats["2026|J|ALG|AUT"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:10,sh2:9,so1:5,so2:3,sb1:5,sb2:6,co1:0,co2:3,fo1:3,fo2:7,os1:1,os2:3,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:139,at2:81,da1:43,da2:39,pk1:0,pk2:0};
+matchStats["2026|R32|RSA|CAN"] = {p1:"58%",p2:"42%",ps1:null,ps2:null,sh1:5,sh2:12,so1:1,so2:7,sb1:4,sb2:5,co1:1,co2:4,fo1:10,fo2:16,os1:1,os2:0,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:85,at2:124,da1:20,da2:50,pk1:0,pk2:0};

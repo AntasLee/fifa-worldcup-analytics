@@ -2331,9 +2331,30 @@ const wc2026AllMatches = {
 
   // M73 · 6月29日 03:00 · SoFi体育场 (洛杉矶)
   "2026|R32|RSA|CAN": {
-    score: null, date: "2026-06-29", time: "03:00", venue: "SoFi体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 0, sa: 1 }, date: "2026-06-29", time: "03:00", venue: "SoFi体育场", stage: "R32",
+    goals: [
+      { min: "90+2", side: "away", scorer: "斯蒂芬·欧斯塔基奥", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 58, a: 42 },
+      shots:           { h: 5,  a: 12 },
+      shotsOnTarget:   { h: 1,  a: 7 },
+      corners:         { h: 1,  a: 4 },
+      fouls:           { h: 10, a: 16 },
+      yellowCards:     { h: 0,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 85, a: 124 },
+      dangerousAttacks:{ h: 20, a: 50 }
+    },
+    attendance: null, referee: null,
+    xg: null,
+    mediaRating: {
+      motm: "斯蒂芬·欧斯塔基奥",
+      sources: ["ESPN", "FIFA", "Al Jazeera", "FotMob"],
+      home: {score: 6, quotes: "巴法纳巴法纳的世界杯童话在92分钟戛然而止。威廉斯多次神扑力保球门不失，防守端展现了非凡纪律。但进攻端全场仅1次射正难以制造威胁，首场淘汰赛虽败犹荣。"},
+      away: {score: 8, quotes: "欧斯塔基奥禁区外凌空抽射绝杀缔造加拿大历史首场世界杯淘汰赛胜利！全场12射7正碾压对手，阿方索·戴维斯75分钟替补登场改变战局。16强将迎战荷兰vs摩洛哥胜者。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M76 · 6月30日 01:00 · NRG体育场 (休斯顿)
   "2026|R32|BRA|JPN": {

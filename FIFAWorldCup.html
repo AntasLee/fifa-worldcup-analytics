@@ -154,20 +154,22 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .knockout-panel.visible{display:block}
 .ko-round-section{display:none}
 .ko-round-section.active{display:block}
-.ko-match{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;margin-bottom:8px;flex-wrap:wrap;border:2px solid transparent;transition:all 0.2s;cursor:default}
-.ko-match:hover{background:var(--surface);border-color:var(--border)}
+.ko-round-section > div{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow)}
+.ko-match{display:flex;align-items:center;gap:6px;padding:10px 8px;border-radius:8px;margin-bottom:6px;flex-wrap:wrap;border:1px solid var(--border);transition:all 0.2s;cursor:default}
+.ko-match:hover{background:var(--surface2);border-color:var(--gold);box-shadow:0 2px 12px rgba(0,0,0,0.3)}
 .ko-match.predicted{border-left:3px solid var(--accent)}
-.ko-match.finished{border-left:3px solid #2ecc71;background:rgba(46,204,113,0.12);cursor:pointer;transition:all 0.35s ease;position:relative;box-shadow:0 0 6px rgba(46,204,113,0.08)}
-.ko-match.finished:hover{background:rgba(46,204,113,0.22);border-color:#2ecc71;box-shadow:0 0 22px rgba(46,204,113,0.28);transform:translateY(-3px);z-index:2}
-.ko-match.finished::before{content:'';position:absolute;inset:-2px;border-radius:inherit;border:2px solid transparent;transition:border-color 0.35s;pointer-events:none}
-.ko-match.finished:hover::before{border-color:rgba(46,204,113,0.35);animation:finishPulse 1.5s ease-in-out infinite}
-.ko-team{flex:1;display:flex;align-items:center;gap:6px;cursor:pointer;position:relative}
+/* Knockout row-2 container: score + buttons */
+.ko-match-row2{display:flex;align-items:center;gap:6px;flex-basis:100%;padding-top:4px}
+/* Finished match inside knockout panel — visible border */
+#knockoutPanel .match-item.finished{border:1px solid var(--border);margin-bottom:6px}
+#knockoutPanel .match-item.finished .ko-match-row2{display:flex;align-items:center;gap:6px;flex-basis:100%;padding-top:4px}
+.ko-team{flex:1;display:flex;align-items:center;gap:6px;min-width:110px;cursor:pointer;position:relative}
 .ko-match > .ko-team:nth-of-type(1){justify-content:flex-end}
 .ko-match > .ko-team:nth-of-type(2){justify-content:flex-start}
 .ko-team select{display:none;position:absolute;top:100%;left:0;width:100%;z-index:10}
 .ko-team.editing select{display:block}
 .ko-team .display{display:flex;align-items:center;gap:6px;min-height:30px}
-.ko-score-group{display:flex;align-items:center;gap:4px}
+.ko-score-group{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .ko-actions{display:flex;gap:4px;flex-wrap:wrap}
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:999;justify-content:center;align-items:center}
 #playerDetailModal{z-index:10000!important}
@@ -2025,7 +2027,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     gap: 6px !important;
   }
 
-  /* Knockout match: same 2-row layout as group stage match-item */
+  /* Knockout match: same layout as group stage match-item */
   .ko-match {
     display: flex;
     flex-wrap: wrap;
@@ -2035,9 +2037,6 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     font-size: 0.62rem;
     overflow-x: hidden;
     min-height: auto;
-    margin-bottom: 4px;
-    border: 1px solid transparent;
-    border-radius: 6px;
   }
   /* Force line break between row 1 & row 2 */
   .ko-match::after {
