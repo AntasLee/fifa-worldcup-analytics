@@ -1961,13 +1961,18 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
       { min: "90+2", side: "away", scorer: "斯蒂芬·欧斯塔基奥 (Stephen Eustáquio)", type: "shot" }
     ],
     cards: { home: { yellow: 0, red: 0 }, away: { yellow: 2, red: 0 } },
-    attendance: null, referee: "TBD"
+    attendance: 70242, referee: "João Pedro Pinheiro (POR)"
   },
-  // M76 · 6月30日 01:00 · NRG体育场
+  // M76 · 6月30日 01:00 · NRG体育场 (休斯顿)
   "2026|R32|BRA|JPN": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 2, sa: 1 },
+    goals: [
+      { min: 29, side: "away", scorer: "佐野海州 (Kaiso Sano)", type: "shot" },
+      { min: 56, side: "home", scorer: "卡塞米罗 (Casemiro)", type: "header", assist: "加布里埃尔·马丁内利 (Gabriel Martinelli)" },
+      { min: "90+6", side: "home", scorer: "加布里埃尔·马丁内利 (Gabriel Martinelli)", type: "shot", assist: "布鲁诺·吉马良斯 (Bruno Guimarães)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 3, red: 0 } },
+    attendance: 72795, referee: "Maurizio Mariani (ITA)"
   },
   // M74 · 6月30日 04:30 · 吉列体育场
   "2026|R32|GER|PAR": {
@@ -2130,3 +2135,4 @@ matchStats["2026|K|COD|UZB"] = {p1:"58%",p2:"42%",ps1:null,ps2:null,sh1:18,sh2:3
 matchStats["2026|J|JOR|ARG"] = {p1:"27%",p2:"73%",ps1:null,ps2:null,sh1:3,sh2:11,so1:1,so2:4,sb1:2,sb2:7,co1:2,co2:6,fo1:13,fo2:7,os1:1,os2:3,yc1:3,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:61,at2:122,da1:23,da2:46,pk1:0,pk2:1};
 matchStats["2026|J|ALG|AUT"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:10,sh2:9,so1:5,so2:3,sb1:5,sb2:6,co1:0,co2:3,fo1:3,fo2:7,os1:1,os2:3,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:139,at2:81,da1:43,da2:39,pk1:0,pk2:0};
 matchStats["2026|R32|RSA|CAN"] = {p1:"58%",p2:"42%",ps1:null,ps2:null,sh1:5,sh2:12,so1:1,so2:7,sb1:4,sb2:5,co1:1,co2:4,fo1:10,fo2:16,os1:1,os2:0,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:85,at2:124,da1:20,da2:50,pk1:0,pk2:0};
+matchStats["2026|R32|BRA|JPN"] = {p1:"69%",p2:"31%",ps1:null,ps2:null,sh1:13,sh2:3,so1:7,so2:2,sb1:6,sb2:1,co1:6,co2:2,fo1:4,fo2:13,os1:1,os2:0,yc1:2,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:133,at2:65,da1:88,da2:30,pk1:0,pk2:0};

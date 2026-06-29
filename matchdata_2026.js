@@ -2346,11 +2346,11 @@ const wc2026AllMatches = {
       attacks:         { h: 85, a: 124 },
       dangerousAttacks:{ h: 20, a: 50 }
     },
-    attendance: null, referee: null,
+    attendance: 70242, referee: "João Pedro Pinheiro (POR)",
     xg: null,
     mediaRating: {
       motm: "斯蒂芬·欧斯塔基奥",
-      sources: ["ESPN", "FIFA", "Al Jazeera", "FotMob"],
+      sources: ["BBC Sport", "ESPN", "FIFA", "Al Jazeera", "FotMob", "Sportstar"],
       home: {score: 6, quotes: "巴法纳巴法纳的世界杯童话在92分钟戛然而止。威廉斯多次神扑力保球门不失，防守端展现了非凡纪律。但进攻端全场仅1次射正难以制造威胁，首场淘汰赛虽败犹荣。"},
       away: {score: 8, quotes: "欧斯塔基奥禁区外凌空抽射绝杀缔造加拿大历史首场世界杯淘汰赛胜利！全场12射7正碾压对手，阿方索·戴维斯75分钟替补登场改变战局。16强将迎战荷兰vs摩洛哥胜者。"}
     },
@@ -2358,9 +2358,32 @@ const wc2026AllMatches = {
   },
   // M76 · 6月30日 01:00 · NRG体育场 (休斯顿)
   "2026|R32|BRA|JPN": {
-    score: null, date: "2026-06-30", time: "01:00", venue: "NRG体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 2, sa: 1 }, date: "2026-06-30", time: "01:00", venue: "NRG体育场", stage: "R32",
+    goals: [
+      { min: 29, side: "away", scorer: "佐野海州", type: "shot" },
+      { min: 56, side: "home", scorer: "卡塞米罗", type: "header", assist: "加布里埃尔·马丁内利" },
+      { min: "90+6", side: "home", scorer: "加布里埃尔·马丁内利", type: "shot", assist: "布鲁诺·吉马良斯" }
+    ],
+    stats: {
+      possession:      { h: 69, a: 31 },
+      shots:           { h: 13, a: 3 },
+      shotsOnTarget:   { h: 7,  a: 2 },
+      corners:         { h: 6,  a: 2 },
+      fouls:           { h: 4,  a: 13 },
+      yellowCards:     { h: 2,  a: 3 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 133, a: 65 },
+      dangerousAttacks:{ h: 88, a: 30 }
+    },
+    attendance: 72795, referee: "Maurizio Mariani (ITA)",
+    xg: null,
+    mediaRating: {
+      motm: "加布里埃尔·马丁内利",
+      sources: ["BBC Sport", "Sofascore", "Goal.com", "ABC Sport", "AP"],
+      home: {score: 7, quotes: "巴西全场碾压（69%控球、133次进攻、7射正），但面对日本极具纪律的五后卫防线长时间陷入僵局。卡塞米罗头球扳平后攻势如潮，马丁内利90+6分钟绝杀避免加时赛。逆转淘汰赛展现冠军底蕴，但攻坚效率有待提升。"},
+      away: {score: 6, quotes: "佐野海州的先制进球让日本看到爆冷希望。森保一的五后卫体系执行近乎完美——纪律严明、封堵果敢、反击坚决——让巴西直到56分钟才扳平。最终被马丁内利绝杀实属残酷，但日本证明了其战术体系可与世界顶级强队抗衡。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M74 · 6月30日 04:30 · 吉列体育场 (波士顿)
   "2026|R32|GER|PAR": {
