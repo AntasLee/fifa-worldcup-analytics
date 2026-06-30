@@ -1096,8 +1096,10 @@ function parseMatchTime(ts) {
 function buildOddsMap() {
   var map = {};
   if (typeof matchOdds === 'undefined') return map;
-  Object.keys(matchOdds).forEach(function(k) {
-    var od = matchOdds[k], grp = k.split('_')[0];
+  // 合并小组赛 + 淘汰赛赔率
+  var allOdds = Object.assign({}, matchOdds, typeof knockoutOdds !== 'undefined' ? knockoutOdds : {});
+  Object.keys(allOdds).forEach(function(k) {
+    var od = allOdds[k], grp = k.split('_')[0];
     map['2026|' + grp + '|' + od.h + '|' + od.a] = od;
     map['2026|' + grp + '|' + od.a + '|' + od.h] = od;
   });
@@ -1641,7 +1643,7 @@ function runFlat(cfg, matches) {
   });
 
   matches.forEach(function(m, globalIdx) {
-    if (!m.odds) return;
+    if (!m.odds || !m.isFinished) return;
     var od = m.odds;
     strats.forEach(function(s) {
       // idle/空仓策略跳过
@@ -1699,6 +1701,8 @@ function runFlat(cfg, matches) {
       } else if (result === 'push') {
         s.pushes++;
         s.capital += returnAmount;
+      } else if (result === 'pending') {
+        s.capital += stake; s.totalBets--; s.totalStake -= stake;
       }
 
       if (s.capital > s.peakCapital) { s.peakCapital = s.capital; s.peakIdx = globalIdx; }
@@ -1740,7 +1744,7 @@ function runOptimal(cfg, matches, optStrats) {
   });
 
   matches.forEach(function(m, globalIdx) {
-    if (!m.odds) return;
+    if (!m.odds || !m.isFinished) return;
     var od = m.odds;
     strats.forEach(function(s) {
       if (!s.shouldBetFn(od)) {
@@ -1791,6 +1795,8 @@ function runOptimal(cfg, matches, optStrats) {
       } else if (result === 'push') {
         s.pushes++;
         s.capital += returnAmount;
+      } else if (result === 'pending') {
+        s.capital += stake; s.totalBets--; s.totalStake -= stake;
       }
 
       if (s.capital > s.peakCapital) { s.peakCapital = s.capital; s.peakIdx = globalIdx; }
@@ -1928,7 +1934,7 @@ function runOptimalWithProb(cfg, matches, optStrats, probData) {
   probData.forEach(function(pd) { probMap[pd.idx] = pd; });
 
   matches.forEach(function(m, globalIdx) {
-    if (!m.odds) return;
+    if (!m.odds || !m.isFinished) return;
     var od = m.odds;
     var prob = probMap[globalIdx] || {};
 
@@ -1983,6 +1989,7 @@ function runOptimalWithProb(cfg, matches, optStrats, probData) {
         s.capital += returnAmount;
       } else if (result === 'halfLose') { s.capital += returnAmount; }
       else if (result === 'push') { s.pushes++; s.capital += returnAmount; }
+      else if (result === 'pending') { s.capital += stake; s.totalBets--; s.totalStake -= stake; }
 
       if (s.capital > s.peakCapital) { s.peakCapital = s.capital; s.peakIdx = globalIdx; }
       var dd = s.peakCapital > 0 ? (s.peakCapital - s.capital) / s.peakCapital * 100 : 0;
@@ -3242,13 +3249,13 @@ function runDaily(cfg, matches, dailyConfig, probData) {
 	  if (probData) probData.forEach(function(pd) { probMap[pd.idx] = pd; });
 
 	  matches.forEach(function(m, globalIdx) {
-	    if (!m.odds) {
-	      result.history.push({ idx: globalIdx, capital: result.capital, bet: 0, result: null, skipped: true, isFinished: m.isFinished });
-	      return;
-	    }
-	    var od = m.odds;
-	    var prob = probMap[globalIdx] || {};
-	    var dateKey = getMatchLocalDate(m);
+    if (!m.odds || !m.isFinished) {
+      result.history.push({ idx: globalIdx, capital: result.capital, bet: 0, result: null, skipped: true, isFinished: m.isFinished });
+      return;
+    }
+    var od = m.odds;
+    var prob = probMap[globalIdx] || {};
+    var dateKey = getMatchLocalDate(m);
 	    var stratId = dailyConfig[dateKey] || 'v1_fav';
 	    var strat = stratMap[stratId];
 
@@ -3281,11 +3288,11 @@ function runDaily(cfg, matches, dailyConfig, probData) {
     }
 
     result.capital -= stake;
-	    result.totalBets++;
-	    result.totalStake += stake;
+    result.totalBets++;
+    result.totalStake += stake;
 
-	    var settleResult, mult, returnAmount = 0;
-	    if (m.isFinished) {
+    var settleResult, mult, returnAmount = 0;
+    if (m.isFinished) {
 	      if (cfg.settleMultiplier) {
 	        mult = cfg.settleMultiplier(m, target);
 	        if (mult > 0.001) {
@@ -3313,17 +3320,19 @@ function runDaily(cfg, matches, dailyConfig, probData) {
 	      result.capital += returnAmount;
 	    } else if (settleResult === 'halfLose') {
 	      result.capital += returnAmount;
-	    } else if (settleResult === 'push') {
-	      result.pushes++;
-	      result.capital += returnAmount;
-	    }
+    } else if (settleResult === 'push') {
+      result.pushes++;
+      result.capital += returnAmount;
+    } else if (settleResult === 'pending') {
+      result.capital += stake; result.totalBets--; result.totalStake -= stake;
+    }
 
-	    if (result.capital > result.peakCapital) { result.peakCapital = result.capital; result.peakIdx = globalIdx; }
-	    var dd = result.peakCapital > 0 ? ((result.peakCapital - result.capital) / result.peakCapital * 100) : 0;
-	    if (dd > result.maxDrawdown) result.maxDrawdown = dd;
+    if (result.capital > result.peakCapital) { result.peakCapital = result.capital; result.peakIdx = globalIdx; }
+    var dd = result.peakCapital > 0 ? ((result.peakCapital - result.capital) / result.peakCapital * 100) : 0;
+    if (dd > result.maxDrawdown) result.maxDrawdown = dd;
 
-	    var capSaved = result.capital;
-	    result.history.push({ idx: globalIdx, capital: result.capital, bet: stake, result: settleResult, isFinished: m.isFinished, dateKey: dateKey, stratId: stratId });
+    var capSaved = result.capital;
+    result.history.push({ idx: globalIdx, capital: result.capital, bet: stake, result: settleResult, isFinished: m.isFinished, dateKey: dateKey, stratId: stratId });
 
 	    result.bets.push({
 	      idx: globalIdx, stage: m.groupName, match: m.homeCN + ' vs ' + m.awayCN,
@@ -3614,7 +3623,7 @@ function runMatrix(cfg, matches, matrixConfig, probData) {
   if (probData) probData.forEach(function(pd) { probMap[pd.idx] = pd; });
 
   matches.forEach(function(m, globalIdx) {
-    if (!m.odds) {
+    if (!m.odds || !m.isFinished) {
       result.history.push({ idx: globalIdx, capital: result.capital, bet: 0, result: null, skipped: true, isFinished: m.isFinished });
       return;
     }
@@ -3689,6 +3698,8 @@ function runMatrix(cfg, matches, matrixConfig, probData) {
     } else if (settleResult === 'push') {
       result.pushes++;
       result.capital += returnAmount;
+    } else if (settleResult === 'pending') {
+      result.capital += stake; result.totalBets--; result.totalStake -= stake;
     }
 
     if (result.capital > result.peakCapital) { result.peakCapital = result.capital; result.peakIdx = globalIdx; }
@@ -4156,7 +4167,7 @@ function evaluateStrategyOnPhase(strat, phaseGroup, cfg, probMap) {
   var capital = INITIAL_CAPITAL;
   var bets = 0, wins = 0, pushes = 0, totalStake = 0, totalReturn = 0;
   phaseGroup.matches.forEach(function(m) {
-    if (!m.odds) return;
+    if (!m.odds || !m.isFinished) return;
     var od = m.odds, prob = probMap ? (probMap[m.idx] || {}) : {};
     var decision = null;
     if (strat.betFn && typeof strat.betFn === 'function') {
@@ -4199,11 +4210,13 @@ function evaluateStrategyOnPhase(strat, phaseGroup, cfg, probMap) {
 	      capital += returnAmount;
 	    } else if (settleResult === 'halfLose') {
 	      capital += returnAmount;
-	    } else if (settleResult === 'push') {
-	      pushes++;
-	      capital += returnAmount;
-	    }
-	  });
+    } else if (settleResult === 'push') {
+      pushes++;
+      capital += returnAmount;
+    } else if (settleResult === 'pending') {
+      capital += stake; bets--; totalStake -= stake;
+    }
+  });
 	  var profit = capital - INITIAL_CAPITAL;
 	  var roi = (capital / INITIAL_CAPITAL - 1) * 100;
 	  return { capital: capital, profit: profit, roi: roi, bets: bets, wins: wins, pushes: pushes, totalStake: totalStake, totalReturn: totalReturn };
