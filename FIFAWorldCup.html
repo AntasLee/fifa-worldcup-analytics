@@ -493,6 +493,17 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .goal-type.free_kick{background:rgba(186,85,211,0.2);color:#ba55d3}
 .goal-type.own_goal{background:rgba(231,76,60,0.2);color:#e74c3c}
 .goal-type.shot{background:rgba(46,204,113,0.2);color:#2ecc71}
+/* 点球大战时间轴 */
+.penalty-timeline{position:relative;padding-left:36px;margin-top:6px}
+.penalty-timeline::before{content:'';position:absolute;left:18px;top:6px;bottom:6px;width:2px;background:var(--border);border-radius:1px}
+.penalty-event{display:flex;align-items:center;gap:8px;padding:5px 10px;margin-bottom:4px;background:var(--surface2);border-radius:6px;position:relative;font-size:0.74rem}
+.penalty-event.ps-winner{background:rgba(212,168,67,0.12);border:1px solid rgba(212,168,67,0.3)}
+.ps-flag{width:18px;height:13px;border-radius:2px;flex-shrink:0;object-fit:cover;border:1px solid rgba(255,255,255,0.15)}
+.ps-order{font-weight:700;color:var(--text-secondary);min-width:24px;font-size:0.65rem}
+.ps-scorer{font-weight:600;color:var(--text);flex:1}
+.ps-result{padding:2px 8px;border-radius:10px;font-size:0.63rem;font-weight:700;white-space:nowrap}
+.ps-result.ps-scored{background:rgba(46,204,113,0.18);color:#2ecc71}
+.ps-result.ps-missed{background:rgba(231,76,60,0.18);color:#e74c3c}
 .cards-row{display:flex;gap:14px}
 .cards-box{flex:1;background:var(--surface2);border-radius:8px;padding:12px;text-align:center}
 .cards-count{font-size:1.5rem;font-weight:800}
@@ -5485,7 +5496,7 @@ function collectDetailData(){
       var norm=normalizeGoalMin(g.min);
       // ⚠️ 安全网：无加时赛 → min≥91 必为90+补时（数据录入容错）
       // 判断"无加时"：小组赛 OR (淘汰赛无点球大战且无≥105进球)
-      var hasET=!!detail.ps||detail.goals.some(function(x){return normalizeGoalMin(x.min).num>=105;});
+      var hasET=!!detail.ps||!!detail.penalties||!!detail.aet||detail.goals.some(function(x){return normalizeGoalMin(x.min).num>=105;});
       if(!norm.isStoppage && (isGroup||!hasET) && norm.num>=91){norm.isStoppage=true;norm.base=90;}
       if(norm.num<=130||norm.isStoppage){allGoals.push({min:norm.num,isStoppage:norm.isStoppage,stoppageBase:norm.base,type:g.type,scorer:g.scorer,side:g.side});goalTypeCount[g.type]=(goalTypeCount[g.type]||0)+1;}
     });

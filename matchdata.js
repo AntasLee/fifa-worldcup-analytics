@@ -1974,17 +1974,53 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 2, red: 0 }, away: { yellow: 3, red: 0 } },
     attendance: 72795, referee: "Maurizio Mariani (ITA)"
   },
-  // M74 · 6月30日 04:30 · 吉列体育场
+  // M74 · 6月30日 04:30 · 吉列体育场 (波士顿) — 加时1-1, 巴拉圭点球4-3胜
   "2026|R32|GER|PAR": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 1, sa: 1 },
+    goals: [
+      { min: 42, side: "away", scorer: "胡利奥·恩西索 (Julio Enciso)", type: "header", assist: "马蒂亚斯·加拉尔萨 (Matías Galarza)" },
+      { min: 54, side: "home", scorer: "凯·哈弗茨 (Kai Havertz)", type: "header", assist: "弗洛里安·维尔茨 (Florian Wirtz)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 2, red: 0 } },
+    aet: true, penalties: true, penaltyScore: { home: 3, away: 4 },
+    penaltyShootout: [
+      { side: "home", scorer: "凯·哈弗茨 (Kai Havertz)", result: "saved" },
+      { side: "away", scorer: "毛里西奥 (Maurício)", result: "scored" },
+      { side: "home", scorer: "约书亚·基米希 (Joshua Kimmich)", result: "scored" },
+      { side: "away", scorer: "古斯塔沃·戈麦斯 (Gustavo Gómez)", result: "scored" },
+      { side: "home", scorer: "贾马尔·穆夏拉 (Jamal Musiala)", result: "scored" },
+      { side: "away", scorer: "马蒂亚斯·加拉尔萨 (Matías Galarza)", result: "scored" },
+      { side: "home", scorer: "尼克·沃尔特马德 (Nick Woltemade)", result: "saved" },
+      { side: "away", scorer: "安东尼奥·萨纳布里亚 (Antonio Sanabria)", result: "missed" },
+      { side: "home", scorer: "纳迪姆·阿米里 (Nadiem Amiri)", result: "scored" },
+      { side: "away", scorer: "法比安·巴尔布埃纳 (Fabián Balbuena)", result: "saved" },
+      { side: "home", scorer: "若纳坦·塔 (Jonathan Tah)", result: "missed" },
+      { side: "away", scorer: "何塞·卡纳莱 (José Canale)", result: "scored", winner: true }
+    ],
+    attendance: 65798, referee: "Wilton Sampaio (BRA)"
   },
-  // M75 · 6月30日 09:00 · BBVA球场
+  // M75 · 6月30日 09:00 · BBVA球场 (蒙特雷) — 加时1-1, 摩洛哥点球3-2胜
   "2026|R32|NED|MAR": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 1, sa: 1 },
+    goals: [
+      { min: 72, side: "home", scorer: "科迪·加克波 (Cody Gakpo)", type: "shot", assist: "克莱森西奥·萨默维尔 (Crysencio Summerville)" },
+      { min: "90+1", side: "away", scorer: "伊萨·迪奥普 (Issa Diop)", type: "header", assist: "沙姆斯丁·塔勒比 (Chemsdine Talbi)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
+    aet: true, penalties: true, penaltyScore: { home: 2, away: 3 },
+    penaltyShootout: [
+      { side: "home", scorer: "特恩·科普迈纳斯 (Teun Koopmeiners)", result: "scored" },
+      { side: "away", scorer: "尼尔·艾纳维 (Neil El Aynaoui)", result: "missed" },
+      { side: "home", scorer: "贾斯汀·克鲁伊维特 (Justin Kluivert)", result: "missed" },
+      { side: "away", scorer: "阿什拉夫·哈基米 (Achraf Hakimi)", result: "scored" },
+      { side: "home", scorer: "弗伦基·德容 (Frenkie de Jong)", result: "scored" },
+      { side: "away", scorer: "阿泽丁·奥纳希 (Azzedine Ounahi)", result: "scored" },
+      { side: "home", scorer: "昆滕·廷贝尔 (Quinten Timber)", result: "missed" },
+      { side: "away", scorer: "伊斯梅尔·赛巴里 (Ismael Saibari)", result: "scored", winner: true },
+      { side: "home", scorer: "克莱森西奥·萨默维尔 (Crysencio Summerville)", result: "saved" },
+      { side: "away", scorer: "阿尤布·布阿迪 (Ayyoub Bouaddi)", result: "not_taken" }
+    ],
+    attendance: 53502, referee: "Facundo Tello (ARG)"
   },
   // M78 · 7月1日 01:00 · AT&T体育场
   "2026|R32|CIV|NOR": {
@@ -2136,3 +2172,5 @@ matchStats["2026|J|JOR|ARG"] = {p1:"27%",p2:"73%",ps1:null,ps2:null,sh1:3,sh2:11
 matchStats["2026|J|ALG|AUT"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:10,sh2:9,so1:5,so2:3,sb1:5,sb2:6,co1:0,co2:3,fo1:3,fo2:7,os1:1,os2:3,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:139,at2:81,da1:43,da2:39,pk1:0,pk2:0};
 matchStats["2026|R32|RSA|CAN"] = {p1:"58%",p2:"42%",ps1:null,ps2:null,sh1:5,sh2:12,so1:1,so2:7,sb1:4,sb2:5,co1:1,co2:4,fo1:10,fo2:16,os1:1,os2:0,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:85,at2:124,da1:20,da2:50,pk1:0,pk2:0};
 matchStats["2026|R32|BRA|JPN"] = {p1:"69%",p2:"31%",ps1:null,ps2:null,sh1:13,sh2:3,so1:7,so2:2,sb1:6,sb2:1,co1:6,co2:2,fo1:4,fo2:13,os1:1,os2:0,yc1:2,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:133,at2:65,da1:88,da2:30,pk1:0,pk2:0};
+matchStats["2026|R32|GER|PAR"] = {p1:"75%",p2:"25%",ps1:null,ps2:null,sh1:13,sh2:5,so1:6,so2:3,sb1:7,sb2:2,co1:16,co2:6,fo1:18,fo2:12,os1:4,os2:1,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:186,at2:64,da1:139,da2:39,pk1:0,pk2:0};
+matchStats["2026|R32|NED|MAR"] = {p1:"31%",p2:"69%",ps1:null,ps2:null,sh1:3,sh2:9,so1:2,so2:5,sb1:1,sb2:4,co1:5,co2:8,fo1:18,fo2:15,os1:3,os2:0,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:101,at2:152,da1:35,da2:46,pk1:0,pk2:0};

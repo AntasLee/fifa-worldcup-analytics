@@ -282,6 +282,28 @@ window.showMatchDetail=function(year, stage, h, a, isKnockout) {
       html += '<div class="detail-no-data">⚽ 本场比赛无进球 (0:0)</div>';
     }
     html += '</div>';
+    // Penalty Shootout Timeline
+    if (detail && detail.penaltyShootout && detail.penaltyShootout.length > 0) {
+      var psHome = 0, psAway = 0;
+      detail.penaltyShootout.forEach(function(ps) {
+        if (ps.result === 'scored') { if (ps.side === 'home') psHome++; else psAway++; }
+      });
+      html += '<div class="detail-section"><div class="detail-section-title">🎯 点球大战 (' + psHome + '-' + psAway + ')</div>';
+      html += '<div class="penalty-timeline">';
+      detail.penaltyShootout.forEach(function(ps, idx) {
+        if (ps.result === 'not_taken') return;
+        var flagUrl = ps.side === 'home' ? pastFlag(h) : pastFlag(a);
+        var flagCountry = ps.side === 'home' ? h : a;
+        var resultIcon = ps.result === 'scored' ? '✅' : (ps.result === 'saved' ? '🧤' : '❌');
+        var resultLabel = ps.result === 'scored' ? '命中' : (ps.result === 'saved' ? '被扑' : '罚丢');
+        var resultClass = ps.result === 'scored' ? 'ps-scored' : 'ps-missed';
+        var isWinner = ps.winner ? ' ps-winner' : '';
+        html += '<div class="penalty-event' + isWinner + '"><img class="ps-flag" src="' + flagUrl + '" onerror="this.style.display=\'none\'"><span class="ps-order">#' + (idx+1) + '</span><span class="ps-scorer">' + makePlayerClickable(ps.scorer) + '</span><span class="ps-result ' + resultClass + '">' + resultIcon + ' ' + resultLabel + '</span></div>';
+      });
+      html += '</div></div>';
+    }
+
+
     
     // Additional info
     

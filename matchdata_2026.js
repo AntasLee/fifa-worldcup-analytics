@@ -2387,15 +2387,61 @@ const wc2026AllMatches = {
   },
   // M74 · 6月30日 04:30 · 吉列体育场 (波士顿)
   "2026|R32|GER|PAR": {
-    score: null, date: "2026-06-30", time: "04:30", venue: "吉列体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 1, sa: 1 }, date: "2026-06-30", time: "04:30", venue: "吉列体育场", stage: "R32",
+    aet: true, penalties: true, penaltyScore: { home: 3, away: 4 },
+    goals: [
+      { min: 42, side: "away", scorer: "胡利奥·恩西索", type: "header", assist: "马蒂亚斯·加拉尔萨" },
+      { min: 54, side: "home", scorer: "凯·哈弗茨", type: "header", assist: "弗洛里安·维尔茨" }
+    ],
+    stats: {
+      possession:      { h: 75, a: 25 },
+      shots:           { h: 13, a: 5 },
+      shotsOnTarget:   { h: 6,  a: 3 },
+      corners:         { h: 16, a: 6 },
+      fouls:           { h: 18, a: 12 },
+      yellowCards:     { h: 2,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 186, a: 64 },
+      dangerousAttacks:{ h: 139, a: 39 }
+    },
+    attendance: 65798, referee: "Wilton Sampaio (BRA)",
+    xg: null,
+    mediaRating: {
+      motm: "奥兰多·希尔",
+      sources: ["Sky Sports", "ESPN", "BBC Sport", "FotMob", "Al Jazeera"],
+      home: {score: 6, quotes: "德国75%控球、21次射门的数据掩盖了进攻端的乏力。上半场零射正令人震惊，哈弗茨头球扳平后仍无法在常规时间解决战斗。VAR吹掉塔的加时进球引发争议，但点球大战首次世界杯失利——哈弗茨、沃尔特马德、塔相继罚丢——反映了这支德国队的心理脆弱。连续三届世界杯未能晋级16强。"},
+      away: {score: 8, quotes: "巴拉圭用一场防守大师课创造了世界杯历史！希尔两扑点球+全场神勇，卡纳莱15次解围筑起铜墙铁壁，恩西索头球首开纪录震撼四届冠军。加时赛VAR争议中死里逃生，点球大战卡纳莱一脚定乾坤。南美铁血足球的完美范本，16强对阵法国/瑞典值得期待。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M75 · 6月30日 09:00 · BBVA球场 (蒙特雷)
   "2026|R32|NED|MAR": {
-    score: null, date: "2026-06-30", time: "09:00", venue: "BBVA球场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 1, sa: 1 }, date: "2026-06-30", time: "09:00", venue: "BBVA球场", stage: "R32",
+    aet: true, penalties: true, penaltyScore: { home: 2, away: 3 },
+    goals: [
+      { min: 72, side: "home", scorer: "科迪·加克波", type: "shot", assist: "克莱森西奥·萨默维尔" },
+      { min: "90+1", side: "away", scorer: "伊萨·迪奥普", type: "header", assist: "沙姆斯丁·塔勒比" }
+    ],
+    stats: {
+      possession:      { h: 31, a: 69 },
+      shots:           { h: 3,  a: 9 },
+      shotsOnTarget:   { h: 2,  a: 5 },
+      corners:         { h: 5,  a: 8 },
+      fouls:           { h: 18, a: 15 },
+      yellowCards:     { h: 0,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 101, a: 152 },
+      dangerousAttacks:{ h: 35, a: 46 }
+    },
+    attendance: 53502, referee: "Facundo Tello (ARG)",
+    xg: null,
+    mediaRating: {
+      motm: "伊萨·迪奥普",
+      sources: ["ESPN", "Goal.com", "BBC Sport", "Al Jazeera", "AP"],
+      home: {score: 5, quotes: "荷兰全场被动——31%控球、293次传球对比摩洛哥800次——科曼的保守战术几乎得逞。加克波在丧子之痛中进球令人动容，但球队领先后一味退守终被迪奥普绝平。点球大战克鲁伊维特、廷贝尔、萨默维尔相继失手，荷兰队史首次世界杯一轮游。维尔布鲁根的多次神扑是唯一亮点。"},
+      away: {score: 8, quotes: "阿特拉斯雄狮再次在点球大战中征服欧洲强敌！69%控球率、800次传球完全掌控局面，迪奥普91分钟头球绝平展现不屈意志。布努扑出萨默维尔的点球后，赛巴里一蹴而就锁定胜局。继2022年淘汰西班牙后，摩洛哥再次证明自己是世界杯淘汰赛的终极搅局者。16强对阵加拿大。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M78 · 7月1日 01:00 · AT&T体育场 (达拉斯)
   "2026|R32|CIV|NOR": {
