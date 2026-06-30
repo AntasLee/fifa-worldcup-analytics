@@ -2445,9 +2445,32 @@ const wc2026AllMatches = {
   },
   // M78 · 7月1日 01:00 · AT&T体育场 (达拉斯)
   "2026|R32|CIV|NOR": {
-    score: null, date: "2026-07-01", time: "01:00", venue: "AT&T体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 1, sa: 2 }, date: "2026-07-01", time: "01:00", venue: "AT&T体育场", stage: "R32",
+    goals: [
+      { min: 39, side: "away", scorer: "安东尼奥·努萨", type: "shot", assist: "马丁·厄德高" },
+      { min: 74, side: "home", scorer: "阿玛德·迪亚洛", type: "shot", assist: "尼古拉·佩佩" },
+      { min: 86, side: "away", scorer: "埃尔林·哈兰德", type: "shot", assist: "帕特里克·贝格" }
+    ],
+    stats: {
+      possession:      { h: 47, a: 53 },
+      shots:           { h: 14, a: 6 },
+      shotsOnTarget:   { h: 5,  a: 4 },
+      corners:         { h: 14, a: 3 },
+      fouls:           { h: 6,  a: 7 },
+      yellowCards:     { h: 0,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 59, a: 116 },
+      dangerousAttacks:{ h: 68, a: 58 }
+    },
+    attendance: 78523, referee: "Jesús Valenzuela (VEN)",
+    xg: null,
+    mediaRating: {
+      motm: "埃尔林·哈兰德",
+      sources: ["Goal.com", "BBC Sport", "Al Jazeera", "FotMob", "Sporting News"],
+      home: {score: 7, quotes: "科特迪瓦虽败犹荣——14次角球、迪亚洛替补登场后的一射一传点燃逆转希望。但防线对哈兰德的唯一一次松懈就付出了淘汰代价。迪亚洛补时任意球被尼兰神扑救出，大象军团距离加时仅一步之遥。"},
+      away: {score: 7, quotes: "挪威队史首场世界杯淘汰赛胜利！努萨39分钟的世界波先拔头筹，哈兰德86分钟用典型的哈兰德方式——全场仅2次射正就打入制胜球。贝格（8.2分）全场最佳表现奠定中场基石。16强将迎战巴西，北欧战车不容小觑。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M77 · 7月1日 05:00 · 大都会人寿体育场 (纽约)
   "2026|R32|FRA|SWE": {

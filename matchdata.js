@@ -2024,9 +2024,14 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
   },
   // M78 · 7月1日 01:00 · AT&T体育场
   "2026|R32|CIV|NOR": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 1, sa: 2 },
+    goals: [
+      { min: 39, side: "away", scorer: "安东尼奥·努萨 (Antonio Nusa)", type: "shot", assist: "马丁·厄德高 (Martin Ødegaard)" },
+      { min: 74, side: "home", scorer: "阿玛德·迪亚洛 (Amad Diallo)", type: "shot", assist: "尼古拉·佩佩 (Nicolas Pépé)" },
+      { min: 86, side: "away", scorer: "埃尔林·哈兰德 (Erling Haaland)", type: "shot", assist: "帕特里克·贝格 (Patrick Berg)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: 78523, referee: "Jesús Valenzuela (VEN)"
   },
   // M77 · 7月1日 05:00 · 大都会人寿体育场
   "2026|R32|FRA|SWE": {
@@ -2174,3 +2179,4 @@ matchStats["2026|R32|RSA|CAN"] = {p1:"58%",p2:"42%",ps1:null,ps2:null,sh1:5,sh2:
 matchStats["2026|R32|BRA|JPN"] = {p1:"69%",p2:"31%",ps1:null,ps2:null,sh1:13,sh2:3,so1:7,so2:2,sb1:6,sb2:1,co1:6,co2:2,fo1:4,fo2:13,os1:1,os2:0,yc1:2,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:133,at2:65,da1:88,da2:30,pk1:0,pk2:0};
 matchStats["2026|R32|GER|PAR"] = {p1:"75%",p2:"25%",ps1:null,ps2:null,sh1:13,sh2:5,so1:6,so2:3,sb1:7,sb2:2,co1:16,co2:6,fo1:18,fo2:12,os1:4,os2:1,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:186,at2:64,da1:139,da2:39,pk1:0,pk2:0};
 matchStats["2026|R32|NED|MAR"] = {p1:"31%",p2:"69%",ps1:null,ps2:null,sh1:3,sh2:9,so1:2,so2:5,sb1:1,sb2:4,co1:5,co2:8,fo1:18,fo2:15,os1:3,os2:0,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:101,at2:152,da1:35,da2:46,pk1:0,pk2:0};
+matchStats["2026|R32|CIV|NOR"] = {p1:"47%",p2:"53%",ps1:null,ps2:null,sh1:14,sh2:6,so1:5,so2:4,sb1:9,sb2:2,co1:14,co2:3,fo1:6,fo2:7,os1:2,os2:2,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:59,at2:116,da1:68,da2:58,pk1:0,pk2:0};
