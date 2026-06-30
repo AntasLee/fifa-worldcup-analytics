@@ -359,65 +359,66 @@ function autoFillBracket() {
 //  自动判定胜者并传播到下游轮次
 // ═══════════════════════════════════════════
 
-function getKnockoutMatchResult(stage, teamA, teamB) {
+function getKnockoutMatchData(stage, teamA, teamB) {
   if (!teamA || !teamB) return null;
   if (!teamA.code || !teamB.code) return null;
   var key1 = '2026|' + stage + '|' + teamA.code + '|' + teamB.code;
   var key2 = '2026|' + stage + '|' + teamB.code + '|' + teamA.code;
 
-  // 优先 wc2026MatchDetails（含进球明细），其次 wc2026AllMatches
+  function extract(md, isReversed) {
+    if (!md || !md.score || md.score.sh == null || md.score.sa == null) return null;
+    var sh = Number(md.score.sh), sa = Number(md.score.sa);
+    var r = { sh: isReversed ? sa : sh, sa: isReversed ? sh : sa };
+    // 如有加时/点球数据，附带返回
+    if (md.penaltyScore && md.penaltyScore.home != null && md.penaltyScore.away != null) {
+      var ph = Number(md.penaltyScore.home), pa = Number(md.penaltyScore.away);
+      r.pkHome = isReversed ? pa : ph;
+      r.pkAway = isReversed ? ph : pa;
+    }
+    r.data = md;
+    return r;
+  }
+
   if (typeof wc2026MatchDetails !== 'undefined') {
-    var md = wc2026MatchDetails[key1];
-    if (md && md.score && md.score.sh != null && md.score.sa != null) {
-      return { sh: Number(md.score.sh), sa: Number(md.score.sa), key: key1, source: 'details' };
-    }
-    md = wc2026MatchDetails[key2];
-    if (md && md.score && md.score.sh != null && md.score.sa != null) {
-      return { sh: Number(md.score.sa), sa: Number(md.score.sh), key: key2, source: 'details' };
-    }
+    var r = extract(wc2026MatchDetails[key1], false) || extract(wc2026MatchDetails[key2], true);
+    if (r) { r.source = 'details'; return r; }
   }
   if (typeof wc2026AllMatches !== 'undefined') {
-    var ma = wc2026AllMatches[key1];
-    if (ma && ma.score && ma.score.sh != null && ma.score.sa != null) {
-      return { sh: Number(ma.score.sh), sa: Number(ma.score.sa), key: key1, source: 'allMatches' };
-    }
-    ma = wc2026AllMatches[key2];
-    if (ma && ma.score && ma.score.sh != null && ma.score.sa != null) {
-      return { sh: Number(ma.score.sa), sa: Number(ma.score.sh), key: key2, source: 'allMatches' };
-    }
+    var r2 = extract(wc2026AllMatches[key1], false) || extract(wc2026AllMatches[key2], true);
+    if (r2) { r2.source = 'allMatches'; return r2; }
   }
   return null;
 }
 
 function autoAdvanceKnockoutResults() {
   var changed = false;
-  // 按轮次排序：R32 → R16 → QF → SF → TP → FINAL
   var orderedSlots = R32.concat(R16, QF, SF, [TP, FIN]);
   var processed = {};
 
   orderedSlots.forEach(function(slot) {
-    // 季军赛特殊处理：通过 SF 败者自动填充，不从 matchdata 读取
     if (slot.isThirdPlace) return;
 
     var p = gpred(slot.id);
     if (!p) return;
-    if (!p.teams[0] || !p.teams[1]) return; // 双方未齐
-    if (p.winner !== null && p.winner !== undefined) return; // 已有胜者，跳过
+    if (!p.teams[0] || !p.teams[1]) return;
 
-    var result = getKnockoutMatchResult(slot.round, p.teams[0], p.teams[1]);
+    var result = getKnockoutMatchData(slot.round, p.teams[0], p.teams[1]);
     if (!result) return;
 
-    // 判断胜者
+    // 判定胜者：常规比分 > 点球 > 平局未决
+    var actualWinner = null;
     if (result.sh > result.sa) {
-      p.winner = 0;
+      actualWinner = 0;
     } else if (result.sa > result.sh) {
-      p.winner = 1;
-    } else {
-      return; // 平局 → 需点球数据，暂不判定
+      actualWinner = 1;
+    } else if (result.pkHome != null && result.pkAway != null) {
+      actualWinner = result.pkHome > result.pkAway ? 0 : 1;
     }
+    if (actualWinner === null) return; // 无点球数据，暂不判定
 
-    console.log('Bracket: ' + slot.round + ' auto-advance ' +
-      p.teams[p.winner].code + ' (' + result.sh + '-' + result.sa + ') via ' + result.source);
+    // 赛后结果优先覆盖用户自选
+    if (p.winner === actualWinner) return; // 未变化，跳过
+    p.winner = actualWinner;
 
     changed = true;
     processed[slot.id] = true;
@@ -425,7 +426,6 @@ function autoAdvanceKnockoutResults() {
 
   if (changed) {
     save();
-    // 按轮次级联传播
     orderedSlots.forEach(function(slot) {
       if (processed[slot.id]) propagate(slot.id);
     });
