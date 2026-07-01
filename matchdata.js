@@ -2035,15 +2035,24 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
   },
   // M77 · 7月1日 05:00 · 大都会人寿体育场
   "2026|R32|FRA|SWE": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 3, sa: 0 },
+    goals: [
+      { min: 45, side: "home", scorer: "基利安·姆巴佩 (Kylian Mbappé)", type: "shot", assist: "奥斯曼·登贝莱 (Ousmane Dembélé)" },
+      { min: 53, side: "home", scorer: "布拉德利·巴尔科拉 (Bradley Barcola)", type: "shot", assist: "迈克尔·奥利赛 (Michael Olise)" },
+      { min: 74, side: "home", scorer: "基利安·姆巴佩 (Kylian Mbappé)", type: "shot", assist: "迈克尔·奥利赛 (Michael Olise)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 0, red: 0 } },
+    attendance: 80663, referee: "Slavko Vinčić (SVN)"
   },
-  // M79 · 7月1日 09:00 · 阿兹特克球场
+  // M79 · 7月1日 09:00 · 阿兹特克球场 (墨西哥城)
   "2026|R32|MEX|ECU": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 2, sa: 0 },
+    goals: [
+      { min: 22, side: "home", scorer: "胡利安·基尼奥内斯 (Julián Quiñones)", type: "shot", assist: "罗伯托·阿尔瓦拉多 (Roberto Alvarado)" },
+      { min: 31, side: "home", scorer: "劳尔·希门尼斯 (Raúl Jiménez)", type: "shot", assist: "胡里安·基尼奥内斯 (Julián Quiñones)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 3, red: 1 } },
+    attendance: 80824, referee: "Slavko Vinčić (SVN)"
   },
   // M80 · 7月2日 00:00 · 梅赛德斯-奔驰体育场
   "2026|R32|ENG|COD": {
@@ -2180,3 +2189,5 @@ matchStats["2026|R32|BRA|JPN"] = {p1:"69%",p2:"31%",ps1:null,ps2:null,sh1:13,sh2
 matchStats["2026|R32|GER|PAR"] = {p1:"75%",p2:"25%",ps1:null,ps2:null,sh1:13,sh2:5,so1:6,so2:3,sb1:7,sb2:2,co1:16,co2:6,fo1:18,fo2:12,os1:4,os2:1,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:186,at2:64,da1:139,da2:39,pk1:0,pk2:0};
 matchStats["2026|R32|NED|MAR"] = {p1:"31%",p2:"69%",ps1:null,ps2:null,sh1:3,sh2:9,so1:2,so2:5,sb1:1,sb2:4,co1:5,co2:8,fo1:18,fo2:15,os1:3,os2:0,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:101,at2:152,da1:35,da2:46,pk1:0,pk2:0};
 matchStats["2026|R32|CIV|NOR"] = {p1:"47%",p2:"53%",ps1:null,ps2:null,sh1:14,sh2:6,so1:5,so2:4,sb1:9,sb2:2,co1:14,co2:3,fo1:6,fo2:7,os1:2,os2:2,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:59,at2:116,da1:68,da2:58,pk1:0,pk2:0};
+matchStats["2026|R32|FRA|SWE"] = {p1:"61%",p2:"39%",ps1:null,ps2:null,sh1:21,sh2:7,so1:12,so2:3,sb1:9,sb2:4,co1:9,co2:1,fo1:14,fo2:10,os1:3,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:118,at2:80,da1:63,da2:33,pk1:0,pk2:0};
+matchStats["2026|R32|MEX|ECU"] = {p1:"43%",p2:"57%",ps1:null,ps2:null,sh1:12,sh2:6,so1:3,so2:1,sb1:9,sb2:5,co1:3,co2:8,fo1:10,fo2:14,os1:0,os2:1,yc1:0,yc2:3,rc1:0,rc2:1,tk1:null,tk2:null,at1:77,at2:85,da1:25,da2:57,pk1:0,pk2:0};

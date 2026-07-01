@@ -2474,15 +2474,60 @@ const wc2026AllMatches = {
   },
   // M77 · 7月1日 05:00 · 大都会人寿体育场 (纽约)
   "2026|R32|FRA|SWE": {
-    score: null, date: "2026-07-01", time: "05:00", venue: "大都会人寿体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 3, sa: 0 }, date: "2026-07-01", time: "05:00", venue: "大都会人寿体育场", stage: "R32",
+    goals: [
+      { min: 45, side: "home", scorer: "基利安·姆巴佩", type: "shot", assist: "奥斯曼·登贝莱" },
+      { min: 53, side: "home", scorer: "布拉德利·巴尔科拉", type: "shot", assist: "迈克尔·奥利赛" },
+      { min: 74, side: "home", scorer: "基利安·姆巴佩", type: "shot", assist: "迈克尔·奥利赛" }
+    ],
+    stats: {
+      possession:      { h: 61, a: 39 },
+      shots:           { h: 21, a: 7 },
+      shotsOnTarget:   { h: 12, a: 3 },
+      corners:         { h: 9,  a: 1 },
+      fouls:           { h: 14, a: 10 },
+      yellowCards:     { h: 0,  a: 0 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 118, a: 80 },
+      dangerousAttacks:{ h: 63, a: 33 }
+    },
+    attendance: 80663, referee: "Slavko Vinčić (SVN)",
+    xg: null,
+    mediaRating: {
+      motm: "基利安·姆巴佩",
+      sources: ["L'Équipe", "BBC Sport", "Al Jazeera", "Sports Mole", "Livescore"],
+      home: {score: 9, quotes: "法国用一场碾压级表现宣告夺冠野心。姆巴佩梅开二度（18球距梅西纪录仅差1球），奥利赛两记助攻+全场最佳9.2分全面支配比赛。上半场两中立柱后由姆巴佩打破僵局，下半场巴尔科拉锦上添花。法国成为第三支小组赛+淘汰赛全胜球队，16强对阵巴拉圭。"},
+      away: {score: 4, quotes: "瑞典全场被压制——仅3次射正、39%控球率完全无法与法国抗衡。伊萨克和哲凯赖什在法国防线前彻底隐身，泽特斯特伦的多次神扑成为唯一遮羞布。波特执教的瑞典队带着失望离开北美。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M79 · 7月1日 09:00 · 阿兹特克球场 (墨西哥城)
   "2026|R32|MEX|ECU": {
-    score: null, date: "2026-07-01", time: "09:00", venue: "阿兹特克球场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 2, sa: 0 }, date: "2026-07-01", time: "09:00", venue: "阿兹特克球场", stage: "R32",
+    goals: [
+      { min: 22, side: "home", scorer: "胡利安·基尼奥内斯", type: "shot", assist: "罗伯托·阿尔瓦拉多" },
+      { min: 31, side: "home", scorer: "劳尔·希门尼斯", type: "shot", assist: "胡里安·基尼奥内斯" }
+    ],
+    stats: {
+      possession:      { h: 43, a: 57 },
+      shots:           { h: 12, a: 6 },
+      shotsOnTarget:   { h: 3,  a: 1 },
+      corners:         { h: 3,  a: 8 },
+      fouls:           { h: 10, a: 14 },
+      yellowCards:     { h: 0,  a: 3 },
+      redCards:        { h: 0,  a: 1 },
+      attacks:         { h: 77, a: 85 },
+      dangerousAttacks:{ h: 25, a: 57 }
+    },
+    attendance: 80824, referee: "Slavko Vinčić (SVN)",
+    xg: null,
+    mediaRating: {
+      motm: "胡利安·基尼奥内斯",
+      sources: ["BBC Sport", "Sofascore", "Al Jazeera", "Sporting News", "FotMob"],
+      home: {score: 8, quotes: "墨西哥打破40年淘汰赛魔咒！基尼奥内斯一射一传（8.2分）主宰比赛——22分钟爆射破门后31分钟助攻希门尼斯锁定胜局。阿兹特克10场不败神话继续，小组赛至今4战全胜零失球。16强迎战英格兰/刚果金，五战梦近在咫尺。"},
+      away: {score: 4, quotes: "厄瓜多尔虽控球占优（57%）但进攻端完全哑火——全场仅1次射正。凯塞多孤掌难鸣，因卡皮耶补时红牌雪上加霜。南美球队在阿兹特克的噩梦延续，连续两届世界杯止步小组出线后的首轮淘汰赛。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M80 · 7月2日 00:00 · 梅赛德斯-奔驰体育场 (亚特兰大)
   "2026|R32|ENG|COD": {
