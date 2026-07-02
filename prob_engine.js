@@ -1098,7 +1098,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     var matchData = window.wc2026AllMatches && window.wc2026AllMatches[matchKey];
     var round = matchData ? matchData.round : null;
 
-    // 完赛命中判定
+    // 完赛命中判定 — score为90分钟常规时间+补时赛果（赌盘结算标准）
     var isCompleted = matchData && matchData.score && matchData.score.sh !== null && matchData.score.sa !== null;
     var actualSh = isCompleted ? matchData.score.sh : null;
     var actualSa = isCompleted ? matchData.score.sa : null;

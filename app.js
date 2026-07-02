@@ -230,7 +230,8 @@ window.showMatchDetail=function(year, stage, h, a, isKnockout) {
   var matchFound = null;
   // 2026: look up score from wc2026MatchDetails
   if (year === '2026' && detail && detail.score) {
-    matchFound = { h: h, a: a, sh: detail.score.sh, sa: detail.score.sa };
+    var es = detail.score120 || detail.score;
+    matchFound = { h: h, a: a, sh: es.sh, sa: es.sa };
   }
   if (isKnockout && data.knockout) {
     data.knockout.forEach(function(kr) {

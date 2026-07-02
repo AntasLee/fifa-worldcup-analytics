@@ -42,6 +42,8 @@ function parseMatchKey(key){
 }
 
 function getMatchData(key){ return wcData[key]||null; }
+// 取有效比分：加时赛用最终比分，否则用90分钟比分
+function effScore(md){ return md&&md.score120?md.score120:md&&md.score?md.score:null; }
 
 // ========== 维度一：统计统治力 (25分) ==========
 function calcStatisticalDominance(stats, redH, redA, side){
@@ -219,7 +221,7 @@ function calcDefensiveResilience(stats, goals, matchData, side, teamCode, oppCod
   var oppSt=typeof getOpponentStrength==='function'?getOpponentStrength(oppRank):1.0;
   // oppSt: 0.65(弱)~1.5(顶级), 防守强敌才值得高分
 
-  var sh=matchData?matchData.score.sh:0, sa=matchData?matchData.score.sa:0;
+  var sc=effScore(matchData)||{sh:0,sa:0}; var sh=sc.sh, sa=sc.sa;
   var ga=side==='home'?sa:sh;
   var oppSOT=stats.shotsOnTarget[oppKey]||0;
 
@@ -276,7 +278,7 @@ function calcAdvancementPerformance(teamCode, matchKey, matchData){
   var stageBase={R32:6,R16:8,QF:10,SF:11,TP:11,FINAL:12};
   var base=stageBase[stage]||6;
   var goals=matchData?matchData.goals:null;
-  var sh=matchData.score.sh, sa=matchData.score.sa;
+  var sc=effScore(matchData)||{sh:0,sa:0}; var sh=sc.sh, sa=sc.sa;
   var isHome=parsed.home===teamCode;
   var gf=isHome?sh:sa, ga=isHome?sa:sh;
   var gd=gf-ga;
@@ -474,7 +476,7 @@ function computeMatchEvaluation(matchKey){
 
   var parsed=parseMatchKey(matchKey);
   var homeCode=parsed.home, awayCode=parsed.away;
-  var sh=match.score.sh, sa=match.score.sa;
+  var sc=effScore(match)||{sh:0,sa:0}; var sh=sc.sh, sa=sc.sa;
   var stats=match.stats||null;
   var goals=match.goals||null;
   var redH=stats?stats.redCards.h:0, redA=stats?stats.redCards.a:0;
@@ -601,7 +603,7 @@ function computeMatchEvaluation(matchKey){
     homeCode:homeCode, awayCode:awayCode,
     homeFlag:getFlag(homeCode), awayFlag:getFlag(awayCode),
     homeName:getZh(homeCode), awayName:getZh(awayCode),
-    score:match.score,
+    score:effScore(match)||match.score,
     stage:match.stage, round:match.round,
     date:match.date, venue:match.venue,
     motm:motm,

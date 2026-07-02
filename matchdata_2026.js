@@ -2531,21 +2531,93 @@ const wc2026AllMatches = {
   },
   // M80 · 7月2日 00:00 · 梅赛德斯-奔驰体育场 (亚特兰大)
   "2026|R32|ENG|COD": {
-    score: null, date: "2026-07-02", time: "00:00", venue: "梅赛德斯-奔驰体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 2, sa: 1 }, date: "2026-07-02", time: "00:00", venue: "梅赛德斯-奔驰体育场", stage: "R32",
+    goals: [
+      { min: 7, side: "away", scorer: "布里安·西庞家", type: "shot", assist: "尚塞尔·姆本巴" },
+      { min: 75, side: "home", scorer: "哈里·凯恩", type: "header", assist: "安东尼·戈登" },
+      { min: 86, side: "home", scorer: "哈里·凯恩", type: "shot", assist: "安东尼·戈登" }
+    ],
+    stats: {
+      possession:      { h: 60, a: 40 },
+      shots:           { h: 13, a: 5 },
+      shotsOnTarget:   { h: 7,  a: 2 },
+      corners:         { h: 5,  a: 3 },
+      fouls:           { h: 10, a: 12 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 123, a: 78 },
+      dangerousAttacks:{ h: 92, a: 29 }
+    },
+    attendance: 71358, referee: "Jesús Valenzuela (VEN)",
+    xg: null,
+    mediaRating: {
+      motm: "哈里·凯恩",
+      sources: ["BBC Sport", "FIFA", "Goal.com", "Sky Sports", "Sportstar"],
+      home: {score: 7, quotes: "凯恩拯救英格兰！队长第75分钟头球扳平+86分钟爆射绝杀，完成自1966年决赛以来英格兰首次世界杯逆转取胜。但前74分钟表现令人担忧——图赫尔的球队在刚果密集防守前毫无办法，姆帕西多次神扑力保领先。戈登替补登场改变战局，两记助攻成为胜负手。"},
+      away: {score: 6, quotes: "刚果金的世界杯淘汰赛首秀险些创造历史。西庞家第7分钟破门让梦想起飞，姆帕西（7.1分）的神勇扑救将领先维持了整整74分钟。姆本巴领衔的防线顽强抵抗至最后一刻，但最终被凯恩的巨星光芒击碎。虽败犹荣。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
-  // M82 · 7月2日 04:00 · 流明球场 (西雅图)
+  // M82 · 7月2日 04:00 · 流明球场 (西雅图) — 加时赛 BEL 3-2 SEN
   "2026|R32|BEL|SEN": {
-    score: null, date: "2026-07-02", time: "04:00", venue: "流明球场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 2, sa: 2 }, date: "2026-07-02", time: "04:00", venue: "流明球场", stage: "R32",
+    score120: { sh: 3, sa: 2 },
+    aet: true,
+    goals: [
+      { min: 24, side: "away", scorer: "哈比卜·迪亚拉", type: "shot" },
+      { min: 51, side: "away", scorer: "伊斯梅拉·萨尔", type: "shot", assist: "穆萨·尼亚卡特" },
+      { min: 86, side: "home", scorer: "罗梅卢·卢卡库", type: "shot", assist: "托马斯·穆尼耶" },
+      { min: 89, side: "home", scorer: "尤里·蒂勒曼斯", type: "header", assist: "莱安德罗·特罗萨德" },
+      { min: "120+5", side: "home", scorer: "尤里·蒂勒曼斯", type: "penalty" }
+    ],
+    stats: {
+      possession:      { h: 52, a: 48 },
+      shots:           { h: 14, a: 16 },
+      shotsOnTarget:   { h: 5,  a: 5 },
+      corners:         { h: 4,  a: 2 },
+      fouls:           { h: 22, a: 12 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 131, a: 133 },
+      dangerousAttacks:{ h: 72, a: 74 }
+    },
+    attendance: 68912, referee: "Daniele Orsato (ITA)",
+    xg: null,
+    mediaRating: {
+      motm: "尤里·蒂勒曼斯",
+      sources: ["FIFA", "ESPN", "BBC Sport", "Al Jazeera", "Goal.com"],
+      home: {score: 7, quotes: "比利时从死亡边缘爬回！0-2落后至86分钟——加西亚换下德布劳内和杜库看似投降——卢卡库86分钟破门点燃希望，蒂勒曼斯89分钟头球扳平引爆全场。加时赛125分钟VAR点球，蒂勒曼斯顶住压力射入死角。史上最晚世界杯进球+最不可思议逆转，黄金一代的最后一舞仍在继续。"},
+      away: {score: 7, quotes: "塞内加尔距离16强仅差4分钟。迪亚拉和萨尔的进球让西亚夫的球队完全掌控局面，两次击中门柱更显统治力。但最后时刻的崩盘——尤其是卡马拉对蒂勒曼斯的争议VAR点球——将永远成为塞内加尔足球的伤痛。四支非洲球队全部以微弱差距止步R32。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M81 · 7月2日 08:00 · 李维斯体育场 (旧金山)
   "2026|R32|USA|BIH": {
-    score: null, date: "2026-07-02", time: "08:00", venue: "李维斯体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 2, sa: 0 }, date: "2026-07-02", time: "08:00", venue: "李维斯体育场", stage: "R32",
+    goals: [
+      { min: 45, side: "home", scorer: "弗拉林·巴洛贡", type: "shot" },
+      { min: 82, side: "home", scorer: "马利克·帝尔曼", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 48, a: 52 },
+      shots:           { h: 6,  a: 7 },
+      shotsOnTarget:   { h: 2,  a: 3 },
+      corners:         { h: 4,  a: 3 },
+      fouls:           { h: 7,  a: 13 },
+      yellowCards:     { h: 0,  a: 1 },
+      redCards:        { h: 1,  a: 0 },
+      attacks:         { h: 108, a: 87 },
+      dangerousAttacks:{ h: 44, a: 28 }
+    },
+    attendance: 70241, referee: "Facundo Tello (ARG)",
+    xg: null,
+    mediaRating: {
+      motm: "马利克·帝尔曼",
+      sources: ["ESPN", "BBC Sport", "NBC Sports", "DAZN", "Yahoo Sports"],
+      home: {score: 7, quotes: "美国24年来首场世界杯淘汰赛胜利！巴洛贡半场前接麦肯尼抢断后冷静破门先拔头筹，但64分钟的红牌让东道主陷入人数劣势。少一人作战的美国展现顽强防守，帝尔曼82分钟任意球世界波锁定胜局。但巴洛贡的停赛将为16强对阵比利时蒙上阴影。"},
+      away: {score: 4, quotes: "波黑在人数占优的26分钟内未能创造任何实质威胁。全场3次射正均来自禁区外远射。面对10人美国仍无法破门，进攻端的创造力严重不足。波黑的世界杯之旅就此止步。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M84 · 7月3日 03:00 · SoFi体育场 (洛杉矶)
   "2026|R32|ESP|AUT": {

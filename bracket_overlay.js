@@ -124,17 +124,18 @@ function getMatchResult(gid, homeIdx, awayIdx) {
   var key = '2026|' + gid + '|' + home.code + '|' + away.code;
   var revKey = '2026|' + gid + '|' + away.code + '|' + home.code;
 
+  function effScore(md) { return md.score120 || md.score; }
   if (typeof wc2026MatchDetails !== 'undefined') {
     var md = wc2026MatchDetails[key];
-    if (md && md.score) return { sh: md.score.sh, sa: md.score.sa, isReal: true };
+    if (md && md.score) { var es=effScore(md); return { sh: es.sh, sa: es.sa, isReal: true }; }
     md = wc2026MatchDetails[revKey];
-    if (md && md.score) return { sh: md.score.sa, sa: md.score.sh, isReal: true };
+    if (md && md.score) { var es=effScore(md); return { sh: es.sa, sa: es.sh, isReal: true }; }
   }
   if (typeof wc2026AllMatches !== 'undefined') {
     var ma = wc2026AllMatches[key];
-    if (ma && ma.score) return { sh: ma.score.sh, sa: ma.score.sa, isReal: true };
+    if (ma && ma.score) { var es=effScore(ma); return { sh: es.sh, sa: es.sa, isReal: true }; }
     ma = wc2026AllMatches[revKey];
-    if (ma && ma.score) return { sh: ma.score.sa, sa: ma.score.sh, isReal: true };
+    if (ma && ma.score) { var es=effScore(ma); return { sh: es.sa, sa: es.sh, isReal: true }; }
   }
   try {
     var gPreds = JSON.parse(localStorage.getItem('wc2026_groups') || '{}');
@@ -366,8 +367,9 @@ function getKnockoutMatchData(stage, teamA, teamB) {
   var key2 = '2026|' + stage + '|' + teamB.code + '|' + teamA.code;
 
   function extract(md, isReversed) {
-    if (!md || !md.score || md.score.sh == null || md.score.sa == null) return null;
-    var sh = Number(md.score.sh), sa = Number(md.score.sa);
+    var es = md && (md.score120 || md.score);
+    if (!es || es.sh == null || es.sa == null) return null;
+    var sh = Number(es.sh), sa = Number(es.sa);
     var r = { sh: isReversed ? sa : sh, sa: isReversed ? sh : sa };
     // 如有加时/点球数据，附带返回
     if (md.penaltyScore && md.penaltyScore.home != null && md.penaltyScore.away != null) {

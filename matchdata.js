@@ -2056,21 +2056,39 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
   },
   // M80 · 7月2日 00:00 · 梅赛德斯-奔驰体育场
   "2026|R32|ENG|COD": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 2, sa: 1 },
+    goals: [
+      { min: 7, side: "away", scorer: "布里安·西庞家 (Brian Cipenga)", type: "shot", assist: "尚塞尔·姆本巴 (Chancel Mbemba)" },
+      { min: 75, side: "home", scorer: "哈里·凯恩 (Harry Kane)", type: "header", assist: "安东尼·戈登 (Anthony Gordon)" },
+      { min: 86, side: "home", scorer: "哈里·凯恩 (Harry Kane)", type: "shot", assist: "安东尼·戈登 (Anthony Gordon)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: 71358, referee: "Jesús Valenzuela (VEN)"
   },
-  // M82 · 7月2日 04:00 · 流明球场
+  // M82 · 7月2日 04:00 · 流明球场 (西雅图) — 加时3-2
   "2026|R32|BEL|SEN": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 2, sa: 2 },
+    score120: { sh: 3, sa: 2 },
+    aet: true,
+    goals: [
+      { min: 24, side: "away", scorer: "哈比卜·迪亚拉 (Habib Diarra)", type: "shot" },
+      { min: 51, side: "away", scorer: "伊斯梅拉·萨尔 (Ismaïla Sarr)", type: "shot", assist: "穆萨·尼亚卡特 (Moussa Niakhaté)" },
+      { min: 86, side: "home", scorer: "罗梅卢·卢卡库 (Romelu Lukaku)", type: "shot", assist: "托马斯·穆尼耶 (Thomas Meunier)" },
+      { min: 89, side: "home", scorer: "尤里·蒂勒曼斯 (Youri Tielemans)", type: "header", assist: "莱安德罗·特罗萨德 (Leandro Trossard)" },
+      { min: "120+5", side: "home", scorer: "尤里·蒂勒曼斯 (Youri Tielemans)", type: "penalty" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: 68912, referee: "Daniele Orsato (ITA)"
   },
-  // M81 · 7月2日 08:00 · 李维斯体育场
+  // M81 · 7月2日 08:00 · 李维斯体育场 (旧金山)
   "2026|R32|USA|BIH": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 2, sa: 0 },
+    goals: [
+      { min: 45, side: "home", scorer: "弗拉林·巴洛贡 (Folarin Balogun)", type: "shot" },
+      { min: 82, side: "home", scorer: "马利克·帝尔曼 (Malik Tillman)", type: "shot" }
+    ],
+    cards: { home: { yellow: 0, red: 1 }, away: { yellow: 1, red: 0 } },
+    attendance: 70241, referee: "Facundo Tello (ARG)"
   },
   // M84 · 7月3日 03:00 · SoFi体育场
   "2026|R32|ESP|AUT": {
@@ -2191,3 +2209,6 @@ matchStats["2026|R32|NED|MAR"] = {p1:"31%",p2:"69%",ps1:null,ps2:null,sh1:3,sh2:
 matchStats["2026|R32|CIV|NOR"] = {p1:"47%",p2:"53%",ps1:null,ps2:null,sh1:14,sh2:6,so1:5,so2:4,sb1:9,sb2:2,co1:14,co2:3,fo1:6,fo2:7,os1:2,os2:2,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:59,at2:116,da1:68,da2:58,pk1:0,pk2:0};
 matchStats["2026|R32|FRA|SWE"] = {p1:"61%",p2:"39%",ps1:null,ps2:null,sh1:21,sh2:7,so1:12,so2:3,sb1:9,sb2:4,co1:9,co2:1,fo1:14,fo2:10,os1:3,os2:1,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:118,at2:80,da1:63,da2:33,pk1:0,pk2:0};
 matchStats["2026|R32|MEX|ECU"] = {p1:"43%",p2:"57%",ps1:null,ps2:null,sh1:12,sh2:6,so1:3,so2:1,sb1:9,sb2:5,co1:3,co2:8,fo1:10,fo2:14,os1:0,os2:1,yc1:0,yc2:3,rc1:0,rc2:1,tk1:null,tk2:null,at1:77,at2:85,da1:25,da2:57,pk1:0,pk2:0};
+matchStats["2026|R32|ENG|COD"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:13,sh2:5,so1:7,so2:2,sb1:6,sb2:3,co1:5,co2:3,fo1:10,fo2:12,os1:0,os2:4,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:123,at2:78,da1:92,da2:29,pk1:0,pk2:0};
+matchStats["2026|R32|BEL|SEN"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:14,sh2:16,so1:5,so2:5,sb1:9,sb2:11,co1:4,co2:2,fo1:22,fo2:12,os1:2,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:131,at2:133,da1:72,da2:74,pk1:1,pk2:0};
+matchStats["2026|R32|USA|BIH"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:6,sh2:7,so1:2,so2:3,sb1:4,sb2:4,co1:4,co2:3,fo1:7,fo2:13,os1:3,os2:0,yc1:0,yc2:1,rc1:1,rc2:0,tk1:null,tk2:null,at1:108,at2:87,da1:44,da2:28,pk1:0,pk2:0};
