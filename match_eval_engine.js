@@ -84,9 +84,10 @@ var _oddsMap=null;
 function buildOddsMap(){
   if(_oddsMap) return _oddsMap;
   _oddsMap={};
-  var mo=window.matchOdds||{};
-  Object.keys(mo).forEach(function(k){
-    var m=mo[k]; if(m.h&&m.a) _oddsMap[m.h+'|'+m.a]=m;
+  [window.matchOdds||{}, window.knockoutOdds||{}].forEach(function(mo){
+    Object.keys(mo).forEach(function(k){
+      var m=mo[k]; if(m.h&&m.a) _oddsMap[m.h+'|'+m.a]=m;
+    });
   });
   return _oddsMap;
 }
@@ -104,14 +105,35 @@ function oddsToImpliedProb(hw, d, aw){
 // ========== 维度二：预实对比 (30分) — 盘前赔率核心 ==========
 var ZONE={BIG_FAV:'大热', NORMAL:'预期', MINOR_COLD:'超常', MAJOR_COLD:'爆冷'};
 
-function calcExpectationVsReality(homeCode, awayCode, actualScore, side){
+function calcExpectationVsReality(homeCode, awayCode, actualScore, side, isKO){
   var odds=getMatchOdds(homeCode, awayCode);
-  if(!odds){ return {score:15, summary:'无盘前赔率数据', resultType:ZONE.NORMAL}; }
+  var dataSource=''; // 数据来源标记
+  if(!odds){
+    // ── Fallback 链: AI推算 → FIFA排名推算 → 中立估值 ──
+    ensureAIPbs();
+    var fbPH, fbPD, fbPA;
+    if(calcAIPbsFn){
+      try{
+        var fb=calcAIPbsFn(homeCode, awayCode, null, 0);
+        if(fb&&fb.ph!==undefined){ fbPH=fb.ph; fbPD=fb.pd; fbPA=fb.pa; dataSource='（AI推算）'; }
+      }catch(e){}
+    }
+    if(fbPH===undefined){
+      var hr=teamDB[homeCode]?teamDB[homeCode].r:50, ar=teamDB[awayCode]?teamDB[awayCode].r:50;
+      var rd=ar-hr, hp=Math.round(50-rd*0.4);
+      fbPH=Math.max(15,Math.min(75,hp));
+      fbPA=Math.max(15,Math.min(75,100-fbPH-30));
+      fbPD=100-fbPH-fbPA;
+      dataSource='（FIFA排名推算）';
+    }
+    // 构造虚拟赔率，无让球线数据
+    odds={hw:fbPH>0?1/(fbPH/100):3, d:1/(fbPD/100), aw:fbPA>0?1/(fbPA/100):3, ahLine:0};
+  }
   var imp=oddsToImpliedProb(odds.hw, odds.d, odds.aw);
   var pH=imp.ph, pD=imp.pd, pA=imp.pa;
   var favSide=pH>=pA?'home':'away';
   var favProb=Math.max(pH, pA), undProb=Math.min(pH, pA);
-  var probGap=favProb-undProb; // 概率差，表征强弱分明程度
+  var probGap=favProb-undProb;
   var sh=actualScore.sh, sa=actualScore.sa;
   var isHomeWin=sh>sa, isDraw=sh===sa, isAwayWin=sa>sh;
   var actualWinSide=isHomeWin?'home':(isAwayWin?'away':'draw');
@@ -119,54 +141,59 @@ function calcExpectationVsReality(homeCode, awayCode, actualScore, side){
   var isDraw1=isDraw;
   var score, summary, rType;
 
-  // 让球盘检查：热门方净胜球必须大于让球线绝对值才算击穿
+  // 让球盘检查：淘汰赛放宽为 >=（1球小胜即为击穿），小组赛保持 > 严格判定
   var ahLine=Math.abs(odds.ahLine||0);
   var goalDiff=Math.abs(sh-sa);
-  var favCovered=goalDiff > ahLine; // 净胜球 > 让球线（走水不算击穿）
+  var favCovered=isKO ? (goalDiff >= ahLine) : (goalDiff > ahLine);
 
   // probGap分级: ≥40 深度倾向, ≥20 中等倾向, <20 盘口均衡
   var isDeepGap=probGap>=40, isMidGap=probGap>=20&&probGap<40, isTight=probGap<20;
 
-  if(isFavWin){ // 热门方获胜 — 基分统一为18, 让球盘击穿+3, probGap加成体现对手质量
+  if(isFavWin){
     if(!isDraw1&&isDeepGap&&favCovered){ score=Math.round(18+3+probGap*0.08); rType=ZONE.BIG_FAV; summary='盘口深度兑现，热门方碾压取胜';}
     else if(!isDraw1&&isDeepGap){ score=Math.round(18+probGap*0.06); rType=ZONE.NORMAL; summary='盘口倾向大热但净胜球未击穿让球线，正常取胜';}
     else if(!isDraw1&&isMidGap){ score=Math.round(18+probGap*0.06); rType=ZONE.NORMAL; summary='盘口倾向明显，热门方正常取胜';}
     else if(!isDraw1&&isTight){ score=Math.round(19+probGap*0.06); rType=ZONE.NORMAL; summary='均势对话中取胜，实力经受考验';}
     else { score=Math.round(10+probGap*0.05); rType=ZONE.NORMAL; summary='平局与盘口方向基本吻合';}
-  }else if(isDraw1){ // 平局
+  }else if(isDraw1){
     if(isDeepGap){ score=Math.round(4+pD*0.06); rType=ZONE.MAJOR_COLD; summary='盘口深度倾向一方，平局属重大意外';}
     else if(isMidGap){ score=Math.round(8+pD*0.06); rType=ZONE.MINOR_COLD; summary='盘口倾向一方但平局收场，小有意外';}
     else { score=Math.round(14+pD*0.05); rType=ZONE.NORMAL; summary='盘口均衡，平局在预期范围';}
-  }else{ // 冷门方获胜
+  }else{
     if(isDeepGap){ score=Math.round(22+probGap*0.1); rType=ZONE.MAJOR_COLD; summary='盘口深度看低却爆冷取胜，重大冷门';}
     else if(isMidGap){ score=Math.round(18+probGap*0.08); rType=ZONE.MINOR_COLD; summary='盘口略看低但逆袭成功，小冷门';}
     else { score=Math.round(17+probGap*0.05); rType=ZONE.NORMAL; summary='盘口均衡，任一方取胜均在预期内';}
   }
-  // 己方得分调整
+
+  // ── 己方视角修正 ──
   var myIsFav=(side===favSide);
   var myWin=(side==='home'&&isHomeWin)||(side==='away'&&isAwayWin);
   var myDraw=isDraw1, myLose=!myWin&&!myDraw;
-
   var myGA=side==='home'?sa:sh;
-  if(myDraw&&myIsFav&&probGap>=15) score=Math.max(1,score-5);       // 热门被逼平罚分
-  if(myDraw&&!myIsFav&&probGap>=15){ score=Math.min(16,score+8); if(myGA===0) score=Math.min(16,score+4); } // 冷门逼平加分, 零封额外
-  if(myLose&&myIsFav) score=Math.max(1,score-10);                    // 热门输球重罚
-  if(myWin&&!myIsFav) score=Math.min(16,score+8);                    // 冷门取胜加分
-  // 冷门方败北: 净胜球越大 EvR 越低 (避免 0-3 输球与赢家同分)
+
+  // 淘汰赛: 平局进加时/点球 → 罚分减半; 冷门取胜 → 加分稍降(淘汰赛爆冷更常见)
+  var drawPenalty  = isKO ? 2 : 5;   // 热门被逼平罚分
+  var lossPenalty  = isKO ? 6 : 10;  // 热门输球罚分
+  var coldWinBonus = isKO ? 6 : 8;   // 冷门取胜加分
+
+  if(myDraw&&myIsFav&&probGap>=15) score=Math.max(1,score-drawPenalty);
+  if(myDraw&&!myIsFav&&probGap>=15){ score=Math.min(16,score+8); if(myGA===0) score=Math.min(16,score+4); }
+  if(myLose&&myIsFav) score=Math.max(1,score-lossPenalty);
+  if(myWin&&!myIsFav) score=Math.min(16,score+coldWinBonus);
   if(myLose&&!myIsFav&&goalDiff>=1) score=Math.max(6,score-Math.min(12,goalDiff*4));
 
   // 侧级结果类型（己方视角）
   var sideType;
-  if(myWin&&myIsFav&&probGap>=40&&favCovered) sideType=ZONE.BIG_FAV;  // 大热碾压+击穿
-  else if(myWin&&myIsFav) sideType=ZONE.NORMAL;                       // 预期取胜（含大热未击穿）
-  else if(myWin&&!myIsFav) sideType=ZONE.MINOR_COLD;                   // 以弱胜强→超常
-  else if(myDraw&&myIsFav) sideType=ZONE.MAJOR_COLD;                  // 热门被逼平→爆冷
-  else if(myDraw&&!myIsFav) sideType=ZONE.MINOR_COLD;                 // 冷门逼平→超常
-  else if(myLose&&myIsFav) sideType=ZONE.MAJOR_COLD;                  // 大热输球→爆冷
-  else sideType=ZONE.NORMAL;                                          // 不被看好·输球正常→预期
+  if(myWin&&myIsFav&&probGap>=40&&favCovered) sideType=ZONE.BIG_FAV;
+  else if(myWin&&myIsFav) sideType=ZONE.NORMAL;
+  else if(myWin&&!myIsFav) sideType=ZONE.MINOR_COLD;
+  else if(myDraw&&myIsFav) sideType=ZONE.MAJOR_COLD;
+  else if(myDraw&&!myIsFav) sideType=ZONE.MINOR_COLD;
+  else if(myLose&&myIsFav) sideType=ZONE.MAJOR_COLD;
+  else sideType=ZONE.NORMAL;
 
   score=Math.min(16,Math.max(1,Math.round(score)));
-  return {score:score, summary:summary, resultType:rType, sideType:sideType, impliedProb:imp, probGap:probGap, favSide:favSide};
+  return {score:score, summary:summary+dataSource, resultType:rType, sideType:sideType, impliedProb:imp, probGap:probGap, favSide:favSide};
 }
 
 // ========== 维度三：进攻效率 (12分) ==========
@@ -502,8 +529,9 @@ function computeMatchEvaluation(matchKey){
   else if(hGoals===1) sdH.score=Math.min(sdH.score,14);
   if(aGoals===0) sdA.score=Math.min(sdA.score,12);
   else if(aGoals===1) sdA.score=Math.min(sdA.score,14);
-  var evrH=calcExpectationVsReality(homeCode, awayCode, match.score, 'home');
-  var evrA=calcExpectationVsReality(homeCode, awayCode, match.score, 'away');
+  var isKO=KO_STAGES.indexOf(match.stage)>=0;
+  var evrH=calcExpectationVsReality(homeCode, awayCode, match.score, 'home', isKO);
+  var evrA=calcExpectationVsReality(homeCode, awayCode, match.score, 'away', isKO);
   var ceH=calcClinicalEfficiency(stats, goals, 'home');
   var ceA=calcClinicalEfficiency(stats, goals, 'away');
   var drH=calcDefensiveResilience(stats, goals, match, 'home', homeCode, awayCode);
@@ -566,7 +594,7 @@ function computeMatchEvaluation(matchKey){
   }
 
   // 5.5 淘汰赛专属成就徽章
-  var isKO=KO_STAGES.indexOf(match.stage)>=0;
+  // isKO 已在六维计算阶段声明, 此处复用
   if(isKO){
     var koACH=['','']; // [home成就, away成就]
     var gh=gsH,gA=gsA;

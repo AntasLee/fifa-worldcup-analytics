@@ -2092,21 +2092,35 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
   },
   // M84 · 7月3日 03:00 · SoFi体育场
   "2026|R32|ESP|AUT": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 3, sa: 0 },
+    goals: [
+      { min: 36, side: "home", scorer: "米克尔·奥亚萨瓦尔 (Mikel Oyarzabal)", type: "shot", assist: "马克·库库雷利亚 (Marc Cucurella)" },
+      { min: 66, side: "home", scorer: "佩德罗·波罗 (Pedro Porro)", type: "header", assist: "亚历杭德罗·巴埃纳 (Álex Baena)" },
+      { min: 89, side: "home", scorer: "米克尔·奥亚萨瓦尔 (Mikel Oyarzabal)", type: "shot", assist: "马克·库库雷利亚 (Marc Cucurella)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: 70248, referee: "Daniele Orsato (ITA)"
   },
-  // M83 · 7月3日 07:00 · BMO球场
+  // M83 · 7月3日 07:00 · BMO球场 (多伦多)
   "2026|R32|POR|CRO": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 2, sa: 1 },
+    goals: [
+      { min: 53, side: "away", scorer: "伊万·佩里西奇 (Ivan Perišić)", type: "shot" },
+      { min: 68, side: "home", scorer: "克里斯蒂亚诺·罗纳尔多 (Cristiano Ronaldo)", type: "penalty" },
+      { min: "90+4", side: "home", scorer: "贡萨洛·拉莫斯 (Gonçalo Ramos)", type: "header", assist: "拉斐尔·莱奥 (Rafael Leão)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: 31500, referee: "Maurizio Mariani (ITA)"
   },
-  // M85 · 7月3日 11:00 · BC Place体育场
+  // M85 · 7月3日 11:00 · BC Place体育场 (温哥华)
   "2026|R32|SUI|ALG": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 2, sa: 0 },
+    goals: [
+      { min: 10, side: "home", scorer: "布雷尔·恩博洛 (Breel Embolo)", type: "shot", assist: "约翰·曼赞比 (Johan Manzambi)" },
+      { min: 46, side: "home", scorer: "丹·恩多耶 (Dan Ndoye)", type: "shot" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: 54320, referee: "Facundo Tello (ARG)"
   },
   // M88 · 7月4日 02:00 · AT&T体育场
   "2026|R32|AUS|EGY": {
@@ -2212,3 +2226,6 @@ matchStats["2026|R32|MEX|ECU"] = {p1:"43%",p2:"57%",ps1:null,ps2:null,sh1:12,sh2
 matchStats["2026|R32|ENG|COD"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:13,sh2:5,so1:7,so2:2,sb1:6,sb2:3,co1:5,co2:3,fo1:10,fo2:12,os1:0,os2:4,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:123,at2:78,da1:92,da2:29,pk1:0,pk2:0};
 matchStats["2026|R32|BEL|SEN"] = {p1:"52%",p2:"48%",ps1:null,ps2:null,sh1:14,sh2:16,so1:5,so2:5,sb1:9,sb2:11,co1:4,co2:2,fo1:22,fo2:12,os1:2,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:131,at2:133,da1:72,da2:74,pk1:1,pk2:0};
 matchStats["2026|R32|USA|BIH"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:6,sh2:7,so1:2,so2:3,sb1:4,sb2:4,co1:4,co2:3,fo1:7,fo2:13,os1:3,os2:0,yc1:0,yc2:1,rc1:1,rc2:0,tk1:null,tk2:null,at1:108,at2:87,da1:44,da2:28,pk1:0,pk2:0};
+matchStats["2026|R32|ESP|AUT"] = {p1:"64%",p2:"36%",ps1:null,ps2:null,sh1:16,sh2:4,so1:10,so2:0,sb1:6,sb2:4,co1:9,co2:0,fo1:8,fo2:15,os1:2,os2:5,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:121,at2:66,da1:78,da2:25,pk1:0,pk2:0};
+matchStats["2026|R32|POR|CRO"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:11,sh2:11,so1:3,so2:6,sb1:8,sb2:5,co1:9,co2:5,fo1:6,fo2:12,os1:1,os2:4,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:119,at2:66,da1:45,da2:36,pk1:1,pk2:0};
+matchStats["2026|R32|SUI|ALG"] = {p1:"44%",p2:"56%",ps1:null,ps2:null,sh1:9,sh2:5,so1:5,so2:2,sb1:4,sb2:3,co1:4,co2:2,fo1:10,fo2:12,os1:0,os2:2,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:114,da1:33,da2:40,pk1:0,pk2:0};

@@ -2621,21 +2621,89 @@ const wc2026AllMatches = {
   },
   // M84 · 7月3日 03:00 · SoFi体育场 (洛杉矶)
   "2026|R32|ESP|AUT": {
-    score: null, date: "2026-07-03", time: "03:00", venue: "SoFi体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 3, sa: 0 }, date: "2026-07-03", time: "03:00", venue: "SoFi体育场", stage: "R32",
+    goals: [
+      { min: 36, side: "home", scorer: "米克尔·奥亚萨瓦尔", type: "shot", assist: "马克·库库雷利亚" },
+      { min: 66, side: "home", scorer: "佩德罗·波罗", type: "header", assist: "亚历杭德罗·巴埃纳" },
+      { min: 89, side: "home", scorer: "米克尔·奥亚萨瓦尔", type: "shot", assist: "马克·库库雷利亚" }
+    ],
+    stats: {
+      possession:      { h: 64, a: 36 },
+      shots:           { h: 16, a: 4 },
+      shotsOnTarget:   { h: 10, a: 0 },
+      corners:         { h: 9,  a: 0 },
+      fouls:           { h: 8,  a: 15 },
+      yellowCards:     { h: 0,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 121, a: 66 },
+      dangerousAttacks:{ h: 78, a: 25 }
+    },
+    attendance: 70248, referee: "Daniele Orsato (ITA)",
+    xg: null,
+    mediaRating: {
+      motm: "米克尔·奥亚萨瓦尔",
+      sources: ["FIFA", "Sky Sports", "AP", "Sports Mole", "Sports Illustrated"],
+      home: {score: 9, quotes: "西班牙打出本届世界杯最佳表现！奥亚萨瓦尔梅开二度（近16场国家队17球），库库雷利亚两记助攻+争议进球被吹后强势回应。奥地利全场零射正——乌奈·西蒙刷新世界杯连续519分钟零封纪录。自2010年夺冠以来首场淘汰赛胜利，16强对阵葡萄牙/克罗地亚胜者。"},
+      away: {score: 4, quotes: "奥地利在西班牙面前毫无还手之力。全场零射正，格雷戈里奇（3分）63分钟仅2次传球、零射门堪称灾难。阿拉巴领衔的防线被奥亚萨瓦尔和亚马尔反复撕碎。朗尼克的球队虽拼尽全力，但实力的鸿沟无法逾越。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M83 · 7月3日 07:00 · BMO球场 (多伦多)
   "2026|R32|POR|CRO": {
-    score: null, date: "2026-07-03", time: "07:00", venue: "BMO球场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 2, sa: 1 }, date: "2026-07-03", time: "07:00", venue: "BMO球场", stage: "R32",
+    goals: [
+      { min: 53, side: "away", scorer: "伊万·佩里西奇", type: "shot" },
+      { min: 68, side: "home", scorer: "克里斯蒂亚诺·罗纳尔多", type: "penalty" },
+      { min: "90+4", side: "home", scorer: "贡萨洛·拉莫斯", type: "header", assist: "拉斐尔·莱奥" }
+    ],
+    stats: {
+      possession:      { h: 60, a: 40 },
+      shots:           { h: 11, a: 11 },
+      shotsOnTarget:   { h: 3,  a: 6 },
+      corners:         { h: 9,  a: 5 },
+      fouls:           { h: 6,  a: 12 },
+      yellowCards:     { h: 1,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 119, a: 66 },
+      dangerousAttacks:{ h: 45, a: 36 }
+    },
+    attendance: 31500, referee: "Maurizio Mariani (ITA)",
+    xg: null,
+    mediaRating: {
+      motm: "贡萨洛·拉莫斯",
+      sources: ["Sky Sports", "AP", "Livescore", "BBC Sport", "Sports Illustrated"],
+      home: {score: 7, quotes: "葡萄牙死里逃生！C罗68分钟点球命中——41岁首粒世界杯淘汰赛进球创历史。但真正的英雄是替补登场的拉莫斯，90+4分钟接莱奥传中头槌绝杀。VAR两次改判（点球判定+克罗地亚补时绝平被芯片球判定越位）引发巨大争议。16强伊比利亚德比对阵西班牙。"},
+      away: {score: 6, quotes: "克罗地亚悲壮出局。佩里西奇左后卫位置打入首球，莫德里奇世界杯最后一舞拼尽全场。但弗拉西奇禁区内的拉拽送点、格瓦迪奥尔绝平球被传感器芯片判定越位——这场比赛的VAR判罚将长久成为争议话题。黄金一代的终章以最残酷的方式写就。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M85 · 7月3日 11:00 · BC Place体育场 (温哥华)
   "2026|R32|SUI|ALG": {
-    score: null, date: "2026-07-03", time: "11:00", venue: "BC Place体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 2, sa: 0 }, date: "2026-07-03", time: "11:00", venue: "BC Place体育场", stage: "R32",
+    goals: [
+      { min: 10, side: "home", scorer: "布雷尔·恩博洛", type: "shot", assist: "约翰·曼赞比" },
+      { min: 46, side: "home", scorer: "丹·恩多耶", type: "shot" }
+    ],
+    stats: {
+      possession:      { h: 44, a: 56 },
+      shots:           { h: 9,  a: 5 },
+      shotsOnTarget:   { h: 5,  a: 2 },
+      corners:         { h: 4,  a: 2 },
+      fouls:           { h: 10, a: 12 },
+      yellowCards:     { h: 0,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 91, a: 114 },
+      dangerousAttacks:{ h: 33, a: 40 }
+    },
+    attendance: 54320, referee: "Facundo Tello (ARG)",
+    xg: null,
+    mediaRating: {
+      motm: "约翰·曼赞比",
+      sources: ["BBC Sport", "Sports Mole", "AP", "Sportstar", "AfricaSoccer"],
+      home: {score: 8, quotes: "瑞士打破88年淘汰赛不胜魔咒！20岁的曼赞比统治比赛——突破后助攻恩博洛首开纪录，本届赛事已贡献5次直接进球参与（3球2助），自1966年数据记录以来世界杯最年轻达成此成就的球员。恩多耶下半场46秒闪击锁定胜局。连续四届晋级16强，将对阵哥伦比亚/加纳。"},
+      away: {score: 5, quotes: "阿尔及利亚时隔12年的世界杯淘汰赛之旅令人失望。马赫雷斯全场被瑞士防线锁死（6.1分），进攻端从未真正威胁科贝尔。10分钟丢球后士气崩溃，下半场46秒再度失守彻底缴械。佩特科维奇的球队带着遗憾离开，但重返淘汰赛本身就是一种成功。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M88 · 7月4日 02:00 · AT&T体育场 (达拉斯)
   "2026|R32|AUS|EGY": {
