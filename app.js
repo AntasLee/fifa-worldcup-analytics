@@ -80,7 +80,7 @@ window.switchEdition=function(edition){
       if(ko2026) ko2026.classList.add('visible');
     }
     if(typeof rGM==='function') rGM();
-    if(typeof mTab!=='undefined'&&mTab==='knockout'){ if(typeof autoFillKO==='function') autoFillKO(); if(typeof rKP==='function') rKP(); }
+    if(typeof mTab!=='undefined'&&mTab==='knockout'){ if(typeof autoFillKO==='function') autoFillKO(); if(typeof propagateR32ToR16==='function') propagateR32ToR16(); if(typeof rKP==='function') rKP(); }
     // Sync tab visibility after render (covers all call sites)
     if(typeof switchMainTab==='function'&&typeof mTab!=='undefined') switchMainTab(mTab);
   } else if(isPast){
@@ -262,7 +262,7 @@ window.showMatchDetail=function(year, stage, h, a, isKnockout) {
   html += '<div class="match-detail-info-bar">';
   if (matchFound && matchFound.venue) html += '<span>📍 '+matchFound.venue+'</span>';
   if (matchFound && matchFound.date) html += '<span>📅 '+formatPastDate(matchFound.date)+'</span>';
-  html += '<span class="ko-stage-marker">'+(isKnockout ? {'R16':'16强','QF':'8强','SF':'4强','TP':'季军赛','FINAL':'决赛'}[stage]||stage : data.groups[stage]?data.groups[stage].name:stage)+'</span>';
+  html += '<span class="ko-stage-marker">'+(isKnockout ? {'R32':'32强','R16':'16强','QF':'8强','SF':'4强','TP':'季军赛','FINAL':'决赛'}[stage]||stage : data.groups[stage]?data.groups[stage].name:stage)+'</span>';
   html += '</div>';
   
   if (detail) {

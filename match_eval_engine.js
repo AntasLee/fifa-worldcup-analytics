@@ -84,7 +84,7 @@ var _oddsMap=null;
 function buildOddsMap(){
   if(_oddsMap) return _oddsMap;
   _oddsMap={};
-  [window.matchOdds||{}, window.knockoutOdds||{}].forEach(function(mo){
+	  [window.matchOdds||{}, window.knockoutOdds||{}, window.knockoutOddsR16||{}].forEach(function(mo){
     Object.keys(mo).forEach(function(k){
       var m=mo[k]; if(m.h&&m.a) _oddsMap[m.h+'|'+m.a]=m;
     });

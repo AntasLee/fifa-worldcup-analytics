@@ -32,12 +32,52 @@ const koRounds=[{id:'R32',name:'32强',count:16,label:'32强'},{id:'R16',name:'1
 const r32s=[{a:{g:'E',p:1},b:{g:'*',p:3,opts:'ABCDF'}},{a:{g:'I',p:1},b:{g:'*',p:3,opts:'CDFGH'}},{a:{g:'A',p:2},b:{g:'B',p:2}},{a:{g:'F',p:1},b:{g:'C',p:2}},{a:{g:'C',p:1},b:{g:'F',p:2}},{a:{g:'E',p:2},b:{g:'I',p:2}},{a:{g:'A',p:1},b:{g:'*',p:3,opts:'CEFHI'}},{a:{g:'L',p:1},b:{g:'*',p:3,opts:'EHIJK'}},{a:{g:'K',p:2},b:{g:'L',p:2}},{a:{g:'H',p:1},b:{g:'J',p:2}},{a:{g:'D',p:1},b:{g:'*',p:3,opts:'BEFIJ'}},{a:{g:'G',p:1},b:{g:'*',p:3,opts:'AEHIJ'}},{a:{g:'J',p:1},b:{g:'H',p:2}},{a:{g:'D',p:2},b:{g:'G',p:2}},{a:{g:'B',p:1},b:{g:'*',p:3,opts:'EFGIJ'}},{a:{g:'K',p:1},b:{g:'*',p:3,opts:'DEIJL'}}];
 
 function genKOs(){const ms=[];koRounds.forEach(r=>{for(let i=1;i<=r.count;i++){const m={id:r.id+'_'+i,sid:r.id,sn:r.name,time:getKOTime(r.id,i-1),tA:null,tB:null,sA:null,sB:null,w:null,af:true};if(r.id==='R32'&&i<=r32s.length){m.sA=r32s[i-1].a;m.sB=r32s[i-1].b;}ms.push(m);}});return ms;}
-let koMs=genKOs();
+	let koMs=genKOs();
+
+	// ========== R32→R16 胜者自动晋级 ==========
+	// 对阵配对: R32_(2n-1)胜者 vs R32_(2n)胜者 → R16_n
+	function propagateR32ToR16(){
+		var wcData=window.wc2026AllMatches||{};
+		var r32Winners={}; // R32_1→winnerCode, R32_2→winnerCode, ...
+		for(var i=1;i<=16;i++){
+			var mid='R32_'+i;
+			var koMatch=koMs.find(function(m){return m.id===mid;});
+			if(!koMatch) continue;
+			var p=kPreds[mid];
+			if(!p||!p.tA||!p.tB) continue;
+			var mk='2026|R32|'+p.tA+'|'+p.tB;
+			var fin=wcData[mk];
+			if(!fin||!fin.score) continue;
+			var sh=fin.score.sh, sa=fin.score.sa;
+			var sc120=fin.score120;
+			var pk=fin.penaltyScore;
+			// 判定胜者: 先看加时/点球, 再看90分钟
+			var winner=null;
+			if(pk){ winner=pk.home>pk.away?p.tA:p.tB; }
+			else if(sc120){ winner=sc120.sh>sc120.sa?p.tA:p.tB; }
+			else if(sh>sa) winner=p.tA;
+			else if(sa>sh) winner=p.tB;
+			if(winner) r32Winners[mid]=winner;
+		}
+		// 填充R16 — 官方对阵映射: R16_1←(R32_3,R32_4), R16_2←(R32_1,R32_2), 其余成对
+		var r16map={R16_1:['R32_3','R32_4'],R16_2:['R32_1','R32_2']};
+		for(var n=3;n<=8;n++){ r16map['R16_'+n]=['R32_'+(2*n-1),'R32_'+(2*n)]; }
+		for(var rid in r16map){
+			var pair=r16map[rid];
+			var wA=r32Winners[pair[0]];
+			var wB=r32Winners[pair[1]];
+			if(!wA||!wB) continue;
+			var rp=kPreds[rid];
+		if(!rp){ rp={tA:null,tB:null,sA:null,sB:null,w:null,af:true}; kPreds[rid]=rp; }
+		if(rp.af!==false||!rp.tA){ rp.tA=wA; rp.af=true; }
+		if(rp.af!==false||!rp.tB){ rp.tB=wB; rp.af=true; }
+		}
+	}
 const koByStage={};koMs.forEach(m=>{if(!koByStage[m.sid])koByStage[m.sid]=[];koByStage[m.sid].push(m);});if(koByStage['R32']){koByStage['R32'].sort(function(a,b){var pa=a.time.split(/[月日 ]/),pb=b.time.split(/[月日 ]/);return(pa[0].padStart(2,'0')+pa[1].padStart(2,'0')+(pa[3]||'').replace(':','')).localeCompare(pb[0].padStart(2,'0')+pb[1].padStart(2,'0')+(pb[3]||'').replace(':',''));});}
 
 let gPreds=JSON.parse(localStorage.getItem('wc2026_groups')||'{}');
 let kPreds=JSON.parse(localStorage.getItem('wc2026_knockout')||'{}');
-var _R32_INIT={R32_1:{tA:'GER',tB:'PAR'},R32_2:{tA:'FRA',tB:'SWE'},R32_3:{tA:'RSA',tB:'CAN'},R32_4:{tA:'NED',tB:'MAR'},R32_5:{tA:'BRA',tB:'JPN'},R32_6:{tA:'CIV',tB:'NOR'},R32_7:{tA:'MEX',tB:'ECU'},R32_8:{tA:'ENG',tB:'COD'},R32_9:{tA:'POR',tB:'CRO'},R32_10:{tA:'ESP',tB:'AUT'},R32_11:{tA:'USA',tB:'BIH'},R32_12:{tA:'BEL',tB:'SEN'},R32_13:{tA:'ARG',tB:'CPV'},R32_14:{tA:'AUS',tB:'EGY'},R32_15:{tA:'SUI',tB:'ALG'},R32_16:{tA:'COL',tB:'GHA'}};for(var _k in _R32_INIT){if(!kPreds[_k])kPreds[_k]={tA:null,tB:null,sA:null,sB:null,w:null,af:true};if(kPreds[_k].af!==false||(kPreds[_k].tA===null&&kPreds[_k].tB===null)){kPreds[_k].tA=_R32_INIT[_k].tA;kPreds[_k].tB=_R32_INIT[_k].tB;kPreds[_k].af=true;}}localStorage.setItem('wc2026_knockout',JSON.stringify(kPreds));
+var _R32_INIT={R32_1:{tA:'GER',tB:'PAR'},R32_2:{tA:'FRA',tB:'SWE'},R32_3:{tA:'RSA',tB:'CAN'},R32_4:{tA:'NED',tB:'MAR'},R32_5:{tA:'BRA',tB:'JPN'},R32_6:{tA:'CIV',tB:'NOR'},R32_7:{tA:'MEX',tB:'ECU'},R32_8:{tA:'ENG',tB:'COD'},R32_9:{tA:'POR',tB:'CRO'},R32_10:{tA:'ESP',tB:'AUT'},R32_11:{tA:'USA',tB:'BIH'},R32_12:{tA:'BEL',tB:'SEN'},R32_13:{tA:'ARG',tB:'CPV'},R32_14:{tA:'AUS',tB:'EGY'},R32_15:{tA:'SUI',tB:'ALG'},R32_16:{tA:'COL',tB:'GHA'}};for(var _k in _R32_INIT){if(!kPreds[_k])kPreds[_k]={tA:null,tB:null,sA:null,sB:null,w:null,af:true};if(kPreds[_k].af!==false||(kPreds[_k].tA===null&&kPreds[_k].tB===null)){kPreds[_k].tA=_R32_INIT[_k].tA;kPreds[_k].tB=_R32_INIT[_k].tB;kPreds[_k].af=true;}}var _R16_INIT={R16_1:{tA:'CAN',tB:'MAR'},R16_2:{tA:'PAR',tB:'FRA'},R16_3:{tA:'BRA',tB:'NOR'},R16_4:{tA:'MEX',tB:'ENG'},R16_5:{tA:'POR',tB:'ESP'},R16_6:{tA:'USA',tB:'BEL'},R16_7:{tA:'ARG',tB:'EGY'},R16_8:{tA:'SUI',tB:'COL'}};for(var _k in _R16_INIT){if(!kPreds[_k])kPreds[_k]={tA:null,tB:null,sA:null,sB:null,w:null,af:true};if(kPreds[_k].af!==false||(kPreds[_k].tA===null&&kPreds[_k].tB===null)){kPreds[_k].tA=_R16_INIT[_k].tA;kPreds[_k].tB=_R16_INIT[_k].tB;kPreds[_k].af=true;}}localStorage.setItem('wc2026_knockout',JSON.stringify(kPreds));
 let selMid=null,cGT='nearby',mTab='knockout',cKR='R32',cProbMid=null;
 
 function compStands(gid){const ms=mByGroup[gid];const ts=groupsData.find(g=>g.id===gid).teams;const st={};ts.forEach(t=>{st[t.code]={t:t,pts:0,gf:0,ga:0,gd:0};});let comp=true;ms.forEach(m=>{var mk='2026|'+m.gid+'|'+m.home.code+'|'+m.away.code;var fin=(typeof wc2026MatchDetails!=='undefined'&&wc2026MatchDetails[mk]);if(fin){var sh=fin.score.sh,sa=fin.score.sa;st[m.home.code].gf+=sh;st[m.home.code].ga+=sa;st[m.away.code].gf+=sa;st[m.away.code].ga+=sh;if(sh>sa)st[m.home.code].pts+=3;else if(sa>sh)st[m.away.code].pts+=3;else{st[m.home.code].pts+=1;st[m.away.code].pts+=1;}}else{const p=gPreds[m.id];if(!p||p.sh==null||p.sa==null){comp=false;return;}st[m.home.code].gf+=p.sh;st[m.home.code].ga+=p.sa;st[m.away.code].gf+=p.sa;st[m.away.code].ga+=p.sh;if(p.sh>p.sa)st[m.home.code].pts+=3;else if(p.sa>p.sh)st[m.away.code].pts+=3;else{st[m.home.code].pts+=1;st[m.away.code].pts+=1;}}});if(!comp)return null;Object.values(st).forEach(s=>{s.gd=s.gf-s.ga;});return Object.values(st).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf).map(s=>s.t);}
@@ -71,7 +111,7 @@ window.updateOddsFromBookmakers=function(){
     setTimeout(()=>{
         // 从 matchOdds + knockoutOdds 提取各队最新赔率
         const teamStats={};
-        const allOdds=Object.assign({},matchOdds,window.knockoutOdds||{});
+        const allOdds=Object.assign({},matchOdds,window.knockoutOdds||{},window.knockoutOddsR16||{});
         Object.values(allOdds).forEach(m=>{
             if(!teamStats[m.h])teamStats[m.h]={hw:[],aw:[],d:[]};
             if(!teamStats[m.a])teamStats[m.a]={hw:[],aw:[],d:[]};
@@ -95,10 +135,10 @@ window.updateOddsFromBookmakers=function(){
         lastUpdate=new Date();
         dataSource='William Hill';
         const info=document.getElementById('updateInfo');
-        if(info)info.innerHTML='<span class=\"source-tag source-william\">William Hill</span> 数据更新于 '+lastUpdate.toLocaleString('zh-CN')+' | 数据来源: The Odds API (72场小组赛 + 16场R32淘汰赛)';
+        if(info)info.innerHTML='<span class=\"source-tag source-william\">William Hill</span> 数据更新于 '+lastUpdate.toLocaleString('zh-CN')+' | 数据来源: The Odds API (72场小组赛 + 16场R32 + 8场R16淘汰赛)';
         btn.disabled=false;
         btn.textContent='🔄 刷新概率数据';
-        showToast('✅ William Hill 概率数据已更新 (72场小组赛 + 16场淘汰赛)');
+        showToast('✅ William Hill 概率数据已更新 (72场小组赛 + 16场R32 + 8场R16淘汰赛)');
     },800);
 };
 
@@ -254,7 +294,7 @@ window.uGS=function(mid,side,value){const sc=value===''?null:parseInt(value);if(
 window.uKS=function(mid,side,value){const sc=value===''?null:parseInt(value);if(sc!==null&&(isNaN(sc)||sc<0||sc>20)){showToast('⚠️ 请输入0-20之间的比分');return;}if(!kPreds[mid])kPreds[mid]={tA:null,tB:null,sA:null,sB:null,w:null,af:true};kPreds[mid][side]=sc;const sa=kPreds[mid].sA,sb=kPreds[mid].sB;if(sa!=null&&sb!=null){if(sa>sb)kPreds[mid].w='teamA';else if(sb>sa)kPreds[mid].w='teamB';else kPreds[mid].w='draw';}else kPreds[mid].w=null;saveK();if(mTab==='knockout')rKP();showToast('✅ 比分已更新');};
 window.uKT=function(mid,side,code){if(!kPreds[mid])kPreds[mid]={tA:null,tB:null,sA:null,sB:null,w:null,af:true};kPreds[mid][side]=code||null;kPreds[mid].af=false;kPreds[mid].w=null;saveK();if(mTab==='knockout')rKP();};
 window.eKT=function(ev,mid,side){ev.currentTarget.classList.toggle('editing');};
-window._koReg=function(mid,tA,tB){if(!tA||!tB)return null;var m={id:mid,home:{code:tA,zh:(teamMap[tA]||{}).zh||tA,en:(teamMap[tA]||{}).en||tA},away:{code:tB,zh:(teamMap[tB]||{}).zh||tB,en:(teamMap[tB]||{}).en||tB},gid:'R32',gn:'32强',sid:'R32',time:''};allGM.push(m);return m;};
+window._koReg=function(mid,tA,tB){if(!tA||!tB)return null;var stage='R32',stagename='32强';if(mid.indexOf('R16_')===0){stage='R16';stagename='16强';}else if(mid.indexOf('QF_')===0){stage='QF';stagename='8强';}else if(mid.indexOf('SF_')===0){stage='SF';stagename='4强';}else if(mid.indexOf('TP_')===0){stage='TP';stagename='季军赛';}else if(mid.indexOf('FINAL')===0){stage='FINAL';stagename='决赛';}var m={id:mid,home:{code:tA,zh:(teamMap[tA]||{}).zh||tA,en:(teamMap[tA]||{}).en||tA},away:{code:tB,zh:(teamMap[tB]||{}).zh||tB,en:(teamMap[tB]||{}).en||tB},gid:stage,gn:stagename,sid:stage,time:''};allGM.push(m);return m;};
 window.showA_ko=function(mid,tA,tB){var m=window._koReg(mid,tA,tB);if(!m)return;showA(mid);allGM.pop();};
 window.showVenue_ko=function(mid,tA,tB){var m=window._koReg(mid,tA,tB);if(!m)return;showVenueAnalysis(mid);allGM.pop();};
 window.calcP_ko=function(mid,tA,tB){var m=window._koReg(mid,tA,tB);if(!m)return;if(typeof calcP==='function')calcP(mid);allGM.pop();};
@@ -269,7 +309,7 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 // ========== TABS ==========
 function bGT(){const c=document.getElementById('groupTabs');let h='<div class="tab'+(cGT==='nearby'?' active':'')+'" data-group="nearby" onclick="sGT(\'nearby\')">📍 邻近比赛</div><div class="tab'+(cGT==='all'?' active':'')+'" data-group="all" onclick="sGT(\'all\')">全部小组</div>';groupsData.forEach(g=>{h+='<div class="tab'+(cGT===g.id?' active':'')+'" data-group="'+g.id+'" onclick="sGT(\''+g.id+'\')">'+g.name+'</div>';});c.innerHTML=h;}
 window.sGT=function(tid){cGT=tid;document.querySelectorAll('#groupTabs .tab').forEach(t=>t.classList.remove('active'));const tb=document.querySelector('#groupTabs .tab[data-group="'+tid+'"]');if(tb)tb.classList.add('active');document.getElementById('searchInput').value='';if(tid==='nearby')rNM();else rGM();};
-window.switchMainTab=function(tab){mTab=tab;document.querySelectorAll('#tabContainer .tab').forEach(t=>t.classList.remove('active'));var tb=document.querySelector('#tabContainer .tab[data-tab="'+tab+'"]');if(tb)tb.classList.add('active');var gc=document.getElementById('groupsContainer');var kp=document.getElementById('knockoutPanel');if(tab==='groups'){gc.style.display='block';gc.style.visibility='visible';if(kp)kp.classList.remove('visible');}else{gc.style.display='none';gc.style.visibility='hidden';if(kp)kp.classList.add('visible');}if(tab==='knockout'){autoFillKO();rKP();}};
+window.switchMainTab=function(tab){mTab=tab;document.querySelectorAll('#tabContainer .tab').forEach(t=>t.classList.remove('active'));var tb=document.querySelector('#tabContainer .tab[data-tab="'+tab+'"]');if(tb)tb.classList.add('active');var gc=document.getElementById('groupsContainer');var kp=document.getElementById('knockoutPanel');if(tab==='groups'){gc.style.display='block';gc.style.visibility='visible';if(kp)kp.classList.remove('visible');}else{gc.style.display='none';gc.style.visibility='hidden';if(kp)kp.classList.add('visible');}if(tab==='knockout'){autoFillKO();propagateR32ToR16();rKP();}};
 window.filterTeams=function(){if(currentEdition==='2026'){if(cGT==='nearby')rNM();else rGM();}else{renderPastWCMatchesMain();}};
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){try{var pd=document.querySelector('.player-detail-overlay');if(pd){pd.remove();e.stopImmediatePropagation();return;}var pdm=document.getElementById('playerDetailModal');if(pdm&&pdm.classList.contains('visible')){if(typeof closePlayerDetail==='function')closePlayerDetail();e.stopImmediatePropagation();return;}var sm=document.getElementById('squadModal');if(sm&&sm.classList.contains('visible')){if(typeof closeSquadModal==='function')closeSquadModal();e.stopImmediatePropagation();return;}var modals=[{id:'matchDetailModal',close:closeMatchDetail},{id:'analysisModal',close:closeAnalysisModal},{id:'venueAnalysisModal',close:closeVenueAnalysis},{id:'probModal',close:closeProbModal},{id:'summaryModal',close:closeSummaryModal},{id:'ovGoalTimeModal',close:function(){closeOvModal('ovGoalTimeModal')}},{id:'ovGoalTypeModal',close:function(){closeOvModal('ovGoalTypeModal')}},{id:'ovCornerModal',close:function(){closeOvModal('ovCornerModal')}},{id:'ovDisciplineModal',close:function(){closeOvModal('ovDisciplineModal')}},{id:'ovPerfBoardModal',close:function(){closeOvModal('ovPerfBoardModal')}},{id:'ovValueRankModal',close:function(){closeOvModal('ovValueRankModal')}},{id:'ovScorerRankModal',close:function(){closeOvModal('ovScorerRankModal')}},{id:'ovAssistRankModal',close:function(){closeOvModal('ovAssistRankModal')}},{id:'ovSaveRankModal',close:function(){closeOvModal('ovSaveRankModal')}}];for(var i=0;i<modals.length;i++){var m=document.getElementById(modals[i].id);if(m&&m.classList.contains('visible')){modals[i].close();e.stopImmediatePropagation();return;}}selMid=null;if(mTab==='groups')rGM();}catch(e){}}if(e.ctrlKey&&e.key==='s'){e.preventDefault();savePredictions();}});
 // pastWCModal removed - using main page view instead

@@ -2124,21 +2124,48 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
   },
   // M88 · 7月4日 02:00 · AT&T体育场
   "2026|R32|AUS|EGY": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 1, sa: 1 },
+    aet: true, penalties: true, penaltyScore: { home: 2, away: 4 },
+    penaltyShootout: [
+      { side: "home", scorer: "哈里·苏塔 (Harry Souttar)", result: "missed" },
+      { side: "away", scorer: "奥马尔·马尔穆什 (Omar Marmoush)", result: "scored" },
+      { side: "home", scorer: "杰克逊·欧文 (Jackson Irvine)", result: "scored" },
+      { side: "away", scorer: "伊玛姆·阿舒尔 (Emam Ashour)", result: "scored" },
+      { side: "home", scorer: "阿维尔·马比尔 (Awer Mabil)", result: "scored" },
+      { side: "away", scorer: "穆罕默德·萨拉赫 (Mohamed Salah)", result: "scored" },
+      { side: "home", scorer: "卢卡斯·赫林顿 (Lucas Herrington)", result: "missed" },
+      { side: "away", scorer: "霍萨姆·阿卜杜勒马吉德 (Hossam Abdelmaguid)", result: "scored", winner: true }
+    ],
+    goals: [
+      { min: 13, side: "away", scorer: "伊玛姆·阿舒尔 (Emam Ashour)", type: "header", assist: "卡里姆·哈菲兹 (Karim Hafez)" },
+      { min: 55, side: "home", scorer: "默罕穆德·哈尼 (Mohamed Hany)", type: "own_goal" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: 78235, referee: "Wilton Sampaio (BRA)"
   },
-  // M86 · 7月4日 06:00 · 硬石体育场
+  // M86 · 7月4日 06:00 · 硬石体育场 (迈阿密)
   "2026|R32|ARG|CPV": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 1, sa: 1 },
+    score120: { sh: 3, sa: 2 },
+    aet: true,
+    goals: [
+      { min: 29, side: "home", scorer: "利昂内尔·梅西 (Lionel Messi)", type: "shot", assist: "利桑德罗·马丁内斯 (Lisandro Martínez)" },
+      { min: 59, side: "away", scorer: "德罗伊·杜阿尔特 (Deroy Duarte)", type: "shot", assist: "瑞安·门德斯 (Ryan Mendes)" },
+      { min: 92, side: "home", scorer: "利桑德罗·马丁内斯 (Lisandro Martínez)", type: "shot", assist: "亚历克西斯·麦克利斯特 (Alexis Mac Allister)" },
+      { min: 103, side: "away", scorer: "西德尼·卡布拉尔 (Sidny Lopes Cabral)", type: "shot", assist: "杨尼克·塞梅多 (Yannick Semedo)" },
+      { min: 111, side: "home", scorer: "迪尼·博尔赫斯 (Diney Borges)", type: "own_goal" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: 65326, referee: "Jesús Valenzuela (VEN)"
   },
-  // M87 · 7月4日 09:30 · 箭头体育场
+  // M87 · 7月4日 09:30 · 箭头体育场 (堪萨斯城)
   "2026|R32|COL|GHA": {
-    score: null,
-    goals: null, cards: null,
-    attendance: null, referee: null
+    score: { sh: 1, sa: 0 },
+    goals: [
+      { min: 14, side: "home", scorer: "霍恩·阿里亚斯 (Jhon Arias)", type: "shot", assist: "路易斯·迪亚斯 (Luis Díaz)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 3, red: 0 } },
+    attendance: 72156, referee: "Slavko Vinčić (SVN)"
   },
 };
 // ========== 2026世界杯 比赛统计数据 ==========
@@ -2229,3 +2256,6 @@ matchStats["2026|R32|USA|BIH"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:6,sh2:
 matchStats["2026|R32|ESP|AUT"] = {p1:"64%",p2:"36%",ps1:null,ps2:null,sh1:16,sh2:4,so1:10,so2:0,sb1:6,sb2:4,co1:9,co2:0,fo1:8,fo2:15,os1:2,os2:5,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:121,at2:66,da1:78,da2:25,pk1:0,pk2:0};
 matchStats["2026|R32|POR|CRO"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:11,sh2:11,so1:3,so2:6,sb1:8,sb2:5,co1:9,co2:5,fo1:6,fo2:12,os1:1,os2:4,yc1:1,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:119,at2:66,da1:45,da2:36,pk1:1,pk2:0};
 matchStats["2026|R32|SUI|ALG"] = {p1:"44%",p2:"56%",ps1:null,ps2:null,sh1:9,sh2:5,so1:5,so2:2,sb1:4,sb2:3,co1:4,co2:2,fo1:10,fo2:12,os1:0,os2:2,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:91,at2:114,da1:33,da2:40,pk1:0,pk2:0};
+matchStats["2026|R32|AUS|EGY"] = {p1:"42%",p2:"58%",ps1:null,ps2:null,sh1:7,sh2:8,so1:1,so2:4,sb1:6,sb2:4,co1:4,co2:7,fo1:12,fo2:14,os1:0,os2:3,yc1:0,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:128,at2:130,da1:65,da2:71,pk1:0,pk2:0};
+matchStats["2026|R32|ARG|CPV"] = {p1:"63%",p2:"37%",ps1:null,ps2:null,sh1:15,sh2:10,so1:10,so2:5,sb1:5,sb2:5,co1:8,co2:8,fo1:13,fo2:12,os1:3,os2:2,yc1:1,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:174,at2:91,da1:82,da2:35,pk1:0,pk2:0};
+matchStats["2026|R32|COL|GHA"] = {p1:"60%",p2:"40%",ps1:null,ps2:null,sh1:16,sh2:3,so1:8,so2:0,sb1:8,sb2:3,co1:3,co2:2,fo1:14,fo2:10,os1:2,os2:0,yc1:2,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:85,at2:76,da1:33,da2:29,pk1:0,pk2:0};

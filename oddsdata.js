@@ -91,12 +91,25 @@ L_1_2:{h:'CRO',a:'GHA',hw:1.65,d:3.6,aw:5,ahLine:-0.75,ahHome:1.78,ahAway:2.05,o
 		R32_14:{h:'AUS',a:'EGY',hw:3.40,d:2.75,aw:2.40,ahLine:0.25,ahHome:1.85,ahAway:1.95,ouLine:2.5,ouOver:2.62,ouUnder:1.44},
 		R32_15:{h:'SUI',a:'ALG',hw:2.00,d:3.10,aw:4.50,ahLine:-0.25,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.00,ouUnder:1.73},
 		R32_16:{h:'COL',a:'GHA',hw:1.44,d:4.00,aw:7.00,ahLine:-1,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.95,ouUnder:1.80}
-	};
+		};
+		// ========== 淘汰赛比赛级赔率 (R16, 8场) ==========
+		// 数据源: William Hill (via The Odds API)
+		// 获取时间: 2026-07-04 09:12 UTC
+		const knockoutOddsR16={
+		R16_1:{h:'CAN',a:'MAR',hw:5.00,d:3.30,aw:1.75,ahLine:0.75,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.10,ouUnder:1.67},
+		R16_2:{h:'PAR',a:'FRA',hw:15.00,d:6.50,aw:1.17,ahLine:1.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.62,ouUnder:2.20},
+		R16_3:{h:'BRA',a:'NOR',hw:1.85,d:3.50,aw:4.00,ahLine:-0.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.73,ouUnder:2.00},
+		R16_4:{h:'MEX',a:'ENG',hw:2.90,d:3.00,aw:2.45,ahLine:0.25,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.30,ouUnder:1.57},
+		R16_5:{h:'POR',a:'ESP',hw:3.80,d:3.50,aw:1.91,ahLine:0.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.91,ouUnder:1.91},
+		R16_6:{h:'USA',a:'BEL',hw:2.70,d:3.25,aw:2.50,ahLine:0.25,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.80,ouUnder:1.95},
+		R16_7:{h:'ARG',a:'EGY',hw:1.36,d:4.60,aw:8.50,ahLine:-1.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.95,ouUnder:1.80},
+		R16_8:{h:'SUI',a:'COL',hw:3.40,d:3.10,aw:2.15,ahLine:0.25,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.20,ouUnder:1.62}
+		};
 	// ========== 从 matchOdds + knockoutOdds 自动计算 liveOdds ==========
 	(function(){
 	  var ts={};
 	  // 合并小组赛 + 淘汰赛赔率
-	  var allOdds=Object.assign({},matchOdds,knockoutOdds);
+		  var allOdds=Object.assign({},matchOdds,knockoutOdds,knockoutOddsR16);
 	  Object.values(allOdds).forEach(function(m){
 	    if(!ts[m.h])ts[m.h]={hw:[],aw:[],d:[]};
 	    if(!ts[m.a])ts[m.a]={hw:[],aw:[],d:[]};
@@ -116,13 +129,14 @@ L_1_2:{h:'CRO',a:'GHA',hw:1.65,d:3.6,aw:5,ahLine:-0.75,ahHome:1.78,ahAway:2.05,o
 })();
 
 	// ========== 暴露到全局 ==========
-	window.matchOdds = matchOdds;
-	window.knockoutOdds = knockoutOdds;
-	window.initialOdds = initialOdds;
+		window.matchOdds = matchOdds;
+		window.knockoutOdds = knockoutOdds;
+		window.knockoutOddsR16 = knockoutOddsR16;
+		window.initialOdds = initialOdds;
 	window.liveOdds = liveOdds;
 	window.lastUpdate = lastUpdate;
 	window.dataSource = 'William Hill';
 	
-		console.log('✅ oddsdata.js 已加载: 72场小组赛 + 16场淘汰赛R32 (含AH/OU扩展字段) | 数据源: William Hill via The Odds API | 更新: 2026-07-03');
+		console.log('✅ oddsdata.js 已加载: 72场小组赛 + 16场R32 + 8场R16 (含AH/OU扩展字段) | 数据源: William Hill via The Odds API | 更新: 2026-07-04');
 
 })();

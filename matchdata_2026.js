@@ -2707,25 +2707,156 @@ const wc2026AllMatches = {
   },
   // M88 · 7月4日 02:00 · AT&T体育场 (达拉斯)
   "2026|R32|AUS|EGY": {
-    score: null, date: "2026-07-04", time: "02:00", venue: "AT&T体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 1, sa: 1 }, date: "2026-07-04", time: "02:00", venue: "AT&T体育场", stage: "R32",
+    aet: true, penalties: true, penaltyScore: { home: 2, away: 4 },
+    penaltyShootout: [
+      { side: "home", scorer: "哈里·苏塔 (Harry Souttar)", result: "missed" },
+      { side: "away", scorer: "奥马尔·马尔穆什 (Omar Marmoush)", result: "scored" },
+      { side: "home", scorer: "杰克逊·欧文 (Jackson Irvine)", result: "scored" },
+      { side: "away", scorer: "伊玛姆·阿舒尔 (Emam Ashour)", result: "scored" },
+      { side: "home", scorer: "阿维尔·马比尔 (Awer Mabil)", result: "scored" },
+      { side: "away", scorer: "穆罕默德·萨拉赫 (Mohamed Salah)", result: "scored" },
+      { side: "home", scorer: "卢卡斯·赫林顿 (Lucas Herrington)", result: "missed" },
+      { side: "away", scorer: "霍萨姆·阿卜杜勒马吉德 (Hossam Abdelmaguid)", result: "scored", winner: true }
+    ],
+    goals: [
+      { min: 13, side: "away", scorer: "伊玛姆·阿舒尔", type: "header", assist: "卡里姆·哈菲兹" },
+      { min: 55, side: "home", scorer: "默罕穆德·哈尼", type: "own_goal" }
+    ],
+    stats: {
+      possession:      { h: 42, a: 58 },
+      shots:           { h: 7,  a: 8 },
+      shotsOnTarget:   { h: 1,  a: 4 },
+      corners:         { h: 4,  a: 7 },
+      fouls:           { h: 12, a: 14 },
+      yellowCards:     { h: 0,  a: 2 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 128, a: 130 },
+      dangerousAttacks:{ h: 65, a: 71 }
+    },
+    attendance: 78235, referee: "Wilton Sampaio (BRA)",
+    xg: null,
+    mediaRating: {
+      motm: "霍萨姆·阿卜杜勒马吉德",
+      sources: ["Sky Sports", "Al Jazeera", "AP", "France 24", "Socceroos.com"],
+      home: {score: 6, quotes: "澳大利亚英勇抵抗至最后一刻。比奇的94分钟神扑将比赛拖入加时，波波维奇119分钟换上 Ryan 的扑点赌博——但苏塔首球射飞、18岁赫林顿击中立柱，点球大战2-4梦碎。哈尼的乌龙球是澳大利亚唯一的得分来源，进攻端创造力严重不足。"},
+      away: {score: 7, quotes: "埃及队史首场世界杯淘汰赛胜利！阿舒尔13分钟头球先拔头筹，虽然哈尼的乌龙让比赛回到起点。加时赛萨拉赫逐渐苏醒，点球大战中一记勺子点球技惊四座。阿卜杜勒马吉德罚入制胜点球，16强静候阿根廷/佛得角胜者。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
-  // M86 · 7月4日 06:00 · 硬石体育场 (迈阿密)
+  // M86 · 7月4日 06:00 · 硬石体育场 (迈阿密) — 加时赛 ARG 3-2 CPV
   "2026|R32|ARG|CPV": {
-    score: null, date: "2026-07-04", time: "06:00", venue: "硬石体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 1, sa: 1 }, date: "2026-07-04", time: "06:00", venue: "硬石体育场", stage: "R32",
+    score120: { sh: 3, sa: 2 },
+    aet: true,
+    goals: [
+      { min: 29, side: "home", scorer: "利昂内尔·梅西", type: "shot", assist: "利桑德罗·马丁内斯" },
+      { min: 59, side: "away", scorer: "德罗伊·杜阿尔特", type: "shot", assist: "瑞安·门德斯" },
+      { min: 92, side: "home", scorer: "利桑德罗·马丁内斯", type: "shot", assist: "亚历克西斯·麦克利斯特" },
+      { min: 103, side: "away", scorer: "西德尼·卡布拉尔", type: "shot", assist: "杨尼克·塞梅多" },
+      { min: 111, side: "home", scorer: "迪尼·博尔赫斯", type: "own_goal" }
+    ],
+    stats: {
+      possession:      { h: 63, a: 37 },
+      shots:           { h: 15, a: 10 },
+      shotsOnTarget:   { h: 10, a: 5 },
+      corners:         { h: 8,  a: 8 },
+      fouls:           { h: 13, a: 12 },
+      yellowCards:     { h: 1,  a: 1 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 174, a: 91 },
+      dangerousAttacks:{ h: 82, a: 35 }
+    },
+    attendance: 65326, referee: "Jesús Valenzuela (VEN)",
+    xg: null,
+    mediaRating: {
+      motm: "利昂内尔·梅西",
+      sources: ["Sky Sports", "ESPN", "Goal.com", "NBC Sports", "The Independent"],
+      home: {score: 6, quotes: "卫冕冠军死里逃生——被世界排名67位的佛得角两次逼平的惊魂夜。梅西29分钟首开纪录（连续8场世界杯进球+第20球创纪录），但全队下半场严重下滑。马丁内斯92分钟一度救主，卡布拉尔103分钟的世界波又将阿根廷推到悬崖边。罗梅罗111分钟头球折射乌龙才惊险晋级。斯卡洛尼的球队漏洞百出。"},
+      away: {score: 9, quotes: "佛得角——50万人口的岛国——几乎创造了世界杯史上最大冷门！沃齐尼亚8次神扑、杜阿尔特爆射扳平、卡布拉尔一记金球级别的弧线世界波将比分改写为2-2。面对世界冠军，蓝鲨两度落后两度扳平，直到111分钟才被折射乌龙击败。这是48队世界杯存在意义的最佳证明。"}
+    },
+    aiPreMatch: null, aiPostReview: null
   },
   // M87 · 7月4日 09:30 · 箭头体育场 (堪萨斯城)
   "2026|R32|COL|GHA": {
-    score: null, date: "2026-07-04", time: "09:30", venue: "箭头体育场", stage: "R32",
-    goals: null, stats: null, attendance: null, referee: null,
-    xg: null, mediaRating: null, aiPreMatch: null, aiPostReview: null
+    score: { sh: 1, sa: 0 }, date: "2026-07-04", time: "09:30", venue: "箭头体育场", stage: "R32",
+    goals: [
+      { min: 14, side: "home", scorer: "霍恩·阿里亚斯", type: "shot", assist: "路易斯·迪亚斯" }
+    ],
+    stats: {
+      possession:      { h: 60, a: 40 },
+      shots:           { h: 16, a: 3 },
+      shotsOnTarget:   { h: 8,  a: 0 },
+      corners:         { h: 3,  a: 2 },
+      fouls:           { h: 14, a: 10 },
+      yellowCards:     { h: 2,  a: 3 },
+      redCards:        { h: 0,  a: 0 },
+      attacks:         { h: 85, a: 76 },
+      dangerousAttacks:{ h: 33, a: 29 }
+    },
+    attendance: 72156, referee: "Slavko Vinčić (SVN)",
+    xg: null,
+    mediaRating: {
+      motm: "霍恩·阿里亚斯",
+      sources: ["Sky Sports", "beIN Sports", "Yahoo Sports", "FotMob", "SportsDunia"],
+      home: {score: 7, quotes: "哥伦比亚职业表现锁定16强席位。阿里亚斯14分钟接迪亚斯精妙传球破门（8.6分），此后牢牢掌控局面。加纳全场零射正——哥伦比亚防线固若金汤。洛伦索的球队以最经济的方式晋级，16强对阵瑞士。"},
+      away: {score: 4, quotes: "加纳的进攻端彻底哑火——全场零射正、3次射偏无力威胁哥伦比亚球门。奎罗斯的防守组织虽保持紧凑，但进攻创造力完全缺失。塞门约和乔丹·阿尤在锋线孤立无援，黑星军团以失望的方式告别北美。"}
+    },
+	  aiPreMatch: null, aiPostReview: null
+  },
+
+  // ========== 淘汰赛 R16 (8场) — William Hill 赔率已录入 ==========
+  // M89 · 7月5日 01:00 · SoFi体育场 (洛杉矶)
+  "2026|R16|CAN|MAR": {
+    score: null, date: "2026-07-05", time: "01:00", venue: "SoFi体育场", stage: "R16",
+    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M90 · 7月5日 05:00 · 吉列体育场 (波士顿)
+  "2026|R16|PAR|FRA": {
+    score: null, date: "2026-07-05", time: "05:00", venue: "吉列体育场", stage: "R16",
+    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M91 · 7月6日 04:00 · NRG体育场 (休斯顿)
+  "2026|R16|BRA|NOR": {
+    score: null, date: "2026-07-06", time: "04:00", venue: "NRG体育场", stage: "R16",
+    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M92 · 7月6日 08:00 · 阿兹特克球场 (墨西哥城)
+  "2026|R16|MEX|ENG": {
+    score: null, date: "2026-07-06", time: "08:00", venue: "阿兹特克球场", stage: "R16",
+    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M93 · 7月7日 03:00 · BMO球场 (多伦多)
+  "2026|R16|POR|ESP": {
+    score: null, date: "2026-07-07", time: "03:00", venue: "BMO球场", stage: "R16",
+    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M94 · 7月7日 08:00 · 李维斯体育场 (旧金山)
+  "2026|R16|USA|BEL": {
+    score: null, date: "2026-07-07", time: "08:00", venue: "李维斯体育场", stage: "R16",
+    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M95 · 7月8日 00:00 · 硬石体育场 (迈阿密)
+  "2026|R16|ARG|EGY": {
+    score: null, date: "2026-07-08", time: "00:00", venue: "硬石体育场", stage: "R16",
+    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M96 · 7月8日 04:00 · BC Place体育场 (温哥华)
+  "2026|R16|SUI|COL": {
+    score: null, date: "2026-07-08", time: "04:00", venue: "BC Place体育场", stage: "R16",
+    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    aiPreMatch: null, aiPostReview: null
   }
 
-  // ========= R16 / QF / SF / TP / FINAL 预留框架 =========
-  // 赛后将动态填充格式: "2026|R16|???|???"
+  // ========= QF / SF / TP / FINAL 预留框架 =========
+  // 赛后将动态填充格式: "2026|QF|???|???"
 };
 
 // ================================================================
