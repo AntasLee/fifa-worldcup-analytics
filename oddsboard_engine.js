@@ -1,4 +1,4 @@
-// oddsboard_engine.js — 赔率榜动态聚合引擎 | V1.81
+// oddsboard_engine.js — 赔率榜动态聚合引擎 | V1.82
 // Author: Antas Lee
 // Copyright: © 2026 ZHENTAO LI. All rights reserved.
 //
@@ -461,6 +461,6 @@ window.OddsBoard = {
   }
 };
 
-console.log('✅ V1.81 赔率榜引擎已安装（胜平负榜 + 让球盘榜 · 动态聚合）');
+console.log('✅ V1.82 赔率榜引擎已安装（胜平负榜 + 让球盘榜 · 动态聚合）');
 
 })();
