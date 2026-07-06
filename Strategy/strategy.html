@@ -407,12 +407,40 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 @media(max-width:980px){.summary-grid{grid-template-columns:repeat(2,1fr)}.expand-panel.open{width:200px}.panel-inner{width:188px}}
 @media(max-width:768px){
   .summary-grid{grid-template-columns:1fr}.container{padding:8px}.market-tab{font-size:0.78rem;padding:8px 6px}
-  .capsule-row{flex-wrap:wrap;gap:8px;padding:4px 8px 0}
-  .insight-wrapper{width:100%}.insight-capsule{width:100%;justify-content:center;font-size:0.74rem}
-  .side-host{position:static!important;height:auto;display:flex;margin-top:0;width:100%}
-  .handle{width:100%;height:auto;flex-direction:row;padding:8px 14px;border-radius:22px;justify-content:center;gap:6px}
-  .handle-text{writing-mode:horizontal-tb;font-size:0.72rem;letter-spacing:0}
-  .handle-arrow{font-size:0.5rem;margin:0;transform:none;width:auto}
+
+  /* ── 赛事选择栏：单排横向滑动 ── */
+  .edition-bar{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 8px;
+    gap: 3px;
+    mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  }
+  .edition-bar .edition-label{flex-shrink:0;font-size:0.62rem;margin-right:2px}
+  .edition-tab{flex-shrink:0;font-size:0.65rem;padding:4px 10px;border-radius:14px}
+
+  /* ── 胶囊行：策略说明 + 策略控制 并排，各占一半 ── */
+  .capsule-row{flex-wrap:nowrap;gap:12px;padding:4px 8px 0;justify-content:space-between}
+  .insight-wrapper{width:calc(50% - 6px);flex-shrink:0;position:static}
+  .insight-capsule{width:100%;justify-content:center;font-size:0.7rem;padding:6px 10px}
+  /* 策略说明下拉：移动端固定定位，宽度与策略控制一致 */
+  .insight-dropdown{
+    position:fixed;left:8px;top:0;width:min(340px,calc(100vw - 16px));
+    max-height:0;opacity:0;margin-top:0;overflow:hidden;
+    border-radius:12px;z-index:680;
+    transition:max-height 0.35s ease,opacity 0.3s ease;
+    box-shadow:0 12px 40px rgba(0,0,0,0.7);
+  }
+  .insight-dropdown.expanded{
+    max-height:420px;opacity:1;pointer-events:auto;
+  }
+
+  .side-host{position:static!important;height:auto;display:flex;margin-top:0;width:calc(50% - 6px);flex-shrink:0}
+  .handle{width:100%;height:auto;flex-direction:row;padding:6px 10px;border-radius:22px;justify-content:center;gap:6px}
+  .handle-text{writing-mode:horizontal-tb;font-size:0.7rem;letter-spacing:0}
+  .handle-arrow{font-size:0.5rem;margin:0;transform:none;width:auto;animation:none}
   .expand-panel{position:fixed;right:8px;width:min(340px,calc(100vw - 16px));max-height:0;overflow:hidden;opacity:0;transition:max-height 0.35s ease,opacity 0.3s ease;display:block;background:var(--panel-bg);border:1.5px solid var(--panel-border);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.6);z-index:680;pointer-events:none}
   .expand-panel.open{max-height:420px;opacity:1;pointer-events:auto}
   .panel-inner{width:100%!important;border-radius:0!important;border:none!important;margin:0!important;height:100%!important}
@@ -441,10 +469,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 
 <div class="capsule-row">
   <div class="insight-wrapper">
-    <span class="insight-capsule expanded" onclick="toggleInsight()" id="insightCapsule">
-      📖 策略说明 <span class="insight-arrow" id="insightArrow">▴</span>
+    <span class="insight-capsule" onclick="toggleInsight()" id="insightCapsule">
+      📖 策略说明 <span class="insight-arrow" id="insightArrow">▾</span>
     </span>
-    <div class="insight-dropdown expanded" id="insightDropdown"></div>
+    <div class="insight-dropdown" id="insightDropdown"></div>
   </div>
   <div class="side-host" id="sideHost">
     <div class="expand-panel" id="expandPanel">
@@ -506,7 +534,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 <div style="display:none" aria-hidden="true">
   <div id="groupTabs"></div><input id="searchInput" value=""><div id="toast"></div>
   <div id="groupsContainer"><div id="groupsGrid"></div></div>
-  <div id="knockoutPanel"></div><div id="pastWCMainContainer"></div>
+  <div id="knockoutPanel"><div id="koTabs"></div><div id="koContent"></div></div><div id="pastWCMainContainer"></div>
   <div id="summaryModal"><div id="summaryContent"></div></div>
   <div id="probModal"><div id="probContent"></div></div>
   <div id="analysisModal"><div id="analysisContent"></div></div>
@@ -4971,8 +4999,16 @@ window.toggleInsight = function(){
   var dd=document.getElementById('insightDropdown');
   var cap=document.getElementById('insightCapsule');
   var arr=document.getElementById('insightArrow');
-  dd.classList.toggle('expanded');cap.classList.toggle('expanded');
-  arr.textContent=dd.classList.contains('expanded')?'▴':'▾';
+  var isOpen=dd.classList.contains('expanded');
+  if(isOpen){dd.classList.remove('expanded');cap.classList.remove('expanded');arr.textContent='\u25be';}
+  else{
+    dd.classList.add('expanded');cap.classList.add('expanded');arr.textContent='\u25b4';
+    if(window.innerWidth<=768){
+      var capRect=cap.getBoundingClientRect();
+      dd.style.top=(capRect.bottom+6)+'px';
+      dd.style.maxHeight=(window.innerHeight-capRect.bottom-14)+'px';
+    }
+  }
 };
 
 (function(){
@@ -5002,9 +5038,8 @@ window.toggleInsight = function(){
         p.style.top=(rect.bottom+6)+'px';
         p.style.maxHeight=(window.innerHeight-rect.bottom-14)+'px';
         p.style.height=p.style.maxHeight;
-        var hRect=h.getBoundingClientRect();
-        p.style.width=hRect.width+'px';
-        p.style.right=(window.innerWidth-hRect.right)+'px';
+        p.style.width=Math.min(340,window.innerWidth*0.5)+'px';
+        p.style.right='8px';
       }
       var cap=document.getElementById('insightCapsule');
       var dd=document.getElementById('insightDropdown');
