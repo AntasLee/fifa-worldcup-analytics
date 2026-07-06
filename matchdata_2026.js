@@ -2808,26 +2808,54 @@ const wc2026AllMatches = {
   // ========== 淘汰赛 R16 (8场) — William Hill 赔率已录入 ==========
   // M89 · 7月5日 01:00 · SoFi体育场 (洛杉矶)
   "2026|R16|CAN|MAR": {
-    score: null, date: "2026-07-05", time: "01:00", venue: "SoFi体育场", stage: "R16",
-    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    score: { sh: 0, sa: 3 }, date: "2026-07-05", time: "01:00", venue: "NRG体育场", stage: "R16",
+    goals: [
+      { min: 50, side: "away", scorer: "阿兹丁·乌纳希", type: "shot", assist: "阿什拉夫·哈基米" },
+      { min: 82, side: "away", scorer: "阿兹丁·乌纳希", type: "shot", assist: "卜拉欣·迪亚斯" },
+      { min: "90+8", side: "away", scorer: "苏菲安·拉希米", type: "shot", assist: "卜拉欣·迪亚斯" }
+    ],
+    stats: { possession:{h:45,a:55}, shots:{h:7,a:5}, shotsOnTarget:{h:3,a:4}, corners:{h:11,a:1}, fouls:{h:24,a:14}, yellowCards:{h:4,a:4}, redCards:{h:0,a:0}, attacks:{h:105,a:74}, dangerousAttacks:{h:70,a:17} },
+    attendance: 68532, referee: "Jesús Valenzuela (VEN)", xg: null,
+    mediaRating: { motm:"阿兹丁·乌纳希", sources:["Sky Sports","FIFA","Al Jazeera","Sportstar","NBC Sports"], home:{score:5, quotes:"东道主的上半场堪称完美——11人全员高水平发挥，多次险些破门。但下半场风云突变，乌纳希50分钟打破僵局后防线崩盘。加拿大首次世界杯淘汰赛之旅虽止步16强，但已赢得全国冰球迷的尊重。"}, away:{score:8, quotes:"摩洛哥连续两届世界杯晋级八强！乌纳希梅开二度（9.0分）统治比赛——哈基米助攻首球、迪亚斯两记助攻锦上添花。尽管赛巴里22分钟伤退，阿特拉斯雄狮下半场展现非洲足球巅峰水准。8强对阵法国/巴拉圭胜者。"} },
     aiPreMatch: null, aiPostReview: null
   },
-  // M90 · 7月5日 05:00 · 吉列体育场 (波士顿)
+  // M90 · 7月5日 05:00 · 林肯金融球场 (费城)
   "2026|R16|PAR|FRA": {
-    score: null, date: "2026-07-05", time: "05:00", venue: "吉列体育场", stage: "R16",
-    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    score: { sh: 0, sa: 1 }, date: "2026-07-05", time: "05:00", venue: "林肯金融球场", stage: "R16",
+    goals: [
+      { min: 70, side: "away", scorer: "基利安·姆巴佩", type: "penalty" }
+    ],
+    stats: { possession:{h:24,a:76}, shots:{h:4,a:11}, shotsOnTarget:{h:0,a:5}, corners:{h:2,a:12}, fouls:{h:13,a:11}, yellowCards:{h:0,a:3}, redCards:{h:0,a:0}, attacks:{h:63,a:145}, dangerousAttacks:{h:17,a:81} },
+    attendance: 67921, referee: "Ilgiz Tantashev (UZB)", xg: null,
+    mediaRating: { motm:"基利安·姆巴佩", sources:["FIFA","Sky Sports","Goal.com","Opta","AP"], home:{score:6, quotes:"巴拉圭再次上演防守大师课——24%控球率+零射正的极致保守战术几乎将法国拖入加时。希尔多次神扑力保悬念，但戈麦斯对杜埃的鲁莽犯规送出点球。全场零黄牌的粗暴踢法引发争议——姆巴佩赛后拒绝与希尔握手。虽败犹荣，两届淘汰赛表现足以自豪。"}, away:{score:6, quotes:"法国艰难闯关。面对巴拉圭的铁桶阵，德尚的豪华锋线全场创造力几乎为零——奥尔赛4分、巴尔科拉4分。杜埃替补登场5分钟即造点，姆巴佩顶住对手拖延战术冷静罚入第19粒世界杯进球（距梅西纪录仅差1球）。8强对阵摩洛哥将是2022半决赛重演。"} },
     aiPreMatch: null, aiPostReview: null
   },
-  // M91 · 7月6日 04:00 · NRG体育场 (休斯顿)
+  // M91 · 7月6日 04:00 · 大都会人寿体育场 (纽约)
   "2026|R16|BRA|NOR": {
-    score: null, date: "2026-07-06", time: "04:00", venue: "NRG体育场", stage: "R16",
-    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    score: { sh: 1, sa: 2 }, date: "2026-07-06", time: "04:00", venue: "大都会人寿体育场", stage: "R16",
+    goals: [
+      { min: 79, side: "away", scorer: "埃尔林·哈兰德", type: "header", assist: "安德列亚斯·谢尔德鲁普" },
+      { min: 90, side: "away", scorer: "埃尔林·哈兰德", type: "shot", assist: "安德列亚斯·谢尔德鲁普" },
+      { min: "90+10", side: "home", scorer: "内马尔", type: "penalty" }
+    ],
+    stats: { possession:{h:34,a:66}, shots:{h:10,a:8}, shotsOnTarget:{h:4,a:5}, corners:{h:5,a:5}, fouls:{h:7,a:6}, yellowCards:{h:1,a:0}, redCards:{h:0,a:0}, attacks:{h:74,a:124}, dangerousAttacks:{h:58,a:65} },
+    attendance: 80125, referee: "Daniele Orsato (ITA)", xg: null,
+    mediaRating: { motm:"埃尔林·哈兰德", sources:["FIFA","Sky Sports","ESPN","Opta","Sportstar"], home:{score:5, quotes:"五星巴西自1990年来最早出局。吉马良斯14分钟点球被尼兰扑出成为比赛转折——巴西队史首次世界杯常规时间罚丢点球。哈兰德79分钟碾压加布里埃尔头球破门+90分钟爆射近角——成为首位在世界杯单场对巴西打入2球的球员。内马尔补时点球仅是告别战的安慰。"}, away:{score:9, quotes:"挪威队史首次晋级大赛八强！哈兰德7场4球——79分钟力压加布里埃尔的头球展现绝对统治力，90分钟低射近角锁定胜局。尼兰扑出吉马良斯点球+多次神扑奠定胜基，谢尔德鲁普替补两记助攻堪称神来之笔。8强对阵英格兰——北欧神话继续。"} },
     aiPreMatch: null, aiPostReview: null
   },
-  // M92 · 7月6日 08:00 · 阿兹特克球场 (墨西哥城)
+  // M92 · 7月6日 08:00 · 阿兹特克球场 (墨西哥城) — 10人英格兰
   "2026|R16|MEX|ENG": {
-    score: null, date: "2026-07-06", time: "08:00", venue: "阿兹特克球场", stage: "R16",
-    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    score: { sh: 2, sa: 3 }, date: "2026-07-06", time: "08:00", venue: "阿兹特克球场", stage: "R16",
+    goals: [
+      { min: 36, side: "away", scorer: "祖德·贝林厄姆", type: "header", assist: "布卡约·萨卡" },
+      { min: 38, side: "away", scorer: "祖德·贝林厄姆", type: "shot", assist: "哈里·凯恩" },
+      { min: 42, side: "home", scorer: "胡里安·基尼奥内斯", type: "shot" },
+      { min: 60, side: "away", scorer: "哈里·凯恩", type: "penalty" },
+      { min: 69, side: "home", scorer: "劳尔·希门尼斯", type: "penalty" }
+    ],
+    stats: { possession:{h:67,a:33}, shots:{h:13,a:6}, shotsOnTarget:{h:5,a:5}, corners:{h:12,a:2}, fouls:{h:14,a:7}, yellowCards:{h:2,a:3}, redCards:{h:0,a:1}, attacks:{h:126,a:54}, dangerousAttacks:{h:82,a:22} },
+    attendance: 87523, referee: "Slavko Vinčić (SVN)", xg: null,
+    mediaRating: { motm:"祖德·贝林厄姆", sources:["ESPN","BBC Sport","Al Jazeera","Sky Sports","AP"], home:{score:7, quotes:"阿兹特克的魔力被英格兰的冷静击碎。墨西哥在0-2落后+对手红牌（54分钟夸萨被罚下）的情况下两度追近——基尼奥内斯和希门尼斯各入一球点燃全场。但贝林厄姆半场前的门线解围+凯恩点球稳住局势，阿吉雷的球队虽败犹荣。阿兹特克89场不败神话仅第三度被破。"}, away:{score:8, quotes:"三狮军团在海拔2240米的阿兹特克打出了本届最佳表现！贝林厄姆98秒两球堪称天神下凡——头槌+爆射+半场前门线解围拯救英格兰。10人应战后凯恩点球稳定军心，皮克福德多次神扑化解险情。连续三届世界杯晋级八强，对阵挪威将是哈兰德vs贝林厄姆的金球级别对决。"} },
     aiPreMatch: null, aiPostReview: null
   },
   // M93 · 7月7日 03:00 · BMO球场 (多伦多)
