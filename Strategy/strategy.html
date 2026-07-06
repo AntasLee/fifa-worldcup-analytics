@@ -4699,7 +4699,7 @@ window.syncInsightBox = function(){
     dd.innerHTML = html;
     ib.style.display = 'none';
   }
-  if (!dd.classList.contains('expanded')) {
+  if (!dd.classList.contains('expanded') && window.innerWidth > 768) {
     dd.classList.add('expanded');
     cap.classList.add('expanded');
     if (arr) arr.textContent = '▴';
