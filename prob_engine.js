@@ -736,21 +736,25 @@
    * 当两者高度统一时，赔率推算权重略微增大（55:45）
    * 存在分歧时，AI模型权重提升
    */
-  function calcBlendedScores(aiResult, ho, ao, comp) {
-    // 1. 赔率推算 λ
-    const oddsLambda = oddsToLambda(ho.w, ao.w);
+  function calcBlendedScores(aiResult, ho, ao, comp, hasRealOdds) {
+    // 1. 赔率推算 λ（无真实赔率时回退到中立值，权重归零）
+    const oddsLambda = oddsToLambda(ho.w || 2.50, ao.w || 2.80);
     
     // 2. AI推算 λ
     const aiHL = aiResult.hLambda;
     const aiAL = aiResult.aLambda;
     
-    // 3. 根据一致性判定确定融合权重
+    // 3. 根据一致性判定确定融合权重（无赔率时100%AI）
     let oddsW, aiW;
-    const vl = comp.verdictLevel;
-    if (vl === '高度统一')      { oddsW = 0.55; aiW = 0.45; }
-    else if (vl === '基本一致')  { oddsW = 0.50; aiW = 0.50; }
-    else if (vl === '存在分歧')  { oddsW = 0.35; aiW = 0.65; }
-    else                        { oddsW = 0.25; aiW = 0.75; }
+    if (!hasRealOdds) {
+      oddsW = 0; aiW = 1.0;
+    } else {
+      const vl = comp.verdictLevel;
+      if (vl === '高度统一')      { oddsW = 0.55; aiW = 0.45; }
+      else if (vl === '基本一致')  { oddsW = 0.50; aiW = 0.50; }
+      else if (vl === '存在分歧')  { oddsW = 0.35; aiW = 0.65; }
+      else                        { oddsW = 0.25; aiW = 0.75; }
+    }
     
     // 4. 双λ分别泊松展开 → 融合
     const MG = 10, all = [];
@@ -1084,6 +1088,12 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
         ho = liveOdds[homeCode] || { w: 2.50, d: 3.20, l: 2.80 };
         ao = liveOdds[awayCode] || { w: 2.80, d: 3.20, l: 2.50 };
     }
+    var hasRealOdds = !!md; // 仅当场比赛级赔率，不含球队历史均值
+    // 无真实赔率时回退到 AI-only 模式
+    if (!hasRealOdds) {
+      ho = { w: 0, d: 0, l: 0 };
+      ao = { w: 0, d: 0, l: 0 };
+    }
     var oddsPbs = calcOddsPbs(ho, ao);
 
     // 让球/大小球数据
@@ -1148,11 +1158,20 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     // === 上栏：赔率推算 + 智能推算 ===
     h += '<div class="cg">';
     // 赔率推算
-    h += '<div class="hc od"><div class="cl">📊 赔率推算 <span style="font-weight:400;font-size:10px;color:#5a6888;margin-left:4px">William Hill</span></div><div class="pr">';
-    h += '<div class="pi w' + (actualResult==='home'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + oddsPbs.ph + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.ph + '%"></div></div><div class="pl">主胜</div><div class="ps">' + ho.w.toFixed(2) + '</div></div>';
-    h += '<div class="pi d' + (actualResult==='draw'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + oddsPbs.pd + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.pd + '%"></div></div><div class="pl">平局</div><div class="ps">' + ((ho.d + (ao.d || 3.2)) / 2).toFixed(2) + '</div></div>';
-    h += '<div class="pi l' + (actualResult==='away'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + oddsPbs.pa + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.pa + '%"></div></div><div class="pl">客胜</div><div class="ps">' + ao.w.toFixed(2) + '</div></div>';
-    h += '</div></div>';
+    h += '<div class="hc od"><div class="cl">📊 赔率推算 <span style="font-weight:400;font-size:10px;color:#5a6888;margin-left:4px">William Hill</span></div>';
+    if (!hasRealOdds) {
+      h += '<div class="pr"><div class="pi w"><div class="pv" style="font-size:14px;color:#5a6888">暂无</div><div class="pl">主胜</div><div class="ps" style="color:#5a6888">—</div></div>';
+      h += '<div class="pi d"><div class="pv" style="font-size:14px;color:#5a6888">暂无</div><div class="pl">平局</div><div class="ps" style="color:#5a6888">—</div></div>';
+      h += '<div class="pi l"><div class="pv" style="font-size:14px;color:#5a6888">暂无</div><div class="pl">客胜</div><div class="ps" style="color:#5a6888">—</div></div></div>';
+      h += '<div style="font-size:10px;color:#5a6888;text-align:center;padding:4px 0">William Hill 赔率暂未收录该比赛</div>';
+    } else {
+      h += '<div class="pr">';
+      h += '<div class="pi w' + (actualResult==='home'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + oddsPbs.ph + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.ph + '%"></div></div><div class="pl">主胜</div><div class="ps">' + ho.w.toFixed(2) + '</div></div>';
+      h += '<div class="pi d' + (actualResult==='draw'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + oddsPbs.pd + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.pd + '%"></div></div><div class="pl">平局</div><div class="ps">' + ((ho.d + (ao.d || 3.2)) / 2).toFixed(2) + '</div></div>';
+      h += '<div class="pi l' + (actualResult==='away'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + oddsPbs.pa + '%</div><div class="pb"><div class="pbf" style="width:' + oddsPbs.pa + '%"></div></div><div class="pl">客胜</div><div class="ps">' + ao.w.toFixed(2) + '</div></div>';
+      h += '</div>';
+    }
+    h += '</div>';
     // 智能推算
     h += '<div class="hc ai"><div class="cl">🤖 智能推算 <span style="font-weight:400;font-size:10px;color:#5a6888;margin-left:4px">泊松 λ</span></div><div class="pr">';
     h += '<div class="pi w' + (actualResult==='home'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="pv">' + aiResult.ph + '%</div><div class="pb"><div class="pbf" style="width:' + aiResult.ph + '%"></div></div><div class="pl">主胜</div><div class="ps">λ=' + aiResult.hLambda.toFixed(2) + '</div></div>';
@@ -1164,7 +1183,17 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     // === 下栏：赔率详情 + 影响参数 ===
     h += '<div class="dr">';
     // 赔率详情
-    h += '<div class="db odds-detail"><div class="btr"><span class="bt">赔率详情</span><span class="dsi">William Hill · 盘前赔率</span></div><div class="os">';
+    h += '<div class="db odds-detail"><div class="btr"><span class="bt">赔率详情</span><span class="dsi">William Hill · ' + (hasRealOdds ? '盘前赔率' : '暂无数据') + '</span></div><div class="os">';
+    // 胜平负 (1X2)
+    if (hasRealOdds) {
+      h += '<div class="osi"><div class="htr"><span class="hdl">胜平负 (1X2)</span></div><div class="hrr">';
+      h += '<div class="hci hm"><div class="hcn">' + ho.w.toFixed(2) + '</div><div class="hcg">主胜</div></div>';
+      h += '<div class="hci aw"><div class="hcn" style="color:#ffb74d">' + ((ho.d + (ao.d || 3.2)) / 2).toFixed(2) + '</div><div class="hcg">平局</div></div>';
+      h += '<div class="hci aw"><div class="hcn">' + ao.w.toFixed(2) + '</div><div class="hcg">客胜</div></div>';
+      h += '</div></div>';
+    } else {
+      h += '<div class="osi"><div class="htr"><span class="hdl">胜平负 (1X2)</span></div><div class="na">暂无赔率数据</div></div>';
+    }
     if (ahData && md) {
       h += '<div class="osi"><div class="htr"><span class="hdl">让球盘</span><span class="hdt">' + (md.ahLine > 0 ? '主+' + md.ahLine.toFixed(2) : '主' + md.ahLine.toFixed(2)) + '</span></div><div class="hrr">';
       h += '<div class="hci hm' + (ahHit==='home'?' hit':'') + '"><span class="hit-badge">HIT</span><div class="hcn">' + md.ahHome.toFixed(2) + '</div><div class="hcg">主队</div></div>';
@@ -1229,7 +1258,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     h += '</div>'; // .cb-left
 
     // 右栏：V3 三列瀑布比分（融合赔率+AI）
-    var blended = calcBlendedScores(aiResult, ho, ao, comp);
+    var blended = calcBlendedScores(aiResult, ho, ao, comp, hasRealOdds);
     // 其他命中判定：真实比分未在枚举列表中时，高亮对应列的"其他"行
     var winExact = blended.winScores.some(function(s){return s.score===actualScoreStr;});
     var drawExact = blended.drawScores.some(function(s){return s.score===actualScoreStr;});

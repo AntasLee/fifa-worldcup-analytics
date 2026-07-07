@@ -34,45 +34,110 @@ const r32s=[{a:{g:'E',p:1},b:{g:'*',p:3,opts:'ABCDF'}},{a:{g:'I',p:1},b:{g:'*',p
 function genKOs(){const ms=[];koRounds.forEach(r=>{for(let i=1;i<=r.count;i++){const m={id:r.id+'_'+i,sid:r.id,sn:r.name,time:getKOTime(r.id,i-1),tA:null,tB:null,sA:null,sB:null,w:null,af:true};if(r.id==='R32'&&i<=r32s.length){m.sA=r32s[i-1].a;m.sB=r32s[i-1].b;}ms.push(m);}});return ms;}
 	let koMs=genKOs();
 
-	// ========== R32→R16 胜者自动晋级 ==========
-	// 对阵配对: R32_(2n-1)胜者 vs R32_(2n)胜者 → R16_n
-	function propagateR32ToR16(){
-		var wcData=window.wc2026AllMatches||{};
-		var r32Winners={}; // R32_1→winnerCode, R32_2→winnerCode, ...
-		for(var i=1;i<=16;i++){
-			var mid='R32_'+i;
-			var koMatch=koMs.find(function(m){return m.id===mid;});
-			if(!koMatch) continue;
-			var p=kPreds[mid];
-			if(!p||!p.tA||!p.tB) continue;
-			var mk='2026|R32|'+p.tA+'|'+p.tB;
+		// ========== 淘汰赛胜者自动晋级（通用辅助函数） ==========
+		// 从 wc2026AllMatches / wc2026MatchDetails 读取比分，返回胜者球队 code
+		function getKOWinner(mid, stage, tA, tB){
+			var wcData=window.wc2026AllMatches||{};
+			var mk='2026|'+stage+'|'+tA+'|'+tB;
 			var fin=wcData[mk];
-			if(!fin||!fin.score) continue;
+			if(!fin&&typeof wc2026MatchDetails!=='undefined') fin=wc2026MatchDetails[mk];
+			if(!fin||!fin.score) return null;
 			var sh=fin.score.sh, sa=fin.score.sa;
 			var sc120=fin.score120;
 			var pk=fin.penaltyScore;
-			// 判定胜者: 先看加时/点球, 再看90分钟
-			var winner=null;
-			if(pk){ winner=pk.home>pk.away?p.tA:p.tB; }
-			else if(sc120){ winner=sc120.sh>sc120.sa?p.tA:p.tB; }
-			else if(sh>sa) winner=p.tA;
-			else if(sa>sh) winner=p.tB;
-			if(winner) r32Winners[mid]=winner;
+			if(pk){ return pk.home>pk.away?tA:tB; }
+			if(sc120){ return sc120.sh>sc120.sa?tA:tB; }
+			if(sh>sa) return tA;
+			if(sa>sh) return tB;
+			return null;
 		}
-		// 填充R16 — 官方对阵映射: R16_1←(R32_3,R32_4), R16_2←(R32_1,R32_2), 其余成对
-		var r16map={R16_1:['R32_3','R32_4'],R16_2:['R32_1','R32_2']};
-		for(var n=3;n<=8;n++){ r16map['R16_'+n]=['R32_'+(2*n-1),'R32_'+(2*n)]; }
-		for(var rid in r16map){
-			var pair=r16map[rid];
-			var wA=r32Winners[pair[0]];
-			var wB=r32Winners[pair[1]];
-			if(!wA||!wB) continue;
-			var rp=kPreds[rid];
-		if(!rp){ rp={tA:null,tB:null,sA:null,sB:null,w:null,af:true}; kPreds[rid]=rp; }
-		if(rp.af!==false||!rp.tA){ rp.tA=wA; rp.af=true; }
-		if(rp.af!==false||!rp.tB){ rp.tB=wB; rp.af=true; }
+		// 通用填充：将从上游轮次收集到的胜者写入下游 match
+		function fillDownstreamTeams(feedMap, winners){
+			for(var rid in feedMap){
+				var pair=feedMap[rid];
+				var wA=winners[pair[0]];
+				var wB=winners[pair[1]];
+				if(!wA||!wB) continue;
+				var rp=kPreds[rid];
+				if(!rp){ rp={tA:null,tB:null,sA:null,sB:null,w:null,af:true}; kPreds[rid]=rp; }
+				if(rp.af!==false||!rp.tA){ rp.tA=wA; rp.af=true; }
+				if(rp.af!==false||!rp.tB){ rp.tB=wB; rp.af=true; }
+			}
 		}
-	}
+
+		// R32 → R16 胜者自动晋级
+		// 对阵配对: R32_(2n-1)胜者 vs R32_(2n)胜者 → R16_n
+		function propagateR32ToR16(){
+			var r32Winners={};
+			for(var i=1;i<=16;i++){
+				var mid='R32_'+i;
+				var p=kPreds[mid];
+				if(!p||!p.tA||!p.tB) continue;
+				var winner=getKOWinner(mid,'R32',p.tA,p.tB);
+				if(winner) r32Winners[mid]=winner;
+			}
+			var r16map={R16_1:['R32_3','R32_4'],R16_2:['R32_1','R32_2']};
+			for(var n=3;n<=8;n++){ r16map['R16_'+n]=['R32_'+(2*n-1),'R32_'+(2*n)]; }
+			fillDownstreamTeams(r16map, r32Winners);
+		}
+
+		// R16 → QF 胜者自动晋级
+		// QF_1←(R16_1,R16_2), QF_2←(R16_3,R16_4), QF_3←(R16_5,R16_6), QF_4←(R16_7,R16_8)
+		function propagateR16ToQF(){
+			var r16Winners={};
+			for(var i=1;i<=8;i++){
+				var mid='R16_'+i;
+				var p=kPreds[mid];
+				if(!p||!p.tA||!p.tB) continue;
+				var winner=getKOWinner(mid,'R16',p.tA,p.tB);
+				if(winner) r16Winners[mid]=winner;
+			}
+			var qfMap={};
+			for(var n=1;n<=4;n++){ qfMap['QF_'+n]=['R16_'+(2*n-1),'R16_'+(2*n)]; }
+			fillDownstreamTeams(qfMap, r16Winners);
+		}
+
+		// QF → SF 胜者自动晋级
+		// SF_1←(QF_1,QF_2), SF_2←(QF_3,QF_4)
+		function propagateQFToSF(){
+			var qfWinners={};
+			for(var i=1;i<=4;i++){
+				var mid='QF_'+i;
+				var p=kPreds[mid];
+				if(!p||!p.tA||!p.tB) continue;
+				var winner=getKOWinner(mid,'QF',p.tA,p.tB);
+				if(winner) qfWinners[mid]=winner;
+			}
+			var sfMap={SF_1:['QF_1','QF_2'],SF_2:['QF_3','QF_4']};
+			fillDownstreamTeams(sfMap, qfWinners);
+		}
+
+		// SF → FINAL（胜者） & TP（败者）自动晋级
+		function propagateSFToFinalAndTP(){
+			var sfWinners={}, sfLosers={};
+			for(var i=1;i<=2;i++){
+				var mid='SF_'+i;
+				var p=kPreds[mid];
+				if(!p||!p.tA||!p.tB) continue;
+				var winner=getKOWinner(mid,'SF',p.tA,p.tB);
+				if(winner){ sfWinners[mid]=winner; sfLosers[mid]=(winner===p.tA?p.tB:p.tA); }
+			}
+			// FINAL: SF_1胜者 vs SF_2胜者
+			var finalMap={FINAL_1:['SF_1','SF_2']};
+			fillDownstreamTeams(finalMap, sfWinners);
+			// TP: SF_1败者 vs SF_2败者
+			var tpMap={TP_1:['SF_1','SF_2']};
+			fillDownstreamTeams(tpMap, sfLosers);
+		}
+
+		// 全链路传播：R32→R16→QF→SF→FINAL/TP
+		function propagateAllKnockout(){
+			propagateR32ToR16();
+			propagateR16ToQF();
+			propagateQFToSF();
+			propagateSFToFinalAndTP();
+			saveK();
+		}
 const koByStage={};koMs.forEach(m=>{if(!koByStage[m.sid])koByStage[m.sid]=[];koByStage[m.sid].push(m);});if(koByStage['R32']){koByStage['R32'].sort(function(a,b){var pa=a.time.split(/[月日 ]/),pb=b.time.split(/[月日 ]/);return(pa[0].padStart(2,'0')+pa[1].padStart(2,'0')+(pa[3]||'').replace(':','')).localeCompare(pb[0].padStart(2,'0')+pb[1].padStart(2,'0')+(pb[3]||'').replace(':',''));});}
 
 let gPreds=JSON.parse(localStorage.getItem('wc2026_groups')||'{}');
@@ -98,7 +163,7 @@ function poisson(lambda,k){if(k<0)return 0;let p=Math.exp(-lambda);for(let i=1;i
 function oddsToLambda(ow,ol){const pw=1/ow,pl=1/ol,pd=1/((ow+ol)/2+0.5);const t=pw+pd+pl;const pWin=pw/t;const diff=(pWin-0.5)*4;const base=1.35;return{hl:Math.max(0.2,base+diff*0.7),al:Math.max(0.2,base-diff*0.7)};}
 function calcGD(hl,al){const mg=7;const dHW=[],dD=[],dAW=[];let tHW=0,tD=0,tAW=0;const jt=[];for(let h=0;h<=mg;h++){jt[h]=[];for(let a=0;a<=mg;a++){const p=poisson(hl,h)*poisson(al,a);jt[h][a]=p;if(h>a)tHW+=p;else if(h===a)tD+=p;else tAW+=p;}}for(let g=1;g<=mg;g++){let ph=0;for(let a=0;a<g;a++)ph+=(jt[g]?jt[g][a]||0:0);dHW.push({goal:g,prob:tHW>0?ph/tHW*100:0});}for(let g=1;g<=mg;g++){const pd=jt[g]?jt[g][g]||0:0;dD.push({goal:g,prob:tD>0?pd/tD*100:0});}for(let g=1;g<=mg;g++){let pa=0;for(let h=0;h<g;h++)pa+=(jt[h]?jt[h][g]||0:0);dAW.push({goal:g,prob:tAW>0?pa/tAW*100:0});}return{hw:dHW,dd:dD,aw:dAW};}
 function calcPbs(ho,ao){const rw=1/ho.w,rd=1/((ho.d+ao.d||3.2)/2),ra=1/ao.w;const t=rw+rd+ra;return{ph:(rw/t*100).toFixed(1),pd:(rd/t*100).toFixed(1),pa:(ra/t*100).toFixed(1)};}
-function rPC(mid){if(window.renderProbModalV4){window.renderProbModalV4(mid);return;}const m=allGM.find(x=>x.id===mid);if(!m)return;const ho=liveOdds[m.home.code]||{w:2.50,d:3.20,l:2.80};const ao=liveOdds[m.away.code]||{w:2.80,d:3.20,l:2.50};const pr=calcPbs(ho,ao);const{hl,al}=oddsToLambda(ho.w,ao.w);const gd=calcGD(hl,al);const p=gPreds[mid];const cs=(p&&p.sh!=null&&p.sa!=null)?p.sh+'-'+p.sa:'未填写';const sh='<span class=\"source-tag source-william\">William Hill</span> (The Odds API)';let mh='<table class="prob-matrix"><thead><tr><th rowspan="2" style="width:50px;">进球数</th><th colspan="3" class="cond-header" style="color:#87ceeb;">'+m.home.zh+'胜 ('+pr.ph+'%)</th><th colspan="3" class="cond-header" style="color:#ccc;">平局 ('+pr.pd+'%)</th><th colspan="3" class="cond-header" style="color:#e74c3c;">'+m.away.zh+'胜 ('+pr.pa+'%)</th></tr><tr><th style="font-size:0.65rem;">赔率</th><th style="font-size:0.65rem;">概率</th><th style="font-size:0.65rem;">趋势</th><th style="font-size:0.65rem;">赔率</th><th style="font-size:0.65rem;">概率</th><th style="font-size:0.65rem;">趋势</th><th style="font-size:0.65rem;">赔率</th><th style="font-size:0.65rem;">概率</th><th style="font-size:0.65rem;">趋势</th></tr></thead><tbody>';for(let g=0;g<7;g++){const gl=g<6?'进'+(g+1)+'球':'进7+球';const hd=gd.hw[g]||{prob:0};const dd=gd.dd[g]||{prob:0};const ad=gd.aw[g]||{prob:0};const hOdd=hd.prob>0?(100/hd.prob*0.92).toFixed(2):'—';const dOdd=dd.prob>0?(100/dd.prob*0.92).toFixed(2):'—';const aOdd=ad.prob>0?(100/ad.prob*0.92).toFixed(2):'—';const bw=Math.max(2,Math.min(80,hd.prob*1.2));const bd=Math.max(2,Math.min(80,dd.prob*0.8));const ba=Math.max(2,Math.min(80,ad.prob*1.2));mh+='<tr><td class="goal-col">'+gl+'</td><td class="odd-val">'+hOdd+'</td><td class="prob-val">'+hd.prob.toFixed(1)+'%</td><td><span class="prob-bar" style="width:'+bw+'px;"></span></td><td class="odd-val">'+dOdd+'</td><td class="prob-val">'+dd.prob.toFixed(1)+'%</td><td><span class="prob-bar" style="width:'+bd+'px;background:#aaa;"></span></td><td class="odd-val">'+aOdd+'</td><td class="prob-val">'+ad.prob.toFixed(1)+'%</td><td><span class="prob-bar" style="width:'+ba+'px;background:#e74c3c;"></span></td></tr>';}mh+='</tbody></table>';const sum='<div style="display:flex;gap:20px;margin-top:16px;flex-wrap:wrap;"><div style="flex:1;min-width:180px;background:var(--surface2);padding:12px;border-radius:8px;text-align:center;"><div style="font-size:0.7rem;color:var(--text-secondary);">'+m.home.zh+' 胜</div><div style="font-size:1.4rem;font-weight:800;color:#87ceeb;">'+pr.ph+'%</div><div style="font-size:0.7rem;color:var(--text-secondary);">赔率 '+ho.w.toFixed(2)+'</div></div><div style="flex:1;min-width:180px;background:var(--surface2);padding:12px;border-radius:8px;text-align:center;"><div style="font-size:0.7rem;color:var(--text-secondary);">平局</div><div style="font-size:1.4rem;font-weight:800;color:#ccc;">'+pr.pd+'%</div><div style="font-size:0.7rem;color:var(--text-secondary);">赔率 '+ho.d.toFixed(2)+'</div></div><div style="flex:1;min-width:180px;background:var(--surface2);padding:12px;border-radius:8px;text-align:center;"><div style="font-size:0.7rem;color:var(--text-secondary);">'+m.away.zh+' 胜</div><div style="font-size:1.4rem;font-weight:800;color:#e74c3c;">'+pr.pa+'%</div><div style="font-size:0.7rem;color:var(--text-secondary);">赔率 '+ao.w.toFixed(2)+'</div></div></div>';const ui=lastUpdate?'<div class="update-info">📡 数据更新时间：<b>'+lastUpdate+'</b>（北京时间） | 数据源：'+sh+'</div>':'<div class="update-info">📡 数据源：初始模拟赔率 | 点击「🔄 更新数据」获取最新赔率</div>';document.getElementById('probContent').innerHTML='<p style="color:var(--gold-light);font-weight:700;margin-bottom:8px;font-size:1.1rem;">'+m.home.zh+' vs '+m.away.zh+'（'+m.time+'）</p>'+ui+'<p style="font-size:0.75rem;color:var(--text-secondary);margin-top:10px;margin-bottom:4px;">📊 胜平负条件下进球概率矩阵（进1球~进7+球）— 泊松分布模型 & 博彩赔率推导</p>'+sum+'<div style="overflow-x:auto;margin-top:8px;">'+mh+'</div><p style="font-size:0.65rem;color:var(--text-secondary);margin-top:8px;">* 当前预测比分：<b style="color:var(--gold-light);">'+cs+'</b> | λ主='+hl.toFixed(2)+', λ客='+al.toFixed(2)+'</p>';cProbMid=mid;}
+function rPC(mid){if(window.renderProbModalV4){window.renderProbModalV4(mid);return;}const m=allGM.find(x=>x.id===mid);if(!m)return;const hasRealOdds=!!(matchOdds[mid]||knockoutOdds[mid]||(window.knockoutOddsR16||{})[mid]);const ho=hasRealOdds?liveOdds[m.home.code]:{w:2.50,d:3.20,l:2.80};const ao=hasRealOdds?liveOdds[m.away.code]:{w:2.80,d:3.20,l:2.50};const pr=calcPbs(ho,ao);const{hl,al}=oddsToLambda(ho.w,ao.w);const gd=calcGD(hl,al);const p=gPreds[mid];const cs=(p&&p.sh!=null&&p.sa!=null)?p.sh+'-'+p.sa:'未填写';const sh=hasRealOdds?'<span class=\"source-tag source-william\">William Hill</span> (The Odds API)':'<span class=\"source-tag\" style=\"color:#888\">William Hill</span> 暂无赔率数据';let mh='<table class="prob-matrix"><thead><tr><th rowspan="2" style="width:50px;">进球数</th><th colspan="3" class="cond-header" style="color:#87ceeb;">'+m.home.zh+'胜 ('+(hasRealOdds?pr.ph+'%':'暂无')+')</th><th colspan="3" class="cond-header" style="color:#ccc;">平局 ('+(hasRealOdds?pr.pd+'%':'暂无')+')</th><th colspan="3" class="cond-header" style="color:#e74c3c;">'+m.away.zh+'胜 ('+(hasRealOdds?pr.pa+'%':'暂无')+')</th></tr><tr><th style="font-size:0.65rem;">赔率</th><th style="font-size:0.65rem;">概率</th><th style="font-size:0.65rem;">趋势</th><th style="font-size:0.65rem;">赔率</th><th style="font-size:0.65rem;">概率</th><th style="font-size:0.65rem;">趋势</th><th style="font-size:0.65rem;">赔率</th><th style="font-size:0.65rem;">概率</th><th style="font-size:0.65rem;">趋势</th></tr></thead><tbody>';for(let g=0;g<7;g++){const gl=g<6?'进'+(g+1)+'球':'进7+球';const hd=gd.hw[g]||{prob:0};const dd=gd.dd[g]||{prob:0};const ad=gd.aw[g]||{prob:0};const hOdd=hd.prob>0?(100/hd.prob*0.92).toFixed(2):'—';const dOdd=dd.prob>0?(100/dd.prob*0.92).toFixed(2):'—';const aOdd=ad.prob>0?(100/ad.prob*0.92).toFixed(2):'—';const bw=Math.max(2,Math.min(80,hd.prob*1.2));const bd=Math.max(2,Math.min(80,dd.prob*0.8));const ba=Math.max(2,Math.min(80,ad.prob*1.2));mh+='<tr><td class="goal-col">'+gl+'</td><td class="odd-val">'+(hasRealOdds?hOdd:'暂无')+'</td><td class="prob-val">'+(hasRealOdds?hd.prob.toFixed(1)+'%':'暂无')+'</td><td><span class="prob-bar" style="width:'+(hasRealOdds?bw:0)+'px;"></span></td><td class="odd-val">'+(hasRealOdds?dOdd:'暂无')+'</td><td class="prob-val">'+(hasRealOdds?dd.prob.toFixed(1)+'%':'暂无')+'</td><td><span class="prob-bar" style="width:'+(hasRealOdds?bd:0)+'px;background:#aaa;"></span></td><td class="odd-val">'+aOdd+'</td><td class="prob-val">'+ad.prob.toFixed(1)+'%</td><td><span class="prob-bar" style="width:'+ba+'px;background:#e74c3c;"></span></td></tr>';}mh+='</tbody></table>';const sum='<div style="display:flex;gap:20px;margin-top:16px;flex-wrap:wrap;"><div style="flex:1;min-width:180px;background:var(--surface2);padding:12px;border-radius:8px;text-align:center;"><div style="font-size:0.7rem;color:var(--text-secondary);">'+m.home.zh+' 胜</div><div style="font-size:1.4rem;font-weight:800;color:#87ceeb;">'+pr.ph+'%</div><div style="font-size:0.7rem;color:var(--text-secondary);">赔率 '+ho.w.toFixed(2)+'</div></div><div style="flex:1;min-width:180px;background:var(--surface2);padding:12px;border-radius:8px;text-align:center;"><div style="font-size:0.7rem;color:var(--text-secondary);">平局</div><div style="font-size:1.4rem;font-weight:800;color:#ccc;">'+pr.pd+'%</div><div style="font-size:0.7rem;color:var(--text-secondary);">赔率 '+ho.d.toFixed(2)+'</div></div><div style="flex:1;min-width:180px;background:var(--surface2);padding:12px;border-radius:8px;text-align:center;"><div style="font-size:0.7rem;color:var(--text-secondary);">'+m.away.zh+' 胜</div><div style="font-size:1.4rem;font-weight:800;color:#e74c3c;">'+pr.pa+'%</div><div style="font-size:0.7rem;color:var(--text-secondary);">赔率 '+ao.w.toFixed(2)+'</div></div></div>';const ui=lastUpdate?'<div class="update-info">📡 数据更新时间：<b>'+lastUpdate+'</b>（北京时间） | 数据源：'+sh+'</div>':'<div class="update-info">📡 数据源：初始模拟赔率 | 点击「🔄 更新数据」获取最新赔率</div>';document.getElementById('probContent').innerHTML='<p style="color:var(--gold-light);font-weight:700;margin-bottom:8px;font-size:1.1rem;">'+m.home.zh+' vs '+m.away.zh+'（'+m.time+'）</p>'+ui+'<p style="font-size:0.75rem;color:var(--text-secondary);margin-top:10px;margin-bottom:4px;">📊 胜平负条件下进球概率矩阵（进1球~进7+球）— 泊松分布模型 & 博彩赔率推导</p>'+sum+'<div style="overflow-x:auto;margin-top:8px;">'+mh+'</div><p style="font-size:0.65rem;color:var(--text-secondary);margin-top:8px;">* 当前预测比分：<b style="color:var(--gold-light);">'+cs+'</b> | λ主='+hl.toFixed(2)+', λ客='+al.toFixed(2)+'</p>';cProbMid=mid;}
 window.calcP=function(mid){if(window.renderProbModalV4){window.renderProbModalV4(mid);}else{rPC(mid);}document.getElementById('probModal').classList.add('visible');};
 window.closeProbModal=function(){document.getElementById('probModal').classList.remove('visible');cProbMid=null;};
 
@@ -290,15 +355,15 @@ window.sKR=function(rid){cKR=rid;document.querySelectorAll('#koTabs .tab').forEa
 
 // ========== ACTIONS ==========
 window.selM=function(mid){if(selMid){const p=document.querySelector('.match-item[data-match-id="'+selMid+'"]');if(p)p.classList.remove('selected');}selMid=mid;const el=document.querySelector('.match-item[data-match-id="'+mid+'"]');if(el)el.classList.add('selected');};
-window.uGS=function(mid,side,value){const sc=value===''?null:parseInt(value);if(sc!==null&&(isNaN(sc)||sc<0||sc>20)){showToast('⚠️ 请输入0-20之间的比分');return;}if(!gPreds[mid])gPreds[mid]={sh:null,sa:null,w:null};if(side==='home')gPreds[mid].sh=sc;else gPreds[mid].sa=sc;const sh=gPreds[mid].sh,sa=gPreds[mid].sa;if(sh!=null&&sa!=null){if(sh>sa)gPreds[mid].w='home';else if(sa>sh)gPreds[mid].w='away';else gPreds[mid].w='draw';}else gPreds[mid].w=null;saveG();autoFillKO();rGM();if(mTab==='knockout')rKP();showToast('✅ 比分已更新');};
-window.uKS=function(mid,side,value){const sc=value===''?null:parseInt(value);if(sc!==null&&(isNaN(sc)||sc<0||sc>20)){showToast('⚠️ 请输入0-20之间的比分');return;}if(!kPreds[mid])kPreds[mid]={tA:null,tB:null,sA:null,sB:null,w:null,af:true};kPreds[mid][side]=sc;const sa=kPreds[mid].sA,sb=kPreds[mid].sB;if(sa!=null&&sb!=null){if(sa>sb)kPreds[mid].w='teamA';else if(sb>sa)kPreds[mid].w='teamB';else kPreds[mid].w='draw';}else kPreds[mid].w=null;saveK();if(mTab==='knockout')rKP();showToast('✅ 比分已更新');};
+window.uGS=function(mid,side,value){const sc=value===''?null:parseInt(value);if(sc!==null&&(isNaN(sc)||sc<0||sc>20)){showToast('⚠️ 请输入0-20之间的比分');return;}if(!gPreds[mid])gPreds[mid]={sh:null,sa:null,w:null};if(side==='home')gPreds[mid].sh=sc;else gPreds[mid].sa=sc;const sh=gPreds[mid].sh,sa=gPreds[mid].sa;if(sh!=null&&sa!=null){if(sh>sa)gPreds[mid].w='home';else if(sa>sh)gPreds[mid].w='away';else gPreds[mid].w='draw';}else gPreds[mid].w=null;saveG();autoFillKO();propagateAllKnockout();rGM();if(mTab==='knockout')rKP();showToast('✅ 比分已更新');};
+window.uKS=function(mid,side,value){const sc=value===''?null:parseInt(value);if(sc!==null&&(isNaN(sc)||sc<0||sc>20)){showToast('⚠️ 请输入0-20之间的比分');return;}if(!kPreds[mid])kPreds[mid]={tA:null,tB:null,sA:null,sB:null,w:null,af:true};kPreds[mid][side]=sc;const sa=kPreds[mid].sA,sb=kPreds[mid].sB;if(sa!=null&&sb!=null){if(sa>sb)kPreds[mid].w='teamA';else if(sb>sa)kPreds[mid].w='teamB';else kPreds[mid].w='draw';}else kPreds[mid].w=null;saveK();propagateAllKnockout();if(mTab==='knockout')rKP();showToast('✅ 比分已更新');};
 window.uKT=function(mid,side,code){if(!kPreds[mid])kPreds[mid]={tA:null,tB:null,sA:null,sB:null,w:null,af:true};kPreds[mid][side]=code||null;kPreds[mid].af=false;kPreds[mid].w=null;saveK();if(mTab==='knockout')rKP();};
 window.eKT=function(ev,mid,side){ev.currentTarget.classList.toggle('editing');};
 window._koReg=function(mid,tA,tB){if(!tA||!tB)return null;var stage='R32',stagename='32强';if(mid.indexOf('R16_')===0){stage='R16';stagename='16强';}else if(mid.indexOf('QF_')===0){stage='QF';stagename='8强';}else if(mid.indexOf('SF_')===0){stage='SF';stagename='4强';}else if(mid.indexOf('TP_')===0){stage='TP';stagename='季军赛';}else if(mid.indexOf('FINAL')===0){stage='FINAL';stagename='决赛';}var m={id:mid,home:{code:tA,zh:(teamMap[tA]||{}).zh||tA,en:(teamMap[tA]||{}).en||tA},away:{code:tB,zh:(teamMap[tB]||{}).zh||tB,en:(teamMap[tB]||{}).en||tB},gid:stage,gn:stagename,sid:stage,time:''};allGM.push(m);return m;};
 window.showA_ko=function(mid,tA,tB){var m=window._koReg(mid,tA,tB);if(!m)return;showA(mid);allGM.pop();};
 window.showVenue_ko=function(mid,tA,tB){var m=window._koReg(mid,tA,tB);if(!m)return;showVenueAnalysis(mid);allGM.pop();};
 window.calcP_ko=function(mid,tA,tB){var m=window._koReg(mid,tA,tB);if(!m)return;if(typeof calcP==='function')calcP(mid);allGM.pop();};
-window.resetAllPredictions=function(){if(confirm('确定要清除所有小组赛预测结果吗？')){gPreds={};selMid=null;saveG();rGM();autoFillKO();if(mTab==='knockout')rKP();showToast('🔄 小组预测已重置');}};
+window.resetAllPredictions=function(){if(confirm('确定要清除所有小组赛预测结果吗？')){gPreds={};selMid=null;saveG();rGM();autoFillKO();propagateAllKnockout();if(mTab==='knockout')rKP();showToast('🔄 小组预测已重置');}};
 window.showMyPredictionsModal=function(){const ct=document.getElementById('summaryContent');const gp=allGM.filter(m=>{const p=gPreds[m.id];return p&&p.sh!=null&&p.sa!=null;});const kp=koMs.filter(m=>{const p=kPreds[m.id];return p&&p.tA&&p.tB&&p.sA!=null&&p.sB!=null;});let h='';if(gp.length===0&&kp.length===0){h='<p style="color:var(--text-secondary);text-align:center;padding:20px;">暂无预测记录。</p>';}else{if(gp.length>0){h+='<p style="color:var(--gold-light);font-weight:700;">小组赛</p>';const ggd={};gp.forEach(m=>{if(!ggd[m.gid])ggd[m.gid]=[];ggd[m.gid].push(m);});for(const[gid,ms]of Object.entries(ggd)){h+='<p style="color:var(--gold-light);font-size:0.8rem;">'+ms[0].gn+'</p>';ms.forEach(m=>{const p=gPreds[m.id];const wn=p.w==='home'?m.home.zh:p.w==='away'?m.away.zh:'平局';h+='<div class="summary-item"><span>'+m.home.zh+' '+p.sh+':'+p.sa+' '+m.away.zh+'</span> <span>→ '+wn+'</span></div>';});}}if(kp.length>0){h+='<p style="color:var(--gold-light);font-weight:700;margin-top:12px;">淘汰赛</p>';kp.forEach(m=>{const p=kPreds[m.id];const ta=teamMap[p.tA]?.zh||p.tA;const tb=teamMap[p.tB]?.zh||p.tB;const wn=p.w==='teamA'?ta:p.w==='teamB'?tb:'平局';h+='<div class="summary-item"><span>'+ta+' '+p.sA+':'+p.sB+' '+tb+'</span> <span>→ '+wn+'</span> <small>('+m.sn+')</small></div>';});}}ct.innerHTML=h;document.getElementById('summaryModal').classList.add('visible');};
 window.closeSummaryModal=function(){document.getElementById('summaryModal').classList.remove('visible');};
 window.savePredictions=function(){saveG();saveK();const gc=Object.values(gPreds).filter(p=>p.sh!=null&&p.sa!=null).length;const kc=Object.values(kPreds).filter(p=>p.tA&&p.tB&&p.sA!=null&&p.sB!=null).length;showToast('💾 已保存 '+gc+' 场小组赛 + '+kc+' 场淘汰赛预测');};
@@ -309,7 +374,7 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 // ========== TABS ==========
 function bGT(){const c=document.getElementById('groupTabs');let h='<div class="tab'+(cGT==='nearby'?' active':'')+'" data-group="nearby" onclick="sGT(\'nearby\')">📍 邻近比赛</div><div class="tab'+(cGT==='all'?' active':'')+'" data-group="all" onclick="sGT(\'all\')">全部小组</div>';groupsData.forEach(g=>{h+='<div class="tab'+(cGT===g.id?' active':'')+'" data-group="'+g.id+'" onclick="sGT(\''+g.id+'\')">'+g.name+'</div>';});c.innerHTML=h;}
 window.sGT=function(tid){cGT=tid;document.querySelectorAll('#groupTabs .tab').forEach(t=>t.classList.remove('active'));const tb=document.querySelector('#groupTabs .tab[data-group="'+tid+'"]');if(tb)tb.classList.add('active');document.getElementById('searchInput').value='';if(tid==='nearby')rNM();else rGM();};
-window.switchMainTab=function(tab){mTab=tab;document.querySelectorAll('#tabContainer .tab').forEach(t=>t.classList.remove('active'));var tb=document.querySelector('#tabContainer .tab[data-tab="'+tab+'"]');if(tb)tb.classList.add('active');var gc=document.getElementById('groupsContainer');var kp=document.getElementById('knockoutPanel');if(tab==='groups'){gc.style.display='block';gc.style.visibility='visible';if(kp)kp.classList.remove('visible');}else{gc.style.display='none';gc.style.visibility='hidden';if(kp)kp.classList.add('visible');}if(tab==='knockout'){autoFillKO();propagateR32ToR16();rKP();}};
+window.switchMainTab=function(tab){mTab=tab;document.querySelectorAll('#tabContainer .tab').forEach(t=>t.classList.remove('active'));var tb=document.querySelector('#tabContainer .tab[data-tab="'+tab+'"]');if(tb)tb.classList.add('active');var gc=document.getElementById('groupsContainer');var kp=document.getElementById('knockoutPanel');if(tab==='groups'){gc.style.display='block';gc.style.visibility='visible';if(kp)kp.classList.remove('visible');}else{gc.style.display='none';gc.style.visibility='hidden';if(kp)kp.classList.add('visible');}if(tab==='knockout'){autoFillKO();propagateAllKnockout();rKP();}};
 window.filterTeams=function(){if(currentEdition==='2026'){if(cGT==='nearby')rNM();else rGM();}else{renderPastWCMatchesMain();}};
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){try{var pd=document.querySelector('.player-detail-overlay');if(pd){pd.remove();e.stopImmediatePropagation();return;}var pdm=document.getElementById('playerDetailModal');if(pdm&&pdm.classList.contains('visible')){if(typeof closePlayerDetail==='function')closePlayerDetail();e.stopImmediatePropagation();return;}var sm=document.getElementById('squadModal');if(sm&&sm.classList.contains('visible')){if(typeof closeSquadModal==='function')closeSquadModal();e.stopImmediatePropagation();return;}var modals=[{id:'matchDetailModal',close:closeMatchDetail},{id:'analysisModal',close:closeAnalysisModal},{id:'venueAnalysisModal',close:closeVenueAnalysis},{id:'probModal',close:closeProbModal},{id:'summaryModal',close:closeSummaryModal},{id:'ovGoalTimeModal',close:function(){closeOvModal('ovGoalTimeModal')}},{id:'ovGoalTypeModal',close:function(){closeOvModal('ovGoalTypeModal')}},{id:'ovCornerModal',close:function(){closeOvModal('ovCornerModal')}},{id:'ovDisciplineModal',close:function(){closeOvModal('ovDisciplineModal')}},{id:'ovPerfBoardModal',close:function(){closeOvModal('ovPerfBoardModal')}},{id:'ovValueRankModal',close:function(){closeOvModal('ovValueRankModal')}},{id:'ovScorerRankModal',close:function(){closeOvModal('ovScorerRankModal')}},{id:'ovAssistRankModal',close:function(){closeOvModal('ovAssistRankModal')}},{id:'ovSaveRankModal',close:function(){closeOvModal('ovSaveRankModal')}}];for(var i=0;i<modals.length;i++){var m=document.getElementById(modals[i].id);if(m&&m.classList.contains('visible')){modals[i].close();e.stopImmediatePropagation();return;}}selMid=null;if(mTab==='groups')rGM();}catch(e){}}if(e.ctrlKey&&e.key==='s'){e.preventDefault();savePredictions();}});
 // pastWCModal removed - using main page view instead
@@ -1178,7 +1243,7 @@ if(typeof window!=='undefined'&&window.innerWidth>480)cGT='all';
 			if(gEl){gEl.style.display='none';gEl.style.visibility='hidden';}
 			if(kEl) kEl.classList.add('visible');
 		}
-		if(cGT==='nearby')rNM();else rGM();autoFillKO();
+		if(cGT==='nearby')rNM();else rGM();autoFillKO();propagateAllKnockout();
 		if(mTab==='knockout') rKP();
 // ===== 开发测试：模拟当前时间为 2026-06-14 03:30 北京时间 =====
 // 生产环境注释下行即可使用真实时间

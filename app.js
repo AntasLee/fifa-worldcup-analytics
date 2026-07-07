@@ -80,7 +80,7 @@ window.switchEdition=function(edition){
       if(ko2026) ko2026.classList.add('visible');
     }
     if(typeof rGM==='function') rGM();
-    if(typeof mTab!=='undefined'&&mTab==='knockout'){ if(typeof autoFillKO==='function') autoFillKO(); if(typeof propagateR32ToR16==='function') propagateR32ToR16(); if(typeof rKP==='function') rKP(); }
+    if(typeof mTab!=='undefined'&&mTab==='knockout'){ if(typeof autoFillKO==='function') autoFillKO(); if(typeof propagateAllKnockout==='function') propagateAllKnockout(); if(typeof rKP==='function') rKP(); }
     // Sync tab visibility after render (covers all call sites)
     if(typeof switchMainTab==='function'&&typeof mTab!=='undefined') switchMainTab(mTab);
   } else if(isPast){
