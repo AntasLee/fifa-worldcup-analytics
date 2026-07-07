@@ -2860,14 +2860,28 @@ const wc2026AllMatches = {
   },
   // M93 · 7月7日 03:00 · BMO球场 (多伦多)
   "2026|R16|POR|ESP": {
-    score: null, date: "2026-07-07", time: "03:00", venue: "BMO球场", stage: "R16",
-    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    score: { sh: 0, sa: 1 }, date: "2026-07-07", time: "03:00", venue: "AT&T体育场", stage: "R16",
+    goals: [
+      { min: "90+1", side: "away", scorer: "米克尔·梅里诺", type: "shot", assist: "费兰·托雷斯" }
+    ],
+    stats: { possession:{h:45,a:55}, shots:{h:7,a:12}, shotsOnTarget:{h:2,a:6}, corners:{h:3,a:7}, fouls:{h:9,a:13}, yellowCards:{h:2,a:1}, redCards:{h:0,a:0}, attacks:{h:106,a:96}, dangerousAttacks:{h:38,a:50} },
+    attendance: 80120, referee: "Maurizio Mariani (ITA)", xg: null,
+    mediaRating: { motm:"乌奈·西蒙", sources:["Sky Sports","AP","ESPN","Sports Illustrated","BBC Sport"], home:{score:5, quotes:"C罗的世界杯告别战——19次触球、2次射门、0.60总xG。马丁内斯赛后宣布辞职，葡萄牙的黄金一代在沉闷的伊比利亚德比中黯然谢幕。C罗的'最后一舞'被梅里诺的绝杀无情终结——他走向球员通道时那沉默的挥手将成为世界杯永恒画面。"}, away:{score:7, quotes:"西班牙以破纪录的连续第6场零封晋级八强！乌奈·西蒙超越曾加的36年纪录后继续书写历史。虽然进攻端同样乏善可陈——奥亚萨瓦尔错失空门——但费兰·托雷斯替补登场助攻梅里诺90+1分钟绝杀，延续了西班牙本届赛事关键时刻总有人挺身而出的传统。8强对阵比利时。"} },
     aiPreMatch: null, aiPostReview: null
   },
-  // M94 · 7月7日 08:00 · 李维斯体育场 (旧金山)
+  // M94 · 7月7日 08:00 · 流明球场 (西雅图)
   "2026|R16|USA|BEL": {
-    score: null, date: "2026-07-07", time: "08:00", venue: "李维斯体育场", stage: "R16",
-    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    score: { sh: 1, sa: 4 }, date: "2026-07-07", time: "08:00", venue: "流明球场", stage: "R16",
+    goals: [
+      { min: 9, side: "away", scorer: "夏尔·德凯特拉雷", type: "shot", assist: "尼古拉·拉斯坎" },
+      { min: 31, side: "home", scorer: "马利克·蒂尔曼", type: "free_kick" },
+      { min: 33, side: "away", scorer: "夏尔·德凯特拉雷", type: "header", assist: "莱安德罗·特罗萨德" },
+      { min: 57, side: "away", scorer: "汉斯·范纳肯", type: "shot", assist: "夏尔·德凯特拉雷" },
+      { min: "90+3", side: "away", scorer: "罗梅卢·卢卡库", type: "shot", assist: "汉斯·范纳肯" }
+    ],
+    stats: { possession:{h:56,a:44}, shots:{h:7,a:15}, shotsOnTarget:{h:2,a:7}, corners:{h:3,a:5}, fouls:{h:11,a:9}, yellowCards:{h:2,a:0}, redCards:{h:0,a:0}, attacks:{h:127,a:93}, dangerousAttacks:{h:43,a:33} },
+    attendance: 68532, referee: "Facundo Tello (ARG)", xg: null,
+    mediaRating: { motm:"夏尔·德凯特拉雷", sources:["Sofascore","DAZN","FotMob","France 24","AP"], home:{score:4, quotes:"东道主的噩梦之夜。弗里斯的致命失误导致第三球、理查兹的传球送给卢卡库第四球——3次失误直接导致丢球。蒂尔曼的任意球世界波（7.3分）是唯一亮点，普利西奇59分钟伤退雪上加霜。三支东道主全部止步16强，北美世界杯的梦想就此终结。"}, away:{score:9, quotes:"比利时4-1碾碎东道主！德凯特拉雷两射一传（8.5分）展现亚特兰大核心的全部天赋——第9分钟首开纪录、33分钟头球梅开二度、57分钟助攻范纳肯。加西亚轮换德布劳内和杜库的豪赌大获成功。补时阶段卢卡库锦上添花。8强对阵西班牙——黄金一代的最后一舞仍在继续。"} },
     aiPreMatch: null, aiPostReview: null
   },
   // M95 · 7月8日 00:00 · 硬石体育场 (迈阿密)

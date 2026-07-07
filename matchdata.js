@@ -2213,6 +2213,28 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 2, red: 0 }, away: { yellow: 3, red: 1 } },
     attendance: 87523, referee: "Slavko Vinčić (SVN)"
   },
+  // M93 · 7月7日 03:00 · AT&T体育场 (达拉斯)
+  "2026|R16|POR|ESP": {
+    score: { sh: 0, sa: 1 },
+    goals: [
+      { min: "90+1", side: "away", scorer: "米克尔·梅里诺 (Mikel Merino)", type: "shot", assist: "费兰·托雷斯 (Ferran Torres)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: 80120, referee: "Maurizio Mariani (ITA)"
+  },
+  // M94 · 7月7日 08:00 · 流明球场 (西雅图)
+  "2026|R16|USA|BEL": {
+    score: { sh: 1, sa: 4 },
+    goals: [
+      { min: 9, side: "away", scorer: "夏尔·德凯特拉雷 (Charles De Ketelaere)", type: "shot", assist: "尼古拉·拉斯坎 (Nicolas Raskin)" },
+      { min: 31, side: "home", scorer: "马利克·蒂尔曼 (Malik Tillman)", type: "free_kick" },
+      { min: 33, side: "away", scorer: "夏尔·德凯特拉雷 (Charles De Ketelaere)", type: "header", assist: "莱安德罗·特罗萨德 (Leandro Trossard)" },
+      { min: 57, side: "away", scorer: "汉斯·范纳肯 (Hans Vanaken)", type: "shot", assist: "夏尔·德凯特拉雷 (Charles De Ketelaere)" },
+      { min: "90+3", side: "away", scorer: "罗梅卢·卢卡库 (Romelu Lukaku)", type: "shot", assist: "汉斯·范纳肯 (Hans Vanaken)" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 0, red: 0 } },
+    attendance: 68532, referee: "Facundo Tello (ARG)"
+  },
 };
 // ========== 2026世界杯 比赛统计数据 ==========
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
@@ -2309,3 +2331,5 @@ matchStats["2026|R16|CAN|MAR"] = {p1:"45%",p2:"55%",ps1:null,ps2:null,sh1:7,sh2:
 matchStats["2026|R16|PAR|FRA"] = {p1:"24%",p2:"76%",ps1:null,ps2:null,sh1:4,sh2:11,so1:0,so2:5,sb1:4,sb2:6,co1:2,co2:12,fo1:13,fo2:11,os1:0,os2:0,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:63,at2:145,da1:17,da2:81,pk1:0,pk2:1};
 matchStats["2026|R16|BRA|NOR"] = {p1:"34%",p2:"66%",ps1:null,ps2:null,sh1:10,sh2:8,so1:4,so2:5,sb1:6,sb2:3,co1:5,co2:5,fo1:7,fo2:6,os1:1,os2:1,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:74,at2:124,da1:58,da2:65,pk1:2,pk2:0};
 matchStats["2026|R16|MEX|ENG"] = {p1:"67%",p2:"33%",ps1:null,ps2:null,sh1:13,sh2:6,so1:5,so2:5,sb1:8,sb2:1,co1:12,co2:2,fo1:14,fo2:7,os1:1,os2:0,yc1:2,yc2:3,rc1:0,rc2:1,tk1:null,tk2:null,at1:126,at2:54,da1:82,da2:22,pk1:1,pk2:1};
+matchStats["2026|R16|POR|ESP"] = {p1:"45%",p2:"55%",ps1:null,ps2:null,sh1:7,sh2:12,so1:2,so2:6,sb1:5,sb2:6,co1:3,co2:7,fo1:9,fo2:13,os1:2,os2:1,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:106,at2:96,da1:38,da2:50,pk1:0,pk2:0};
+matchStats["2026|R16|USA|BEL"] = {p1:"56%",p2:"44%",ps1:null,ps2:null,sh1:7,sh2:15,so1:2,so2:7,sb1:5,sb2:4,co1:3,co2:5,fo1:11,fo2:9,os1:0,os2:1,yc1:2,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:127,at2:93,da1:43,da2:33,pk1:0,pk2:0};
