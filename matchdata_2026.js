@@ -2886,14 +2886,39 @@ const wc2026AllMatches = {
   },
   // M95 · 7月8日 00:00 · 硬石体育场 (迈阿密)
   "2026|R16|ARG|EGY": {
-    score: null, date: "2026-07-08", time: "00:00", venue: "硬石体育场", stage: "R16",
-    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    score: { sh: 3, sa: 2 }, date: "2026-07-08", time: "00:00", venue: "梅赛德斯-奔驰体育场", stage: "R16",
+    goals: [
+      { min: 15, side: "away", scorer: "亚西尔·易卜拉欣", type: "header", assist: "马尔万·阿提亚" },
+      { min: 67, side: "away", scorer: "穆斯塔法·济科", type: "shot", assist: "哈塞姆·哈桑" },
+      { min: 79, side: "home", scorer: "克里斯蒂安·罗梅罗", type: "header", assist: "利昂内尔·梅西" },
+      { min: 83, side: "home", scorer: "利昂内尔·梅西", type: "shot", assist: "贡萨洛·蒙铁尔" },
+      { min: "90+3", side: "home", scorer: "恩佐·费尔南德斯", type: "header", assist: "劳塔罗·马丁内斯" }
+    ],
+    stats: { possession:{h:64,a:36}, shots:{h:15,a:5}, shotsOnTarget:{h:7,a:2}, corners:{h:6,a:1}, fouls:{h:13,a:11}, yellowCards:{h:0,a:3}, redCards:{h:0,a:0}, attacks:{h:139,a:77}, dangerousAttacks:{h:77,a:18} },
+    attendance: 71253, referee: "Wilton Sampaio (BRA)", xg: null,
+    mediaRating: { motm:"利昂内尔·梅西", sources:["FIFA","Goal.com","Al Jazeera","AP","Sky Sports"], home:{score:8, quotes:"卫冕冠军上演世界杯史上最伟大的逆转之一——0-2落后至79分钟，最后11分钟连入三球绝地翻盘！梅西罚丢点球（本届第二粒失点）后以助攻+扳平球自我救赎——连续9场世界杯进球+第21球继续领跑金靴。罗梅罗头球点燃反攻号角，恩佐补时头槌完成史诗逆转。斯卡洛尼赛后激动落泪。"}, away:{score:7, quotes:"埃及距世界杯最大冷门仅差11分钟。易卜拉欣15分钟头球+济科67分钟爆射建立2-0优势，舒贝尔扑出梅西点球后看似天命所归。但VAR取消埃及第三球的争议判罚成为转折——罗梅罗79分钟头球破门后法老防线全面崩盘。教练组成员赛后染红。虽败犹荣，埃及足球的未来令人期待。"} },
     aiPreMatch: null, aiPostReview: null
   },
-  // M96 · 7月8日 04:00 · BC Place体育场 (温哥华)
+  // M96 · 7月8日 04:00 · BC Place体育场 (温哥华) — 加时0-0, 瑞士点球4-3胜
   "2026|R16|SUI|COL": {
-    score: null, date: "2026-07-08", time: "04:00", venue: "BC Place体育场", stage: "R16",
-    goals: null, stats: null, attendance: null, referee: null, xg: null, mediaRating: null,
+    score: { sh: 0, sa: 0 }, date: "2026-07-08", time: "04:00", venue: "BC Place体育场", stage: "R16",
+    aet: true, penalties: true, penaltyScore: { home: 4, away: 3 },
+    penaltyShootout: [
+      { side: "away", scorer: "戴文森·桑切斯 (Davinson Sánchez)", result: "missed" },
+      { side: "home", scorer: "格拉尼特·扎卡 (Granit Xhaka)", result: "scored" },
+      { side: "away", scorer: "路易斯·迪亚斯 (Luis Díaz)", result: "scored" },
+      { side: "home", scorer: "泽基·阿姆杜尼 (Zeki Amdouni)", result: "scored" },
+      { side: "away", scorer: "路易斯·苏亚雷斯 (Luis Suárez)", result: "scored" },
+      { side: "home", scorer: "曼努埃尔·阿坎吉 (Manuel Akanji)", result: "missed" },
+      { side: "away", scorer: "库乔·埃尔南德斯 (Cucho Hernández)", result: "saved" },
+      { side: "home", scorer: "塞德里克·伊滕 (Cedric Itten)", result: "scored" },
+      { side: "away", scorer: "胡安·金特罗 (Juan Quintero)", result: "scored" },
+      { side: "home", scorer: "鲁本·巴尔加斯 (Ruben Vargas)", result: "scored", winner: true }
+    ],
+    goals: [],
+    stats: { possession:{h:53,a:47}, shots:{h:6,a:11}, shotsOnTarget:{h:2,a:3}, corners:{h:3,a:7}, fouls:{h:13,a:10}, yellowCards:{h:3,a:2}, redCards:{h:0,a:0}, attacks:{h:115,a:104}, dangerousAttacks:{h:56,a:33} },
+    attendance: 52104, referee: "Ilgiz Tantashev (UZB)", xg: null,
+    mediaRating: { motm:"格雷戈尔·科贝尔", sources:["FIFA","ESPN","BBC Sport","AP","Sky Sports"], home:{score:7, quotes:"瑞士自1954年以来首进世界杯八强！120分钟的绞杀战术——面对哥伦比亚的攻势（xG 1.09 vs 0.39），科贝尔多次神扑+点球大战扑出埃尔南德斯射门成为英雄。巴尔加斯罚入制胜点球引爆全场。曼赞比因伤缺阵使进攻乏力但防守韧性十足。8强对阵阿根廷。"}, away:{score:6, quotes:"哥伦比亚再次倒在点球大战——2018年负于英格兰的噩梦重演。卢库米加时头球中楣、坎帕兹116分钟单刀射飞错过绝杀。桑切斯点球击中横梁、埃尔南德斯被科贝尔扑出——哥伦比亚全场仅失1球的钢铁防线未能换来八强席位。五届世界杯四次止步16强。"} },
     aiPreMatch: null, aiPostReview: null
   }
 

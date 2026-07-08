@@ -2235,6 +2235,39 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 2, red: 0 }, away: { yellow: 0, red: 0 } },
     attendance: 68532, referee: "Facundo Tello (ARG)"
   },
+  // M95 · 7月8日 00:00 · 梅赛德斯-奔驰体育场 (亚特兰大)
+  "2026|R16|ARG|EGY": {
+    score: { sh: 3, sa: 2 },
+    goals: [
+      { min: 15, side: "away", scorer: "亚西尔·易卜拉欣 (Yasser Ibrahim)", type: "header", assist: "马尔万·阿提亚 (Marwan Attia)" },
+      { min: 67, side: "away", scorer: "穆斯塔法·济科 (Mostafa Ziko)", type: "shot", assist: "哈塞姆·哈桑 (Hasem Hassan)" },
+      { min: 79, side: "home", scorer: "克里斯蒂安·罗梅罗 (Cristian Romero)", type: "header", assist: "利昂内尔·梅西 (Lionel Messi)" },
+      { min: 83, side: "home", scorer: "利昂内尔·梅西 (Lionel Messi)", type: "shot", assist: "贡萨洛·蒙铁尔 (Gonzalo Montiel)" },
+      { min: "90+3", side: "home", scorer: "恩佐·费尔南德斯 (Enzo Fernández)", type: "header", assist: "劳塔罗·马丁内斯 (Lautaro Martínez)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 3, red: 0 } },
+    attendance: 71253, referee: "Wilton Sampaio (BRA)"
+  },
+  // M96 · 7月8日 04:00 · BC Place体育场 (温哥华)
+  "2026|R16|SUI|COL": {
+    score: { sh: 0, sa: 0 },
+    aet: true, penalties: true, penaltyScore: { home: 4, away: 3 },
+    penaltyShootout: [
+      { side: "away", scorer: "戴文森·桑切斯 (Davinson Sánchez)", result: "missed" },
+      { side: "home", scorer: "格拉尼特·扎卡 (Granit Xhaka)", result: "scored" },
+      { side: "away", scorer: "路易斯·迪亚斯 (Luis Díaz)", result: "scored" },
+      { side: "home", scorer: "泽基·阿姆杜尼 (Zeki Amdouni)", result: "scored" },
+      { side: "away", scorer: "路易斯·苏亚雷斯 (Luis Suárez)", result: "scored" },
+      { side: "home", scorer: "曼努埃尔·阿坎吉 (Manuel Akanji)", result: "missed" },
+      { side: "away", scorer: "库乔·埃尔南德斯 (Cucho Hernández)", result: "saved" },
+      { side: "home", scorer: "塞德里克·伊滕 (Cedric Itten)", result: "scored" },
+      { side: "away", scorer: "胡安·金特罗 (Juan Quintero)", result: "scored" },
+      { side: "home", scorer: "鲁本·巴尔加斯 (Ruben Vargas)", result: "scored", winner: true }
+    ],
+    goals: [],
+    cards: { home: { yellow: 3, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: 52104, referee: "Ilgiz Tantashev (UZB)"
+  },
 };
 // ========== 2026世界杯 比赛统计数据 ==========
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
@@ -2333,3 +2366,5 @@ matchStats["2026|R16|BRA|NOR"] = {p1:"34%",p2:"66%",ps1:null,ps2:null,sh1:10,sh2
 matchStats["2026|R16|MEX|ENG"] = {p1:"67%",p2:"33%",ps1:null,ps2:null,sh1:13,sh2:6,so1:5,so2:5,sb1:8,sb2:1,co1:12,co2:2,fo1:14,fo2:7,os1:1,os2:0,yc1:2,yc2:3,rc1:0,rc2:1,tk1:null,tk2:null,at1:126,at2:54,da1:82,da2:22,pk1:1,pk2:1};
 matchStats["2026|R16|POR|ESP"] = {p1:"45%",p2:"55%",ps1:null,ps2:null,sh1:7,sh2:12,so1:2,so2:6,sb1:5,sb2:6,co1:3,co2:7,fo1:9,fo2:13,os1:2,os2:1,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:106,at2:96,da1:38,da2:50,pk1:0,pk2:0};
 matchStats["2026|R16|USA|BEL"] = {p1:"56%",p2:"44%",ps1:null,ps2:null,sh1:7,sh2:15,so1:2,so2:7,sb1:5,sb2:4,co1:3,co2:5,fo1:11,fo2:9,os1:0,os2:1,yc1:2,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:127,at2:93,da1:43,da2:33,pk1:0,pk2:0};
+matchStats["2026|R16|ARG|EGY"] = {p1:"64%",p2:"36%",ps1:null,ps2:null,sh1:15,sh2:5,so1:7,so2:2,sb1:8,sb2:3,co1:6,co2:1,fo1:13,fo2:11,os1:3,os2:0,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:139,at2:77,da1:77,da2:18,pk1:1,pk2:0};
+matchStats["2026|R16|SUI|COL"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:6,sh2:11,so1:2,so2:3,sb1:4,sb2:8,co1:3,co2:7,fo1:13,fo2:10,os1:1,os2:2,yc1:3,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:115,at2:104,da1:56,da2:33,pk1:0,pk2:0};
