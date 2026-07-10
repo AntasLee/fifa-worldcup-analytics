@@ -105,11 +105,20 @@ L_1_2:{h:'CRO',a:'GHA',hw:1.65,d:3.6,aw:5,ahLine:-0.75,ahHome:1.78,ahAway:2.05,o
 		R16_7:{h:'ARG',a:'EGY',hw:1.36,d:4.60,aw:8.50,ahLine:-1.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.95,ouUnder:1.80},
 		R16_8:{h:'SUI',a:'COL',hw:3.40,d:3.10,aw:2.15,ahLine:0.25,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.20,ouUnder:1.62}
 		};
+		// ========== 淘汰赛比赛级赔率 (QF, 4场) ==========
+		// 数据源: William Hill / FanDuel / DraftKings / Dimers 综合
+		// 更新时间: 2026-07-08
+		const knockoutOddsQF={
+		QF_1:{h:'FRA',a:'MAR',hw:1.57,d:3.90,aw:6.00,ahLine:-1.0,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.00,ouUnder:1.82},
+		QF_2:{h:'NOR',a:'ENG',hw:4.40,d:3.90,aw:1.90,ahLine:0.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.87,ouUnder:1.95},
+		QF_3:{h:'ESP',a:'BEL',hw:1.65,d:3.95,aw:5.50,ahLine:-0.75,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.87,ouUnder:1.95},
+		QF_4:{h:'ARG',a:'SUI',hw:1.69,d:3.60,aw:5.50,ahLine:-0.75,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.05,ouUnder:1.78}
+		};
 	// ========== 从 matchOdds + knockoutOdds 自动计算 liveOdds ==========
 	(function(){
 	  var ts={};
 	  // 合并小组赛 + 淘汰赛赔率
-		  var allOdds=Object.assign({},matchOdds,knockoutOdds,knockoutOddsR16);
+		  var allOdds=Object.assign({},matchOdds,knockoutOdds,knockoutOddsR16,knockoutOddsQF);
 	  Object.values(allOdds).forEach(function(m){
 	    if(!ts[m.h])ts[m.h]={hw:[],aw:[],d:[]};
 	    if(!ts[m.a])ts[m.a]={hw:[],aw:[],d:[]};
@@ -132,11 +141,12 @@ L_1_2:{h:'CRO',a:'GHA',hw:1.65,d:3.6,aw:5,ahLine:-0.75,ahHome:1.78,ahAway:2.05,o
 		window.matchOdds = matchOdds;
 		window.knockoutOdds = knockoutOdds;
 		window.knockoutOddsR16 = knockoutOddsR16;
+		window.knockoutOddsQF = knockoutOddsQF;
 		window.initialOdds = initialOdds;
 	window.liveOdds = liveOdds;
 	window.lastUpdate = lastUpdate;
 	window.dataSource = 'William Hill';
 	
-		console.log('✅ oddsdata.js 已加载: 72场小组赛 + 16场R32 + 8场R16 (含AH/OU扩展字段) | 数据源: William Hill via The Odds API | 更新: 2026-07-04');
+		console.log('✅ oddsdata.js 已加载: 72场小组赛 + 16场R32 + 8场R16 + 4场QF (含AH/OU扩展字段) | 数据源: William Hill via The Odds API | 更新: 2026-07-08');
 
 })();

@@ -41,7 +41,17 @@ function parseMatchKey(key){
   return { edition:parts[0], stage:parts[1], home:parts[2], away:parts[3] };
 }
 
-function getMatchData(key){ return wcData[key]||null; }
+function getMatchData(key){
+  var data = wcData[key];
+  if (data) return data;
+  // 双向查找：兼容 matchdata 中 team 顺序与调用方不同的情况
+  var parts = key.split('|');
+  if (parts.length === 4) {
+    var revKey = parts[0] + '|' + parts[1] + '|' + parts[3] + '|' + parts[2];
+    return wcData[revKey] || null;
+  }
+  return null;
+}
 // 取有效比分：加时赛用最终比分，否则用90分钟比分
 function effScore(md){ return md&&md.score120?md.score120:md&&md.score?md.score:null; }
 
@@ -84,7 +94,7 @@ var _oddsMap=null;
 function buildOddsMap(){
   if(_oddsMap) return _oddsMap;
   _oddsMap={};
-	  [window.matchOdds||{}, window.knockoutOdds||{}, window.knockoutOddsR16||{}].forEach(function(mo){
+		  [window.matchOdds||{}, window.knockoutOdds||{}, window.knockoutOddsR16||{}, window.knockoutOddsQF||{}].forEach(function(mo){
     Object.keys(mo).forEach(function(k){
       var m=mo[k]; if(m.h&&m.a) _oddsMap[m.h+'|'+m.a]=m;
     });
@@ -503,6 +513,13 @@ function computeMatchEvaluation(matchKey){
 
   var parsed=parseMatchKey(matchKey);
   var homeCode=parsed.home, awayCode=parsed.away;
+  // 双向兼容：若 matchdata key 是反序的（如 FRA|MAR 而非 MAR|FRA），
+  // 则交换 homeCode/awayCode 使其与数据中的 h/a 对齐
+  if(!wcData[matchKey]){
+    var kp=matchKey.split('|');
+    var revKey=kp[0]+'|'+kp[1]+'|'+kp[3]+'|'+kp[2];
+    if(wcData[revKey]){ var tmp=homeCode; homeCode=awayCode; awayCode=tmp; }
+  }
   var sc=effScore(match)||{sh:0,sa:0}; var sh=sc.sh, sa=sc.sa;
   var stats=match.stats||null;
   var goals=match.goals||null;

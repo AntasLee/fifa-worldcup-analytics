@@ -231,7 +231,13 @@ window.showMatchDetail=function(year, stage, h, a, isKnockout) {
   // 2026: look up score from wc2026MatchDetails
   if (year === '2026' && detail && detail.score) {
     var es = detail.score120 || detail.score;
-    matchFound = { h: h, a: a, sh: es.sh, sa: es.sa };
+    var keyParts = key.split('|');
+    var dataHome = keyParts[2]; // matchdata key 中的第一队
+    if (dataHome === h) {
+      matchFound = { h: h, a: a, sh: es.sh, sa: es.sa };
+    } else {
+      matchFound = { h: h, a: a, sh: es.sa, sa: es.sh };
+    }
   }
   if (isKnockout && data.knockout) {
     data.knockout.forEach(function(kr) {

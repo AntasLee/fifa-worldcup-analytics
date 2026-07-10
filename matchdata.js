@@ -2268,6 +2268,21 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 3, red: 0 }, away: { yellow: 2, red: 0 } },
     attendance: 52104, referee: "Ilgiz Tantashev (UZB)"
   },
+
+  // ========= 淘汰赛 QF (4场) — 7月10日-11日 =========
+  // M97 · 7月10日 03:00 · 吉列体育场 (波士顿)
+  "2026|QF|FRA|MAR": {
+    score: { sh: 2, sa: 0 },
+    goals: [
+      { min: 60, side: "home", scorer: "基利安·姆巴佩 (Kylian Mbappé)", type: "shot", assist: "德西雷·杜埃 (Désiré Doué)" },
+      { min: 66, side: "home", scorer: "奥斯曼·登贝莱 (Ousmane Dembélé)", type: "shot", assist: "基利安·姆巴佩 (Kylian Mbappé)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
+    attendance: 65878, referee: "Facundo Tello (ARG)"
+  },
+  // M98 · 7月10日 07:00 · AT&T体育场 (达拉斯) — 挪威vs英格兰
+  // M99 · 7月11日 03:00 · SoFi体育场 (洛杉矶) — 西班牙vs比利时
+  // M100 · 7月11日 07:00 · 箭头体育场 (堪萨斯城) — 阿根廷vs瑞士
 };
 // ========== 2026世界杯 比赛统计数据 ==========
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
@@ -2368,3 +2383,4 @@ matchStats["2026|R16|POR|ESP"] = {p1:"45%",p2:"55%",ps1:null,ps2:null,sh1:7,sh2:
 matchStats["2026|R16|USA|BEL"] = {p1:"56%",p2:"44%",ps1:null,ps2:null,sh1:7,sh2:15,so1:2,so2:7,sb1:5,sb2:4,co1:3,co2:5,fo1:11,fo2:9,os1:0,os2:1,yc1:2,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:127,at2:93,da1:43,da2:33,pk1:0,pk2:0};
 matchStats["2026|R16|ARG|EGY"] = {p1:"64%",p2:"36%",ps1:null,ps2:null,sh1:15,sh2:5,so1:7,so2:2,sb1:8,sb2:3,co1:6,co2:1,fo1:13,fo2:11,os1:3,os2:0,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:139,at2:77,da1:77,da2:18,pk1:1,pk2:0};
 matchStats["2026|R16|SUI|COL"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:6,sh2:11,so1:2,so2:3,sb1:4,sb2:8,co1:3,co2:7,fo1:13,fo2:10,os1:1,os2:2,yc1:3,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:115,at2:104,da1:56,da2:33,pk1:0,pk2:0};
+matchStats["2026|QF|FRA|MAR"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:17,sh2:4,so1:8,so2:1,sb1:9,sb2:3,co1:5,co2:5,fo1:10,fo2:13,os1:0,os2:0,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:114,at2:82,da1:56,da2:35,pk1:1,pk2:0};

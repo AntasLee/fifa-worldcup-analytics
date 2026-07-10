@@ -2920,10 +2920,26 @@ const wc2026AllMatches = {
     attendance: 52104, referee: "Ilgiz Tantashev (UZB)", xg: null,
     mediaRating: { motm:"格雷戈尔·科贝尔", sources:["FIFA","ESPN","BBC Sport","AP","Sky Sports"], home:{score:7, quotes:"瑞士自1954年以来首进世界杯八强！120分钟的绞杀战术——面对哥伦比亚的攻势（xG 1.09 vs 0.39），科贝尔多次神扑+点球大战扑出埃尔南德斯射门成为英雄。巴尔加斯罚入制胜点球引爆全场。曼赞比因伤缺阵使进攻乏力但防守韧性十足。8强对阵阿根廷。"}, away:{score:6, quotes:"哥伦比亚再次倒在点球大战——2018年负于英格兰的噩梦重演。卢库米加时头球中楣、坎帕兹116分钟单刀射飞错过绝杀。桑切斯点球击中横梁、埃尔南德斯被科贝尔扑出——哥伦比亚全场仅失1球的钢铁防线未能换来八强席位。五届世界杯四次止步16强。"} },
     aiPreMatch: null, aiPostReview: null
-  }
+  },
 
   // ========= QF / SF / TP / FINAL 预留框架 =========
   // 赛后将动态填充格式: "2026|QF|???|???"
+
+  // M97 · 7月10日 03:00 · 吉列体育场 (波士顿) — QF1
+  "2026|QF|FRA|MAR": {
+    score: { sh: 2, sa: 0 }, date: "2026-07-10", time: "03:00", venue: "吉列体育场", stage: "QF",
+    goals: [
+      { min: 60, side: "home", scorer: "基利安·姆巴佩", type: "shot", assist: "德西雷·杜埃" },
+      { min: 66, side: "home", scorer: "奥斯曼·登贝莱", type: "shot", assist: "基利安·姆巴佩" }
+    ],
+    stats: { possession:{h:48,a:52}, shots:{h:17,a:4}, shotsOnTarget:{h:8,a:1}, corners:{h:5,a:5}, fouls:{h:10,a:13}, yellowCards:{h:0,a:1}, redCards:{h:0,a:0}, attacks:{h:114,a:82}, dangerousAttacks:{h:56,a:35} },
+    attendance: 65878, referee: "Facundo Tello (ARG)", xg: null,
+    mediaRating: { motm:"基利安·姆巴佩", sources:["ESPN","Al Jazeera","NBC Sports","AP","Sky Sports"], home:{score:8, quotes:"法国连续第三届世界杯晋级四强！姆巴佩28分钟罚丢点球后60分钟用一记弧线世界波完成自我救赎——第20粒世界杯进球距梅西纪录仅差1球。登贝莱66分钟锦上添花锁定胜局。法国全场碾压（17射8正 vs 4射1正），摩洛哥直到83分钟才有首次射正。半决赛对阵西班牙/比利时胜者。"}, away:{score:5, quotes:"摩洛哥的童话止步八强。赛巴里因伤缺阵使进攻核心尽失——全场仅4次射门1次射正。布努扑出姆巴佩点球一度让梦想延续，但法国的碾压级攻势终将阿特拉斯雄狮的防线击碎。非洲冠军连续两届世界杯止步法国之手，但2022四强+2026八强的成绩足以傲视非洲。"} },
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M98 · 7月10日 07:00 · AT&T体育场 (达拉斯) — QF2 挪威vs英格兰
+  // M99 · 7月11日 03:00 · SoFi体育场 (洛杉矶) — QF3 西班牙vs比利时
+  // M100 · 7月11日 07:00 · 箭头体育场 (堪萨斯城) — QF4 阿根廷vs瑞士
 };
 
 // ================================================================
