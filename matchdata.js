@@ -2280,9 +2280,19 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: 65878, referee: "Facundo Tello (ARG)"
   },
-  // M98 · 7月10日 07:00 · AT&T体育场 (达拉斯) — 挪威vs英格兰
-  // M99 · 7月11日 03:00 · SoFi体育场 (洛杉矶) — 西班牙vs比利时
-  // M100 · 7月11日 07:00 · 箭头体育场 (堪萨斯城) — 阿根廷vs瑞士
+  // M99 · 7月10日 22:00 · SoFi体育场 (洛杉矶) — QF2 西班牙2-1比利时
+  "2026|QF|ESP|BEL": {
+    score: { sh: 2, sa: 1 },
+    goals: [
+      { min: 30, side: "home", scorer: "法比安·鲁伊斯 (Fabián Ruiz)", type: "shot" },
+      { min: 41, side: "away", scorer: "夏尔·德凯特拉雷 (Charles De Ketelaere)", type: "header", assist: "蒂莫西·卡斯塔涅 (Timothy Castagne)" },
+      { min: 88, side: "home", scorer: "米克尔·梅里诺 (Mikel Merino)", type: "shot" }
+    ],
+    cards: { home: { yellow: 2, red: 0 }, away: { yellow: 2, red: 0 } },
+    attendance: 70248, referee: "Michael Oliver (ENG)"
+  },
+  // M98 · 7月11日 · AT&T体育场 (达拉斯) — 挪威vs英格兰
+  // M100 · 7月11日 · 箭头体育场 (堪萨斯城) — 阿根廷vs瑞士
 };
 // ========== 2026世界杯 比赛统计数据 ==========
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
@@ -2384,3 +2394,4 @@ matchStats["2026|R16|USA|BEL"] = {p1:"56%",p2:"44%",ps1:null,ps2:null,sh1:7,sh2:
 matchStats["2026|R16|ARG|EGY"] = {p1:"64%",p2:"36%",ps1:null,ps2:null,sh1:15,sh2:5,so1:7,so2:2,sb1:8,sb2:3,co1:6,co2:1,fo1:13,fo2:11,os1:3,os2:0,yc1:0,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:139,at2:77,da1:77,da2:18,pk1:1,pk2:0};
 matchStats["2026|R16|SUI|COL"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:6,sh2:11,so1:2,so2:3,sb1:4,sb2:8,co1:3,co2:7,fo1:13,fo2:10,os1:1,os2:2,yc1:3,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:115,at2:104,da1:56,da2:33,pk1:0,pk2:0};
 matchStats["2026|QF|FRA|MAR"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:17,sh2:4,so1:8,so2:1,sb1:9,sb2:3,co1:5,co2:5,fo1:10,fo2:13,os1:0,os2:0,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:114,at2:82,da1:56,da2:35,pk1:1,pk2:0};
+matchStats["2026|QF|ESP|BEL"] = {p1:"68%",p2:"32%",ps1:null,ps2:null,sh1:12,sh2:3,so1:8,so2:2,sb1:4,sb2:1,co1:5,co2:1,fo1:13,fo2:18,os1:3,os2:1,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:133,at2:71,da1:85,da2:25,pk1:0,pk2:0};

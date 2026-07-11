@@ -2937,9 +2937,21 @@ const wc2026AllMatches = {
     mediaRating: { motm:"基利安·姆巴佩", sources:["ESPN","Al Jazeera","NBC Sports","AP","Sky Sports"], home:{score:8, quotes:"法国连续第三届世界杯晋级四强！姆巴佩28分钟罚丢点球后60分钟用一记弧线世界波完成自我救赎——第20粒世界杯进球距梅西纪录仅差1球。登贝莱66分钟锦上添花锁定胜局。法国全场碾压（17射8正 vs 4射1正），摩洛哥直到83分钟才有首次射正。半决赛对阵西班牙/比利时胜者。"}, away:{score:5, quotes:"摩洛哥的童话止步八强。赛巴里因伤缺阵使进攻核心尽失——全场仅4次射门1次射正。布努扑出姆巴佩点球一度让梦想延续，但法国的碾压级攻势终将阿特拉斯雄狮的防线击碎。非洲冠军连续两届世界杯止步法国之手，但2022四强+2026八强的成绩足以傲视非洲。"} },
     aiPreMatch: null, aiPostReview: null
   },
-  // M98 · 7月10日 07:00 · AT&T体育场 (达拉斯) — QF2 挪威vs英格兰
-  // M99 · 7月11日 03:00 · SoFi体育场 (洛杉矶) — QF3 西班牙vs比利时
-  // M100 · 7月11日 07:00 · 箭头体育场 (堪萨斯城) — QF4 阿根廷vs瑞士
+  // M99 · 7月10日 22:00 · SoFi体育场 (洛杉矶) — QF2 西班牙2-1比利时
+  "2026|QF|ESP|BEL": {
+    score: { sh: 2, sa: 1 }, date: "2026-07-10", time: "22:00", venue: "SoFi体育场", stage: "QF",
+    goals: [
+      { min: 30, side: "home", scorer: "法比安·鲁伊斯", type: "shot" },
+      { min: 41, side: "away", scorer: "夏尔·德凯特拉雷", type: "header", assist: "蒂莫西·卡斯塔涅" },
+      { min: 88, side: "home", scorer: "米克尔·梅里诺", type: "shot" }
+    ],
+    stats: { possession:{h:68,a:32}, shots:{h:12,a:3}, shotsOnTarget:{h:8,a:2}, corners:{h:5,a:1}, fouls:{h:13,a:18}, yellowCards:{h:2,a:2}, redCards:{h:0,a:0}, attacks:{h:133,a:71}, dangerousAttacks:{h:85,a:25} },
+    attendance: 70248, referee: "Michael Oliver (ENG)", xg: null,
+    mediaRating: { motm:"米克尔·梅里诺", sources:["ABC News","AP","FotMob","CNA","Boston Globe"], home:{score:8, quotes:"西班牙2010年来首次晋级四强！梅里诺连续第二场替补绝杀——86分钟登场、88分钟补射破门，仅第二次触球就终结比赛。库尔图瓦71分钟伤退后替补拉芒致命脱手成为转折。法比安·鲁伊斯首开纪录，德凯特拉雷头球扳平终结西蒙650分钟零封纪录。半决赛对阵法国。"}, away:{score:7, quotes:"比利时18场不败纪录终结。蒂勒曼斯赛前热身受伤被迫退出首发，库尔图瓦71分钟伤退让替补拉芒的致命失误葬送比赛。德凯特拉雷头球一度扳平延续火热状态，但黄金一代的最后一舞在四强大门前戛然而止。卢卡库补时头球被拉波尔特门线解围，距加时仅差数厘米。"} },
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M98 · 7月11日 · AT&T体育场 (达拉斯) — QF3 挪威vs英格兰
+  // M100 · 7月11日 · 箭头体育场 (堪萨斯城) — QF4 阿根廷vs瑞士
 };
 
 // ================================================================
