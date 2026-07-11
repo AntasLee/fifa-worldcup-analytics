@@ -2280,7 +2280,7 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 0, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: 65878, referee: "Facundo Tello (ARG)"
   },
-  // M99 · 7月10日 22:00 · SoFi体育场 (洛杉矶) — QF2 西班牙2-1比利时
+  // M98 · 7月11日 03:00 · SoFi体育场 (洛杉矶) — QF2 西班牙2-1比利时
   "2026|QF|ESP|BEL": {
     score: { sh: 2, sa: 1 },
     goals: [
@@ -2291,8 +2291,8 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 2, red: 0 }, away: { yellow: 2, red: 0 } },
     attendance: 70248, referee: "Michael Oliver (ENG)"
   },
-  // M98 · 7月11日 · AT&T体育场 (达拉斯) — 挪威vs英格兰
-  // M100 · 7月11日 · 箭头体育场 (堪萨斯城) — 阿根廷vs瑞士
+  // M99 · 7月12日 · AT&T体育场 (达拉斯) — 挪威vs英格兰
+  // M100 · 7月12日 · 箭头体育场 (堪萨斯城) — 阿根廷vs瑞士
 };
 // ========== 2026世界杯 比赛统计数据 ==========
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
