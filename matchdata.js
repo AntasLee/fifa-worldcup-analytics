@@ -2291,8 +2291,33 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 2, red: 0 }, away: { yellow: 2, red: 0 } },
     attendance: 70248, referee: "Michael Oliver (ENG)"
   },
-  // M99 · 7月12日 · AT&T体育场 (达拉斯) — 挪威vs英格兰
-  // M100 · 7月12日 · 箭头体育场 (堪萨斯城) — 阿根廷vs瑞士
+  // M99 · 7月12日 05:00 · 硬石体育场 (迈阿密) — QF3 挪威1-2英格兰 (加时)
+  "2026|QF|NOR|ENG": {
+    score: { sh: 1, sa: 1 },
+    score120: { sh: 1, sa: 2 },
+    aet: true,
+    goals: [
+      { min: 36, side: "home", scorer: "安德列亚斯·谢尔德鲁普 (Andreas Schjelderup)", type: "shot", assist: "马丁·厄德高 (Martin Ødegaard)" },
+      { min: "45+2", side: "away", scorer: "祖德·贝林厄姆 (Jude Bellingham)", type: "shot", assist: "安东尼·戈登 (Anthony Gordon)" },
+      { min: 93, side: "away", scorer: "祖德·贝林厄姆 (Jude Bellingham)", type: "shot" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 0, red: 0 } },
+    attendance: 64767, referee: "Slavko Vinčić (SVN)"
+  },
+  // M100 · 7月12日 09:00 · 箭头体育场 (堪萨斯城) — QF4 阿根廷3-1瑞士 (加时)
+  "2026|QF|ARG|SUI": {
+    score: { sh: 1, sa: 1 },
+    score120: { sh: 3, sa: 1 },
+    aet: true,
+    goals: [
+      { min: 10, side: "home", scorer: "亚历克西斯·麦卡利斯特 (Alexis Mac Allister)", type: "header", assist: "利昂内尔·梅西 (Lionel Messi)" },
+      { min: 67, side: "away", scorer: "丹·恩多耶 (Dan Ndoye)", type: "shot", assist: "里卡多·罗德里格斯 (Ricardo Rodriguez)" },
+      { min: 112, side: "home", scorer: "胡利安·阿尔瓦雷斯 (Julián Álvarez)", type: "shot", assist: "何塞·洛佩斯 (José López)" },
+      { min: "120+1", side: "home", scorer: "劳塔罗·马丁内斯 (Lautaro Martínez)", type: "shot" }
+    ],
+    cards: { home: { yellow: 3, red: 0 }, away: { yellow: 1, red: 1 } },
+    attendance: 76416, referee: "João Pinheiro (POR)"
+  },
 };
 // ========== 2026世界杯 比赛统计数据 ==========
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
@@ -2395,3 +2420,5 @@ matchStats["2026|R16|ARG|EGY"] = {p1:"64%",p2:"36%",ps1:null,ps2:null,sh1:15,sh2
 matchStats["2026|R16|SUI|COL"] = {p1:"53%",p2:"47%",ps1:null,ps2:null,sh1:6,sh2:11,so1:2,so2:3,sb1:4,sb2:8,co1:3,co2:7,fo1:13,fo2:10,os1:1,os2:2,yc1:3,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:115,at2:104,da1:56,da2:33,pk1:0,pk2:0};
 matchStats["2026|QF|FRA|MAR"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:17,sh2:4,so1:8,so2:1,sb1:9,sb2:3,co1:5,co2:5,fo1:10,fo2:13,os1:0,os2:0,yc1:0,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:114,at2:82,da1:56,da2:35,pk1:1,pk2:0};
 matchStats["2026|QF|ESP|BEL"] = {p1:"68%",p2:"32%",ps1:null,ps2:null,sh1:12,sh2:3,so1:8,so2:2,sb1:4,sb2:1,co1:5,co2:1,fo1:13,fo2:18,os1:3,os2:1,yc1:2,yc2:2,rc1:0,rc2:0,tk1:null,tk2:null,at1:133,at2:71,da1:85,da2:25,pk1:0,pk2:0};
+matchStats["2026|QF|NOR|ENG"] = {p1:"48%",p2:"52%",ps1:null,ps2:null,sh1:10,sh2:11,so1:4,so2:8,sb1:6,sb2:3,co1:7,co2:4,fo1:10,fo2:8,os1:1,os2:5,yc1:1,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:106,at2:118,da1:61,da2:62,pk1:0,pk2:0};
+matchStats["2026|QF|ARG|SUI"] = {p1:"59%",p2:"41%",ps1:null,ps2:null,sh1:15,sh2:8,so1:7,so2:5,sb1:8,sb2:3,co1:8,co2:2,fo1:14,fo2:18,os1:4,os2:3,yc1:3,yc2:1,rc1:0,rc2:1,tk1:null,tk2:null,at1:119,at2:106,da1:65,da2:54,pk1:0,pk2:0};

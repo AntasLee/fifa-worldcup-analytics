@@ -2950,8 +2950,37 @@ const wc2026AllMatches = {
     mediaRating: { motm:"米克尔·梅里诺", sources:["ABC News","AP","FotMob","CNA","Boston Globe"], home:{score:8, quotes:"西班牙2010年来首次晋级四强！梅里诺连续第二场替补绝杀——86分钟登场、88分钟补射破门，仅第二次触球就终结比赛。库尔图瓦71分钟伤退后替补拉芒致命脱手成为转折。法比安·鲁伊斯首开纪录，德凯特拉雷头球扳平终结西蒙650分钟零封纪录。半决赛对阵法国。"}, away:{score:7, quotes:"比利时18场不败纪录终结。蒂勒曼斯赛前热身受伤被迫退出首发，库尔图瓦71分钟伤退让替补拉芒的致命失误葬送比赛。德凯特拉雷头球一度扳平延续火热状态，但黄金一代的最后一舞在四强大门前戛然而止。卢卡库补时头球被拉波尔特门线解围，距加时仅差数厘米。"} },
     aiPreMatch: null, aiPostReview: null
   },
-  // M99 · 7月12日 · AT&T体育场 (达拉斯) — QF3 挪威vs英格兰
-  // M100 · 7月12日 · 箭头体育场 (堪萨斯城) — QF4 阿根廷vs瑞士
+  // M99 · 7月12日 05:00 · 硬石体育场 (迈阿密) — QF3 挪威1-2英格兰 (加时)
+  "2026|QF|NOR|ENG": {
+    score: { sh: 1, sa: 1 }, date: "2026-07-12", time: "05:00", venue: "硬石体育场", stage: "QF",
+    score120: { sh: 1, sa: 2 },
+    aet: true,
+    goals: [
+      { min: 36, side: "home", scorer: "安德列亚斯·谢尔德鲁普", type: "shot", assist: "马丁·厄德高" },
+      { min: "45+2", side: "away", scorer: "祖德·贝林厄姆", type: "shot", assist: "安东尼·戈登" },
+      { min: 93, side: "away", scorer: "祖德·贝林厄姆", type: "shot" }
+    ],
+    stats: { possession:{h:48,a:52}, shots:{h:10,a:11}, shotsOnTarget:{h:4,a:8}, corners:{h:7,a:4}, fouls:{h:10,a:8}, yellowCards:{h:1,a:0}, redCards:{h:0,a:0}, attacks:{h:106,a:118}, dangerousAttacks:{h:61,a:62} },
+    attendance: 64767, referee: "Slavko Vinčić (SVN)", xg: null,
+    mediaRating: { motm:"祖德·贝林厄姆", sources:["FIFA","AP","BBC Sport","Sky Sports","Al Jazeera"], home:{score:7, quotes:"挪威的维京传奇在四强大门前止步。谢尔德鲁普上半场的世界波让梦想起飞，赫格姆的进球因哈兰德推人被判无效成为转折。哈兰德全场被英格兰防线冻结——世界杯首次零进球+加时被换下时落寞坐替补席的画面令人心碎。索尔洛特两度浪费绝佳机会葬送最后希望。但首次八强之旅已足够骄傲。"}, away:{score:8, quotes:"贝林厄姆再次拯救英格兰！上半场补时接戈登直塞低射扳平、加时赛93分钟抓住尼兰脱手补射制胜——本届赛事6球追平凯恩。哈兰德被完全锁死的防守组织令人惊叹。图赫尔赛后批评球队表现被贝林厄姆当场回怼'无论如何'。连续两届大赛四强，半决赛对阵阿根廷。"} },
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M100 · 7月12日 09:00 · 箭头体育场 (堪萨斯城) — QF4 阿根廷3-1瑞士 (加时)
+  "2026|QF|ARG|SUI": {
+    score: { sh: 1, sa: 1 }, date: "2026-07-12", time: "09:00", venue: "箭头体育场", stage: "QF",
+    score120: { sh: 3, sa: 1 },
+    aet: true,
+    goals: [
+      { min: 10, side: "home", scorer: "亚历克西斯·麦卡利斯特", type: "header", assist: "利昂内尔·梅西" },
+      { min: 67, side: "away", scorer: "丹·恩多耶", type: "shot", assist: "里卡多·罗德里格斯" },
+      { min: 112, side: "home", scorer: "胡利安·阿尔瓦雷斯", type: "shot", assist: "何塞·洛佩斯" },
+      { min: "120+1", side: "home", scorer: "劳塔罗·马丁内斯", type: "shot" }
+    ],
+    stats: { possession:{h:59,a:41}, shots:{h:15,a:8}, shotsOnTarget:{h:7,a:5}, corners:{h:8,a:2}, fouls:{h:14,a:18}, yellowCards:{h:3,a:1}, redCards:{h:0,a:1}, attacks:{h:119,a:106}, dangerousAttacks:{h:65,a:54} },
+    attendance: 76416, referee: "João Pinheiro (POR)", xg: null,
+    mediaRating: { motm:"胡利安·阿尔瓦雷斯", sources:["FIFA","AP","Sky Sports","BBC Sport","ESPN"], home:{score:8, quotes:"卫冕冠军挺进四强！梅西连续9场世界杯进球纪录虽被终结，但第10分钟角球助攻麦卡利斯特头球破门再度展现魔力。恩博洛72分钟假摔两黄变红成为比赛转折——瑞士少一人后再无力回天。阿尔瓦雷斯112分钟25码世界波直挂死角+劳塔罗补时锦上添花。连续两场淘汰赛打满120分钟，半决赛对阵英格兰。"}, away:{score:7, quotes:"瑞士的钢铁防线几乎将阿根廷拖入点球大战。恩多耶67分钟扳平后士气大振，但恩博洛72分钟因假摔染红葬送全局——他在替补席上掩面而泣的画面令人动容。少一人后穆拉特·雅金的球队顽强坚守至加时，直到阿尔瓦雷斯的无解世界波击碎梦想。1954年以来最佳世界杯战绩，值得骄傲。"} },
+    aiPreMatch: null, aiPostReview: null
+  },
 };
 
 // ================================================================

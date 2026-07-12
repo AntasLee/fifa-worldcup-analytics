@@ -27,7 +27,7 @@ SWE:{w:2.95,d:3.85,l:2.49},TUN:{w:4.86,d:3.63,l:1.93},TUR:{w:2.05,d:3.61,l:4.26}
 URU:{w:1.53,d:4.56,l:7.74},USA:{w:1.94,d:3.8,l:4.53},UZB:{w:7.49,d:4.67,l:1.66}};
 
 let liveOdds=JSON.parse(JSON.stringify(initialOdds));
-		let lastUpdate='2026-07-03';
+		let lastUpdate='2026-07-12';
 
 // ========== 比赛级赔率 (72场小组赛, 扩展9字段) ==========
 // 字段: h(主队), a(客队), hw(主胜赔), d(平赔), aw(客胜赔),
@@ -114,11 +114,18 @@ L_1_2:{h:'CRO',a:'GHA',hw:1.65,d:3.6,aw:5,ahLine:-0.75,ahHome:1.78,ahAway:2.05,o
 		QF_3:{h:'ESP',a:'BEL',hw:1.65,d:3.95,aw:5.50,ahLine:-0.75,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.87,ouUnder:1.95},
 		QF_4:{h:'ARG',a:'SUI',hw:1.69,d:3.60,aw:5.50,ahLine:-0.75,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.05,ouUnder:1.78}
 		};
+		// ========== 淘汰赛比赛级赔率 (SF, 2场) ==========
+		// 数据源: FanDuel / DraftKings (via The Odds API)
+		// 获取时间: 2026-07-12
+		const knockoutOddsSF={
+		SF_1:{h:'FRA',a:'ESP',hw:2.30,d:3.10,aw:3.30,ahLine:-0.25,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.89,ouUnder:1.93},
+		SF_2:{h:'ENG',a:'ARG',hw:2.65,d:3.00,aw:2.90,ahLine:0,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.25,ouUnder:1.65}
+		};
 	// ========== 从 matchOdds + knockoutOdds 自动计算 liveOdds ==========
 	(function(){
 	  var ts={};
 	  // 合并小组赛 + 淘汰赛赔率
-		  var allOdds=Object.assign({},matchOdds,knockoutOdds,knockoutOddsR16,knockoutOddsQF);
+		  var allOdds=Object.assign({},matchOdds,knockoutOdds,knockoutOddsR16,knockoutOddsQF,knockoutOddsSF);
 	  Object.values(allOdds).forEach(function(m){
 	    if(!ts[m.h])ts[m.h]={hw:[],aw:[],d:[]};
 	    if(!ts[m.a])ts[m.a]={hw:[],aw:[],d:[]};
@@ -142,11 +149,12 @@ L_1_2:{h:'CRO',a:'GHA',hw:1.65,d:3.6,aw:5,ahLine:-0.75,ahHome:1.78,ahAway:2.05,o
 		window.knockoutOdds = knockoutOdds;
 		window.knockoutOddsR16 = knockoutOddsR16;
 		window.knockoutOddsQF = knockoutOddsQF;
+		window.knockoutOddsSF = knockoutOddsSF;
 		window.initialOdds = initialOdds;
 	window.liveOdds = liveOdds;
 	window.lastUpdate = lastUpdate;
 	window.dataSource = 'William Hill';
 	
-		console.log('✅ oddsdata.js 已加载: 72场小组赛 + 16场R32 + 8场R16 + 4场QF (含AH/OU扩展字段) | 数据源: William Hill via The Odds API | 更新: 2026-07-08');
+		console.log('✅ oddsdata.js 已加载: 72场小组赛 + 16场R32 + 8场R16 + 4场QF + 2场SF (含AH/OU扩展字段) | 数据源: William Hill via The Odds API | 更新: 2026-07-12');
 
 })();

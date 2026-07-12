@@ -47,7 +47,7 @@ function makeSlot(round,idx,extra){_sid++;var s={id:_sid,round:round,idx:idx,tea
 var R32=R32_PAIRINGS.map(function(p,i){return makeSlot('R32',i,{ga:p.a,gb:p.b,hasThirdPlace:p.b.g==='*'});});
 var R16_FEED=[[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15]];
 var R16=R16_FEED.map(function(pair,i){var s=makeSlot('R16',i,{feeds:[R32[pair[0]].id,R32[pair[1]].id]});R32[pair[0]].nextMatchId=s.id;R32[pair[1]].nextMatchId=s.id;return s;});
-var QF_FEED=[[0,1],[2,3],[4,5],[6,7]];
+var QF_FEED=[[0,1],[4,5],[2,3],[6,7]];
 var QF=QF_FEED.map(function(pair,i){var s=makeSlot('QF',i,{feeds:[R16[pair[0]].id,R16[pair[1]].id]});R16[pair[0]].nextMatchId=s.id;R16[pair[1]].nextMatchId=s.id;return s;});
 var SF=[];
 for(var i=0;i<2;i++){var s=makeSlot('SF',i,{feeds:[QF[i*2].id,QF[i*2+1].id]});QF[i*2].nextMatchId=s.id;QF[i*2+1].nextMatchId=s.id;SF.push(s);}
@@ -59,15 +59,15 @@ var SLOT_BY_ID={};ALL_SLOTS.forEach(function(s){SLOT_BY_ID[s.id]=s;});
 
 // ── Layout (9 columns, split left/right) ──
 var COLUMNS=[
-  {id:'R32L',slots:[R32[0],R32[1],R32[2],R32[3],R32[4],R32[5],R32[6],R32[7]],label:'32強',round:'R32'},
-  {id:'R16L',slots:[R16[0],R16[1],R16[2],R16[3]],label:'16強',round:'R16'},
+  {id:'R32L',slots:[R32[0],R32[1],R32[2],R32[3],R32[8],R32[9],R32[10],R32[11]],label:'32強',round:'R32'},
+  {id:'R16L',slots:[R16[0],R16[1],R16[4],R16[5]],label:'16強',round:'R16'},
   {id:'QFL', slots:[QF[0],QF[1]],label:'8強',round:'QF'},
   {id:'SFL', slots:[SF[0]],label:'4強',round:'SF'},
   {id:'CTR', slots:[FIN,TP],label:'',isCenter:true},
   {id:'SFR', slots:[SF[1]],label:'4強',round:'SF'},
   {id:'QFR', slots:[QF[2],QF[3]],label:'8強',round:'QF'},
-  {id:'R16R',slots:[R16[4],R16[5],R16[6],R16[7]],label:'16強',round:'R16'},
-  {id:'R32R',slots:[R32[8],R32[9],R32[10],R32[11],R32[12],R32[13],R32[14],R32[15]],label:'32強',round:'R32'}
+  {id:'R16R',slots:[R16[2],R16[3],R16[6],R16[7]],label:'16強',round:'R16'},
+  {id:'R32R',slots:[R32[4],R32[5],R32[6],R32[7],R32[12],R32[13],R32[14],R32[15]],label:'32強',round:'R32'}
 ];
 
 var CARD_H=38;
@@ -105,8 +105,8 @@ function matchY(ci,idx,total){
 
 // ── State ──
 var preds={};
-function load(){try{var raw=localStorage.getItem('wc2026_bracket_v9');if(raw)preds=JSON.parse(raw);}catch(e){}if(!preds||typeof preds!=='object')preds={};}
-function save(){localStorage.setItem('wc2026_bracket_v9',JSON.stringify(preds));}
+function load(){try{var raw=localStorage.getItem('wc2026_bracket_v12');if(raw)preds=JSON.parse(raw);}catch(e){}if(!preds||typeof preds!=='object')preds={};}
+function save(){localStorage.setItem('wc2026_bracket_v12',JSON.stringify(preds));}
 function gpred(sid){return preds[sid]||null;}
 function spred(sid,data){preds[sid]=data;save();}
 
@@ -302,8 +302,11 @@ var HARDCODED_R32 = [
   ['ARG','CPV'],  // 12: M86 J1 vs H2
   ['AUS','EGY'],  // 13: M88 D2 vs G2
   ['SUI','ALG'],  // 14: M85 B1 vs 3rd
-  ['COL','GHA']   // 15: M87 K1 vs 3rd
+	['COL','GHA']   // 15: M87 K1 vs 3rd
 ];
+
+// R32 胜者索引: 0=第一队晋级, 1=第二队晋级 (由R16对阵反推)
+var R32_WINNERS = [1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
 
 // ═══════════════════════════════════════════
 //  AUTO-FILL (V14: 硬编码R32 + 自动晋级)
@@ -348,10 +351,26 @@ function autoFillBracket() {
     p._lockedB = false;
   });
 
+  // V15: 自动设定 R32 胜者（由 R16 对阵反推）
+  R32.forEach(function(slot, i) {
+    var p = gpred(slot.id);
+    if (!p || !p.teams[0] || !p.teams[1]) return;
+    if (p.winner !== null && p.winner !== undefined) return;
+    var w = R32_WINNERS[i];
+    if (w === undefined) return;
+    p.winner = w;
+    changed = true;
+  });
+
   if (changed) save();
 
-  // V13: 自动从淘汰赛实际比分推进晋级路线
-  autoAdvanceKnockoutResults();
+  // V15: 传播 R32 胜者至 R16，再自动推进至 QF/SF
+  R32.forEach(function(slot) {
+    var p = gpred(slot.id);
+    if (p && p.winner !== null && p.winner !== undefined) propagate(slot.id);
+  });
+  autoAdvanceKnockoutResults();  // R16 胜者 → QF
+  autoAdvanceKnockoutResults();  // QF 胜者 → SF
 }
 
 // ═══════════════════════════════════════════

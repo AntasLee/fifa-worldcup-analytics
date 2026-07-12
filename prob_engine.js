@@ -1079,7 +1079,7 @@ function computeCompositeAnalysis(aiResult, oddsPbs, homeCode, awayCode, factors
     var homeName = m.home.zh, awayName = m.away.zh;
 
     // 赔率数据 - 优先使用当场比赛赔率(matchOdds→knockoutOdds)，回退至球队平均赔率(liveOdds)
-    var md = matchOdds[mid] || knockoutOdds[mid] || (window.knockoutOddsR16||{})[mid] || (window.knockoutOddsQF||{})[mid] || null;
+    var md = matchOdds[mid] || knockoutOdds[mid] || (window.knockoutOddsR16||{})[mid] || (window.knockoutOddsQF||{})[mid] || (window.knockoutOddsSF||{})[mid] || null;
     var ho, ao;
     if (md) {
         ho = { w: md.hw, d: md.d, l: md.aw };
