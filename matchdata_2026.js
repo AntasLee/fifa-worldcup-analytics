@@ -2981,6 +2981,21 @@ const wc2026AllMatches = {
     mediaRating: { motm:"胡利安·阿尔瓦雷斯", sources:["FIFA","AP","Sky Sports","BBC Sport","ESPN"], home:{score:8, quotes:"卫冕冠军挺进四强！梅西连续9场世界杯进球纪录虽被终结，但第10分钟角球助攻麦卡利斯特头球破门再度展现魔力。恩博洛72分钟假摔两黄变红成为比赛转折——瑞士少一人后再无力回天。阿尔瓦雷斯112分钟25码世界波直挂死角+劳塔罗补时锦上添花。连续两场淘汰赛打满120分钟，半决赛对阵英格兰。"}, away:{score:7, quotes:"瑞士的钢铁防线几乎将阿根廷拖入点球大战。恩多耶67分钟扳平后士气大振，但恩博洛72分钟因假摔染红葬送全局——他在替补席上掩面而泣的画面令人动容。少一人后穆拉特·雅金的球队顽强坚守至加时，直到阿尔瓦雷斯的无解世界波击碎梦想。1954年以来最佳世界杯战绩，值得骄傲。"} },
     aiPreMatch: null, aiPostReview: null
   },
+
+  // ========= SF 半决赛 — 7月15日 =========
+  // M101 · 7月15日 03:00 · AT&T体育场 (达拉斯) — SF1 法国0-2西班牙
+  "2026|SF|FRA|ESP": {
+    score: { sh: 0, sa: 2 }, date: "2026-07-15", time: "03:00", venue: "AT&T体育场", stage: "SF",
+    goals: [
+      { min: 22, side: "away", scorer: "米克尔·奥亚萨瓦尔", type: "penalty" },
+      { min: 58, side: "away", scorer: "佩德罗·波罗", type: "shot", assist: "达尼·奥尔莫" }
+    ],
+    stats: { possession:{h:49,a:51}, shots:{h:8,a:7}, shotsOnTarget:{h:3,a:2}, corners:{h:7,a:1}, fouls:{h:11,a:12}, yellowCards:{h:2,a:1}, redCards:{h:0,a:0}, attacks:{h:118,a:109}, dangerousAttacks:{h:46,a:23} },
+    attendance: 80000, referee: "Daniele Orsato (ITA)", xg: null,
+    mediaRating: { motm:"佩德罗·波罗", sources:["FIFA","Sky Sports","ESPN","BBC Sport","AP"], home:{score:4, quotes:"法国的进攻三叉戟在达拉斯彻底哑火。姆巴佩被西班牙防线完全锁死、奥尔赛72分钟被换下时数据惨淡（2次创造机会+0次成功突破）、登贝莱全场隐身。萨利巴30分钟伤退打乱部署，迪涅对亚马尔的鲁莽犯规送出点球成为噩梦开端。德尚14年执教生涯以如此平淡的方式谢幕令人唏嘘。"}, away:{score:9, quotes:"西班牙2010年以来首进世界杯决赛！37场不败追平欧洲国家队纪录。奥亚萨瓦尔22分钟点球打破僵局，波罗58分钟与奥尔莫精彩二过一后劲射锁定胜局。防线全场仅让法国3次射正——本届7场仅失1球的防守堪称历史级。周日决赛将对阵阿根廷/英格兰胜者。"} },
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M102 · 7月16日 03:00 · 梅赛德斯-奔驰体育场 (亚特兰大) — SF2 阿根廷vs英格兰
 };
 
 // ================================================================
