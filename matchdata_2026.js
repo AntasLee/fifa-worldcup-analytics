@@ -2995,7 +2995,21 @@ const wc2026AllMatches = {
     mediaRating: { motm:"佩德罗·波罗", sources:["FIFA","Sky Sports","ESPN","BBC Sport","AP"], home:{score:4, quotes:"法国的进攻三叉戟在达拉斯彻底哑火。姆巴佩被西班牙防线完全锁死、奥尔赛72分钟被换下时数据惨淡（2次创造机会+0次成功突破）、登贝莱全场隐身。萨利巴30分钟伤退打乱部署，迪涅对亚马尔的鲁莽犯规送出点球成为噩梦开端。德尚14年执教生涯以如此平淡的方式谢幕令人唏嘘。"}, away:{score:9, quotes:"西班牙2010年以来首进世界杯决赛！37场不败追平欧洲国家队纪录。奥亚萨瓦尔22分钟点球打破僵局，波罗58分钟与奥尔莫精彩二过一后劲射锁定胜局。防线全场仅让法国3次射正——本届7场仅失1球的防守堪称历史级。周日决赛将对阵阿根廷/英格兰胜者。"} },
     aiPreMatch: null, aiPostReview: null
   },
-  // M102 · 7月16日 03:00 · 梅赛德斯-奔驰体育场 (亚特兰大) — SF2 阿根廷vs英格兰
+  // M102 · 7月16日 03:00 · 梅赛德斯-奔驰体育场 (亚特兰大) — SF2 英格兰1-2阿根廷
+  "2026|SF|ENG|ARG": {
+    score: { sh: 1, sa: 2 }, date: "2026-07-16", time: "03:00", venue: "梅赛德斯-奔驰体育场", stage: "SF",
+    goals: [
+      { min: 55, side: "home", scorer: "安东尼·戈登", type: "shot", assist: "摩根·罗杰斯" },
+      { min: 85, side: "away", scorer: "恩佐·费尔南德斯", type: "shot", assist: "利昂内尔·梅西" },
+      { min: "90+2", side: "away", scorer: "劳塔罗·马丁内斯", type: "header", assist: "利昂内尔·梅西" }
+    ],
+    stats: { possession:{h:36,a:64}, shots:{h:3,a:12}, shotsOnTarget:{h:2,a:5}, corners:{h:1,a:6}, fouls:{h:11,a:15}, yellowCards:{h:1,a:3}, redCards:{h:0,a:0}, attacks:{h:77,a:109}, dangerousAttacks:{h:39,a:69} },
+    attendance: 71358, referee: "Facundo Tello (ARG)", xg: null,
+    mediaRating: { motm:"利昂内尔·梅西", sources:["FIFA","Sky Sports","AP","BBC Sport","ESPN"], home:{score:5, quotes:"三狮军团距决赛仅差35分钟。戈登55分钟接罗杰斯传中后点破门让梦想触手可及。但图赫尔领先后全线退守的赌博成为致命失误——英格兰主动放弃控球将比赛主导权拱手让给梅西。7分钟内从天堂坠入地狱：恩佐85分钟世界波+劳塔罗92分钟头球绝杀。连续三届大赛倒在半决赛。"}, away:{score:8, quotes:"阿根廷连续两届世界杯晋级决赛！梅西虽未进球但送出两记助攻——85分钟角球助攻恩佐远射破门+92分钟右路传中助攻劳塔罗绝杀——成为1966年以来首位单场淘汰赛9次过人+2次助攻的球员。8球4助领跑金靴。英阿世仇再添经典战役。决赛对阵西班牙。"} },
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M103 · 7月19日 05:00 · 硬石体育场 (迈阿密) — TP 季军赛 法国vs英格兰
+  // M104 · 7月20日 03:00 · 大都会人寿体育场 (纽约) — FINAL 西班牙vs阿根廷
 };
 
 // ================================================================

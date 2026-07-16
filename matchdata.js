@@ -2330,10 +2330,23 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 2, red: 0 }, away: { yellow: 1, red: 0 } },
     attendance: 80000, referee: "Daniele Orsato (ITA)"
   },
-  // M102 · 7月16日 03:00 · 梅赛德斯-奔驰体育场 (亚特兰大) — SF2 阿根廷vs英格兰
+  // M102 · 7月16日 03:00 · 梅赛德斯-奔驰体育场 (亚特兰大) — SF2 英格兰1-2阿根廷
+  "2026|SF|ENG|ARG": {
+    score: { sh: 1, sa: 2 },
+    goals: [
+      { min: 55, side: "home", scorer: "安东尼·戈登 (Anthony Gordon)", type: "shot", assist: "摩根·罗杰斯 (Morgan Rogers)" },
+      { min: 85, side: "away", scorer: "恩佐·费尔南德斯 (Enzo Fernández)", type: "shot", assist: "利昂内尔·梅西 (Lionel Messi)" },
+      { min: "90+2", side: "away", scorer: "劳塔罗·马丁内斯 (Lautaro Martínez)", type: "header", assist: "利昂内尔·梅西 (Lionel Messi)" }
+    ],
+    cards: { home: { yellow: 1, red: 0 }, away: { yellow: 3, red: 0 } },
+    attendance: 71358, referee: "Facundo Tello (ARG)"
+  },
+  // M103 · 7月19日 05:00 · 硬石体育场 (迈阿密) — TP 季军赛 法国vs英格兰
+  // M104 · 7月20日 03:00 · 大都会人寿体育场 (纽约) — FINAL 西班牙vs阿根廷
 };
 // ========== SF 半决赛 Match Stats ==========
 matchStats["2026|SF|FRA|ESP"] = {p1:"49%",p2:"51%",ps1:null,ps2:null,sh1:8,sh2:7,so1:3,so2:2,sb1:5,sb2:5,co1:7,co2:1,fo1:11,fo2:12,os1:4,os2:5,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:118,at2:109,da1:46,da2:23,pk1:0,pk2:1};
+matchStats["2026|SF|ENG|ARG"] = {p1:"36%",p2:"64%",ps1:null,ps2:null,sh1:3,sh2:12,so1:2,so2:5,sb1:1,sb2:7,co1:1,co2:6,fo1:11,fo2:15,os1:1,os2:3,yc1:1,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:77,at2:109,da1:39,da2:69,pk1:0,pk2:0};
 // ========== 2026世界杯 比赛统计数据 ==========
 matchStats["2026|A|MEX|RSA"] = {p1:"60%",p2:"40%",ps1:447,ps2:328,sh1:11,sh2:3,so1:4,so2:2,sb1:7,sb2:1,co1:3,co2:1,fo1:10,fo2:18,os1:2,os2:1,yc1:1,yc2:2,rc1:1,rc2:2,tk1:15,tk2:12,at1:98,at2:69,da1:48,da2:27,pk1:0,pk2:0};
 matchStats["2026|A|KOR|CZE"] = {p1:"62%",p2:"38%",ps1:480,ps2:390,sh1:11,sh2:7,so1:6,so2:4,sb1:5,sb2:3,co1:4,co2:5,fo1:12,fo2:14,os1:2,os2:2,yc1:1,yc2:0,rc1:0,rc2:0,tk1:14,tk2:16,at1:98,at2:90,da1:38,da2:42,pk1:0,pk2:0};
