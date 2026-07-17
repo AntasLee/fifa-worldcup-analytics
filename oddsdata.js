@@ -121,11 +121,20 @@ L_1_2:{h:'CRO',a:'GHA',hw:1.65,d:3.6,aw:5,ahLine:-0.75,ahHome:1.78,ahAway:2.05,o
 		SF_1:{h:'FRA',a:'ESP',hw:2.30,d:3.10,aw:3.30,ahLine:-0.25,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.89,ouUnder:1.93},
 		SF_2:{h:'ENG',a:'ARG',hw:2.65,d:3.00,aw:2.90,ahLine:0,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.25,ouUnder:1.65}
 		};
+		// ========== 淘汰赛比赛级赔率 (TP 季军赛 & FINAL 决赛) ==========
+		// 数据源: FanDuel (via The Odds API)
+		// 获取时间: 2026-07-16
+		const knockoutOddsTP={
+		TP_1:{h:'FRA',a:'ENG',hw:1.91,d:3.80,aw:3.80,ahLine:-0.5,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:1.40,ouUnder:2.98}
+		};
+		const knockoutOddsFINAL={
+		FINAL_1:{h:'ESP',a:'ARG',hw:2.30,d:2.90,aw:3.70,ahLine:-0.25,ahHome:1.90,ahAway:1.90,ouLine:2.5,ouOver:2.38,ouUnder:1.59}
+		};
 	// ========== 从 matchOdds + knockoutOdds 自动计算 liveOdds ==========
 	(function(){
 	  var ts={};
 	  // 合并小组赛 + 淘汰赛赔率
-		  var allOdds=Object.assign({},matchOdds,knockoutOdds,knockoutOddsR16,knockoutOddsQF,knockoutOddsSF);
+		  var allOdds=Object.assign({},matchOdds,knockoutOdds,knockoutOddsR16,knockoutOddsQF,knockoutOddsSF,knockoutOddsTP,knockoutOddsFINAL);
 	  Object.values(allOdds).forEach(function(m){
 	    if(!ts[m.h])ts[m.h]={hw:[],aw:[],d:[]};
 	    if(!ts[m.a])ts[m.a]={hw:[],aw:[],d:[]};
@@ -150,11 +159,13 @@ L_1_2:{h:'CRO',a:'GHA',hw:1.65,d:3.6,aw:5,ahLine:-0.75,ahHome:1.78,ahAway:2.05,o
 		window.knockoutOddsR16 = knockoutOddsR16;
 		window.knockoutOddsQF = knockoutOddsQF;
 		window.knockoutOddsSF = knockoutOddsSF;
+		window.knockoutOddsTP = knockoutOddsTP;
+		window.knockoutOddsFINAL = knockoutOddsFINAL;
 		window.initialOdds = initialOdds;
 	window.liveOdds = liveOdds;
 	window.lastUpdate = lastUpdate;
 	window.dataSource = 'William Hill';
 	
-		console.log('✅ oddsdata.js 已加载: 72场小组赛 + 16场R32 + 8场R16 + 4场QF + 2场SF (含AH/OU扩展字段) | 数据源: William Hill via The Odds API | 更新: 2026-07-12');
+		console.log('✅ oddsdata.js 已加载: 72场小组赛 + 16场R32 + 8场R16 + 4场QF + 2场SF + 季军赛 + 决赛 | 数据源: William Hill via The Odds API | 更新: 2026-07-16');
 
 })();
