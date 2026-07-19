@@ -3008,8 +3008,40 @@ const wc2026AllMatches = {
     mediaRating: { motm:"利昂内尔·梅西", sources:["FIFA","Sky Sports","AP","BBC Sport","ESPN"], home:{score:5, quotes:"三狮军团距决赛仅差35分钟。戈登55分钟接罗杰斯传中后点破门让梦想触手可及。但图赫尔领先后全线退守的赌博成为致命失误——英格兰主动放弃控球将比赛主导权拱手让给梅西。7分钟内从天堂坠入地狱：恩佐85分钟世界波+劳塔罗92分钟头球绝杀。连续三届大赛倒在半决赛。"}, away:{score:8, quotes:"阿根廷连续两届世界杯晋级决赛！梅西虽未进球但送出两记助攻——85分钟角球助攻恩佐远射破门+92分钟右路传中助攻劳塔罗绝杀——成为1966年以来首位单场淘汰赛9次过人+2次助攻的球员。8球4助领跑金靴。英阿世仇再添经典战役。决赛对阵西班牙。"} },
     aiPreMatch: null, aiPostReview: null
   },
-  // M103 · 7月19日 05:00 · 硬石体育场 (迈阿密) — TP 季军赛 法国vs英格兰
-  // M104 · 7月20日 03:00 · 大都会人寿体育场 (纽约) — FINAL 西班牙vs阿根廷
+  // M103 · 7月19日 05:00 · 硬石体育场 (迈阿密) — TP 季军赛 法国4-6英格兰
+  "2026|TP|FRA|ENG": {
+    score: { sh: 4, sa: 6 }, date: "2026-07-19", time: "05:00", venue: "硬石体育场", stage: "TP",
+    goals: [
+      { min: 3, side: "away", scorer: "德克兰·赖斯", type: "shot" },
+      { min: 18, side: "away", scorer: "埃兹里·孔萨", type: "header", assist: "德克兰·赖斯" },
+      { min: 37, side: "away", scorer: "布卡约·萨卡", type: "shot", assist: "马库斯·拉什福德" },
+      { min: "45+1", side: "away", scorer: "布卡约·萨卡", type: "shot", assist: "埃贝雷奇·埃泽" },
+      { min: 48, side: "home", scorer: "基利安·姆巴佩", type: "shot", assist: "迈克尔·奥利赛" },
+      { min: 54, side: "home", scorer: "布拉德利·巴尔科拉", type: "shot", assist: "基利安·姆巴佩" },
+      { min: 66, side: "home", scorer: "基利安·姆巴佩", type: "shot", assist: "迈克尔·奥利赛" },
+      { min: 87, side: "away", scorer: "布卡约·萨卡", type: "penalty" },
+      { min: "90+6", side: "home", scorer: "奥斯曼·登贝莱", type: "shot", assist: "达约·于帕梅卡诺" },
+      { min: "90+8", side: "away", scorer: "祖德·贝林厄姆", type: "shot" }
+    ],
+    stats: { possession:{h:46,a:54}, shots:{h:15,a:13}, shotsOnTarget:{h:9,a:11}, corners:{h:3,a:4}, fouls:{h:14,a:8}, yellowCards:{h:0,a:0}, redCards:{h:0,a:0}, attacks:{h:75,a:60}, dangerousAttacks:{h:55,a:27} },
+    attendance: 64767, referee: "Jesús Valenzuela (VEN)", xg: null,
+    mediaRating: { motm:"布卡约·萨卡", sources:["AP","Sky Sports","CBS Sports","BBC Sport","CNA"], home:{score:6, quotes:"法国在上半场交出史上最灾难的半决赛后45分钟——0-4落后，德尚告别战的开局如噩梦。但下半场展现了法国足球的骄傲：姆巴佩双响（22球超越梅西成为世界杯历史射手王+本届10球），巴尔科拉爆射，登贝莱补时破门——几乎完成从0-4到4-4的神奇逆转。奥尔赛两失绝平良机成为遗憾。德尚14年执教以一场疯狂的10球大战谢幕。"}, away:{score:8, quotes:"英格兰自1966年以来最佳世界杯战绩！萨卡帽子戏法（3球）+赖斯世界波+孔萨头球+贝林厄姆补时单骑闯关——10球盛宴中6次攻破法国球门。但4-0领先后几乎崩盘——法国下半场连追3球让三狮球迷心脏骤停。萨卡87分钟点球完成帽子戏法稳军心，贝林厄姆单届7球创英格兰纪录。世界杯季军，昂首回家。"} },
+    aiPreMatch: null, aiPostReview: null
+  },
+  // M104 · 7月20日 03:00 · 大都会人寿体育场 (纽约) — FINAL 西班牙1-0阿根廷 (加时)
+  "2026|FINAL|ESP|ARG": {
+    score: { sh: 0, sa: 0 }, date: "2026-07-20", time: "03:00", venue: "大都会人寿体育场", stage: "FINAL",
+    score120: { sh: 1, sa: 0 },
+    aet: true,
+    goals: [
+      { min: 106, side: "home", scorer: "费兰·托雷斯", type: "shot", assist: "尼科·威廉斯" }
+    ],
+    stats: { possession:{h:65,a:35}, shots:{h:17,a:1}, shotsOnTarget:{h:12,a:0}, corners:{h:9,a:4}, fouls:{h:21,a:25}, yellowCards:{h:0,a:5}, redCards:{h:0,a:1}, attacks:{h:170,a:77}, dangerousAttacks:{h:88,a:20} },
+    attendance: 82500, referee: "Slavko Vinčić (SVN)", xg: null,
+    mediaRating: { motm:"埃米利亚诺·马丁内斯", sources:["FIFA","CBS Sports","AP","NBC News","CNA","BBC Sport"], home:{score:9, quotes:"西班牙时隔16年重夺世界杯！全场碾压级统治力——65%控球、17次射门12次射正。费兰·托雷斯106分钟接尼科·威廉斯头球摆渡左脚爆射上角打入制胜球。西班牙8场仅失1球创历史最佳防守纪录。同时持有男足+女足世界杯——足球史上首个双冠王国。德拉富恩特65岁成为最年长冠军教练。"}, away:{score:6, quotes:"卫冕冠军以最痛苦的方式交出王座。全场零射正——阿根廷120分钟未能威胁乌奈·西蒙的球门。恩佐·费尔南德斯补时两黄变红葬送最后希望。但迪布·马丁内斯全场12次扑救（世界杯决赛历史纪录）让比分仅停留在0-1。梅西的最后一届世界杯以银牌告终——39岁的他赛后与奖杯擦肩而过的画面将成为永恒。"} },
+    aiPreMatch: null, aiPostReview: null
+  }
+};
 };
 
 // ================================================================

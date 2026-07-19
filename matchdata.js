@@ -2341,10 +2341,39 @@ const wc2026MatchDetails = { // V1.78: 助攻数据已全面补全, gkSaves精�
     cards: { home: { yellow: 1, red: 0 }, away: { yellow: 3, red: 0 } },
     attendance: 71358, referee: "Facundo Tello (ARG)"
   },
-  // M103 · 7月19日 05:00 · 硬石体育场 (迈阿密) — TP 季军赛 法国vs英格兰
-  // M104 · 7月20日 03:00 · 大都会人寿体育场 (纽约) — FINAL 西班牙vs阿根廷
+  // M103 · 7月19日 05:00 · 硬石体育场 (迈阿密) — TP 季军赛 法国4-6英格兰
+  "2026|TP|FRA|ENG": {
+    score: { sh: 4, sa: 6 },
+    goals: [
+      { min: 3, side: "away", scorer: "德克兰·赖斯 (Declan Rice)", type: "shot" },
+      { min: 18, side: "away", scorer: "埃兹里·孔萨 (Ezri Konsa)", type: "header", assist: "德克兰·赖斯 (Declan Rice)" },
+      { min: 37, side: "away", scorer: "布卡约·萨卡 (Bukayo Saka)", type: "shot", assist: "马库斯·拉什福德 (Marcus Rashford)" },
+      { min: "45+1", side: "away", scorer: "布卡约·萨卡 (Bukayo Saka)", type: "shot", assist: "埃贝雷奇·埃泽 (Eberechi Eze)" },
+      { min: 48, side: "home", scorer: "基利安·姆巴佩 (Kylian Mbappé)", type: "shot", assist: "迈克尔·奥利赛 (Michael Olise)" },
+      { min: 54, side: "home", scorer: "布拉德利·巴尔科拉 (Bradley Barcola)", type: "shot", assist: "基利安·姆巴佩 (Kylian Mbappé)" },
+      { min: 66, side: "home", scorer: "基利安·姆巴佩 (Kylian Mbappé)", type: "shot", assist: "迈克尔·奥利赛 (Michael Olise)" },
+      { min: 87, side: "away", scorer: "布卡约·萨卡 (Bukayo Saka)", type: "penalty" },
+      { min: "90+6", side: "home", scorer: "奥斯曼·登贝莱 (Ousmane Dembélé)", type: "shot", assist: "达约·于帕梅卡诺 (Dayot Upamecano)" },
+      { min: "90+8", side: "away", scorer: "祖德·贝林厄姆 (Jude Bellingham)", type: "shot" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 0, red: 0 } },
+    attendance: 64767, referee: "Jesús Valenzuela (VEN)"
+  },
+  // M104 · 7月20日 03:00 · 大都会人寿体育场 (纽约) — FINAL 西班牙1-0阿根廷 (加时)
+  "2026|FINAL|ESP|ARG": {
+    score: { sh: 0, sa: 0 },
+    score120: { sh: 1, sa: 0 },
+    aet: true,
+    goals: [
+      { min: 106, side: "home", scorer: "费兰·托雷斯 (Ferran Torres)", type: "shot", assist: "尼科·威廉斯 (Nico Williams)" }
+    ],
+    cards: { home: { yellow: 0, red: 0 }, away: { yellow: 5, red: 1 } },
+    attendance: 82500, referee: "Slavko Vinčić (SVN)"
+  }
 };
-// ========== SF 半决赛 Match Stats ==========
+// ========== TP 季军赛 Match Stats ==========
+matchStats["2026|FINAL|ESP|ARG"] = {p1:"65%",p2:"35%",ps1:null,ps2:null,sh1:17,sh2:1,so1:12,so2:0,sb1:5,sb2:1,co1:9,co2:4,fo1:21,fo2:25,os1:4,os2:1,yc1:0,yc2:5,rc1:0,rc2:1,tk1:null,tk2:null,at1:170,at2:77,da1:88,da2:20,pk1:0,pk2:0};
+matchStats["2026|TP|FRA|ENG"] = {p1:"46%",p2:"54%",ps1:null,ps2:null,sh1:15,sh2:13,so1:9,so2:11,sb1:6,sb2:2,co1:3,co2:4,fo1:14,fo2:8,os1:3,os2:3,yc1:0,yc2:0,rc1:0,rc2:0,tk1:null,tk2:null,at1:75,at2:60,da1:55,da2:27,pk1:0,pk2:1};
 matchStats["2026|SF|FRA|ESP"] = {p1:"49%",p2:"51%",ps1:null,ps2:null,sh1:8,sh2:7,so1:3,so2:2,sb1:5,sb2:5,co1:7,co2:1,fo1:11,fo2:12,os1:4,os2:5,yc1:2,yc2:1,rc1:0,rc2:0,tk1:null,tk2:null,at1:118,at2:109,da1:46,da2:23,pk1:0,pk2:1};
 matchStats["2026|SF|ENG|ARG"] = {p1:"36%",p2:"64%",ps1:null,ps2:null,sh1:3,sh2:12,so1:2,so2:5,sb1:1,sb2:7,co1:1,co2:6,fo1:11,fo2:15,os1:1,os2:3,yc1:1,yc2:3,rc1:0,rc2:0,tk1:null,tk2:null,at1:77,at2:109,da1:39,da2:69,pk1:0,pk2:0};
 // ========== 2026世界杯 比赛统计数据 ==========
