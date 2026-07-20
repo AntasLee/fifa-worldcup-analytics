@@ -3042,7 +3042,6 @@ const wc2026AllMatches = {
     aiPreMatch: null, aiPostReview: null
   }
 };
-};
 
 // ================================================================
 //  历史世界杯战绩索引 (从 matchdata.js 提炼，用于历史底蕴快速计算)
